@@ -1,103 +1,192 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import Navbar from './components/Navbar';
+import { materials, materialCategories, mainServices, extraServices } from './lib/data';
+import { Material, Size } from './lib/types';
+
+import { MaterialSelector } from './components/calculator/MaterialSelector';
+import { DimensionsInput } from './components/calculator/DimensionsInput';
+import { SizeSelector } from './components/calculator/SizeSelector';
+import { ServicesSelector } from './components/calculator/ServicesSelector';
+import { ExtraServices } from './components/calculator/ExtraServices';
+import { PriceSummary } from './components/calculator/PriceSummary';
+import { MaterialPreview } from './components/calculator/MaterialPreview';
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [hasColumn, setHasColumn] = useState<boolean | null>(null);
+  const [selectedMaterial, setSelectedMaterial] = useState<Material | null>(null);
+  const [selectedSize, setSelectedSize] = useState<Size | null>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, length: 0 });
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [selectedServiceOptions, setSelectedServiceOptions] = useState<Record<string, string>>({});
+  const [selectedExtras, setSelectedExtras] = useState<Record<string, string>>({});
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const area = dimensions.width * dimensions.length;
+
+  const totalPrice = selectedMaterial && selectedSize
+    ? area * selectedMaterial.pricePerSqm[selectedSize.id] +
+      mainServices
+        .filter((service) => selectedServices.includes(service.id))
+        .reduce((sum, service) => sum + service.price, 0) +
+      Object.entries(selectedExtras)
+        .filter(([_, optionId]) => optionId)
+        .reduce((sum, [serviceId, optionId]) => {
+          const service = extraServices.find((s) => s.id === serviceId);
+          const option = service?.options.find((o) => o.id === optionId);
+          return sum + (option?.price || 0);
+        }, 0)
+    : 0;
+
+  return (
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-white pt-16">
+      <Navbar totalPrice={totalPrice} />
+      
+      <div className="container mx-auto px-4 py-8 flex gap-8">
+        {/* Left Side - Calculator (35%) */}
+        <div className="w-[35%] bg-white p-6 rounded-2xl shadow-soft hover:shadow-hover transition-shadow h-[calc(100vh-5rem)] sticky top-20 overflow-y-auto custom-scrollbar">
+          <div className="space-y-8">
+            <div id="materials" className="scroll-mt-20">
+              <MaterialSelector
+                materials={materials}
+                categories={materialCategories}
+                selectedMaterial={selectedMaterial}
+                onSelect={(material) => {
+                  setSelectedMaterial(material);
+                  setSelectedSize(null);
+                  setHasColumn(null);
+                }}
+              />
+            </div>
+
+            {selectedMaterial && (
+              <div id="dimensions" className="scroll-mt-20">
+                <SizeSelector
+                  material={selectedMaterial}
+                  selectedSize={selectedSize}
+                  onSelect={(size) => {
+                    setSelectedSize(size);
+                    setHasColumn(null);
+                  }}
+                />
+              </div>
+            )}
+
+            {selectedMaterial && selectedSize && (
+              <DimensionsInput
+                width={dimensions.width}
+                length={dimensions.length}
+                onChange={setDimensions}
+              />
+            )}
+
+            {selectedSize && selectedMaterial && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold">รูปแบบการติดตั้ง</h2>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    className={`p-3 rounded-lg border ${
+                      hasColumn === true
+                        ? 'border-blue-500 bg-blue-50'
+                        : 'border-gray-200 hover:border-blue-300'
+                    }`}
+                    onClick={() => setHasColumn(true)}
+                  >
+                    แบบมีเสา
+                  </button>
+                  <button
+                    className={`p-3 rounded-lg border ${
+                      hasColumn === false
+                        ? 'border-blue-500 bg-blue-50'
+                        : 'border-gray-200 hover:border-blue-300'
+                    }`}
+                    onClick={() => setHasColumn(false)}
+                  >
+                    แบบไร้เสา
+                  </button>
+                </div>
+              </div>
+            )}
+            {selectedSize && (
+              <div className="space-y-6">
+                <div id="services" className="scroll-mt-20">
+                  <ServicesSelector
+                    services={mainServices.filter(service => 
+                      hasColumn === false 
+                        ? service.id !== 'poles'
+                        : true
+                    )}
+                    selectedSize={selectedSize}
+                    selectedServices={selectedServices}
+                    selectedOptions={selectedServiceOptions}
+                    onToggle={(serviceId, optionId) => {
+                    if (optionId) {
+                      // ถ้ามี optionId แสดงว่าเป็นการเลือกสี
+                      setSelectedServiceOptions(prev => {
+                        const newOptions = { ...prev };
+                        if (prev[serviceId] === optionId) {
+                          delete newOptions[serviceId];
+                          // ถ้ายกเลิกการเลือกสี ให้ยกเลิกบริการด้วย
+                          setSelectedServices(prev => prev.filter(id => id !== serviceId));
+                        } else {
+                          newOptions[serviceId] = optionId;
+                          // ถ้าเลือกสี ให้เพิ่มบริการด้วย
+                          if (!selectedServices.includes(serviceId)) {
+                            setSelectedServices(prev => [...prev, serviceId]);
+                          }
+                        }
+                        return newOptions;
+                      });
+                    } else {
+                      // ถ้าไม่มี optionId แสดงว่าเป็นการเลือกบริการปกติ
+                      setSelectedServices((prev) =>
+                        prev.includes(serviceId)
+                          ? prev.filter((id) => id !== serviceId)
+                          : [...prev, serviceId]
+                      );
+                    }
+                  }}
+                  />
+                </div>
+
+                <div id="extras" className="scroll-mt-20">
+                  <ExtraServices
+                    services={extraServices.filter(service =>
+                      hasColumn === false
+                        ? !service.id.includes('column')
+                        : true
+                    )}
+                    selectedExtras={selectedExtras}
+                    onSelect={(serviceId, optionId) =>
+                      setSelectedExtras((prev) => ({
+                        ...prev,
+                        [serviceId]: optionId,
+                      }))
+                    }
+                  />
+                </div>
+              </div>
+            )}
+
+            {selectedSize && selectedMaterial && (
+              <PriceSummary
+                area={area}
+                material={selectedMaterial}
+                size={selectedSize}
+                mainServices={mainServices}
+                selectedServices={selectedServices}
+                extraServices={extraServices}
+                selectedExtras={selectedExtras}
+              />
+            )}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* Right Side - Details & Preview (70%) */}
+        <div className="w-[70%] p-4">
+          <MaterialPreview material={selectedMaterial} />
+        </div>
+      </div>
+    </main>
   );
 }
