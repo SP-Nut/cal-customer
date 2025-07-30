@@ -2,58 +2,9 @@
 
 import { useState, useEffect } from 'react';
 
-// Mock types for demonstration
-interface Material {
-  id: string;
-  name: string;
-  type: string;
-  description: string;
-  sizes: Size[];
-  pricePerSqm: Record<string, number>;
-}
 
-interface MaterialCategory {
-  id: string;
-  name: string;
-  description: string;
-}
+import type { Material, MaterialCategory, Size, Service, ServiceOption, ExtraService } from '../../lib/types';
 
-interface Size {
-  id: string;
-  name: string;
-  description: string;
-}
-
-interface Service {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  isSelectedByDefault?: boolean;
-  requiresSize?: string;
-  options?: ServiceOption[];
-}
-
-interface ServiceOption {
-  id: string;
-  name: string;
-  price: number;
-  isDefault?: boolean;
-  color?: string;
-}
-
-interface ExtraService {
-  id: string;
-  name: string;
-  description: string;
-  options: ExtraServiceOption[];
-}
-
-interface ExtraServiceOption {
-  id: string;
-  name: string;
-  price: number;
-}
 
 interface MaterialSelectorProps {
   materials: Material[];
