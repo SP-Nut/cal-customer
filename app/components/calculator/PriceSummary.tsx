@@ -8,6 +8,7 @@ interface PriceSummaryProps {
   size: Size;
   mainServices: Service[];
   selectedServices: string[];
+  selectedServiceOptions: Record<string, string>;
   extraServices: ExtraService[];
   selectedExtras: Record<string, string>;
 }
@@ -18,13 +19,27 @@ export function PriceSummary({
   size,
   mainServices,
   selectedServices,
+  selectedServiceOptions,
   extraServices,
   selectedExtras,
 }: PriceSummaryProps) {
   const basePrice = area * material.pricePerSqm[size.id];
+  
   const servicesPrice = mainServices
     .filter((service) => selectedServices.includes(service.id))
-    .reduce((sum, service) => sum + service.price, 0);
+    .reduce((sum, service) => {
+      let servicePrice = service.price;
+      // Add option price if selected
+      const selectedOption = selectedServiceOptions[service.id];
+      if (selectedOption && service.options) {
+        const option = service.options.find(opt => opt.id === selectedOption);
+        if (option) {
+          servicePrice += option.price;
+        }
+      }
+      return sum + servicePrice;
+    }, 0);
+    
   const extrasPrice = Object.entries(selectedExtras)
     .filter(([_, optionId]) => optionId)
     .reduce((sum, [serviceId, optionId]) => {
@@ -55,17 +70,31 @@ export function PriceSummary({
                 <div className="text-sm text-gray-600 mb-2">บริการที่เลือก</div>
                 {mainServices
                   .filter((service) => selectedServices.includes(service.id))
-                  .map((service) => (
-                    <div key={service.id} className="flex justify-between items-center py-1">
-                      <span className="text-gray-800">{service.name}</span>
-                      <span className="font-medium">฿{service.price.toLocaleString()}</span>
-                    </div>
-                  ))}
+                  .map((service) => {
+                    let servicePrice = service.price;
+                    const selectedOption = selectedServiceOptions[service.id];
+                    let optionName = '';
+                    
+                    if (selectedOption && service.options) {
+                      const option = service.options.find(opt => opt.id === selectedOption);
+                      if (option) {
+                        servicePrice += option.price;
+                        optionName = ` (${option.name})`;
+                      }
+                    }
+                    
+                    return (
+                      <div key={service.id} className="flex justify-between items-center py-1">
+                        <span className="text-gray-800">{service.name}{optionName}</span>
+                        <span className="font-medium">฿{servicePrice.toLocaleString()}</span>
+                      </div>
+                    );
+                  })}
               </div>
             </>
           )}
 
-          {Object.keys(selectedExtras).length > 0 && (
+          {Object.keys(selectedExtras).some(key => selectedExtras[key]) && (
             <>
               <div className="border-t border-gray-200 pt-4">
                 <div className="text-sm text-gray-600 mb-2">บริการเสริม</div>
@@ -77,7 +106,7 @@ export function PriceSummary({
                     if (!service || !option) return null;
                     return (
                       <div key={serviceId} className="flex justify-between items-center py-1">
-                        <span className="text-gray-800">{service.name}</span>
+                        <span className="text-gray-800">{service.name} - {option.name}</span>
                         <span className="font-medium">฿{option.price.toLocaleString()}</span>
                       </div>
                     );

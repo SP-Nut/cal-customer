@@ -6,30 +6,41 @@ import { materials, materialCategories, mainServices, extraServices } from './li
 import { Material, Size } from './lib/types';
 
 import { MaterialSelector } from './components/calculator/MaterialSelector';
-import { DimensionsInput } from './components/calculator/DimensionsInput';
-import { SizeSelector } from './components/calculator/SizeSelector';
-import { ServicesSelector } from './components/calculator/ServicesSelector';
-import { ExtraServices } from './components/calculator/ExtraServices';
-import { PriceSummary } from './components/calculator/PriceSummary';
 import { MaterialPreview } from './components/calculator/MaterialPreview';
 
 export default function Home() {
-  const [hasColumn, setHasColumn] = useState<boolean | null>(null);
-  const [selectedMaterial, setSelectedMaterial] = useState<Material | null>(null);
-  const [selectedSize, setSelectedSize] = useState<Size | null>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, length: 0 });
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [selectedServiceOptions, setSelectedServiceOptions] = useState<Record<string, string>>({});
-  const [selectedExtras, setSelectedExtras] = useState<Record<string, string>>({});
+  const [selectionData, setSelectionData] = useState({
+    material: null as Material | null,
+    size: null as Size | null,
+    dimensions: { width: 0, length: 0 },
+    hasColumn: null as boolean | null,
+    selectedServices: [] as string[],
+    selectedServiceOptions: {} as Record<string, string>,
+    selectedExtras: {} as Record<string, string>,
+  });
 
-  const area = dimensions.width * dimensions.length;
-
-  const totalPrice = selectedMaterial && selectedSize
-    ? area * selectedMaterial.pricePerSqm[selectedSize.id] +
+  // Validation
+  const isValidDimensions = selectionData.dimensions.width > 0 && selectionData.dimensions.length > 0;
+  
+  // Calculate total price
+  const totalPrice = selectionData.material && selectionData.size && isValidDimensions
+    ? (selectionData.dimensions.width * selectionData.dimensions.length) * 
+      selectionData.material.pricePerSqm[selectionData.size.id] +
       mainServices
-        .filter((service) => selectedServices.includes(service.id))
-        .reduce((sum, service) => sum + service.price, 0) +
-      Object.entries(selectedExtras)
+        .filter((service) => selectionData.selectedServices.includes(service.id))
+        .reduce((sum, service) => {
+          let servicePrice = service.price;
+          // Add option price if selected
+          const selectedOption = selectionData.selectedServiceOptions[service.id];
+          if (selectedOption && service.options) {
+            const option = service.options.find(opt => opt.id === selectedOption);
+            if (option) {
+              servicePrice += option.price;
+            }
+          }
+          return sum + servicePrice;
+        }, 0) +
+      Object.entries(selectionData.selectedExtras)
         .filter(([_, optionId]) => optionId)
         .reduce((sum, [serviceId, optionId]) => {
           const service = extraServices.find((s) => s.id === serviceId);
@@ -39,154 +50,98 @@ export default function Home() {
     : 0;
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-white pt-16">
+    <main className="min-h-screen bg-gray-50 pt-16">
       <Navbar totalPrice={totalPrice} />
-      
-      <div className="container mx-auto px-4 py-8 flex gap-8">
-        {/* Left Side - Calculator (35%) */}
-        <div className="w-[35%] bg-white p-6 rounded-2xl shadow-soft hover:shadow-hover transition-shadow h-[calc(100vh-5rem)] sticky top-20 overflow-y-auto custom-scrollbar">
-          <div className="space-y-8">
-            <div id="materials" className="scroll-mt-20">
+      <div className="flex h-[calc(100vh-4rem)]">
+        {/* Left Side - Preview (70%) */}
+        <div id="materials" className="w-[70%] p-6">
+          <MaterialPreview material={selectionData.material} />
+        </div>
+        {/* Right Side - Calculator (30%) */}
+        <div className="w-[30%] bg-white border-l border-gray-200 h-full relative">
+          <div className="h-full overflow-auto snap-y snap-mandatory scrollbar-hide">
+            <div id="dimensions" className="snap-start">
+              {/* ส่วนเลือกขนาด */}
+            </div>
+            <div id="services" className="snap-start">
+              {/* ส่วนเลือกบริการ */}
+            </div>
+            <div id="summary" className="snap-start">
               <MaterialSelector
                 materials={materials}
                 categories={materialCategories}
-                selectedMaterial={selectedMaterial}
-                onSelect={(material) => {
-                  setSelectedMaterial(material);
-                  setSelectedSize(null);
-                  setHasColumn(null);
-                }}
-              />
-            </div>
-
-            {selectedMaterial && (
-              <div id="dimensions" className="scroll-mt-20">
-                <SizeSelector
-                  material={selectedMaterial}
-                  selectedSize={selectedSize}
-                  onSelect={(size) => {
-                    setSelectedSize(size);
-                    setHasColumn(null);
-                  }}
-                />
-              </div>
-            )}
-
-            {selectedMaterial && selectedSize && (
-              <DimensionsInput
-                width={dimensions.width}
-                length={dimensions.length}
-                onChange={setDimensions}
-              />
-            )}
-
-            {selectedSize && selectedMaterial && (
-              <div className="space-y-4">
-                <h2 className="text-xl font-semibold">รูปแบบการติดตั้ง</h2>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    className={`p-3 rounded-lg border ${
-                      hasColumn === true
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-200 hover:border-blue-300'
-                    }`}
-                    onClick={() => setHasColumn(true)}
-                  >
-                    แบบมีเสา
-                  </button>
-                  <button
-                    className={`p-3 rounded-lg border ${
-                      hasColumn === false
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-200 hover:border-blue-300'
-                    }`}
-                    onClick={() => setHasColumn(false)}
-                  >
-                    แบบไร้เสา
-                  </button>
-                </div>
-              </div>
-            )}
-            {selectedSize && (
-              <div className="space-y-6">
-                <div id="services" className="scroll-mt-20">
-                  <ServicesSelector
-                    services={mainServices.filter(service => 
-                      hasColumn === false 
-                        ? service.id !== 'poles'
-                        : true
-                    )}
-                    selectedSize={selectedSize}
-                    selectedServices={selectedServices}
-                    selectedOptions={selectedServiceOptions}
-                    onToggle={(serviceId, optionId) => {
-                    if (optionId) {
-                      // ถ้ามี optionId แสดงว่าเป็นการเลือกสี
-                      setSelectedServiceOptions(prev => {
-                        const newOptions = { ...prev };
-                        if (prev[serviceId] === optionId) {
-                          delete newOptions[serviceId];
-                          // ถ้ายกเลิกการเลือกสี ให้ยกเลิกบริการด้วย
-                          setSelectedServices(prev => prev.filter(id => id !== serviceId));
-                        } else {
-                          newOptions[serviceId] = optionId;
-                          // ถ้าเลือกสี ให้เพิ่มบริการด้วย
-                          if (!selectedServices.includes(serviceId)) {
-                            setSelectedServices(prev => [...prev, serviceId]);
-                          }
-                        }
-                        return newOptions;
-                      });
-                    } else {
-                      // ถ้าไม่มี optionId แสดงว่าเป็นการเลือกบริการปกติ
-                      setSelectedServices((prev) =>
-                        prev.includes(serviceId)
-                          ? prev.filter((id) => id !== serviceId)
-                          : [...prev, serviceId]
-                      );
-                    }
-                  }}
-                  />
-                </div>
-
-                <div id="extras" className="scroll-mt-20">
-                  <ExtraServices
-                    services={extraServices.filter(service =>
-                      hasColumn === false
-                        ? !service.id.includes('column')
-                        : true
-                    )}
-                    selectedExtras={selectedExtras}
-                    onSelect={(serviceId, optionId) =>
-                      setSelectedExtras((prev) => ({
-                        ...prev,
-                        [serviceId]: optionId,
-                      }))
-                    }
-                  />
-                </div>
-              </div>
-            )}
-
-            {selectedSize && selectedMaterial && (
-              <PriceSummary
-                area={area}
-                material={selectedMaterial}
-                size={selectedSize}
                 mainServices={mainServices}
-                selectedServices={selectedServices}
                 extraServices={extraServices}
-                selectedExtras={selectedExtras}
+                onSelectionChange={setSelectionData}
               />
-            )}
-          </div>
-        </div>
-
-        {/* Right Side - Details & Preview (70%) */}
-        <div className="w-[70%] p-4">
-          <MaterialPreview material={selectedMaterial} />
-        </div>
-      </div>
+              {/* Price Summary - Fixed at bottom */}
+              {selectionData.size && selectionData.material && totalPrice > 0 && (
+                <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200 bg-white p-4">
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>พื้นที่รวม</span>
+                      <span>{(selectionData.dimensions.width * selectionData.dimensions.length).toFixed(2)} ตร.ม.</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span>ราคาต่อ ตร.ม.</span>
+                      <span>฿{selectionData.material.pricePerSqm[selectionData.size.id].toLocaleString()}</span>
+                    </div>
+                    {/* Show selected services */}
+                    {selectionData.selectedServices.length > 0 && (
+                      <div className="border-t pt-2">
+                        <div className="text-xs text-gray-600 mb-1">บริการที่เลือก</div>
+                        {mainServices
+                          .filter((service) => selectionData.selectedServices.includes(service.id))
+                          .map((service) => {
+                            let servicePrice = service.price;
+                            const selectedOption = selectionData.selectedServiceOptions[service.id];
+                            if (selectedOption && service.options) {
+                              const option = service.options.find(opt => opt.id === selectedOption);
+                              if (option) {
+                                servicePrice += option.price;
+                              }
+                            }
+                            return (
+                              <div key={service.id} className="flex justify-between text-xs">
+                                <span>{service.name}</span>
+                                <span>฿{servicePrice.toLocaleString()}</span>
+                              </div>
+                            );
+                          })}
+                      </div>
+                    )}
+                    {/* Show selected extras */}
+                    {Object.keys(selectionData.selectedExtras).some(key => selectionData.selectedExtras[key]) && (
+                      <div className="border-t pt-2">
+                        <div className="text-xs text-gray-600 mb-1">บริการเสริม</div>
+                        {Object.entries(selectionData.selectedExtras)
+                          .filter(([_, optionId]) => optionId)
+                          .map(([serviceId, optionId]) => {
+                            const service = extraServices.find((s) => s.id === serviceId);
+                            const option = service?.options.find((o) => o.id === optionId);
+                            if (!service || !option) return null;
+                            return (
+                              <div key={serviceId} className="flex justify-between text-xs">
+                                <span>{service.name}</span>
+                                <span>฿{option.price.toLocaleString()}</span>
+                              </div>
+                            );
+                          })}
+                      </div>
+                    )}
+                    <div className="border-t pt-2">
+                      <div className="flex justify-between font-semibold">
+                        <span>ราคารวมทั้งหมด</span>
+                        <span className="text-blue-600">฿{totalPrice.toLocaleString()}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div> {/* close summary */}
+          </div> {/* close snap-mandatory */}
+        </div> {/* close right side */}
+      </div> {/* close flex */}
     </main>
   );
 }
