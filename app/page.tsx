@@ -52,7 +52,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-8">
       <Navbar totalPrice={totalPrice} />
-      <div className="flex h-[calc(100vh-2rem)] p-8 gap-3">
+      <div className="flex h-[calc(100vh-2rem)] p-8 gap-3 mt-6">
         {/* Left Side - Material Preview (80%) */}
         <div id="materials" className="w-[80%]">
           <div className="h-full rounded-3xl overflow-auto shadow-xl border border-gray-200/50 custom-scrollbar bg-white/95 backdrop-blur-sm">
