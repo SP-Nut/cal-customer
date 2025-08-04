@@ -31,13 +31,13 @@ interface StepIndicatorProps {
 function StepIndicator({ currentStep, totalSteps, stepName }: StepIndicatorProps) {
   return (
     <div className="sticky top-0 z-20 bg-white/90 backdrop-blur-sm border-b border-gray-200">
-      <div className="px-4 py-3">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-            <span className="text-white font-medium text-sm">{currentStep}</span>
+      <div className="px-3 lg:px-4 py-2 lg:py-3">
+        <div className="flex items-center gap-2 lg:gap-3">
+          <div className="w-6 h-6 lg:w-8 lg:h-8 bg-blue-500 rounded-full flex items-center justify-center">
+            <span className="text-white font-medium text-xs lg:text-sm">{currentStep}</span>
           </div>
           <div>
-            <h3 className="font-medium text-gray-800 text-sm">{stepName}</h3>
+            <h3 className="font-medium text-gray-800 text-xs lg:text-sm">{stepName}</h3>
             <p className="text-xs text-gray-500">ขั้นที่ {currentStep} จาก {totalSteps}</p>
           </div>
         </div>
@@ -147,7 +147,7 @@ export function MaterialSelector({
   };
 
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div id="material-selector" className="h-full flex flex-col bg-white">
       <StepIndicator 
         currentStep={getCurrentStep()} 
         totalSteps={6} 
@@ -155,16 +155,16 @@ export function MaterialSelector({
       />
 
       <div 
-        className="flex-1 overflow-y-auto px-4 py-4 space-y-6"
+        className="flex-1 overflow-y-auto px-3 lg:px-4 py-3 lg:py-4 space-y-4 lg:space-y-6"
       >
         {/* Step 1: Material Type Selection */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-gray-700">เลือกประเภทวัสดุ</h3>
-          <div className="space-y-2">
+        <div className="space-y-2 lg:space-y-3">
+          <h3 className="text-xs lg:text-sm font-semibold text-gray-700">เลือกประเภทวัสดุ</h3>
+          <div className="space-y-1 lg:space-y-2">
             {categories.map((category) => (
               <button
                 key={category.id}
-                className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+                className={`w-full p-3 lg:p-4 rounded-lg border-2 transition-all text-left ${
                   selectedType === category.id
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
@@ -176,19 +176,19 @@ export function MaterialSelector({
                   }
                 }}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                <div className="flex items-center gap-2 lg:gap-3">
+                  <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg flex items-center justify-center ${
                     selectedType === category.id 
                       ? 'bg-blue-500 text-white' 
                       : 'bg-gray-100 text-gray-600'
                   }`}>
-                    <span className="text-lg">
+                    <span className="text-sm lg:text-lg">
                       {category.id === 'translucent' ? '☀️' : '🏠'}
                     </span>
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-medium text-gray-800">{category.name}</h4>
-                    <p className="text-sm text-gray-500">{category.description}</p>
+                    <h4 className="font-medium text-gray-800 text-sm lg:text-base">{category.name}</h4>
+                    <p className="text-xs lg:text-sm text-gray-500">{category.description}</p>
                   </div>
                 </div>
               </button>
@@ -198,21 +198,21 @@ export function MaterialSelector({
 
         {/* Step 2: Material Selection */}
         {selectedType && (
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold text-gray-700">เลือกวัสดุ</h3>
-            <div className="space-y-2 max-h-64 overflow-y-auto">
+          <div className="space-y-2 lg:space-y-3">
+            <h3 className="text-xs lg:text-sm font-semibold text-gray-700">เลือกวัสดุ</h3>
+            <div className="space-y-1 lg:space-y-2 max-h-48 lg:max-h-64 overflow-y-auto">
               {filteredMaterials.map((material) => (
                 <button
                   key={material.id}
-                  className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+                  className={`w-full p-3 lg:p-4 rounded-lg border-2 transition-all text-left ${
                     selectedMaterial?.id === material.id
                       ? 'border-blue-500 bg-blue-50'
                       : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
                   }`}
                   onClick={() => handleMaterialSelect(material)}
                 >
-                  <div className="flex items-start gap-3">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-medium ${
+                  <div className="flex items-start gap-2 lg:gap-3">
+                    <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg flex items-center justify-center text-xs lg:text-sm font-medium ${
                       selectedMaterial?.id === material.id
                         ? 'bg-blue-500 text-white'
                         : 'bg-gray-100 text-gray-600'
@@ -220,9 +220,9 @@ export function MaterialSelector({
                       {selectedMaterial?.id === material.id ? '✓' : '📦'}
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-medium text-gray-800">{material.name}</h4>
-                      <p className="text-sm text-gray-500 mt-1">{material.description}</p>
-                      <div className="text-sm font-semibold text-blue-600 mt-2">
+                      <h4 className="font-medium text-gray-800 text-sm lg:text-base">{material.name}</h4>
+                      <p className="text-xs lg:text-sm text-gray-500 mt-0.5 lg:mt-1">{material.description}</p>
+                      <div className="text-xs lg:text-sm font-semibold text-blue-600 mt-1 lg:mt-2">
                         เริ่มต้น ฿{Math.min(...Object.values(material.pricePerSqm).filter(p => p > 0)).toLocaleString()} ต่อ ตร.ม.
                       </div>
                     </div>
@@ -235,13 +235,13 @@ export function MaterialSelector({
 
         {/* Step 3: Size Selection */}
         {selectedMaterial && (
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold text-gray-700">เลือกขนาด</h3>
-            <div className="grid grid-cols-1 gap-2">
+          <div className="space-y-2 lg:space-y-3">
+            <h3 className="text-xs lg:text-sm font-semibold text-gray-700">เลือกขนาด</h3>
+            <div className="grid grid-cols-1 gap-1 lg:gap-2">
               {selectedMaterial.sizes.map((size) => (
                 <button
                   key={size.id}
-                  className={`p-4 rounded-lg border-2 text-left transition-all ${
+                  className={`p-3 lg:p-4 rounded-lg border-2 text-left transition-all ${
                     selectedSize?.id === size.id
                       ? 'border-blue-500 bg-blue-50'
                       : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
@@ -250,10 +250,10 @@ export function MaterialSelector({
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="font-medium text-gray-800">{size.name}</div>
-                      <div className="text-sm text-gray-500">{size.description}</div>
+                      <div className="font-medium text-gray-800 text-sm lg:text-base">{size.name}</div>
+                      <div className="text-xs lg:text-sm text-gray-500">{size.description}</div>
                     </div>
-                    <div className="text-lg font-semibold text-blue-600">
+                    <div className="text-base lg:text-lg font-semibold text-blue-600">
                       {selectedMaterial.pricePerSqm[size.id] > 0 
                         ? `฿${selectedMaterial.pricePerSqm[size.id].toLocaleString()}`
                         : '-'
@@ -268,16 +268,16 @@ export function MaterialSelector({
 
         {/* Step 4: Dimensions Input */}
         {selectedSize && (
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold text-gray-700">ระบุขนาดพื้นที่</h3>
-            <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2 lg:space-y-3">
+            <h3 className="text-xs lg:text-sm font-semibold text-gray-700">ระบุขนาดพื้นที่</h3>
+            <div className="grid grid-cols-2 gap-2 lg:gap-4">
               <div>
-                <label className="block text-sm text-gray-700 mb-2 font-medium">ความกว้าง (เมตร)</label>
+                <label className="block text-xs lg:text-sm text-gray-700 mb-1 lg:mb-2 font-medium">ความกว้าง (เมตร)</label>
                 <input
                   type="number"
                   min="0"
                   step="0.1"
-                  className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  className="w-full px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm"
                   placeholder="0.0"
                   value={dimensions.width || ''}
                   onChange={(e) => {
@@ -291,12 +291,12 @@ export function MaterialSelector({
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-2 font-medium">ความยาว (เมตร)</label>
+                <label className="block text-xs lg:text-sm text-gray-700 mb-1 lg:mb-2 font-medium">ความยาว (เมตร)</label>
                 <input
                   type="number"
                   min="0"
                   step="0.1"
-                  className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  className="w-full px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm"
                   placeholder="0.0"
                   value={dimensions.length || ''}
                   onChange={(e) => {
@@ -311,8 +311,8 @@ export function MaterialSelector({
               </div>
             </div>
             {area > 0 && (
-              <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-200">
-                <div className="text-lg font-semibold text-blue-600">
+              <div className="text-center p-2 lg:p-3 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="text-base lg:text-lg font-semibold text-blue-600">
                   พื้นที่รวม: {area.toFixed(2)} ตร.ม.
                 </div>
               </div>
@@ -322,11 +322,11 @@ export function MaterialSelector({
 
         {/* Step 5: Installation Type */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold text-gray-700">รูปแบบติดตั้ง</h3>
-            <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-2 lg:space-y-3">
+            <h3 className="text-xs lg:text-sm font-semibold text-gray-700">รูปแบบติดตั้ง</h3>
+            <div className="grid grid-cols-2 gap-2 lg:gap-3">
               <button
-                className={`p-4 rounded-lg border-2 text-center transition-all ${
+                className={`p-3 lg:p-4 rounded-lg border-2 text-center transition-all ${
                   hasColumn === true
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
@@ -336,12 +336,12 @@ export function MaterialSelector({
                   setTimeout(updateParent, 0);
                 }}
               >
-                <div className="text-2xl mb-2">🏗️</div>
-                <div className="font-medium text-gray-700">แบบมีเสา</div>
-                <div className="text-sm text-gray-500 mt-1">มีเสาค้ำยัน</div>
+                <div className="text-xl lg:text-2xl mb-1 lg:mb-2">🏗️</div>
+                <div className="font-medium text-gray-700 text-sm lg:text-base">แบบมีเสา</div>
+                <div className="text-xs lg:text-sm text-gray-500 mt-0.5 lg:mt-1">มีเสาค้ำยัน</div>
               </button>
               <button
-                className={`p-4 rounded-lg border-2 text-center transition-all ${
+                className={`p-3 lg:p-4 rounded-lg border-2 text-center transition-all ${
                   hasColumn === false
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
@@ -351,9 +351,9 @@ export function MaterialSelector({
                   setTimeout(updateParent, 0);
                 }}
               >
-                <div className="text-2xl mb-2">🏠</div>
-                <div className="font-medium text-gray-700">แบบไร้เสา</div>
-                <div className="text-sm text-gray-500 mt-1">ไม่มีเสาค้ำยัน</div>
+                <div className="text-xl lg:text-2xl mb-1 lg:mb-2">🏠</div>
+                <div className="font-medium text-gray-700 text-sm lg:text-base">แบบไร้เสา</div>
+                <div className="text-xs lg:text-sm text-gray-500 mt-0.5 lg:mt-1">ไม่มีเสาค้ำยัน</div>
               </button>
             </div>
           </div>
@@ -363,9 +363,9 @@ export function MaterialSelector({
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
           <>
             {/* Main Services Section */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-gray-700">บริการหลัก</h3>
-              <div className="space-y-3">
+            <div className="space-y-3 lg:space-y-4">
+              <h3 className="text-xs lg:text-sm font-semibold text-gray-700">บริการหลัก</h3>
+              <div className="space-y-2 lg:space-y-3">
                 {mainServices
                   .filter(service => {
                     const sizeOk = !service.requiresSize || service.requiresSize === selectedSize?.id;
@@ -376,7 +376,7 @@ export function MaterialSelector({
                   .map((service) => (
                     <div
                       key={service.id}
-                      className={`p-4 rounded-lg border-2 transition-all ${
+                      className={`p-3 lg:p-4 rounded-lg border-2 transition-all ${
                         selectedServices.includes(service.id)
                           ? 'border-blue-500 bg-blue-50'
                           : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
@@ -395,31 +395,31 @@ export function MaterialSelector({
                         >
                           <div className="flex justify-between items-center">
                             <div>
-                              <div className="font-medium text-gray-800">{service.name}</div>
-                              <div className="text-sm text-gray-500 mt-1">{service.description}</div>
+                              <div className="font-medium text-gray-800 text-sm lg:text-base">{service.name}</div>
+                              <div className="text-xs lg:text-sm text-gray-500 mt-0.5 lg:mt-1">{service.description}</div>
                             </div>
-                            <div className="text-lg font-semibold text-blue-600">
+                            <div className="text-base lg:text-lg font-semibold text-blue-600">
                               ฿{service.price.toLocaleString()}
                             </div>
                           </div>
                         </button>
                       ) : (
                         <div>
-                          <div className="flex justify-between items-center mb-3">
+                          <div className="flex justify-between items-center mb-2 lg:mb-3">
                             <div>
-                              <div className="font-medium text-gray-800">{service.name}</div>
-                              <div className="text-sm text-gray-500">{service.description}</div>
+                              <div className="font-medium text-gray-800 text-sm lg:text-base">{service.name}</div>
+                              <div className="text-xs lg:text-sm text-gray-500">{service.description}</div>
                             </div>
-                            <div className="text-lg font-semibold text-blue-600">
+                            <div className="text-base lg:text-lg font-semibold text-blue-600">
                               ฿{service.price.toLocaleString()}
                             </div>
                           </div>
                           
-                          <div className="grid grid-cols-2 gap-2 mt-3">
+                          <div className="grid grid-cols-2 lg:grid-cols-2 gap-1 lg:gap-2 mt-2 lg:mt-3">
                             {service.options.map(option => (
                               <button
                                 key={option.id}
-                                className={`p-3 rounded-lg border transition-all ${
+                                className={`p-2 lg:p-3 rounded-lg border transition-all ${
                                   selectedServiceOptions[service.id] === option.id
                                     ? 'border-blue-500 bg-blue-100'
                                     : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
@@ -446,17 +446,17 @@ export function MaterialSelector({
                                   setTimeout(updateParent, 0);
                                 }}
                               >
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1 lg:gap-2">
                                   {option.color && (
                                     <div 
-                                      className="w-4 h-4 rounded-full border border-gray-300" 
+                                      className="w-3 h-3 lg:w-4 lg:h-4 rounded-full border border-gray-300" 
                                       style={{ backgroundColor: option.color }}
                                     />
                                   )}
-                                  <span className="text-sm font-medium">{option.name}</span>
+                                  <span className="text-xs lg:text-sm font-medium truncate">{option.name}</span>
                                 </div>
                                 {option.price > 0 && (
-                                  <div className="text-sm text-blue-600 mt-1">
+                                  <div className="text-xs lg:text-sm text-blue-600 mt-0.5 lg:mt-1">
                                     +฿{option.price.toLocaleString()}
                                   </div>
                                 )}
@@ -471,9 +471,9 @@ export function MaterialSelector({
             </div>
 
             {/* Extra Services Section */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-gray-700">บริการเสริม (ตัวเลือก)</h3>
-              <div className="space-y-3">
+            <div className="space-y-3 lg:space-y-4">
+              <h3 className="text-xs lg:text-sm font-semibold text-gray-700">บริการเสริม (ตัวเลือก)</h3>
+              <div className="space-y-2 lg:space-y-3">
                 {extraServices
                   .filter(service =>
                     hasColumn === false
@@ -481,15 +481,15 @@ export function MaterialSelector({
                       : true
                   )
                   .map((service) => (
-                    <div key={service.id} className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                      <div className="flex items-center justify-between mb-3">
+                    <div key={service.id} className="p-3 lg:p-4 bg-gray-50 rounded-lg border border-gray-200">
+                      <div className="flex items-center justify-between mb-2 lg:mb-3">
                         <div>
-                          <div className="font-medium text-gray-800">{service.name}</div>
-                          <div className="text-sm text-gray-500">{service.description}</div>
+                          <div className="font-medium text-gray-800 text-sm lg:text-base">{service.name}</div>
+                          <div className="text-xs lg:text-sm text-gray-500">{service.description}</div>
                         </div>
                       </div>
                       <select
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white"
+                        className="w-full p-2 lg:p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white text-sm"
                         value={selectedExtras[service.id] || ''}
                         onChange={(e) => {
                           const newExtras = {

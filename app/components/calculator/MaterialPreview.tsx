@@ -62,22 +62,22 @@ export function MaterialPreview({ material, onNext }: MaterialPreviewProps) {
         </div>
         
         <div className="relative z-10 h-full flex flex-col">
-          <div className="flex-1 flex flex-col p-8 w-full">
+          <div className="flex-1 flex flex-col p-4 lg:p-8 w-full">
             
             {/* Main Content */}
-            <div className="flex-1 flex items-center justify-center py-8">
-              <div className="grid lg:grid-cols-2 gap-12 items-center w-full max-w-6xl mx-auto">
+            <div className="flex-1 flex items-center justify-center py-4 lg:py-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center w-full max-w-6xl mx-auto">
                 
                 {/* Content Section */}
-                <div className="text-left space-y-4">
-                  <div className="flex items-center space-x-4 mb-4">
-                    <div className="w-16 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
-                    <p className="text-sm font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent uppercase tracking-widest">
+                <div className="text-center lg:text-left space-y-3 lg:space-y-4">
+                  <div className="flex items-center justify-center lg:justify-start space-x-3 lg:space-x-4 mb-3 lg:mb-4">
+                    <div className="w-8 lg:w-16 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
+                    <p className="text-xs lg:text-sm font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent uppercase tracking-widest">
                       ระบบคำนวณมืออาชีพ
                     </p>
                   </div>
                   
-                  <h2 className="text-5xl lg:text-7xl font-extralight mb-6 leading-tight text-slate-800">
+                  <h2 className="text-2xl sm:text-3xl lg:text-5xl xl:text-7xl font-extralight mb-4 lg:mb-6 leading-tight text-slate-800">
                     สร้างโซลูชั่น<br />
                     <span className="font-normal bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                       กันสาดและหลังคา
@@ -88,28 +88,28 @@ export function MaterialPreview({ material, onNext }: MaterialPreviewProps) {
                     </span>
                   </h2>
                   
-                  <div className="bg-transparent p-6 mb-6">
-                    <p className="text-lg text-slate-700 leading-relaxed font-normal">
+                  <div className="bg-transparent p-3 lg:p-6 mb-4 lg:mb-6">
+                    <p className="text-sm lg:text-lg text-slate-700 leading-relaxed font-normal">
                       ระบบคำนวณราคากันสาดและหลังคาแบบมืออาชีพ คำนวณราคาแม่นยำครบครันทุกรายการ 
                       ด้วยประสบการณ์มากกว่า 15 ปี พร้อมบริการครบวงจร
                     </p>
                   </div>
                   
                   {/* Feature Cards */}
-                  <div className="grid gap-3 mb-6">
+                  <div className="grid gap-2 lg:gap-3 mb-4 lg:mb-6">
                     {[
                       { icon: '✓', title: 'คำนวณราคาแม่นยำ', desc: 'ไม่มีค่าใช้จ่ายแอบแฝง โปร่งใสทุกรายการ', bg: 'from-blue-500 via-purple-500 to-pink-500' },
                       { icon: '⚡', title: 'วัสดุคุณภาพสูง', desc: 'มาตรฐานสากล ทนทาน ใช้งานได้ยาวนาน', bg: 'from-purple-500 via-blue-500 to-cyan-500' },
                       { icon: '🏠', title: 'ทีมช่างมืออาชีพ', desc: 'รับประกันงาน บริการหลังการขายครบถ้วน', bg: 'from-pink-500 via-purple-500 to-blue-500' }
                     ].map((item, index) => (
-                      <div key={index} className="group bg-transparent p-5 hover:bg-white/10 transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/10">
-                        <div className="flex items-center space-x-5">
-                          <div className={`w-12 h-12 bg-gradient-to-br ${item.bg} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                            <span className="text-white font-bold text-lg">{item.icon}</span>
+                      <div key={index} className="group bg-transparent p-3 lg:p-5 hover:bg-white/10 transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/10">
+                        <div className="flex items-center space-x-3 lg:space-x-5">
+                          <div className={`w-8 lg:w-12 h-8 lg:h-12 bg-gradient-to-br ${item.bg} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                            <span className="text-white font-bold text-sm lg:text-lg">{item.icon}</span>
                           </div>
                           <div>
-                            <h4 className="font-bold text-slate-800 text-lg mb-1">{item.title}</h4>
-                            <p className="text-slate-600 text-base">{item.desc}</p>
+                            <h4 className="font-bold text-slate-800 text-sm lg:text-lg mb-0.5 lg:mb-1">{item.title}</h4>
+                            <p className="text-slate-600 text-xs lg:text-base">{item.desc}</p>
                           </div>
                         </div>
                       </div>
@@ -119,20 +119,27 @@ export function MaterialPreview({ material, onNext }: MaterialPreviewProps) {
                   {/* CTA Button */}
                   <div className="flex justify-center lg:justify-start">
                     <button 
-                      onClick={onNext || (() => {})}
-                      className="group bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-600 text-white px-16 py-6 rounded-2xl font-bold text-2xl transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 transform hover:-translate-y-1 hover:scale-105"
+                      onClick={() => {
+                        if (onNext) onNext();
+                        // Smooth scroll to MaterialSelector
+                        const selector = document.getElementById('material-selector');
+                        if (selector) {
+                          selector.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }}
+                      className="group bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-600 text-white px-6 lg:px-16 py-3 lg:py-6 rounded-2xl font-bold text-sm lg:text-2xl transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 transform hover:-translate-y-1 hover:scale-105"
                     >
-                      <span className="flex items-center justify-center space-x-3">
+                      <span className="flex items-center justify-center space-x-2 lg:space-x-3">
                         <span>เริ่มคำนวณราคา</span>
-                        <span className="group-hover:translate-x-1 transition-transform duration-300 text-2xl">→</span>
+                        <span className="group-hover:translate-x-1 transition-transform duration-300 text-lg lg:text-2xl">→</span>
                       </span>
                     </button>
                   </div>
                 </div>
                 
-                {/* Image Section */}
+                {/* Image Section - Visible on both mobile and desktop */}
                 <div className="relative">
-                  <div className="relative w-full max-w-lg mx-auto lg:mx-0">
+                  <div className="relative w-full max-w-lg mx-auto">
                     <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-50/60 via-white/40 to-slate-50/50 backdrop-blur-sm"></div>
                     
                     {/* Enhanced Floating Elements */}
@@ -201,100 +208,100 @@ export function MaterialPreview({ material, onNext }: MaterialPreviewProps) {
                   </div>
                 </div>
                 
-                {/* Contact Information Section - Full Width */}
-                <div className="col-span-full mt-8 pt-8 border-t border-white/20 w-full">
-                  <div className="text-center space-y-6 w-full">
-                    <div className="flex items-center justify-center space-x-4 mb-6">
-                      <div className="w-20 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
-                      <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
+                {/* Contact Information Section - Hidden on Mobile, Visible on Desktop */}
+                <div className="col-span-full hidden lg:block mt-4 lg:mt-8 pt-4 lg:pt-8 border-t border-white/20 w-full">
+                  <div className="text-center space-y-4 lg:space-y-6 w-full">
+                    <div className="flex items-center justify-center space-x-3 lg:space-x-4 mb-4 lg:mb-6">
+                      <div className="w-12 lg:w-20 h-0.5 lg:h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
+                      <h3 className="text-xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
                         ติดต่อเราเพื่อรับคำปรึกษา
                       </h3>
-                      <div className="w-20 h-1 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full"></div>
+                      <div className="w-12 lg:w-20 h-0.5 lg:h-1 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full"></div>
                     </div>
                     
                     {/* Contact Grid - 3 columns top, 3 columns bottom */}
-                    <div className="space-y-6">
+                    <div className="space-y-3 lg:space-y-6">
                       {/* Top Row - 3 columns */}
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 w-full">
                         {/* Phone Contact */}
-                        <div className="group bg-white/40 backdrop-blur-sm p-8 rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1">
-                          <div className="text-center space-y-4">
+                        <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1">
+                          <div className="text-center space-y-2 lg:space-y-4">
                             <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                              <svg className="w-12 h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                              <svg className="w-8 h-8 lg:w-12 lg:h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                               </svg>
                             </div>
                             <div>
-                              <h4 className="font-bold text-gray-800 text-lg mb-2">โทรศัพท์</h4>
-                              <p className="text-gray-700 text-base font-medium">02-123-4567</p>
-                              <p className="text-gray-500 text-sm">จันทร์-เสาร์ 8:00-18:00</p>
+                              <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">โทรศัพท์</h4>
+                              <p className="text-gray-700 text-xs lg:text-base font-medium">02-123-4567</p>
+                              <p className="text-gray-500 text-xs">จันทร์-เสาร์ 8:00-18:00</p>
                             </div>
                           </div>
                         </div>
                         
                         {/* Line Contact */}
-                        <div className="group bg-white/40 backdrop-blur-sm p-8 rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 transform hover:-translate-y-1">
-                          <div className="text-center space-y-4">
+                        <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 transform hover:-translate-y-1">
+                          <div className="text-center space-y-2 lg:space-y-4">
                             <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                              <svg className="w-12 h-12 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                              <svg className="w-8 h-8 lg:w-12 lg:h-12 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
                               </svg>
                             </div>
                             <div>
-                              <h4 className="font-bold text-gray-800 text-lg mb-2">Line ID</h4>
-                              <p className="text-gray-700 text-base font-medium">@spkansard</p>
-                              <p className="text-gray-500 text-sm">ตอบเร็ว 24 ชม.</p>
+                              <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">Line ID</h4>
+                              <p className="text-gray-700 text-xs lg:text-base font-medium">@spkansard</p>
+                              <p className="text-gray-500 text-xs">ตอบเร็ว 24 ชม.</p>
                             </div>
                           </div>
                         </div>
                         
                         {/* Email Contact */}
-                        <div className="group bg-white/40 backdrop-blur-sm p-8 rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/10 transform hover:-translate-y-1">
-                          <div className="text-center space-y-4">
+                        <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/10 transform hover:-translate-y-1">
+                          <div className="text-center space-y-2 lg:space-y-4">
                             <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                              <svg className="w-12 h-12 text-slate-600 group-hover:text-slate-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                              <svg className="w-8 h-8 lg:w-12 lg:h-12 text-slate-600 group-hover:text-slate-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                               </svg>
                             </div>
                             <div>
-                              <h4 className="font-bold text-gray-800 text-lg mb-2">อีเมล</h4>
-                              <p className="text-gray-700 text-base font-medium">info@spkansard.com</p>
-                              <p className="text-gray-500 text-sm">ตอบภายใน 24 ชม.</p>
+                              <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">อีเมล</h4>
+                              <p className="text-gray-700 text-xs lg:text-base font-medium">info@spkansard.com</p>
+                              <p className="text-gray-500 text-xs">ตอบภายใน 24 ชม.</p>
                             </div>
                           </div>
                         </div>
                       </div>
                       
                       {/* Bottom Row - 3 columns */}
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 w-full">
                         {/* WhatsApp Contact */}
-                        <div className="group bg-white/40 backdrop-blur-sm p-8 rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10 transform hover:-translate-y-1">
-                          <div className="text-center space-y-4">
+                        <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10 transform hover:-translate-y-1">
+                          <div className="text-center space-y-2 lg:space-y-4">
                             <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                              <svg className="w-12 h-12 text-green-600 group-hover:text-green-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                              <svg className="w-8 h-8 lg:w-12 lg:h-12 text-green-600 group-hover:text-green-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
                               </svg>
                             </div>
                             <div>
-                              <h4 className="font-bold text-gray-800 text-lg mb-2">WhatsApp</h4>
-                              <p className="text-gray-700 text-base font-medium">085-123-4567</p>
-                              <p className="text-gray-500 text-sm">ส่งข้อความได้ตลอด 24 ชม.</p>
+                              <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">WhatsApp</h4>
+                              <p className="text-gray-700 text-xs lg:text-base font-medium">085-123-4567</p>
+                              <p className="text-gray-500 text-xs">ส่งข้อความได้ตลอด 24 ชม.</p>
                             </div>
                           </div>
                         </div>
                         
                         {/* Facebook Contact */}
-                        <div className="group bg-white/40 backdrop-blur-sm p-8 rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 transform hover:-translate-y-1">
-                          <div className="text-center space-y-4">
+                        <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 transform hover:-translate-y-1">
+                          <div className="text-center space-y-2 lg:space-y-4">
                             <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                              <svg className="w-12 h-12 text-blue-600 group-hover:text-blue-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                              <svg className="w-8 h-8 lg:w-12 lg:h-12 text-blue-600 group-hover:text-blue-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                               </svg>
                             </div>
                             <div>
-                              <h4 className="font-bold text-gray-800 text-lg mb-2">Facebook</h4>
-                              <p className="text-gray-700 text-base font-medium">SP Kansard Official</p>
-                              <p className="text-gray-500 text-sm">ติดตามข่าวสารและโปรโมชั่น</p>
+                              <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">Facebook</h4>
+                              <p className="text-gray-700 text-xs lg:text-base font-medium">SP Kansard Official</p>
+                              <p className="text-gray-500 text-xs">ติดตามข่าวสารและโปรโมชั่น</p>
                             </div>
                           </div>
                         </div>
