@@ -29,31 +29,17 @@ interface StepIndicatorProps {
 }
 
 function StepIndicator({ currentStep, totalSteps, stepName }: StepIndicatorProps) {
-  const progress = (currentStep / totalSteps) * 100;
-  
   return (
-    <div className="sticky top-0 z-20 bg-gradient-to-r from-gray-600 to-slate-600 backdrop-blur-md border-b border-gray-400/50">
+    <div className="sticky top-0 z-20 bg-white/90 backdrop-blur-sm border-b border-gray-200">
       <div className="px-4 py-3">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-white/25 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/40">
-              <span className="text-white font-medium text-sm">{currentStep}</span>
-            </div>
-            <div>
-              <h3 className="font-medium text-white text-sm">{stepName}</h3>
-              <p className="text-xs text-white/90">ขั้นที่ {currentStep}/{totalSteps}</p>
-            </div>
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+            <span className="text-white font-medium text-sm">{currentStep}</span>
           </div>
-          <div className="text-right">
-            <div className="text-lg font-semibold text-white">{Math.round(progress)}%</div>
+          <div>
+            <h3 className="font-medium text-gray-800 text-sm">{stepName}</h3>
+            <p className="text-xs text-gray-500">ขั้นที่ {currentStep} จาก {totalSteps}</p>
           </div>
-        </div>
-        
-        <div className="w-full bg-white/25 rounded-full h-1.5">
-          <div 
-            className="bg-white h-1.5 rounded-full transition-all duration-500 shadow-sm"
-            style={{ width: `${progress}%` }}
-          />
         </div>
       </div>
     </div>
@@ -161,25 +147,27 @@ export function MaterialSelector({
   };
 
   return (
-    <div className="h-full flex flex-col bg-gradient-to-br from-gray-50 via-white to-slate-50">
+    <div className="h-full flex flex-col bg-white">
       <StepIndicator 
         currentStep={getCurrentStep()} 
         totalSteps={6} 
         stepName={getStepName()} 
       />
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-6">
+      <div 
+        className="flex-1 overflow-y-auto px-4 py-4 space-y-6"
+      >
         {/* Step 1: Material Type Selection */}
-        <div id="materials" className="space-y-3">
-          <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">ประเภทวัสดุ</h3>
+        <div className="space-y-3">
+          <h3 className="text-sm font-semibold text-gray-700">เลือกประเภทวัสดุ</h3>
           <div className="space-y-2">
             {categories.map((category) => (
               <button
                 key={category.id}
-                className={`w-full p-4 rounded-xl border transition-all duration-300 text-left shadow-sm hover:shadow-md ${
+                className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
                   selectedType === category.id
-                    ? 'border-gray-400 bg-gray-50 shadow-gray-200/50'
-                    : 'border-gray-200 hover:border-gray-300 hover:bg-white bg-white/90 backdrop-blur-sm'
+                    ? 'border-blue-500 bg-blue-50'
+                    : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
                 }`}
                 onClick={() => {
                   setSelectedType(category.id);
@@ -189,27 +177,18 @@ export function MaterialSelector({
                 }}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                     selectedType === category.id 
-                      ? 'bg-gray-500 text-white' 
-                      : 'bg-gray-100 text-gray-500'
+                      ? 'bg-blue-500 text-white' 
+                      : 'bg-gray-100 text-gray-600'
                   }`}>
                     <span className="text-lg">
                       {category.id === 'translucent' ? '☀️' : '🏠'}
                     </span>
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-medium text-gray-700">{category.name}</h4>
-                    <p className="text-sm text-gray-500 mt-0.5">{category.description}</p>
-                  </div>
-                  <div className={`w-4 h-4 rounded-full border-2 transition-all duration-300 ${
-                    selectedType === category.id 
-                      ? 'border-gray-500 bg-gray-500' 
-                      : 'border-gray-300'
-                  }`}>
-                    {selectedType === category.id && (
-                      <div className="w-1.5 h-1.5 bg-white rounded-full m-0.5" />
-                    )}
+                    <h4 className="font-medium text-gray-800">{category.name}</h4>
+                    <p className="text-sm text-gray-500">{category.description}</p>
                   </div>
                 </div>
               </button>
@@ -220,45 +199,32 @@ export function MaterialSelector({
         {/* Step 2: Material Selection */}
         {selectedType && (
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">เลือกวัสดุ</h3>
-              <span className="text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded-full">
-                แสดง {filteredMaterials.length} รายการ
-              </span>
-            </div>
-            
-            <div className="space-y-2 max-h-[360px] overflow-y-auto custom-scrollbar pr-2">
-              {filteredMaterials.map((material, index) => (
+            <h3 className="text-sm font-semibold text-gray-700">เลือกวัสดุ</h3>
+            <div className="space-y-2 max-h-64 overflow-y-auto">
+              {filteredMaterials.map((material) => (
                 <button
                   key={material.id}
-                  className={`w-full p-4 rounded-xl border transition-all duration-300 text-left shadow-sm hover:shadow-md ${
+                  className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
                     selectedMaterial?.id === material.id
-                      ? 'border-gray-400 bg-gray-50 shadow-gray-200/50'
-                      : 'border-gray-200 hover:border-gray-300 hover:bg-white bg-white/90 backdrop-blur-sm'
+                      ? 'border-blue-500 bg-blue-50'
+                      : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
                   }`}
                   onClick={() => handleMaterialSelect(material)}
                 >
                   <div className="flex items-start gap-3">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium transition-all duration-300 ${
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-medium ${
                       selectedMaterial?.id === material.id
-                        ? 'bg-gray-500 text-white'
-                        : 'bg-gray-100 text-gray-500'
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-gray-100 text-gray-600'
                     }`}>
-                      {selectedMaterial?.id === material.id ? '✓' : index + 1}
+                      {selectedMaterial?.id === material.id ? '✓' : '📦'}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-gray-700 text-sm leading-tight">
-                        {material.name}
-                      </h4>
-                      <p className="text-xs text-gray-500 mt-1 line-clamp-2">
-                        {material.description}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-semibold text-gray-700 text-sm">
-                        ฿{Math.min(...Object.values(material.pricePerSqm).filter(p => p > 0)).toLocaleString()}
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-800">{material.name}</h4>
+                      <p className="text-sm text-gray-500 mt-1">{material.description}</p>
+                      <div className="text-sm font-semibold text-blue-600 mt-2">
+                        เริ่มต้น ฿{Math.min(...Object.values(material.pricePerSqm).filter(p => p > 0)).toLocaleString()} ต่อ ตร.ม.
                       </div>
-                      <div className="text-xs text-gray-600">ต่อ ตร.ม.</div>
                     </div>
                   </div>
                 </button>
@@ -270,28 +236,30 @@ export function MaterialSelector({
         {/* Step 3: Size Selection */}
         {selectedMaterial && (
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">ขนาดวัสดุ</h3>
-            <div className="grid grid-cols-2 gap-2 max-h-[240px] overflow-y-auto custom-scrollbar pr-1">
+            <h3 className="text-sm font-semibold text-gray-700">เลือกขนาด</h3>
+            <div className="grid grid-cols-1 gap-2">
               {selectedMaterial.sizes.map((size) => (
                 <button
                   key={size.id}
-                  className={`w-full p-2 rounded-lg border text-left transition-all duration-300 shadow-sm hover:shadow-md ${
+                  className={`p-4 rounded-lg border-2 text-left transition-all ${
                     selectedSize?.id === size.id
-                      ? 'border-gray-400 bg-gray-50'
-                      : 'border-gray-200 hover:border-gray-300 hover:bg-white bg-white/90 backdrop-blur-sm'
+                      ? 'border-blue-500 bg-blue-50'
+                      : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
                   }`}
                   onClick={() => handleSizeSelect(size)}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="font-medium text-sm text-gray-700">{size.name}</div>
-                    <div className="text-xs text-gray-600 font-medium">
+                    <div>
+                      <div className="font-medium text-gray-800">{size.name}</div>
+                      <div className="text-sm text-gray-500">{size.description}</div>
+                    </div>
+                    <div className="text-lg font-semibold text-blue-600">
                       {selectedMaterial.pricePerSqm[size.id] > 0 
                         ? `฿${selectedMaterial.pricePerSqm[size.id].toLocaleString()}`
                         : '-'
                       }
                     </div>
                   </div>
-                  <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{size.description}</div>
                 </button>
               ))}
             </div>
@@ -301,16 +269,17 @@ export function MaterialSelector({
         {/* Step 4: Dimensions Input */}
         {selectedSize && (
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">ขนาดพื้นที่</h3>
-            <div className="grid grid-cols-2 gap-3">
+            <h3 className="text-sm font-semibold text-gray-700">ระบุขนาดพื้นที่</h3>
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs text-gray-700 mb-1 font-medium">ความกว้าง (ม.)</label>
+                <label className="block text-sm text-gray-700 mb-2 font-medium">ความกว้าง (เมตร)</label>
                 <input
                   type="number"
                   min="0"
                   step="0.1"
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-gray-400 focus:outline-none bg-white/90 backdrop-blur-sm focus:bg-white transition-all duration-300"
-                  value={dimensions.width}
+                  className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  placeholder="0.0"
+                  value={dimensions.width || ''}
                   onChange={(e) => {
                     const newDimensions = {
                       width: parseFloat(e.target.value) || 0,
@@ -322,13 +291,14 @@ export function MaterialSelector({
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-700 mb-1 font-medium">ความยาว (ม.)</label>
+                <label className="block text-sm text-gray-700 mb-2 font-medium">ความยาว (เมตร)</label>
                 <input
                   type="number"
                   min="0"
                   step="0.1"
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-gray-400 focus:outline-none bg-white/90 backdrop-blur-sm focus:bg-white transition-all duration-300"
-                  value={dimensions.length}
+                  className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  placeholder="0.0"
+                  value={dimensions.length || ''}
                   onChange={(e) => {
                     const newDimensions = {
                       width: dimensions.width,
@@ -340,44 +310,50 @@ export function MaterialSelector({
                 />
               </div>
             </div>
-            <div className="text-xs text-gray-600 bg-gray-50 px-3 py-2 rounded-lg">
-              พื้นที่รวม: <span className="font-semibold">{area.toFixed(2)} ตร.ม.</span>
-            </div>
+            {area > 0 && (
+              <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="text-lg font-semibold text-blue-600">
+                  พื้นที่รวม: {area.toFixed(2)} ตร.ม.
+                </div>
+              </div>
+            )}
           </div>
         )}
 
         {/* Step 5: Installation Type */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">รูปแบบติดตั้ง</h3>
-            <div className="grid grid-cols-2 gap-2">
+            <h3 className="text-sm font-semibold text-gray-700">รูปแบบติดตั้ง</h3>
+            <div className="grid grid-cols-2 gap-3">
               <button
-                className={`p-3 rounded-lg border text-center transition-all duration-300 shadow-sm hover:shadow-md ${
+                className={`p-4 rounded-lg border-2 text-center transition-all ${
                   hasColumn === true
-                    ? 'border-gray-400 bg-gray-50'
-                    : 'border-gray-200 hover:border-gray-300 hover:bg-white bg-white/90 backdrop-blur-sm'
+                    ? 'border-blue-500 bg-blue-50'
+                    : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
                 }`}
                 onClick={() => {
                   setHasColumn(true);
                   setTimeout(updateParent, 0);
                 }}
               >
-                <div className="text-lg mb-1">🏗️</div>
-                <div className="text-xs font-medium text-gray-600">แบบมีเสา</div>
+                <div className="text-2xl mb-2">🏗️</div>
+                <div className="font-medium text-gray-700">แบบมีเสา</div>
+                <div className="text-sm text-gray-500 mt-1">มีเสาค้ำยัน</div>
               </button>
               <button
-                className={`p-3 rounded-lg border text-center transition-all duration-300 shadow-sm hover:shadow-md ${
+                className={`p-4 rounded-lg border-2 text-center transition-all ${
                   hasColumn === false
-                    ? 'border-gray-400 bg-gray-50'
-                    : 'border-gray-200 hover:border-gray-300 hover:bg-white bg-white/90 backdrop-blur-sm'
+                    ? 'border-blue-500 bg-blue-50'
+                    : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
                 }`}
                 onClick={() => {
                   setHasColumn(false);
                   setTimeout(updateParent, 0);
                 }}
               >
-                <div className="text-lg mb-1">🏠</div>
-                <div className="text-xs font-medium text-gray-600">แบบไร้เสา</div>
+                <div className="text-2xl mb-2">🏠</div>
+                <div className="font-medium text-gray-700">แบบไร้เสา</div>
+                <div className="text-sm text-gray-500 mt-1">ไม่มีเสาค้ำยัน</div>
               </button>
             </div>
           </div>
@@ -387,14 +363,12 @@ export function MaterialSelector({
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
           <>
             {/* Main Services Section */}
-            <div className="space-y-3">
-              <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">บริการหลัก</h3>
-              <div className="space-y-2">
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold text-gray-700">บริการหลัก</h3>
+              <div className="space-y-3">
                 {mainServices
                   .filter(service => {
-                    // กรองบริการตามขนาด
                     const sizeOk = !service.requiresSize || service.requiresSize === selectedSize?.id;
-                    // กรองบริการตามรูปแบบการติดตั้ง
                     const installationOk = hasColumn === null || 
                       (hasColumn === false ? service.id !== 'poles' : true);
                     return sizeOk && installationOk;
@@ -402,14 +376,13 @@ export function MaterialSelector({
                   .map((service) => (
                     <div
                       key={service.id}
-                      className={`p-3 rounded-lg border transition-all shadow-sm ${
+                      className={`p-4 rounded-lg border-2 transition-all ${
                         selectedServices.includes(service.id)
-                          ? 'border-gray-500 bg-gray-100'
-                          : 'border-gray-200 hover:border-gray-300 bg-white/80 backdrop-blur-sm'
+                          ? 'border-blue-500 bg-blue-50'
+                          : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
                       }`}
                     >
                       {!service.options ? (
-                        // Simple service without options
                         <button
                           className="w-full text-left"
                           onClick={() => {
@@ -421,47 +394,47 @@ export function MaterialSelector({
                           }}
                         >
                           <div className="flex justify-between items-center">
-                            <span className="text-sm font-medium text-blue-900">{service.name}</span>
-                            <span className="text-sm font-semibold text-blue-600">
+                            <div>
+                              <div className="font-medium text-gray-800">{service.name}</div>
+                              <div className="text-sm text-gray-500 mt-1">{service.description}</div>
+                            </div>
+                            <div className="text-lg font-semibold text-blue-600">
                               ฿{service.price.toLocaleString()}
-                            </span>
+                            </div>
                           </div>
-                          <p className="text-xs text-blue-700 mt-1">{service.description}</p>
                         </button>
                       ) : (
-                        // Service with options (like colors)
                         <div>
                           <div className="flex justify-between items-center mb-3">
-                            <span className="text-sm font-medium text-blue-900">{service.name}</span>
-                            <span className="text-sm font-semibold text-blue-600">
+                            <div>
+                              <div className="font-medium text-gray-800">{service.name}</div>
+                              <div className="text-sm text-gray-500">{service.description}</div>
+                            </div>
+                            <div className="text-lg font-semibold text-blue-600">
                               ฿{service.price.toLocaleString()}
-                            </span>
+                            </div>
                           </div>
-                          <p className="text-xs text-blue-700 mb-3">{service.description}</p>
                           
-                          {/* Service Options Grid */}
-                          <div className="grid grid-cols-3 gap-2">
+                          <div className="grid grid-cols-2 gap-2 mt-3">
                             {service.options.map(option => (
                               <button
                                 key={option.id}
-                                className={`p-2 text-xs rounded border transition-all ${
+                                className={`p-3 rounded-lg border transition-all ${
                                   selectedServiceOptions[service.id] === option.id
-                                    ? 'border-blue-500 bg-blue-200'
-                                    : 'border-blue-200 hover:border-blue-300 bg-white/50'
+                                    ? 'border-blue-500 bg-blue-100'
+                                    : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
                                 }`}
                                 onClick={() => {
                                   const newOptions = { ...selectedServiceOptions };
                                   const newServices = [...selectedServices];
                                   
                                   if (selectedServiceOptions[service.id] === option.id) {
-                                    // Deselect option and service
                                     delete newOptions[service.id];
                                     const serviceIndex = newServices.indexOf(service.id);
                                     if (serviceIndex > -1) {
                                       newServices.splice(serviceIndex, 1);
                                     }
                                   } else {
-                                    // Select option and service
                                     newOptions[service.id] = option.id;
                                     if (!newServices.includes(service.id)) {
                                       newServices.push(service.id);
@@ -476,14 +449,14 @@ export function MaterialSelector({
                                 <div className="flex items-center gap-2">
                                   {option.color && (
                                     <div 
-                                      className="w-3 h-3 rounded-full border border-blue-200" 
+                                      className="w-4 h-4 rounded-full border border-gray-300" 
                                       style={{ backgroundColor: option.color }}
                                     />
                                   )}
-                                  <span className="truncate text-blue-900">{option.name}</span>
+                                  <span className="text-sm font-medium">{option.name}</span>
                                 </div>
                                 {option.price > 0 && (
-                                  <div className="text-xs text-blue-600 mt-1">
+                                  <div className="text-sm text-blue-600 mt-1">
                                     +฿{option.price.toLocaleString()}
                                   </div>
                                 )}
@@ -498,8 +471,8 @@ export function MaterialSelector({
             </div>
 
             {/* Extra Services Section */}
-            <div className="space-y-3">
-              <h3 className="text-sm font-medium text-blue-600 uppercase tracking-wide">บริการเสริม</h3>
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold text-gray-700">บริการเสริม (ตัวเลือก)</h3>
               <div className="space-y-3">
                 {extraServices
                   .filter(service =>
@@ -508,19 +481,15 @@ export function MaterialSelector({
                       : true
                   )
                   .map((service) => (
-                    <div key={service.id} className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <label className="text-sm font-medium text-blue-800">
-                          {service.name}
-                        </label>
-                        {selectedExtras[service.id] && (
-                          <span className="text-xs text-blue-600 font-medium bg-blue-100 px-2 py-1 rounded">
-                            ✓ เลือกแล้ว
-                          </span>
-                        )}
+                    <div key={service.id} className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <div>
+                          <div className="font-medium text-gray-800">{service.name}</div>
+                          <div className="text-sm text-gray-500">{service.description}</div>
+                        </div>
                       </div>
                       <select
-                        className="w-full p-2 border border-blue-200 rounded-lg text-sm focus:border-blue-500 focus:outline-none bg-white/80 backdrop-blur-sm focus:bg-white transition-all"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white"
                         value={selectedExtras[service.id] || ''}
                         onChange={(e) => {
                           const newExtras = {
@@ -531,70 +500,17 @@ export function MaterialSelector({
                           setTimeout(updateParent, 0);
                         }}
                       >
-                        <option value="">ไม่เลือก</option>
+                        <option value="">ไม่ต้องการ</option>
                         {service.options.map((option) => (
                           <option key={option.id} value={option.id}>
                             {option.name} - ฿{option.price.toLocaleString()}
                           </option>
                         ))}
                       </select>
-                      <p className="text-xs text-blue-700">{service.description}</p>
                     </div>
                   ))}
               </div>
             </div>
-
-            {/* Summary Section */}
-            {(selectedServices.length > 0 || Object.keys(selectedExtras).some(key => selectedExtras[key])) && (
-              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                <h4 className="text-sm font-semibold text-blue-600 mb-2">
-                  🎉 บริการที่เลือก
-                </h4>
-                
-                {/* Selected Services */}
-                {selectedServices.length > 0 && (
-                  <div className="mb-2">
-                    <div className="text-xs text-blue-600 mb-1 font-medium">บริการหลัก:</div>
-                    {mainServices
-                      .filter(service => selectedServices.includes(service.id))
-                      .map(service => {
-                        const selectedOption = selectedServiceOptions[service.id];
-                        let optionText = '';
-                        if (selectedOption && service.options) {
-                          const option = service.options.find(opt => opt.id === selectedOption);
-                          if (option) {
-                            optionText = ` (${option.name})`;
-                          }
-                        }
-                        return (
-                          <div key={service.id} className="text-xs text-blue-500">
-                            • {service.name}{optionText}
-                          </div>
-                        );
-                      })}
-                  </div>
-                )}
-
-                {/* Selected Extras */}
-                {Object.keys(selectedExtras).some(key => selectedExtras[key]) && (
-                  <div>
-                    <div className="text-xs text-blue-600 mb-1 font-medium">บริการเสริม:</div>
-                    {Object.entries(selectedExtras)
-                      .filter(([_, optionId]) => optionId)
-                      .map(([serviceId, optionId]) => {
-                        const service = extraServices.find(s => s.id === serviceId);
-                        const option = service?.options.find(o => o.id === optionId);
-                        if (!service || !option) return null;
-                        return (
-                          <div key={serviceId} className="text-xs text-blue-500">
-                            • {service.name} - {option.name}
-                          </div>
-                        );
-                      })}
-                  </div>
-                )}
-              </div>
-            )}
           </>
         )}
       </div>
