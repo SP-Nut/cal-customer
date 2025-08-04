@@ -32,16 +32,16 @@ function StepIndicator({ currentStep, totalSteps, stepName }: StepIndicatorProps
   const progress = (currentStep / totalSteps) * 100;
   
   return (
-    <div className="sticky top-0 z-20 bg-gradient-to-r from-blue-600 to-indigo-600 backdrop-blur-md border-b border-blue-500/50">
+    <div className="sticky top-0 z-20 bg-gradient-to-r from-gray-600 to-slate-600 backdrop-blur-md border-b border-gray-400/50">
       <div className="px-4 py-3">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+            <div className="w-8 h-8 bg-white/25 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/40">
               <span className="text-white font-medium text-sm">{currentStep}</span>
             </div>
             <div>
               <h3 className="font-medium text-white text-sm">{stepName}</h3>
-              <p className="text-xs text-white/80">ขั้นที่ {currentStep}/{totalSteps}</p>
+              <p className="text-xs text-white/90">ขั้นที่ {currentStep}/{totalSteps}</p>
             </div>
           </div>
           <div className="text-right">
@@ -49,9 +49,9 @@ function StepIndicator({ currentStep, totalSteps, stepName }: StepIndicatorProps
           </div>
         </div>
         
-        <div className="w-full bg-white/20 rounded-full h-1.5">
+        <div className="w-full bg-white/25 rounded-full h-1.5">
           <div 
-            className="bg-white h-1.5 rounded-full transition-all duration-300 shadow-sm"
+            className="bg-white h-1.5 rounded-full transition-all duration-500 shadow-sm"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -161,7 +161,7 @@ export function MaterialSelector({
   };
 
   return (
-    <div className="h-full flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50">
+    <div className="h-full flex flex-col bg-gradient-to-br from-gray-50 via-white to-slate-50">
       <StepIndicator 
         currentStep={getCurrentStep()} 
         totalSteps={6} 
@@ -171,15 +171,15 @@ export function MaterialSelector({
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {/* Step 1: Material Type Selection */}
         <div id="materials" className="space-y-3">
-          <h3 className="text-sm font-medium text-blue-800 uppercase tracking-wide">ประเภทวัสดุ</h3>
+          <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">ประเภทวัสดุ</h3>
           <div className="space-y-2">
             {categories.map((category) => (
               <button
                 key={category.id}
-                className={`w-full p-4 rounded-xl border transition-all text-left shadow-sm ${
+                className={`w-full p-4 rounded-xl border transition-all duration-300 text-left shadow-sm hover:shadow-md ${
                   selectedType === category.id
-                    ? 'border-blue-500 bg-blue-100 shadow-blue-200/50'
-                    : 'border-blue-200 hover:border-blue-300 hover:bg-white bg-white/80 backdrop-blur-sm'
+                    ? 'border-gray-400 bg-gray-50 shadow-gray-200/50'
+                    : 'border-gray-200 hover:border-gray-300 hover:bg-white bg-white/90 backdrop-blur-sm'
                 }`}
                 onClick={() => {
                   setSelectedType(category.id);
@@ -189,23 +189,23 @@ export function MaterialSelector({
                 }}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 ${
                     selectedType === category.id 
-                      ? 'bg-blue-600 text-white' 
-                      : 'bg-blue-100 text-blue-600'
+                      ? 'bg-gray-500 text-white' 
+                      : 'bg-gray-100 text-gray-500'
                   }`}>
                     <span className="text-lg">
                       {category.id === 'translucent' ? '☀️' : '🏠'}
                     </span>
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-medium text-blue-900">{category.name}</h4>
-                    <p className="text-sm text-blue-700 mt-0.5">{category.description}</p>
+                    <h4 className="font-medium text-gray-700">{category.name}</h4>
+                    <p className="text-sm text-gray-500 mt-0.5">{category.description}</p>
                   </div>
-                  <div className={`w-4 h-4 rounded-full border-2 ${
+                  <div className={`w-4 h-4 rounded-full border-2 transition-all duration-300 ${
                     selectedType === category.id 
-                      ? 'border-blue-500 bg-blue-500' 
-                      : 'border-blue-300'
+                      ? 'border-gray-500 bg-gray-500' 
+                      : 'border-gray-300'
                   }`}>
                     {selectedType === category.id && (
                       <div className="w-1.5 h-1.5 bg-white rounded-full m-0.5" />
@@ -221,8 +221,8 @@ export function MaterialSelector({
         {selectedType && (
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium text-blue-800 uppercase tracking-wide">เลือกวัสดุ</h3>
-              <span className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
+              <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">เลือกวัสดุ</h3>
+              <span className="text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded-full">
                 แสดง {filteredMaterials.length} รายการ
               </span>
             </div>
@@ -231,34 +231,34 @@ export function MaterialSelector({
               {filteredMaterials.map((material, index) => (
                 <button
                   key={material.id}
-                  className={`w-full p-4 rounded-xl border transition-all text-left shadow-sm ${
+                  className={`w-full p-4 rounded-xl border transition-all duration-300 text-left shadow-sm hover:shadow-md ${
                     selectedMaterial?.id === material.id
-                      ? 'border-blue-500 bg-blue-100 shadow-blue-200/50'
-                      : 'border-blue-200 hover:border-blue-300 hover:bg-white bg-white/80 backdrop-blur-sm'
+                      ? 'border-gray-400 bg-gray-50 shadow-gray-200/50'
+                      : 'border-gray-200 hover:border-gray-300 hover:bg-white bg-white/90 backdrop-blur-sm'
                   }`}
                   onClick={() => handleMaterialSelect(material)}
                 >
                   <div className="flex items-start gap-3">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium ${
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium transition-all duration-300 ${
                       selectedMaterial?.id === material.id
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-blue-100 text-blue-600'
+                        ? 'bg-gray-500 text-white'
+                        : 'bg-gray-100 text-gray-500'
                     }`}>
                       {selectedMaterial?.id === material.id ? '✓' : index + 1}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-blue-900 text-sm leading-tight">
+                      <h4 className="font-medium text-gray-700 text-sm leading-tight">
                         {material.name}
                       </h4>
-                      <p className="text-xs text-blue-700 mt-1 line-clamp-2">
+                      <p className="text-xs text-gray-500 mt-1 line-clamp-2">
                         {material.description}
                       </p>
                     </div>
                     <div className="text-right">
-                      <div className="font-semibold text-blue-900 text-sm">
+                      <div className="font-semibold text-gray-700 text-sm">
                         ฿{Math.min(...Object.values(material.pricePerSqm).filter(p => p > 0)).toLocaleString()}
                       </div>
-                      <div className="text-xs text-blue-600">ต่อ ตร.ม.</div>
+                      <div className="text-xs text-gray-600">ต่อ ตร.ม.</div>
                     </div>
                   </div>
                 </button>
@@ -270,28 +270,28 @@ export function MaterialSelector({
         {/* Step 3: Size Selection */}
         {selectedMaterial && (
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-blue-800 uppercase tracking-wide">ขนาดวัสดุ</h3>
+            <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">ขนาดวัสดุ</h3>
             <div className="grid grid-cols-2 gap-2 max-h-[240px] overflow-y-auto custom-scrollbar pr-1">
               {selectedMaterial.sizes.map((size) => (
                 <button
                   key={size.id}
-                  className={`w-full p-2 rounded-lg border text-left transition-all shadow-sm ${
+                  className={`w-full p-2 rounded-lg border text-left transition-all duration-300 shadow-sm hover:shadow-md ${
                     selectedSize?.id === size.id
-                      ? 'border-blue-500 bg-blue-100'
-                      : 'border-blue-200 hover:border-blue-300 hover:bg-white bg-white/80 backdrop-blur-sm'
+                      ? 'border-gray-400 bg-gray-50'
+                      : 'border-gray-200 hover:border-gray-300 hover:bg-white bg-white/90 backdrop-blur-sm'
                   }`}
                   onClick={() => handleSizeSelect(size)}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="font-medium text-sm text-blue-900">{size.name}</div>
-                    <div className="text-xs text-blue-600 font-medium">
+                    <div className="font-medium text-sm text-gray-700">{size.name}</div>
+                    <div className="text-xs text-gray-600 font-medium">
                       {selectedMaterial.pricePerSqm[size.id] > 0 
                         ? `฿${selectedMaterial.pricePerSqm[size.id].toLocaleString()}`
                         : '-'
                       }
                     </div>
                   </div>
-                  <div className="text-xs text-blue-700 mt-0.5 line-clamp-2">{size.description}</div>
+                  <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{size.description}</div>
                 </button>
               ))}
             </div>
@@ -301,15 +301,15 @@ export function MaterialSelector({
         {/* Step 4: Dimensions Input */}
         {selectedSize && (
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-blue-800 uppercase tracking-wide">ขนาดพื้นที่</h3>
+            <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">ขนาดพื้นที่</h3>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs text-blue-700 mb-1 font-medium">ความกว้าง (ม.)</label>
+                <label className="block text-xs text-gray-700 mb-1 font-medium">ความกว้าง (ม.)</label>
                 <input
                   type="number"
                   min="0"
                   step="0.1"
-                  className="w-full px-3 py-2 border border-blue-200 rounded-lg text-sm focus:border-blue-500 focus:outline-none bg-white/80 backdrop-blur-sm focus:bg-white transition-all"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-gray-400 focus:outline-none bg-white/90 backdrop-blur-sm focus:bg-white transition-all duration-300"
                   value={dimensions.width}
                   onChange={(e) => {
                     const newDimensions = {
@@ -322,12 +322,12 @@ export function MaterialSelector({
                 />
               </div>
               <div>
-                <label className="block text-xs text-blue-700 mb-1 font-medium">ความยาว (ม.)</label>
+                <label className="block text-xs text-gray-700 mb-1 font-medium">ความยาว (ม.)</label>
                 <input
                   type="number"
                   min="0"
                   step="0.1"
-                  className="w-full px-3 py-2 border border-blue-200 rounded-lg text-sm focus:border-blue-500 focus:outline-none bg-white/80 backdrop-blur-sm focus:bg-white transition-all"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-gray-400 focus:outline-none bg-white/90 backdrop-blur-sm focus:bg-white transition-all duration-300"
                   value={dimensions.length}
                   onChange={(e) => {
                     const newDimensions = {
@@ -340,7 +340,7 @@ export function MaterialSelector({
                 />
               </div>
             </div>
-            <div className="text-xs text-blue-600 bg-blue-100 px-3 py-2 rounded-lg">
+            <div className="text-xs text-gray-600 bg-gray-50 px-3 py-2 rounded-lg">
               พื้นที่รวม: <span className="font-semibold">{area.toFixed(2)} ตร.ม.</span>
             </div>
           </div>
@@ -349,13 +349,13 @@ export function MaterialSelector({
         {/* Step 5: Installation Type */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-blue-800 uppercase tracking-wide">รูปแบบติดตั้ง</h3>
+            <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">รูปแบบติดตั้ง</h3>
             <div className="grid grid-cols-2 gap-2">
               <button
-                className={`p-3 rounded-lg border text-center transition-all shadow-sm ${
+                className={`p-3 rounded-lg border text-center transition-all duration-300 shadow-sm hover:shadow-md ${
                   hasColumn === true
-                    ? 'border-blue-500 bg-blue-100'
-                    : 'border-blue-200 hover:border-blue-300 hover:bg-white bg-white/80 backdrop-blur-sm'
+                    ? 'border-gray-400 bg-gray-50'
+                    : 'border-gray-200 hover:border-gray-300 hover:bg-white bg-white/90 backdrop-blur-sm'
                 }`}
                 onClick={() => {
                   setHasColumn(true);
@@ -363,13 +363,13 @@ export function MaterialSelector({
                 }}
               >
                 <div className="text-lg mb-1">🏗️</div>
-                <div className="text-xs font-medium text-blue-900">แบบมีเสา</div>
+                <div className="text-xs font-medium text-gray-600">แบบมีเสา</div>
               </button>
               <button
-                className={`p-3 rounded-lg border text-center transition-all shadow-sm ${
+                className={`p-3 rounded-lg border text-center transition-all duration-300 shadow-sm hover:shadow-md ${
                   hasColumn === false
-                    ? 'border-blue-500 bg-blue-100'
-                    : 'border-blue-200 hover:border-blue-300 hover:bg-white bg-white/80 backdrop-blur-sm'
+                    ? 'border-gray-400 bg-gray-50'
+                    : 'border-gray-200 hover:border-gray-300 hover:bg-white bg-white/90 backdrop-blur-sm'
                 }`}
                 onClick={() => {
                   setHasColumn(false);
@@ -377,7 +377,7 @@ export function MaterialSelector({
                 }}
               >
                 <div className="text-lg mb-1">🏠</div>
-                <div className="text-xs font-medium text-blue-900">แบบไร้เสา</div>
+                <div className="text-xs font-medium text-gray-600">แบบไร้เสา</div>
               </button>
             </div>
           </div>
@@ -388,7 +388,7 @@ export function MaterialSelector({
           <>
             {/* Main Services Section */}
             <div className="space-y-3">
-              <h3 className="text-sm font-medium text-blue-800 uppercase tracking-wide">บริการหลัก</h3>
+              <h3 className="text-sm font-medium text-gray-700 uppercase tracking-wide">บริการหลัก</h3>
               <div className="space-y-2">
                 {mainServices
                   .filter(service => {
@@ -404,8 +404,8 @@ export function MaterialSelector({
                       key={service.id}
                       className={`p-3 rounded-lg border transition-all shadow-sm ${
                         selectedServices.includes(service.id)
-                          ? 'border-blue-500 bg-blue-100'
-                          : 'border-blue-200 hover:border-blue-300 bg-white/80 backdrop-blur-sm'
+                          ? 'border-gray-500 bg-gray-100'
+                          : 'border-gray-200 hover:border-gray-300 bg-white/80 backdrop-blur-sm'
                       }`}
                     >
                       {!service.options ? (
@@ -499,7 +499,7 @@ export function MaterialSelector({
 
             {/* Extra Services Section */}
             <div className="space-y-3">
-              <h3 className="text-sm font-medium text-blue-800 uppercase tracking-wide">บริการเสริม</h3>
+              <h3 className="text-sm font-medium text-blue-600 uppercase tracking-wide">บริการเสริม</h3>
               <div className="space-y-3">
                 {extraServices
                   .filter(service =>
@@ -546,15 +546,15 @@ export function MaterialSelector({
 
             {/* Summary Section */}
             {(selectedServices.length > 0 || Object.keys(selectedExtras).some(key => selectedExtras[key])) && (
-              <div className="bg-blue-100 border border-blue-300 rounded-xl p-4">
-                <h4 className="text-sm font-semibold text-blue-800 mb-2">
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                <h4 className="text-sm font-semibold text-blue-600 mb-2">
                   🎉 บริการที่เลือก
                 </h4>
                 
                 {/* Selected Services */}
                 {selectedServices.length > 0 && (
                   <div className="mb-2">
-                    <div className="text-xs text-blue-700 mb-1 font-medium">บริการหลัก:</div>
+                    <div className="text-xs text-blue-600 mb-1 font-medium">บริการหลัก:</div>
                     {mainServices
                       .filter(service => selectedServices.includes(service.id))
                       .map(service => {
@@ -567,7 +567,7 @@ export function MaterialSelector({
                           }
                         }
                         return (
-                          <div key={service.id} className="text-xs text-blue-600">
+                          <div key={service.id} className="text-xs text-blue-500">
                             • {service.name}{optionText}
                           </div>
                         );
@@ -578,7 +578,7 @@ export function MaterialSelector({
                 {/* Selected Extras */}
                 {Object.keys(selectedExtras).some(key => selectedExtras[key]) && (
                   <div>
-                    <div className="text-xs text-blue-700 mb-1 font-medium">บริการเสริม:</div>
+                    <div className="text-xs text-blue-600 mb-1 font-medium">บริการเสริม:</div>
                     {Object.entries(selectedExtras)
                       .filter(([_, optionId]) => optionId)
                       .map(([serviceId, optionId]) => {
@@ -586,7 +586,7 @@ export function MaterialSelector({
                         const option = service?.options.find(o => o.id === optionId);
                         if (!service || !option) return null;
                         return (
-                          <div key={serviceId} className="text-xs text-blue-600">
+                          <div key={serviceId} className="text-xs text-blue-500">
                             • {service.name} - {option.name}
                           </div>
                         );

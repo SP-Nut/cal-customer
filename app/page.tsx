@@ -50,46 +50,68 @@ export default function Home() {
     : 0;
 
   return (
-    <main className="min-h-screen bg-gray-50 pt-16">
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-8">
       <Navbar totalPrice={totalPrice} />
-      <div className="flex h-[calc(100vh-4rem)]">
-        {/* Left Side - Preview (70%) */}
-        <div id="materials" className="w-[70%] p-6">
-          <MaterialPreview material={selectionData.material} />
+      <div className="flex h-[calc(100vh-2rem)] p-8 gap-8">
+        {/* Left Side - Material Preview (80%) */}
+        <div id="materials" className="w-[80%]">
+          <div className="h-full rounded-3xl overflow-auto shadow-xl border border-gray-200/50 custom-scrollbar bg-white/95 backdrop-blur-sm">
+            <MaterialPreview material={selectionData.material} />
+          </div>
         </div>
-        {/* Right Side - Calculator (30%) */}
-        <div className="w-[30%] bg-white border-l border-gray-200 h-full relative">
-          <div className="h-full overflow-auto snap-y snap-mandatory scrollbar-hide">
-            <div id="dimensions" className="snap-start">
-              {/* ส่วนเลือกขนาด */}
+        
+        {/* Right Side - Calculator (20%) */}
+        <div className="w-[20%] bg-white/95 backdrop-blur-sm border border-gray-200/50 h-full relative shadow-xl rounded-3xl overflow-hidden">
+          <div className="h-full flex flex-col">
+            {/* Main Content - Scrollable */}
+            <div className="flex-1 overflow-auto custom-scrollbar p-6">
+              <div className="space-y-8">
+                {/* Material Selector */}
+                <div className="space-y-6">
+                  <MaterialSelector
+                    materials={materials}
+                    categories={materialCategories}
+                    mainServices={mainServices}
+                    extraServices={extraServices}
+                    onSelectionChange={setSelectionData}
+                  />
+                </div>
+              </div>
             </div>
-            <div id="services" className="snap-start">
-              {/* ส่วนเลือกบริการ */}
-            </div>
-            <div id="summary" className="snap-start">
-              <MaterialSelector
-                materials={materials}
-                categories={materialCategories}
-                mainServices={mainServices}
-                extraServices={extraServices}
-                onSelectionChange={setSelectionData}
-              />
-              {/* Price Summary - Fixed at bottom */}
-              {selectionData.size && selectionData.material && totalPrice > 0 && (
-                <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200 bg-white p-4">
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>พื้นที่รวม</span>
-                      <span>{(selectionData.dimensions.width * selectionData.dimensions.length).toFixed(2)} ตร.ม.</span>
+            
+            {/* Price Summary - Fixed at bottom */}
+            {selectionData.size && selectionData.material && totalPrice > 0 && (
+              <div className="bg-gradient-to-t from-white via-white to-white/95 backdrop-blur-sm border-t border-gray-200 shadow-lg p-6">
+                <div className="space-y-4">
+                  {/* Header */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
+                      <span className="text-white text-sm">💰</span>
                     </div>
-                    <div className="flex justify-between text-sm">
-                      <span>ราคาต่อ ตร.ม.</span>
-                      <span>฿{selectionData.material.pricePerSqm[selectionData.size.id].toLocaleString()}</span>
+                    <h3 className="text-lg font-bold text-gray-800">สรุปราคา</h3>
+                  </div>
+                  
+                  {/* Area and Base Price */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-gray-600">พื้นที่รวม</span>
+                      <span className="font-semibold text-gray-800">
+                        {(selectionData.dimensions.width * selectionData.dimensions.length).toFixed(2)} ตร.ม.
+                      </span>
                     </div>
-                    {/* Show selected services */}
-                    {selectionData.selectedServices.length > 0 && (
-                      <div className="border-t pt-2">
-                        <div className="text-xs text-gray-600 mb-1">บริการที่เลือก</div>
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-gray-600">ราคาต่อ ตร.ม.</span>
+                      <span className="font-semibold text-gray-800">
+                        ฿{selectionData.material.pricePerSqm[selectionData.size.id].toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Services */}
+                  {selectionData.selectedServices.length > 0 && (
+                    <div className="border-t border-gray-200 pt-3">
+                      <div className="text-xs font-medium text-gray-500 mb-2">บริการที่เลือก</div>
+                      <div className="space-y-1">
                         {mainServices
                           .filter((service) => selectionData.selectedServices.includes(service.id))
                           .map((service) => {
@@ -103,17 +125,20 @@ export default function Home() {
                             }
                             return (
                               <div key={service.id} className="flex justify-between text-xs">
-                                <span>{service.name}</span>
-                                <span>฿{servicePrice.toLocaleString()}</span>
+                                <span className="text-gray-600">{service.name}</span>
+                                <span className="font-medium text-gray-800">฿{servicePrice.toLocaleString()}</span>
                               </div>
                             );
                           })}
                       </div>
-                    )}
-                    {/* Show selected extras */}
-                    {Object.keys(selectionData.selectedExtras).some(key => selectionData.selectedExtras[key]) && (
-                      <div className="border-t pt-2">
-                        <div className="text-xs text-gray-600 mb-1">บริการเสริม</div>
+                    </div>
+                  )}
+                  
+                  {/* Extra Services */}
+                  {Object.keys(selectionData.selectedExtras).some(key => selectionData.selectedExtras[key]) && (
+                    <div className="border-t border-gray-200 pt-3">
+                      <div className="text-xs font-medium text-gray-500 mb-2">บริการเสริม</div>
+                      <div className="space-y-1">
                         {Object.entries(selectionData.selectedExtras)
                           .filter(([_, optionId]) => optionId)
                           .map(([serviceId, optionId]) => {
@@ -122,26 +147,30 @@ export default function Home() {
                             if (!service || !option) return null;
                             return (
                               <div key={serviceId} className="flex justify-between text-xs">
-                                <span>{service.name}</span>
-                                <span>฿{option.price.toLocaleString()}</span>
+                                <span className="text-gray-600">{service.name}</span>
+                                <span className="font-medium text-gray-800">฿{option.price.toLocaleString()}</span>
                               </div>
                             );
                           })}
                       </div>
-                    )}
-                    <div className="border-t pt-2">
-                      <div className="flex justify-between font-semibold">
-                        <span>ราคารวมทั้งหมด</span>
-                        <span className="text-blue-600">฿{totalPrice.toLocaleString()}</span>
-                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Total */}
+                  <div className="border-t border-gray-300 pt-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-base font-bold text-gray-800">ราคารวมทั้งหมด</span>
+                      <span className="text-xl font-bold text-primary-600">
+                        ฿{totalPrice.toLocaleString()}
+                      </span>
                     </div>
                   </div>
                 </div>
-              )}
-            </div> {/* close summary */}
-          </div> {/* close snap-mandatory */}
-        </div> {/* close right side */}
-      </div> {/* close flex */}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

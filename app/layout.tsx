@@ -1,16 +1,27 @@
 import type { Metadata } from 'next';
-import { Noto_Sans_Thai } from 'next/font/google';
+import { Prompt, Inter } from 'next/font/google';
 import './globals.css';
 
-const notoSansThai = Noto_Sans_Thai({
-  weight: ['300', '400', '500', '600', '700'],
-  subsets: ['thai'],
+const prompt = Prompt({
+  weight: ['300', '400', '500', '600', '700', '800'],
+  subsets: ['thai', 'latin'],
   display: 'swap',
+  variable: '--font-prompt',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
-  title: 'ระบบคำนวณราคากันสาด',
-  description: 'ระบบคำนวณราคากันสาดออนไลน์',
+  title: 'SP Kansard Calculator - ระบบคำนวณราคากันสาดและหลังคา',
+  description: 'ระบบคำนวณราคากันสาดและหลังคาออนไลน์ที่แม่นยำและใช้งานง่าย สำหรับงานติดตั้งคุณภาพสูง',
+  keywords: 'กันสาด, หลังคา, คำนวณราคา, ติดตั้งกันสาด, วัสดุก่อสร้าง',
+  authors: [{ name: 'SP Kansard Team' }],
+  viewport: 'width=device-width, initial-scale=1',
+  themeColor: '#3B82F6',
 };
 
 export default function RootLayout({
@@ -19,8 +30,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="th" className="scroll-smooth">
-      <body className={`${notoSansThai.className} antialiased`}>{children}</body>
+    <html lang="th" className={`scroll-smooth ${prompt.variable} ${inter.variable}`}>
+      <body className="antialiased bg-gray-50 text-gray-900 font-prompt selection:bg-primary-100 selection:text-primary-900">
+        {children}
+      </body>
     </html>
   );
 }
