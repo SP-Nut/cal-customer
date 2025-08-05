@@ -222,13 +222,25 @@ export function MaterialPreview({
                       { icon: '🏠', title: 'ทีมช่างมืออาชีพ', desc: 'รับประกันงาน บริการหลังการขายครบถ้วน', bg: 'from-pink-500 via-purple-500 to-blue-500' }
                     ].map((item, index) => (
                       <div key={index} className="group bg-transparent p-3 lg:p-5 hover:bg-white/10 transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/10">
-                        <div className="flex items-center space-x-3 lg:space-x-5">
-                          <div className={`w-8 lg:w-12 h-8 lg:h-12 bg-gradient-to-br ${item.bg} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                            <span className="text-white font-bold text-sm lg:text-lg">{item.icon}</span>
+                        {/* Mobile Layout - Icon on top */}
+                        <div className="text-center lg:hidden">
+                          <div className={`w-8 h-8 bg-gradient-to-br ${item.bg} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 mx-auto mb-2`}>
+                            <span className="text-white font-bold text-sm">{item.icon}</span>
                           </div>
                           <div>
-                            <h4 className="font-bold text-slate-800 text-sm lg:text-lg mb-0.5 lg:mb-1">{item.title}</h4>
-                            <p className="text-slate-600 text-xs lg:text-base">{item.desc}</p>
+                            <h4 className="font-bold text-slate-800 text-sm mb-0.5">{item.title}</h4>
+                            <p className="text-slate-600 text-xs">{item.desc}</p>
+                          </div>
+                        </div>
+                        
+                        {/* Desktop Layout - Icon on left */}
+                        <div className="hidden lg:flex items-center space-x-5">
+                          <div className={`w-12 h-12 bg-gradient-to-br ${item.bg} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                            <span className="text-white font-bold text-lg">{item.icon}</span>
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-slate-800 text-lg mb-1">{item.title}</h4>
+                            <p className="text-slate-600 text-base">{item.desc}</p>
                           </div>
                         </div>
                       </div>
@@ -306,132 +318,132 @@ export function MaterialPreview({
                     </div>
                   </div>
                 </div>
-                
-                {/* Contact Information Section - Hidden on Mobile, Visible on Desktop */}
-                <div className="col-span-full hidden lg:block mt-4 lg:mt-8 pt-4 lg:pt-8 border-t border-white/20 w-full">
-                  <div className="text-center space-y-4 lg:space-y-6 w-full">
-                    <div className="flex items-center justify-center space-x-3 lg:space-x-4 mb-4 lg:mb-6">
-                      <div className="w-12 lg:w-20 h-0.5 lg:h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
-                      <h3 className="text-xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
-                        ติดต่อเราเพื่อรับคำปรึกษา
-                      </h3>
-                      <div className="w-12 lg:w-20 h-0.5 lg:h-1 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full"></div>
-                    </div>
-                    
-                    {/* Contact Grid - 3 columns top, 3 columns bottom */}
-                    <div className="space-y-3 lg:space-y-6">
-                      {/* Top Row - 3 columns */}
-                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 w-full">
-                        {/* Phone Contact */}
-                        <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1">
-                          <div className="text-center space-y-2 lg:space-y-4">
-                            <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                              <svg className="w-8 h-8 lg:w-12 lg:h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                              </svg>
-                            </div>
-                            <div>
-                              <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">โทรศัพท์</h4>
-                              <p className="text-gray-700 text-xs lg:text-base font-medium">02-123-4567</p>
-                              <p className="text-gray-500 text-xs">จันทร์-เสาร์ 8:00-18:00</p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Line Contact */}
-                        <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 transform hover:-translate-y-1">
-                          <div className="text-center space-y-2 lg:space-y-4">
-                            <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                              <svg className="w-8 h-8 lg:w-12 lg:h-12 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
-                              </svg>
-                            </div>
-                            <div>
-                              <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">Line ID</h4>
-                              <p className="text-gray-700 text-xs lg:text-base font-medium">@spkansard</p>
-                              <p className="text-gray-500 text-xs">ตอบเร็ว 24 ชม.</p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Email Contact */}
-                        <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/10 transform hover:-translate-y-1">
-                          <div className="text-center space-y-2 lg:space-y-4">
-                            <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                              <svg className="w-8 h-8 lg:w-12 lg:h-12 text-slate-600 group-hover:text-slate-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                              </svg>
-                            </div>
-                            <div>
-                              <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">อีเมล</h4>
-                              <p className="text-gray-700 text-xs lg:text-base font-medium">info@spkansard.com</p>
-                              <p className="text-gray-500 text-xs">ตอบภายใน 24 ชม.</p>
-                            </div>
-                          </div>
-                        </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Contact Information Section - Hidden on Mobile, Visible on Desktop */}
+          <div className="hidden lg:block mt-4 lg:mt-8 pt-4 lg:pt-8 border-t border-white/20 w-full">
+            <div className="text-center space-y-4 lg:space-y-6 w-full">
+              <div className="flex items-center justify-center space-x-3 lg:space-x-4 mb-4 lg:mb-6">
+                <div className="w-12 lg:w-20 h-0.5 lg:h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
+                <h3 className="text-xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
+                  ติดต่อเราเพื่อรับคำปรึกษา
+                </h3>
+                <div className="w-12 lg:w-20 h-0.5 lg:h-1 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full"></div>
+              </div>
+              
+              {/* Contact Grid - 3 columns top, 3 columns bottom */}
+              <div className="space-y-3 lg:space-y-6">
+                {/* Top Row - 3 columns */}
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 w-full">
+                  {/* Phone Contact */}
+                  <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1">
+                    <div className="text-center space-y-2 lg:space-y-4">
+                      <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-8 h-8 lg:w-12 lg:h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                        </svg>
                       </div>
-                      
-                      {/* Bottom Row - 3 columns */}
-                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 w-full">
-                        {/* WhatsApp Contact */}
-                        <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10 transform hover:-translate-y-1">
-                          <div className="text-center space-y-2 lg:space-y-4">
-                            <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                              <svg className="w-8 h-8 lg:w-12 lg:h-12 text-green-600 group-hover:text-green-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
-                              </svg>
-                            </div>
-                            <div>
-                              <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">WhatsApp</h4>
-                              <p className="text-gray-700 text-xs lg:text-base font-medium">085-123-4567</p>
-                              <p className="text-gray-500 text-xs">ส่งข้อความได้ตลอด 24 ชม.</p>
-                            </div>
-                          </div>
+                      <div>
+                        <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">โทรศัพท์</h4>
+                        <p className="text-gray-700 text-xs lg:text-base font-medium">02-123-4567</p>
+                        <p className="text-gray-500 text-xs">จันทร์-เสาร์ 8:00-18:00</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Line Contact */}
+                  <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 transform hover:-translate-y-1">
+                    <div className="text-center space-y-2 lg:space-y-4">
+                      <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-8 h-8 lg:w-12 lg:h-12 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">Line ID</h4>
+                        <p className="text-gray-700 text-xs lg:text-base font-medium">@spkansard</p>
+                        <p className="text-gray-500 text-xs">ตอบเร็ว 24 ชม.</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Email Contact */}
+                  <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/10 transform hover:-translate-y-1">
+                    <div className="text-center space-y-2 lg:space-y-4">
+                      <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-8 h-8 lg:w-12 lg:h-12 text-slate-600 group-hover:text-slate-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">อีเมล</h4>
+                        <p className="text-gray-700 text-xs lg:text-base font-medium">info@spkansard.com</p>
+                        <p className="text-gray-500 text-xs">ตอบภายใน 24 ชม.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Bottom Row - 3 columns */}
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 w-full">
+                  {/* WhatsApp Contact */}
+                  <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10 transform hover:-translate-y-1">
+                    <div className="text-center space-y-2 lg:space-y-4">
+                      <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-8 h-8 lg:w-12 lg:h-12 text-green-600 group-hover:text-green-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">WhatsApp</h4>
+                        <p className="text-gray-700 text-xs lg:text-base font-medium">085-123-4567</p>
+                        <p className="text-gray-500 text-xs">ส่งข้อความได้ตลอด 24 ชม.</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Facebook Contact */}
+                  <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 transform hover:-translate-y-1">
+                    <div className="text-center space-y-2 lg:space-y-4">
+                      <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-8 h-8 lg:w-12 lg:h-12 text-blue-600 group-hover:text-blue-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">Facebook</h4>
+                        <p className="text-gray-700 text-xs lg:text-base font-medium">SP Kansard Official</p>
+                        <p className="text-gray-500 text-xs">ติดตามข่าวสารและโปรโมชั่น</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Address Contact */}
+                  <div className="group bg-white/40 backdrop-blur-sm p-8 rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1 cursor-pointer"
+                       onClick={() => window.open('https://spkansard.com', '_blank')}>
+                    <div className="text-center space-y-4">
+                      <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-12 h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-800 text-lg mb-2">สาขาทั้งหมด</h4>
+                        <div className="text-gray-700 text-sm font-medium leading-relaxed space-y-1">
+                          <p className="font-semibold text-gray-700">สำนักงานใหญ่</p>
+                          <p>ปทุมธานี</p>
+                          <p>• สาขาบางแวก</p>
+                          <p>• สาขาบางพลี</p>
                         </div>
-                        
-                        {/* Facebook Contact */}
-                        <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 transform hover:-translate-y-1">
-                          <div className="text-center space-y-2 lg:space-y-4">
-                            <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                              <svg className="w-8 h-8 lg:w-12 lg:h-12 text-blue-600 group-hover:text-blue-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-                              </svg>
-                            </div>
-                            <div>
-                              <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">Facebook</h4>
-                              <p className="text-gray-700 text-xs lg:text-base font-medium">SP Kansard Official</p>
-                              <p className="text-gray-500 text-xs">ติดตามข่าวสารและโปรโมชั่น</p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Address Contact */}
-                        <div className="group bg-white/40 backdrop-blur-sm p-8 rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1 cursor-pointer"
-                             onClick={() => window.open('https://spkansard.com', '_blank')}>
-                          <div className="text-center space-y-4">
-                            <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                              <svg className="w-12 h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                              </svg>
-                            </div>
-                            <div>
-                              <h4 className="font-bold text-gray-800 text-lg mb-2">สาขาทั้งหมด</h4>
-                              <div className="text-gray-700 text-sm font-medium leading-relaxed space-y-1">
-                                <p className="font-semibold text-gray-700">สำนักงานใหญ่</p>
-                                <p>ปทุมธานี</p>
-                                <p>• สาขาบางแวก</p>
-                                <p>• สาขาบางพลี</p>
-                              </div>
-                              <p className="text-gray-500 text-xs mt-2 flex items-center justify-center space-x-1">
-                                <span>คลิกดูรายละเอียด</span>
-                                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"/>
-                                </svg>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
+                        <p className="text-gray-500 text-xs mt-2 flex items-center justify-center space-x-1">
+                          <span>คลิกดูรายละเอียด</span>
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"/>
+                          </svg>
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -525,7 +537,6 @@ export function MaterialPreview({
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <div className="flex-1">
                   <h4 className="text-xl font-bold text-slate-800 mb-2">{selectedSize.name}</h4>
-                  <p className="text-slate-600 leading-relaxed">{selectedSize.description}</p>
                 </div>
                 <div className="flex-shrink-0">
                   {material.pricePerSqm[selectedSize.id] > 0 ? (
@@ -559,32 +570,29 @@ export function MaterialPreview({
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-slate-800">ขนาดที่มีให้เลือก</h3>
+              <h3 className="text-lg font-semibold text-slate-800">เลือกขนาด</h3>
             </div>
             
-            {/* Size List */}
-            <div className="space-y-3">
+            {/* Size List - Compact */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {material.sizes.map((size, index) => (
                 <div
                   key={size.id}
-                  className="group bg-white rounded-xl p-4 border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300"
+                  className="group bg-white rounded-lg p-4 border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 cursor-pointer"
                   style={{ animation: `fadeIn ${0.6 + index * 0.1}s ease-out` }}
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-lg font-semibold text-slate-800 group-hover:text-slate-900 transition-colors duration-300 mb-1">
-                        {size.name}
-                      </h4>
-                      <p className="text-slate-600 leading-relaxed">{size.description}</p>
-                    </div>
-                    <div className="flex-shrink-0">
+                  <div className="text-center">
+                    <h4 className="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition-colors duration-300 mb-2">
+                      {size.name}
+                    </h4>
+                    <div className="flex items-center justify-center">
                       {material.pricePerSqm[size.id] > 0 ? (
-                        <div className="inline-flex items-center bg-slate-100 group-hover:bg-slate-200 rounded-lg px-3 py-2 border border-slate-200 group-hover:border-slate-300 transition-all duration-300">
-                          <div className="text-right">
-                            <div className="text-lg font-semibold text-slate-800">
+                        <div className="inline-flex items-center bg-slate-100 group-hover:bg-blue-50 rounded-lg px-3 py-2 border border-slate-200 group-hover:border-blue-200 transition-all duration-300">
+                          <div className="text-center">
+                            <div className="text-lg font-semibold text-slate-800 group-hover:text-blue-600">
                               ฿{material.pricePerSqm[size.id].toLocaleString()}
                             </div>
-                            <div className="text-sm text-slate-500">
+                            <div className="text-xs text-slate-500 group-hover:text-blue-500">
                               ต่อ ตร.ม.
                             </div>
                           </div>
