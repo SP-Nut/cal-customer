@@ -55,6 +55,7 @@ interface MaterialPreviewProps {
   extraServices?: ExtraService[];
   selectedServiceOptions?: Record<string, string>;
   onNext?: () => void;
+  onSizeSelect?: (sizeId: string) => void;
 }
 
 export function MaterialPreview({ 
@@ -67,7 +68,8 @@ export function MaterialPreview({
   mainServices = [],
   extraServices = [],
   selectedServiceOptions = {},
-  onNext 
+  onNext,
+  onSizeSelect 
 }: MaterialPreviewProps) {
   if (!material) {
     return (
@@ -574,33 +576,30 @@ export function MaterialPreview({
             </div>
             
             {/* Size List - Compact */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-1.5 sm:gap-2">
               {material.sizes.map((size, index) => (
                 <div
                   key={size.id}
-                  className="group bg-white rounded-lg p-4 border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 cursor-pointer"
+                  className="group bg-white rounded-lg p-2 sm:p-3 border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 cursor-pointer"
                   style={{ animation: `fadeIn ${0.6 + index * 0.1}s ease-out` }}
+                  onClick={() => onSizeSelect?.(size.id)}
                 >
                   <div className="text-center">
-                    <h4 className="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition-colors duration-300 mb-2">
+                    <h4 className="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-blue-600 transition-colors duration-300 mb-1">
                       {size.name}
                     </h4>
                     <div className="flex items-center justify-center">
                       {material.pricePerSqm[size.id] > 0 ? (
-                        <div className="inline-flex items-center bg-slate-100 group-hover:bg-blue-50 rounded-lg px-3 py-2 border border-slate-200 group-hover:border-blue-200 transition-all duration-300">
-                          <div className="text-center">
-                            <div className="text-lg font-semibold text-slate-800 group-hover:text-blue-600">
-                              ฿{material.pricePerSqm[size.id].toLocaleString()}
-                            </div>
-                            <div className="text-xs text-slate-500 group-hover:text-blue-500">
-                              ต่อ ตร.ม.
-                            </div>
+                        <div className="text-center">
+                          <div className="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-blue-600">
+                            ฿{material.pricePerSqm[size.id].toLocaleString()}
+                          </div>
+                          <div className="text-xs text-slate-500 group-hover:text-blue-500">
+                            /ตร.ม.
                           </div>
                         </div>
                       ) : (
-                        <div className="inline-flex items-center bg-slate-100 rounded-lg px-3 py-2 border border-slate-200">
-                          <div className="text-sm font-medium text-slate-400">ไม่รองรับ</div>
-                        </div>
+                        <div className="text-xs font-medium text-slate-400">ไม่รองรับ</div>
                       )}
                     </div>
                   </div>
