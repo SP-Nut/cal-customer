@@ -120,12 +120,30 @@ export function MaterialPreview({ material, onNext }: MaterialPreviewProps) {
                   <div className="flex justify-center lg:justify-start">
                     <button 
                       onClick={() => {
+                        // เรียก onNext ก่อน
                         if (onNext) onNext();
-                        // Smooth scroll to MaterialSelector
-                        const selector = document.getElementById('material-selector');
-                        if (selector) {
-                          selector.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
+                        
+                        // เลื่อนหน้าจอไปยัง MaterialSelector
+                        setTimeout(() => {
+                          const selector = document.getElementById('material-selector');
+                          console.log('กำลังค้นหา material-selector:', selector); // Debug log
+                          
+                          if (selector) {
+                            // เลื่อนไปยัง element ที่พบ
+                            selector.scrollIntoView({ 
+                              behavior: 'smooth', 
+                              block: 'start',
+                              inline: 'nearest'
+                            });
+                          } else {
+                            // ถ้าไม่พบ element ให้เลื่อนลงไปตามความสูงหน้าจอ
+                            console.log('ไม่พบ material-selector, เลื่อนลงตามหน้าจอ');
+                            window.scrollTo({
+                              top: document.documentElement.scrollTop + window.innerHeight * 0.8,
+                              behavior: 'smooth'
+                            });
+                          }
+                        }, 300);
                       }}
                       className="group bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-600 text-white px-6 lg:px-16 py-3 lg:py-6 rounded-2xl font-bold text-sm lg:text-2xl transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 transform hover:-translate-y-1 hover:scale-105"
                     >
