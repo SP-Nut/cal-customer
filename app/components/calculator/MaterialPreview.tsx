@@ -15,12 +15,60 @@ interface Material {
   pricePerSqm: Record<string, number>;
 }
 
+interface Size {
+  id: string;
+  name: string;
+  description: string;
+}
+
+interface Service {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  options?: Array<{
+    id: string;
+    name: string;
+    price: number;
+  }>;
+}
+
+interface ExtraService {
+  id: string;
+  name: string;
+  description: string;
+  options: Array<{
+    id: string;
+    name: string;
+    price: number;
+  }>;
+}
+
 interface MaterialPreviewProps {
   material: Material | null;
+  selectedSize: Size | null;
+  dimensions?: { width: number; length: number };
+  totalPrice?: number;
+  selectedServices?: string[];
+  selectedExtras?: Record<string, string>;
+  mainServices?: Service[];
+  extraServices?: ExtraService[];
+  selectedServiceOptions?: Record<string, string>;
   onNext?: () => void;
 }
 
-export function MaterialPreview({ material, onNext }: MaterialPreviewProps) {
+export function MaterialPreview({ 
+  material, 
+  selectedSize, 
+  dimensions = { width: 0, length: 0 },
+  totalPrice = 0,
+  selectedServices = [],
+  selectedExtras = {},
+  mainServices = [],
+  extraServices = [],
+  selectedServiceOptions = {},
+  onNext 
+}: MaterialPreviewProps) {
   if (!material) {
     return (
       <div className="h-full relative overflow-y-auto bg-gradient-to-br from-blue-50 via-white to-slate-50" 
@@ -69,7 +117,7 @@ export function MaterialPreview({ material, onNext }: MaterialPreviewProps) {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center w-full max-w-6xl mx-auto">
                 
                 {/* Content Section */}
-                <div className="text-center lg:text-left space-y-3 lg:space-y-4">
+                <div className="text-center lg:text-left space-y-3 lg:space-y-4 order-2 lg:order-1">
                   <div className="flex items-center justify-center lg:justify-start space-x-3 lg:space-x-4 mb-3 lg:mb-4">
                     <div className="w-8 lg:w-16 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
                     <p className="text-xs lg:text-sm font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent uppercase tracking-widest">
@@ -95,6 +143,77 @@ export function MaterialPreview({ material, onNext }: MaterialPreviewProps) {
                     </p>
                   </div>
                   
+                  {/* Professional Image - Mobile Only */}
+                  <div className="block lg:hidden relative mb-4 lg:mb-6">
+                    <div className="relative w-full max-w-sm mx-auto">
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-50/60 via-white/40 to-slate-50/50 backdrop-blur-sm"></div>
+                      
+                      {/* Enhanced Floating Elements - Mobile */}
+                      {/* Background floating elements - Large */}
+                      <div className="absolute top-1/5 right-1/5 w-20 h-20 bg-gradient-to-br from-blue-100/40 via-purple-100/35 to-transparent rounded-full blur-xl" style={{ animation: 'pulse-soft 8s ease-in-out infinite' }}></div>
+                      <div className="absolute top-1/2 left-1/6 w-16 h-16 bg-gradient-to-br from-pink-100/35 to-blue-100/40 rounded-full blur-lg" style={{ animation: 'drift 12s linear infinite' }}></div>
+                      <div className="absolute bottom-1/4 right-1/3 w-18 h-18 bg-gradient-to-br from-purple-100/30 to-slate-100/35 rounded-full blur-lg" style={{ animation: 'float-gentle 6s ease-in-out infinite' }}></div>
+                      <div className="absolute top-1/6 left-1/4 w-14 h-14 bg-gradient-to-br from-cyan-100/25 to-purple-100/30 rounded-full blur-md" style={{ animation: 'pulse-soft 10s ease-in-out infinite' }}></div>
+                      <div className="absolute bottom-1/6 left-1/5 w-12 h-12 bg-gradient-to-br from-pink-100/40 to-blue-100/35 rounded-full blur-md" style={{ animation: 'drift 14s linear infinite' }}></div>
+                      
+                      {/* Main floating circles */}
+                      <div className="absolute top-4 right-4 w-14 h-14 bg-gradient-to-br from-blue-200/70 to-purple-200/65 rounded-full" style={{ animation: 'float-gentle 3s ease-in-out infinite' }}></div>
+                      <div className="absolute top-1/4 left-3 w-12 h-12 bg-gradient-to-br from-pink-200/75 to-blue-200/70 rounded-full" style={{ animation: 'pulse-soft 4s ease-in-out infinite' }}></div>
+                      <div className="absolute bottom-1/3 right-3 w-12 h-12 bg-gradient-to-br from-purple-200/70 to-pink-200/65 rounded-full" style={{ animation: 'drift 8s linear infinite' }}></div>
+                      
+                      {/* Additional floating circles */}
+                      <div className="absolute top-6 left-6 w-8 h-8 bg-gradient-to-br from-cyan-200/60 to-blue-200/55 rounded-full" style={{ animation: 'pulse-soft 5s ease-in-out infinite', animationDelay: '1s' }}></div>
+                      <div className="absolute top-1/3 right-6 w-10 h-10 bg-gradient-to-br from-emerald-200/65 to-teal-200/60 rounded-full" style={{ animation: 'float-gentle 6s ease-in-out infinite', animationDelay: '2s' }}></div>
+                      <div className="absolute bottom-1/4 left-4 w-10 h-10 bg-gradient-to-br from-rose-200/70 to-pink-200/65 rounded-full" style={{ animation: 'drift 7s linear infinite', animationDelay: '0.5s' }}></div>
+                      <div className="absolute top-2/3 right-1/4 w-8 h-8 bg-gradient-to-br from-amber-200/55 to-yellow-200/50 rounded-full" style={{ animation: 'pulse-soft 4.5s ease-in-out infinite', animationDelay: '1.5s' }}></div>
+                      <div className="absolute bottom-1/6 right-1/3 w-10 h-10 bg-gradient-to-br from-indigo-200/65 to-purple-200/60 rounded-full" style={{ animation: 'float-gentle 5.5s ease-in-out infinite', animationDelay: '3s' }}></div>
+                      
+                      {/* Small floating dots */}
+                      <div className="absolute top-1/5 left-1/5 w-2 h-2 bg-blue-300/80 rounded-full" style={{ animation: 'pulse-soft 3s ease-in-out infinite', animationDelay: '0.5s' }}></div>
+                      <div className="absolute top-1/6 right-1/5 w-1.5 h-1.5 bg-purple-300/75 rounded-full" style={{ animation: 'float-gentle 2.5s ease-in-out infinite', animationDelay: '1.2s' }}></div>
+                      <div className="absolute top-3/5 left-1/6 w-3 h-3 bg-pink-300/70 rounded-full" style={{ animation: 'drift 4s linear infinite', animationDelay: '2.1s' }}></div>
+                      <div className="absolute bottom-1/5 left-1/3 w-3 h-3 bg-cyan-300/65 rounded-full" style={{ animation: 'pulse-soft 3.5s ease-in-out infinite', animationDelay: '1.8s' }}></div>
+                      <div className="absolute top-1/2 right-1/6 w-2 h-2 bg-emerald-300/70 rounded-full" style={{ animation: 'float-gentle 4.2s ease-in-out infinite', animationDelay: '2.5s' }}></div>
+                      <div className="absolute bottom-2/5 right-1/5 w-1.5 h-1.5 bg-rose-300/60 rounded-full" style={{ animation: 'drift 3.8s linear infinite', animationDelay: '0.8s' }}></div>
+                      
+                      {/* Geometric shapes */}
+                      <div className="absolute top-1/5 right-1/3 w-4 h-4 bg-gradient-to-br from-blue-300/60 to-purple-300/55 transform rotate-45" style={{ animation: 'rotate-slow 20s linear infinite' }}></div>
+                      <div className="absolute bottom-1/4 left-1/4 w-3 h-3 bg-gradient-to-br from-pink-300/65 to-rose-300/60 transform rotate-12" style={{ animation: 'drift 9s linear infinite' }}></div>
+                      <div className="absolute top-2/5 left-1/5 w-4 h-4 bg-gradient-to-br from-cyan-300/55 to-teal-300/50 transform rotate-45" style={{ animation: 'pulse-soft 6s ease-in-out infinite' }}></div>
+                      
+                      {/* Triangle shapes */}
+                      <div className="absolute top-1/6 left-1/3 w-4 h-4 bg-gradient-to-br from-violet-200/60 to-purple-200/55" 
+                           style={{
+                             clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+                             animation: 'float-gentle 7s ease-in-out infinite',
+                             animationDelay: '1.5s'
+                           }}></div>
+                      <div className="absolute bottom-1/5 right-1/4 w-3 h-3 bg-gradient-to-br from-orange-200/65 to-amber-200/60" 
+                           style={{
+                             clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+                             animation: 'drift 5.5s linear infinite',
+                             animationDelay: '2.8s'
+                           }}></div>
+                      
+                      {/* Ring elements */}
+                      <div className="absolute top-1/4 right-1/5 w-6 h-6 border-2 border-blue-200/60 rounded-full" style={{ animation: 'pulse-soft 4.5s ease-in-out infinite', animationDelay: '0.8s' }}></div>
+                      <div className="absolute bottom-1/3 left-1/5 w-5 h-5 border border-purple-200/55 rounded-full" style={{ animation: 'float-gentle 3.8s ease-in-out infinite', animationDelay: '2.2s' }}></div>
+                      <div className="absolute top-1/2 left-1/4 w-5 h-5 border-2 border-pink-200/50 rounded-full" style={{ animation: 'drift 6.5s linear infinite', animationDelay: '1.7s' }}></div>
+                      
+                      {/* Professional Image */}
+                      <div className="relative z-10 group">
+                        <img 
+                          src="/materials/pr.png" 
+                          alt="SP Kansard Professional Consultant" 
+                          className="w-full h-auto object-contain relative z-10 drop-shadow-lg transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute top-2 left-2 bg-white/95 backdrop-blur-sm rounded-full px-2 py-1 shadow-md">
+                          <span className="text-xs font-semibold text-blue-600">ผู้เชี่ยวชาญ</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
                   {/* Feature Cards */}
                   <div className="grid gap-2 lg:gap-3 mb-4 lg:mb-6">
                     {[
@@ -115,48 +234,10 @@ export function MaterialPreview({ material, onNext }: MaterialPreviewProps) {
                       </div>
                     ))}
                   </div>
-                  
-                  {/* CTA Button */}
-                  <div className="flex justify-center lg:justify-start">
-                    <button 
-                      onClick={() => {
-                        // เรียก onNext ก่อน
-                        if (onNext) onNext();
-                        
-                        // เลื่อนหน้าจอไปยัง MaterialSelector
-                        setTimeout(() => {
-                          const selector = document.getElementById('material-selector');
-                          console.log('กำลังค้นหา material-selector:', selector); // Debug log
-                          
-                          if (selector) {
-                            // เลื่อนไปยัง element ที่พบ
-                            selector.scrollIntoView({ 
-                              behavior: 'smooth', 
-                              block: 'start',
-                              inline: 'nearest'
-                            });
-                          } else {
-                            // ถ้าไม่พบ element ให้เลื่อนลงไปตามความสูงหน้าจอ
-                            console.log('ไม่พบ material-selector, เลื่อนลงตามหน้าจอ');
-                            window.scrollTo({
-                              top: document.documentElement.scrollTop + window.innerHeight * 0.8,
-                              behavior: 'smooth'
-                            });
-                          }
-                        }, 300);
-                      }}
-                      className="group bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-600 text-white px-6 lg:px-16 py-3 lg:py-6 rounded-2xl font-bold text-sm lg:text-2xl transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 transform hover:-translate-y-1 hover:scale-105"
-                    >
-                      <span className="flex items-center justify-center space-x-2 lg:space-x-3">
-                        <span>เริ่มคำนวณราคา</span>
-                        <span className="group-hover:translate-x-1 transition-transform duration-300 text-lg lg:text-2xl">→</span>
-                      </span>
-                    </button>
-                  </div>
                 </div>
                 
-                {/* Image Section - Visible on both mobile and desktop */}
-                <div className="relative">
+                {/* Image Section - Desktop Only */}
+                <div className="relative order-1 lg:order-2 hidden lg:block">
                   <div className="relative w-full max-w-lg mx-auto">
                     <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-50/60 via-white/40 to-slate-50/50 backdrop-blur-sm"></div>
                     
@@ -364,129 +445,276 @@ export function MaterialPreview({ material, onNext }: MaterialPreviewProps) {
   }
 
   return (
-    <div className="h-full relative overflow-y-auto bg-gradient-to-br from-blue-50 via-white to-slate-50"
+    <div className="h-full relative overflow-y-auto bg-gradient-to-br from-gray-50 to-slate-100"
          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
       <style jsx>{`
         div::-webkit-scrollbar {
           display: none;
         }
-        @keyframes float-gentle {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-8px); }
-        }
-        @keyframes pulse-soft {
-          0%, 100% { opacity: 0.6; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.1); }
-        }
-        @keyframes drift {
-          0% { transform: translateX(0) translateY(0); }
-          50% { transform: translateX(20px) translateY(-20px); }
-          100% { transform: translateX(0) translateY(0); }
-        }
-        @keyframes rotate-slow {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+        @keyframes fadeIn {
+          0% { opacity: 0; transform: translateY(10px); }
+          100% { opacity: 1; transform: translateY(0); }
         }
       `}</style>
       
-      {/* Background Layer - Full Coverage */}
-      <div className="absolute inset-0 w-full h-full">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50/80 via-blue-50/60 to-pink-50/70"></div>
-        <div className="absolute inset-0 bg-gradient-to-tr from-white/80 via-purple-50/30 to-blue-100/40"></div>
+      {/* Hero Section - Material Image */}
+      <div className="relative h-48 lg:h-56 overflow-hidden">
+        <img
+          src={material.image || "/materials/placeholder.jpg"}
+          alt={material.name}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/30 to-transparent" />
         
-        {/* Subtle floating elements */}
-        <div className="absolute top-1/5 right-1/4 w-64 h-64 bg-gradient-to-br from-blue-100/25 via-purple-100/20 to-transparent rounded-full" style={{ animation: 'pulse-soft 6s ease-in-out infinite' }}></div>
-        <div className="absolute bottom-1/3 left-1/4 w-32 h-32 bg-gradient-to-r from-pink-100/20 to-blue-100/25 rounded-full" style={{ animation: 'drift 12s linear infinite' }}></div>
-        <div className="absolute top-1/2 left-1/6 w-48 h-48 bg-gradient-to-br from-purple-100/15 to-blue-100/20 rounded-full" style={{ animation: 'float-gentle 8s ease-in-out infinite' }}></div>
-        <div className="absolute top-1/4 right-1/6 w-36 h-36 bg-gradient-to-br from-cyan-100/20 to-pink-100/15 rounded-full" style={{ animation: 'drift 14s linear infinite' }}></div>
-        <div className="absolute bottom-1/5 right-1/3 w-28 h-28 bg-gradient-to-br from-blue-100/25 to-purple-100/20 rounded-full" style={{ animation: 'pulse-soft 8s ease-in-out infinite' }}></div>
-      </div>
-      
-      <div className="relative z-10">
-        {/* Material Image */}
-        <div className="relative h-80">
-          <img
-            src={material.image || "/materials/placeholder.jpg"}
-            alt={material.name}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/20 to-transparent" />
-          
-          <div className="absolute top-6 right-6">
-            <span className="inline-flex items-center px-4 py-2 rounded-full bg-white/95 backdrop-blur-sm text-sm font-semibold text-slate-800 shadow-lg border border-blue-100/50">
-              <span className="mr-2 text-lg">
-                {material.type === 'translucent' ? '🔆' : '🛡️'}
-              </span>
-              {material.type === 'translucent' ? 'โปร่งแสง' : 'ทึบแสง'}
+        {/* Material Type Badge */}
+        <div className="absolute top-4 right-4">
+          <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-sm text-sm font-medium text-slate-700 shadow-md">
+            <span className="mr-2">
+              {material.type === 'translucent' ? '🔆' : '🛡️'}
             </span>
-          </div>
-          
-          <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-            <h2 className="text-4xl font-bold mb-3 drop-shadow-lg">{material.name}</h2>
-            <p className="text-lg text-blue-100 drop-shadow-md font-medium">วัสดุคุณภาพสูง สำหรับงานก่อสร้าง</p>
+            {material.type === 'translucent' ? 'โปร่งแสง' : 'ทึบแสง'}
           </div>
         </div>
         
-        {/* Material Details */}
-        <div className="p-8 pb-4 relative z-10">
-          <div className="mb-10">
-            <h3 className="text-2xl font-bold text-slate-800 mb-4">รายละเอียดสินค้า</h3>
-            <div className="bg-white/20 backdrop-blur-sm p-6 rounded-xl border border-white/30">
-              <p className="text-slate-700 leading-relaxed text-lg font-medium">{material.description}</p>
+        {/* Material Title */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+          <h1 className="text-2xl lg:text-3xl font-bold drop-shadow-lg mb-1">{material.name}</h1>
+          <p className="text-sm text-slate-200 drop-shadow-md">วัสดุคุณภาพสูง สำหรับงานก่อสร้าง</p>
+        </div>
+      </div>
+      
+      {/* Main Content */}
+      <div className="p-4 lg:p-6">
+        
+        {/* Material Description */}
+        <div className="mb-6 p-4 bg-white rounded-xl border border-slate-200 shadow-sm"
+             style={{ animation: 'fadeIn 0.5s ease-out' }}>
+          <div className="flex items-start space-x-3">
+            <div className="w-8 h-8 bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-slate-800 mb-2">รายละเอียดวัสดุ</h3>
+              <p className="text-slate-600 leading-relaxed">{material.description}</p>
             </div>
           </div>
-          
-          {/* Size Options */}
-          <div className="mb-6">
-            <h3 className="text-2xl font-bold text-slate-800 mb-6">ขนาดที่มีให้เลือก</h3>
-            <div className="space-y-4">
-              {material.sizes.map((size) => (
+        </div>
+
+        {/* Size Information */}
+        {selectedSize ? (
+          /* Selected Size Display */
+          <div className="mb-6 bg-slate-50 rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+               style={{ animation: 'fadeIn 0.6s ease-out' }}>
+            
+            {/* Header */}
+            <div className="px-4 py-3 border-b border-slate-200 bg-white">
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 bg-slate-700 rounded-md flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-slate-800">ขนาดที่เลือก</h3>
+              </div>
+            </div>
+            
+            {/* Content */}
+            <div className="p-4">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div className="flex-1">
+                  <h4 className="text-xl font-bold text-slate-800 mb-2">{selectedSize.name}</h4>
+                  <p className="text-slate-600 leading-relaxed">{selectedSize.description}</p>
+                </div>
+                <div className="flex-shrink-0">
+                  {material.pricePerSqm[selectedSize.id] > 0 ? (
+                    <div className="inline-block bg-slate-800 text-white rounded-xl px-4 py-3 shadow-sm">
+                      <div className="text-2xl font-bold">
+                        ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}
+                      </div>
+                      <div className="text-sm opacity-80 text-center">
+                        ต่อ ตร.ม.
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="inline-block bg-slate-200 text-slate-500 rounded-xl px-4 py-3">
+                      <div className="text-lg font-semibold">ไม่รองรับ</div>
+                      <div className="text-sm text-center">ขนาดนี้</div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* All Sizes Display */
+          <div className="mb-6"
+               style={{ animation: 'fadeIn 0.6s ease-out' }}>
+            
+            {/* Header */}
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-6 h-6 bg-slate-600 rounded-md flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-slate-800">ขนาดที่มีให้เลือก</h3>
+            </div>
+            
+            {/* Size List */}
+            <div className="space-y-3">
+              {material.sizes.map((size, index) => (
                 <div
                   key={size.id}
-                  className="group p-6 rounded-xl border-2 border-blue-100/50 hover:border-blue-300/70 hover:bg-blue-50/40 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg bg-white/40 backdrop-blur-sm"
+                  className="group bg-white rounded-xl p-4 border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300"
+                  style={{ animation: `fadeIn ${0.6 + index * 0.1}s ease-out` }}
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <h4 className="text-xl font-bold text-slate-800 group-hover:text-blue-700 transition-colors duration-300">
-                      {size.name}
-                    </h4>
-                    <div className="text-right">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-lg font-semibold text-slate-800 group-hover:text-slate-900 transition-colors duration-300 mb-1">
+                        {size.name}
+                      </h4>
+                      <p className="text-slate-600 leading-relaxed">{size.description}</p>
+                    </div>
+                    <div className="flex-shrink-0">
                       {material.pricePerSqm[size.id] > 0 ? (
-                        <div className="bg-blue-50/80 backdrop-blur-sm rounded-lg p-3 border border-blue-100/70">
-                          <div className="text-2xl font-medium text-blue-600 mb-1">
-                            ฿{material.pricePerSqm[size.id].toLocaleString()}
-                          </div>
-                          <div className="text-sm text-slate-500 font-medium">
-                            ต่อ ตร.ม.
+                        <div className="inline-flex items-center bg-slate-100 group-hover:bg-slate-200 rounded-lg px-3 py-2 border border-slate-200 group-hover:border-slate-300 transition-all duration-300">
+                          <div className="text-right">
+                            <div className="text-lg font-semibold text-slate-800">
+                              ฿{material.pricePerSqm[size.id].toLocaleString()}
+                            </div>
+                            <div className="text-sm text-slate-500">
+                              ต่อ ตร.ม.
+                            </div>
                           </div>
                         </div>
                       ) : (
-                        <div className="bg-slate-100/80 backdrop-blur-sm rounded-xl p-3 border border-slate-200/70">
-                          <div className="text-lg text-slate-400 font-bold">
-                            ไม่รองรับ
-                          </div>
+                        <div className="inline-flex items-center bg-slate-100 rounded-lg px-3 py-2 border border-slate-200">
+                          <div className="text-sm font-medium text-slate-400">ไม่รองรับ</div>
                         </div>
                       )}
                     </div>
                   </div>
-                  <p className="text-slate-600 leading-relaxed font-medium">{size.description}</p>
                 </div>
               ))}
             </div>
           </div>
+        )}
 
-          {/* Additional Info */}
-          <div className="bg-white/40 backdrop-blur-sm p-6 rounded-xl border border-white/60">
-            <div className="flex items-start space-x-4">
-              <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                <span className="text-white text-lg">💡</span>
+        {/* Price Calculation Section */}
+        {dimensions.width > 0 && dimensions.length > 0 && material && selectedSize && (
+          <div className="mb-6 bg-white rounded-lg shadow-sm border border-gray-200"
+               style={{ animation: 'fadeIn 1s ease-out' }}>
+            
+            {/* Header */}
+            <div className="flex items-center space-x-3 p-3 border-b border-gray-200">
+              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                </svg>
               </div>
-              <div>
-                <h4 className="text-lg font-medium text-slate-700 mb-3">ข้อมูลสำคัญ</h4>
-                <p className="text-slate-600 leading-relaxed font-normal">
-                  ราคาที่แสดงเป็นราคาวัสดุเท่านั้น ไม่รวมค่าติดตั้ง ค่าขนส่ง และอุปกรณ์เสริม<br />
-                  สามารถเลือกบริการติดตั้งเพิ่มเติมได้ในขั้นตอนถัดไป
-                </p>
+              <h3 className="text-lg font-semibold text-gray-900">สรุปการคำนวณ</h3>
+            </div>
+
+            <div className="p-3 space-y-3">
+              {/* Dimensions - Compact */}
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-600">พื้นที่</span>
+                <span className="font-medium text-gray-900">
+                  {dimensions.width} × {dimensions.length} = {(dimensions.width * dimensions.length).toFixed(2)} ตร.ม.
+                </span>
               </div>
+
+              {/* Material Price - Compact */}
+              <div className="flex items-center justify-between text-sm border-t border-gray-100 pt-2">
+                <span className="text-gray-600">ราคาวัสดุ ({selectedSize.name})</span>
+                <span className="font-medium text-gray-900">
+                  ฿{material.pricePerSqm[selectedSize.id].toLocaleString()} /ตร.ม.
+                </span>
+              </div>
+              
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-600">รวมราคาวัสดุ</span>
+                <span className="font-semibold text-gray-900">
+                  ฿{((dimensions.width * dimensions.length) * material.pricePerSqm[selectedSize.id]).toLocaleString()}
+                </span>
+              </div>
+
+              {/* Services - Compact */}
+              {selectedServices.length > 0 && (
+                <div className="border-t border-gray-100 pt-2">
+                  <div className="text-xs font-medium text-gray-500 mb-1">บริการหลัก</div>
+                  {mainServices
+                    .filter((service) => selectedServices.includes(service.id))
+                    .map((service) => {
+                      let servicePrice = service.price;
+                      const selectedOption = selectedServiceOptions[service.id];
+                      if (selectedOption && service.options) {
+                        const option = service.options.find(opt => opt.id === selectedOption);
+                        if (option) {
+                          servicePrice += option.price;
+                        }
+                      }
+                      return (
+                        <div key={service.id} className="flex items-center justify-between text-sm py-0.5">
+                          <span className="text-gray-600">{service.name}</span>
+                          <span className="font-medium text-gray-900">฿{servicePrice.toLocaleString()}</span>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+
+              {/* Extra Services - Compact */}
+              {Object.keys(selectedExtras).some(key => selectedExtras[key]) && (
+                <div className="border-t border-gray-100 pt-2">
+                  <div className="text-xs font-medium text-gray-500 mb-1">บริการเสริม</div>
+                  {Object.entries(selectedExtras)
+                    .filter(([_, optionId]) => optionId)
+                    .map(([serviceId, optionId]) => {
+                      const service = extraServices.find((s) => s.id === serviceId);
+                      const option = service?.options.find((o) => o.id === optionId);
+                      if (!service || !option) return null;
+                      return (
+                        <div key={serviceId} className="flex items-center justify-between text-sm py-0.5">
+                          <span className="text-gray-600">{service.name}</span>
+                          <span className="font-medium text-gray-900">฿{option.price.toLocaleString()}</span>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+
+              {/* Total Price - Compact */}
+              {totalPrice > 0 && (
+                <div className="bg-blue-600 rounded-lg p-3 text-white border-t border-gray-200 mt-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold">ราคารวมทั้งหมด</span>
+                    <span className="text-xl font-bold">฿{totalPrice.toLocaleString()}</span>
+                  </div>
+                  <div className="text-xs text-blue-100 mt-1">รวมภาษีมูลค่าเพิ่ม 7%</div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Important Notes */}
+        <div className="bg-yellow-50 rounded-lg p-4 border border-yellow-200"
+             style={{ animation: 'fadeIn 0.8s ease-out' }}>
+          <div className="flex items-start space-x-3">
+            <div className="w-6 h-6 bg-yellow-600 rounded-md flex items-center justify-center flex-shrink-0 mt-1">
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h4 className="font-semibold text-yellow-800 mb-1">ข้อมูลสำคัญ</h4>
+              <p className="text-yellow-700 text-sm leading-relaxed">
+                ราคาที่แสดงเป็นราคาวัสดุเท่านั้น ไม่รวมค่าติดตั้ง ค่าขนส่ง และอุปกรณ์เสริม 
+                คุณสามารถเลือกบริการเพิ่มเติมได้ในขั้นตอนถัดไป
+              </p>
             </div>
           </div>
         </div>

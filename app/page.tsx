@@ -57,7 +57,17 @@ export default function Home() {
         {/* Left Side - Material Preview (80%) */}
         <div id="materials" className="w-[80%]">
           <div className="h-full rounded-3xl overflow-auto shadow-xl border border-gray-200/50 custom-scrollbar bg-white/95 backdrop-blur-sm">
-            <MaterialPreview material={selectionData.material} />
+            <MaterialPreview 
+              material={selectionData.material} 
+              selectedSize={selectionData.size}
+              dimensions={selectionData.dimensions}
+              totalPrice={totalPrice}
+              selectedServices={selectionData.selectedServices}
+              selectedExtras={selectionData.selectedExtras}
+              mainServices={mainServices}
+              extraServices={extraServices}
+              selectedServiceOptions={selectionData.selectedServiceOptions}
+            />
           </div>
         </div>
         
@@ -178,7 +188,17 @@ export default function Home() {
         {/* Top - Material Preview */}
         <div className="flex-1 min-h-[50vh]">
           <div className="h-full rounded-2xl overflow-auto shadow-xl border border-gray-200/50 bg-white/95 backdrop-blur-sm">
-            <MaterialPreview material={selectionData.material} />
+            <MaterialPreview 
+              material={selectionData.material} 
+              selectedSize={selectionData.size}
+              dimensions={selectionData.dimensions}
+              totalPrice={totalPrice}
+              selectedServices={selectionData.selectedServices}
+              selectedExtras={selectionData.selectedExtras}
+              mainServices={mainServices}
+              extraServices={extraServices}
+              selectedServiceOptions={selectionData.selectedServiceOptions}
+            />
           </div>
         </div>
         
