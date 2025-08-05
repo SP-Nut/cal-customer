@@ -1,48 +1,7 @@
 'use client';
 
 import React from 'react';
-
-interface Material {
-  name: string;
-  image?: string;
-  type: 'translucent' | 'opaque';
-  description: string;
-  sizes: Array<{
-    id: string;
-    name: string;
-    description: string;
-  }>;
-  pricePerSqm: Record<string, number>;
-}
-
-interface Size {
-  id: string;
-  name: string;
-  description: string;
-}
-
-interface Service {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  options?: Array<{
-    id: string;
-    name: string;
-    price: number;
-  }>;
-}
-
-interface ExtraService {
-  id: string;
-  name: string;
-  description: string;
-  options: Array<{
-    id: string;
-    name: string;
-    price: number;
-  }>;
-}
+import { Material, Size, Service, ExtraService } from '../../lib/types';
 
 interface MaterialPreviewProps {
   material: Material | null;
@@ -500,60 +459,80 @@ export function MaterialPreview({
       {/* Main Content */}
       <div className="p-4 lg:p-6">
         
-        {/* Material Description */}
-        <div className="mb-6 p-4 bg-white rounded-xl border border-slate-200 shadow-sm"
+        {/* Material Description - Mobile Optimized */}
+        <div className="mb-4 lg:mb-6 p-3 lg:p-4 bg-white rounded-lg lg:rounded-xl border border-slate-200 shadow-sm"
              style={{ animation: 'fadeIn 0.5s ease-out' }}>
-          <div className="flex items-start space-x-3">
-            <div className="w-8 h-8 bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <div className="flex items-start space-x-2 lg:space-x-3">
+            <div className="w-6 h-6 lg:w-8 lg:h-8 bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 lg:mt-1">
+              <svg className="w-3 h-3 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-slate-800 mb-2">รายละเอียดวัสดุ</h3>
-              <p className="text-slate-600 leading-relaxed">{material.description}</p>
+              <h3 className="text-base lg:text-lg font-semibold text-slate-800 mb-1 lg:mb-2">รายละเอียดวัสดุ</h3>
+              <p className="text-slate-600 text-sm lg:text-base leading-relaxed">{material.description}</p>
             </div>
           </div>
         </div>
 
         {/* Size Information */}
         {selectedSize ? (
-          /* Selected Size Display */
-          <div className="mb-6 bg-slate-50 rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+          /* Selected Size Display - Mobile Optimized */
+          <div className="mb-4 lg:mb-6 bg-slate-50 rounded-lg lg:rounded-xl border border-slate-200 shadow-sm overflow-hidden"
                style={{ animation: 'fadeIn 0.6s ease-out' }}>
             
-            {/* Header */}
-            <div className="px-4 py-3 border-b border-slate-200 bg-white">
-              <div className="flex items-center space-x-3">
-                <div className="w-6 h-6 bg-slate-700 rounded-md flex items-center justify-center">
-                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
-                  </svg>
+            {/* Mobile Compact Header */}
+            <div className="px-3 py-2 lg:px-4 lg:py-3 border-b border-slate-200 bg-white">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2 lg:space-x-3">
+                  <div className="w-4 h-4 lg:w-6 lg:h-6 bg-slate-700 rounded-md flex items-center justify-center">
+                    <svg className="w-3 h-3 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <h3 className="text-sm lg:text-lg font-semibold text-slate-800">ขนาดที่เลือก</h3>
                 </div>
-                <h3 className="text-lg font-semibold text-slate-800">ขนาดที่เลือก</h3>
+                {/* Change Size Button - Mobile */}
+                <button 
+                  onClick={() => onSizeSelect?.('')}
+                  className="text-xs lg:text-sm text-blue-600 hover:text-blue-700 font-medium px-2 py-1 rounded transition-colors duration-200"
+                >
+                  เปลี่ยน
+                </button>
               </div>
             </div>
             
-            {/* Content */}
-            <div className="p-4">
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            {/* Mobile Optimized Content */}
+            <div className="p-3 lg:p-4">
+              {/* Mobile Layout - Stack vertically with compact spacing */}
+              <div className="space-y-3 lg:space-y-0 lg:flex lg:items-center lg:justify-between lg:gap-4">
+                {/* Size Name - More compact on mobile */}
                 <div className="flex-1">
-                  <h4 className="text-xl font-bold text-slate-800 mb-2">{selectedSize.name}</h4>
+                  <h4 className="text-lg lg:text-xl font-bold text-slate-800 mb-1 lg:mb-2">{selectedSize.name}</h4>
+                  <div className="text-xs lg:text-sm text-slate-500">
+                    วัสดุ: {material.name}
+                  </div>
                 </div>
+                
+                {/* Price Display - Compact mobile version */}
                 <div className="flex-shrink-0">
                   {material.pricePerSqm[selectedSize.id] > 0 ? (
-                    <div className="inline-block bg-slate-800 text-white rounded-xl px-4 py-3 shadow-sm">
-                      <div className="text-2xl font-bold">
-                        ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}
-                      </div>
-                      <div className="text-sm opacity-80 text-center">
-                        ต่อ ตร.ม.
+                    <div className="inline-block bg-slate-800 text-white rounded-lg lg:rounded-xl px-3 py-2 lg:px-4 lg:py-3 shadow-sm w-full lg:w-auto">
+                      <div className="text-center">
+                        <div className="text-lg lg:text-2xl font-bold">
+                          ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}
+                        </div>
+                        <div className="text-xs lg:text-sm opacity-80">
+                          ต่อ ตร.ม.
+                        </div>
                       </div>
                     </div>
                   ) : (
-                    <div className="inline-block bg-slate-200 text-slate-500 rounded-xl px-4 py-3">
-                      <div className="text-lg font-semibold">ไม่รองรับ</div>
-                      <div className="text-sm text-center">ขนาดนี้</div>
+                    <div className="inline-block bg-slate-200 text-slate-500 rounded-lg lg:rounded-xl px-3 py-2 lg:px-4 lg:py-3 w-full lg:w-auto">
+                      <div className="text-center">
+                        <div className="text-sm lg:text-lg font-semibold">ไม่รองรับ</div>
+                        <div className="text-xs lg:text-sm">ขนาดนี้</div>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -609,116 +588,124 @@ export function MaterialPreview({
           </div>
         )}
 
-        {/* Price Calculation Section */}
+        {/* Price Calculation Section - Mobile Optimized */}
         {dimensions.width > 0 && dimensions.length > 0 && material && selectedSize && (
-          <div className="mb-6 bg-white rounded-lg shadow-sm border border-gray-200"
+          <div className="mb-4 lg:mb-6 bg-white rounded-lg shadow-sm border border-gray-200"
                style={{ animation: 'fadeIn 1s ease-out' }}>
             
-            {/* Header */}
-            <div className="flex items-center space-x-3 p-3 border-b border-gray-200">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            {/* Compact Header for Mobile */}
+            <div className="flex items-center space-x-2 lg:space-x-3 p-2 lg:p-3 border-b border-gray-200 bg-slate-50">
+              <div className="w-6 h-6 lg:w-8 lg:h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <svg className="w-3 h-3 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">สรุปการคำนวณ</h3>
+              <h3 className="text-sm lg:text-lg font-semibold text-gray-900">สรุปการคำนวณ</h3>
             </div>
 
-            <div className="p-3 space-y-3">
-              {/* Dimensions - Compact */}
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">พื้นที่</span>
-                <span className="font-medium text-gray-900">
+            <div className="p-3 lg:p-4 space-y-2 lg:space-y-3">
+              {/* Dimensions - Ultra Compact for Mobile */}
+              <div className="flex items-center justify-between text-xs lg:text-sm">
+                <span className="text-gray-600 font-medium">พื้นที่</span>
+                <span className="font-semibold text-gray-900">
                   {dimensions.width} × {dimensions.length} = {(dimensions.width * dimensions.length).toFixed(2)} ตร.ม.
                 </span>
               </div>
 
               {/* Material Price - Compact */}
-              <div className="flex items-center justify-between text-sm border-t border-gray-100 pt-2">
-                <span className="text-gray-600">ราคาวัสดุ ({selectedSize.name})</span>
-                <span className="font-medium text-gray-900">
-                  ฿{material.pricePerSqm[selectedSize.id].toLocaleString()} /ตร.ม.
-                </span>
-              </div>
-              
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">รวมราคาวัสดุ</span>
-                <span className="font-semibold text-gray-900">
-                  ฿{((dimensions.width * dimensions.length) * material.pricePerSqm[selectedSize.id]).toLocaleString()}
-                </span>
+              <div className="bg-gray-50 rounded-md p-2 lg:p-3 space-y-1 lg:space-y-2">
+                <div className="flex items-center justify-between text-xs lg:text-sm">
+                  <span className="text-gray-600">ราคาวัสดุ ({selectedSize.name})</span>
+                  <span className="font-medium text-gray-900">
+                    ฿{material.pricePerSqm[selectedSize.id].toLocaleString()} /ตร.ม.
+                  </span>
+                </div>
+                
+                <div className="flex items-center justify-between text-xs lg:text-sm border-t border-gray-200 pt-1 lg:pt-2">
+                  <span className="text-gray-600 font-medium">รวมราคาวัสดุ</span>
+                  <span className="font-bold text-gray-900">
+                    ฿{((dimensions.width * dimensions.length) * material.pricePerSqm[selectedSize.id]).toLocaleString()}
+                  </span>
+                </div>
               </div>
 
-              {/* Services - Compact */}
+              {/* Services - Ultra Compact */}
               {selectedServices.length > 0 && (
-                <div className="border-t border-gray-100 pt-2">
-                  <div className="text-xs font-medium text-gray-500 mb-1">บริการหลัก</div>
-                  {mainServices
-                    .filter((service) => selectedServices.includes(service.id))
-                    .map((service) => {
-                      let servicePrice = service.price;
-                      const selectedOption = selectedServiceOptions[service.id];
-                      if (selectedOption && service.options) {
-                        const option = service.options.find(opt => opt.id === selectedOption);
-                        if (option) {
-                          servicePrice += option.price;
+                <div className="bg-blue-50 rounded-md p-2 lg:p-3">
+                  <div className="text-xs font-semibold text-blue-700 mb-1 lg:mb-2">บริการหลัก</div>
+                  <div className="space-y-1">
+                    {mainServices
+                      .filter((service) => selectedServices.includes(service.id))
+                      .map((service) => {
+                        let servicePrice = service.price;
+                        const selectedOption = selectedServiceOptions[service.id];
+                        if (selectedOption && service.options) {
+                          const option = service.options.find(opt => opt.id === selectedOption);
+                          if (option) {
+                            servicePrice += option.price;
+                          }
                         }
-                      }
-                      return (
-                        <div key={service.id} className="flex items-center justify-between text-sm py-0.5">
-                          <span className="text-gray-600">{service.name}</span>
-                          <span className="font-medium text-gray-900">฿{servicePrice.toLocaleString()}</span>
-                        </div>
-                      );
-                    })}
-                </div>
-              )}
-
-              {/* Extra Services - Compact */}
-              {Object.keys(selectedExtras).some(key => selectedExtras[key]) && (
-                <div className="border-t border-gray-100 pt-2">
-                  <div className="text-xs font-medium text-gray-500 mb-1">บริการเสริม</div>
-                  {Object.entries(selectedExtras)
-                    .filter(([_, optionId]) => optionId)
-                    .map(([serviceId, optionId]) => {
-                      const service = extraServices.find((s) => s.id === serviceId);
-                      const option = service?.options.find((o) => o.id === optionId);
-                      if (!service || !option) return null;
-                      return (
-                        <div key={serviceId} className="flex items-center justify-between text-sm py-0.5">
-                          <span className="text-gray-600">{service.name}</span>
-                          <span className="font-medium text-gray-900">฿{option.price.toLocaleString()}</span>
-                        </div>
-                      );
-                    })}
-                </div>
-              )}
-
-              {/* Total Price - Compact */}
-              {totalPrice > 0 && (
-                <div className="bg-blue-600 rounded-lg p-3 text-white border-t border-gray-200 mt-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold">ราคารวมทั้งหมด</span>
-                    <span className="text-xl font-bold">฿{totalPrice.toLocaleString()}</span>
+                        return (
+                          <div key={service.id} className="flex items-center justify-between text-xs lg:text-sm">
+                            <span className="text-gray-600 truncate flex-1 mr-2">{service.name}</span>
+                            <span className="font-medium text-gray-900 flex-shrink-0">฿{servicePrice.toLocaleString()}</span>
+                          </div>
+                        );
+                      })}
                   </div>
-                  <div className="text-xs text-blue-100 mt-1">รวมภาษีมูลค่าเพิ่ม 7%</div>
+                </div>
+              )}
+
+              {/* Extra Services - Ultra Compact */}
+              {Object.keys(selectedExtras).some(key => selectedExtras[key]) && (
+                <div className="bg-green-50 rounded-md p-2 lg:p-3">
+                  <div className="text-xs font-semibold text-green-700 mb-1 lg:mb-2">บริการเสริม</div>
+                  <div className="space-y-1">
+                    {Object.entries(selectedExtras)
+                      .filter(([_, optionId]) => optionId)
+                      .map(([serviceId, optionId]) => {
+                        const service = extraServices.find((s) => s.id === serviceId);
+                        const option = service?.options.find((o) => o.id === optionId);
+                        if (!service || !option) return null;
+                        return (
+                          <div key={serviceId} className="flex items-center justify-between text-xs lg:text-sm">
+                            <span className="text-gray-600 truncate flex-1 mr-2">{service.name}</span>
+                            <span className="font-medium text-gray-900 flex-shrink-0">฿{option.price.toLocaleString()}</span>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              )}
+
+              {/* Total Price - Prominent but Compact */}
+              {totalPrice > 0 && (
+                <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg p-3 lg:p-4 text-white mt-3 lg:mt-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="font-semibold text-sm lg:text-base">ราคารวมทั้งหมด</span>
+                      <div className="text-xs text-blue-100 mt-0.5 lg:mt-1">รวมภาษีมูลค่าเพิ่ม 7%</div>
+                    </div>
+                    <span className="text-xl lg:text-2xl font-bold">฿{totalPrice.toLocaleString()}</span>
+                  </div>
                 </div>
               )}
             </div>
           </div>
         )}
 
-        {/* Important Notes */}
-        <div className="bg-yellow-50 rounded-lg p-4 border border-yellow-200"
+        {/* Important Notes - Mobile Optimized */}
+        <div className="bg-yellow-50 rounded-lg border border-yellow-200 p-3 lg:p-4"
              style={{ animation: 'fadeIn 0.8s ease-out' }}>
-          <div className="flex items-start space-x-3">
-            <div className="w-6 h-6 bg-yellow-600 rounded-md flex items-center justify-center flex-shrink-0 mt-1">
-              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <div className="flex items-start space-x-2 lg:space-x-3">
+            <div className="w-5 h-5 lg:w-6 lg:h-6 bg-yellow-600 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5 lg:mt-1">
+              <svg className="w-3 h-3 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
               </svg>
             </div>
             <div className="flex-1">
-              <h4 className="font-semibold text-yellow-800 mb-1">ข้อมูลสำคัญ</h4>
-              <p className="text-yellow-700 text-sm leading-relaxed">
+              <h4 className="font-semibold text-yellow-800 text-sm lg:text-base mb-1">ข้อมูลสำคัญ</h4>
+              <p className="text-yellow-700 text-xs lg:text-sm leading-relaxed">
                 ราคาที่แสดงเป็นราคาวัสดุเท่านั้น ไม่รวมค่าติดตั้ง ค่าขนส่ง และอุปกรณ์เสริม 
                 คุณสามารถเลือกบริการเพิ่มเติมได้ในขั้นตอนถัดไป
               </p>

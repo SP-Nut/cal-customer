@@ -21,11 +21,6 @@ export const materials: Material[] = [
   ...opaqueMaterials
 ];
 
-// ฟังก์ชันสำหรับดึงวัสดุตามประเภท
-export const getMaterialsByType = (type: 'translucent' | 'opaque'): Material[] => {
-  return type === 'translucent' ? translucentMaterials : opaqueMaterials;
-};
-
 export const mainServices: Service[] = [
   {
     id: 'poles',

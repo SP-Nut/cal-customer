@@ -1,10 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-
-
 import type { Material, MaterialCategory, Size, Service, ServiceOption, ExtraService } from '../../lib/types';
-
 
 interface MaterialSelectorProps {
   materials: Material[];
@@ -22,29 +19,36 @@ interface MaterialSelectorProps {
   }) => void;
 }
 
-interface StepIndicatorProps {
+const StepIndicator = ({ currentStep, totalSteps, stepName }: {
   currentStep: number;
   totalSteps: number;
   stepName: string;
-}
-
-function StepIndicator({ currentStep, totalSteps, stepName }: StepIndicatorProps) {
-  return (
-    <div className="sticky top-0 z-20 bg-white/90 backdrop-blur-sm border-b border-gray-200">
-      <div className="px-3 lg:px-4 py-2 lg:py-3">
-        <div className="flex items-center gap-2 lg:gap-3">
-          <div className="w-6 h-6 lg:w-8 lg:h-8 bg-blue-500 rounded-full flex items-center justify-center">
-            <span className="text-white font-medium text-xs lg:text-sm">{currentStep}</span>
-          </div>
-          <div>
-            <h3 className="font-medium text-gray-800 text-xs lg:text-sm">{stepName}</h3>
-            <p className="text-xs text-gray-500">ขั้นที่ {currentStep} จาก {totalSteps}</p>
-          </div>
+}) => (
+  <div className="sticky top-0 z-20 bg-white/90 backdrop-blur-sm border-b border-gray-200">
+    <div className="px-3 lg:px-4 py-2 lg:py-3">
+      <div className="flex items-center gap-2 lg:gap-3">
+        <div className="w-6 h-6 lg:w-8 lg:h-8 bg-blue-500 rounded-full flex items-center justify-center">
+          <span className="text-white font-medium text-xs lg:text-sm">{currentStep}</span>
+        </div>
+        <div>
+          <h3 className="font-medium text-gray-800 text-xs lg:text-sm">{stepName}</h3>
+          <p className="text-xs text-gray-500">ขั้นที่ {currentStep} จาก {totalSteps}</p>
         </div>
       </div>
     </div>
-  );
-}
+  </div>
+);
+
+// Utility functions
+const buttonClass = (isSelected: boolean) => 
+  `w-full p-3 lg:p-4 rounded-lg border-2 transition-all text-left ${
+    isSelected ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
+  }`;
+
+const iconClass = (isSelected: boolean) =>
+  `w-8 h-8 lg:w-10 lg:h-10 rounded-lg flex items-center justify-center text-xs lg:text-sm font-medium ${
+    isSelected ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'
+  }`;
 
 export function MaterialSelector({
   materials,
@@ -164,11 +168,7 @@ export function MaterialSelector({
             {categories.map((category) => (
               <button
                 key={category.id}
-                className={`w-full p-3 lg:p-4 rounded-lg border-2 transition-all text-left ${
-                  selectedType === category.id
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
-                }`}
+                className={buttonClass(selectedType === category.id)}
                 onClick={() => {
                   setSelectedType(category.id);
                   if (selectedMaterial?.type !== category.id) {
@@ -177,11 +177,7 @@ export function MaterialSelector({
                 }}
               >
                 <div className="flex items-center gap-2 lg:gap-3">
-                  <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg flex items-center justify-center ${
-                    selectedType === category.id 
-                      ? 'bg-blue-500 text-white' 
-                      : 'bg-gray-100 text-gray-600'
-                  }`}>
+                  <div className={iconClass(selectedType === category.id)}>
                     <span className="text-sm lg:text-lg">
                       {category.id === 'translucent' ? '☀️' : '🏠'}
                     </span>
@@ -204,24 +200,15 @@ export function MaterialSelector({
               {filteredMaterials.map((material) => (
                 <button
                   key={material.id}
-                  className={`w-full p-3 lg:p-4 rounded-lg border-2 transition-all text-left ${
-                    selectedMaterial?.id === material.id
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
-                  }`}
+                  className={buttonClass(selectedMaterial?.id === material.id)}
                   onClick={() => handleMaterialSelect(material)}
                 >
                   <div className="flex items-start gap-2 lg:gap-3">
-                    <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg flex items-center justify-center text-xs lg:text-sm font-medium ${
-                      selectedMaterial?.id === material.id
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-100 text-gray-600'
-                    }`}>
+                    <div className={iconClass(selectedMaterial?.id === material.id)}>
                       {selectedMaterial?.id === material.id ? '✓' : '📦'}
                     </div>
                     <div className="flex-1">
                       <h4 className="font-medium text-gray-800 text-sm lg:text-base">{material.name}</h4>
-                      <p className="text-xs lg:text-sm text-gray-500 mt-0.5 lg:mt-1">{material.description}</p>
                       <div className="text-xs lg:text-sm font-semibold text-blue-600 mt-1 lg:mt-2">
                         เริ่มต้น ฿{Math.min(...Object.values(material.pricePerSqm).filter(p => p > 0)).toLocaleString()} ต่อ ตร.ม.
                       </div>

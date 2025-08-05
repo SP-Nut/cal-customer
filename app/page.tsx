@@ -4,9 +4,9 @@ import { useState } from 'react';
 import Navbar from './components/Navbar';
 import { materials, materialCategories, mainServices, extraServices } from './lib/data';
 import { Material, Size } from './lib/types';
-
 import { MaterialSelector } from './components/calculator/MaterialSelector';
 import { MaterialPreview } from './components/calculator/MaterialPreview';
+import { PriceSummary } from './components/PriceSummary';
 
 export default function Home() {
   const [selectionData, setSelectionData] = useState({
@@ -19,24 +19,20 @@ export default function Home() {
     selectedExtras: {} as Record<string, string>,
   });
 
-  // Validation
+  // Validation and calculation
   const isValidDimensions = selectionData.dimensions.width > 0 && selectionData.dimensions.length > 0;
+  const area = selectionData.dimensions.width * selectionData.dimensions.length;
   
-  // Calculate total price
   const totalPrice = selectionData.material && selectionData.size && isValidDimensions
-    ? (selectionData.dimensions.width * selectionData.dimensions.length) * 
-      selectionData.material.pricePerSqm[selectionData.size.id] +
+    ? area * selectionData.material.pricePerSqm[selectionData.size.id] +
       mainServices
         .filter((service) => selectionData.selectedServices.includes(service.id))
         .reduce((sum, service) => {
           let servicePrice = service.price;
-          // Add option price if selected
           const selectedOption = selectionData.selectedServiceOptions[service.id];
           if (selectedOption && service.options) {
             const option = service.options.find(opt => opt.id === selectedOption);
-            if (option) {
-              servicePrice += option.price;
-            }
+            if (option) servicePrice += option.price;
           }
           return sum + servicePrice;
         }, 0) +
@@ -92,92 +88,17 @@ export default function Home() {
             
             {/* Price Summary - Fixed at bottom */}
             {selectionData.size && selectionData.material && totalPrice > 0 && (
-              <div className="bg-gradient-to-t from-white via-white to-white/95 backdrop-blur-sm border-t border-gray-200 shadow-lg p-6">
-                <div className="space-y-4">
-                  {/* Header */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
-                      <span className="text-white text-sm">💰</span>
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-800">สรุปราคา</h3>
-                  </div>
-                  
-                  {/* Area and Base Price */}
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-gray-600">พื้นที่รวม</span>
-                      <span className="font-semibold text-gray-800">
-                        {(selectionData.dimensions.width * selectionData.dimensions.length).toFixed(2)} ตร.ม.
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-gray-600">ราคาต่อ ตร.ม.</span>
-                      <span className="font-semibold text-gray-800">
-                        ฿{selectionData.material.pricePerSqm[selectionData.size.id].toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  {/* Services */}
-                  {selectionData.selectedServices.length > 0 && (
-                    <div className="border-t border-gray-200 pt-3">
-                      <div className="text-xs font-medium text-gray-500 mb-2">บริการที่เลือก</div>
-                      <div className="space-y-1">
-                        {mainServices
-                          .filter((service) => selectionData.selectedServices.includes(service.id))
-                          .map((service) => {
-                            let servicePrice = service.price;
-                            const selectedOption = selectionData.selectedServiceOptions[service.id];
-                            if (selectedOption && service.options) {
-                              const option = service.options.find(opt => opt.id === selectedOption);
-                              if (option) {
-                                servicePrice += option.price;
-                              }
-                            }
-                            return (
-                              <div key={service.id} className="flex justify-between text-xs">
-                                <span className="text-gray-600">{service.name}</span>
-                                <span className="font-medium text-gray-800">฿{servicePrice.toLocaleString()}</span>
-                              </div>
-                            );
-                          })}
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Extra Services */}
-                  {Object.keys(selectionData.selectedExtras).some(key => selectionData.selectedExtras[key]) && (
-                    <div className="border-t border-gray-200 pt-3">
-                      <div className="text-xs font-medium text-gray-500 mb-2">บริการเสริม</div>
-                      <div className="space-y-1">
-                        {Object.entries(selectionData.selectedExtras)
-                          .filter(([_, optionId]) => optionId)
-                          .map(([serviceId, optionId]) => {
-                            const service = extraServices.find((s) => s.id === serviceId);
-                            const option = service?.options.find((o) => o.id === optionId);
-                            if (!service || !option) return null;
-                            return (
-                              <div key={serviceId} className="flex justify-between text-xs">
-                                <span className="text-gray-600">{service.name}</span>
-                                <span className="font-medium text-gray-800">฿{option.price.toLocaleString()}</span>
-                              </div>
-                            );
-                          })}
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Total */}
-                  <div className="border-t border-gray-300 pt-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-base font-bold text-gray-800">ราคารวมทั้งหมด</span>
-                      <span className="text-xl font-bold text-primary-600">
-                        ฿{totalPrice.toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <PriceSummary 
+                material={selectionData.material}
+                selectedSize={selectionData.size}
+                dimensions={selectionData.dimensions}
+                totalPrice={totalPrice}
+                selectedServices={selectionData.selectedServices}
+                selectedExtras={selectionData.selectedExtras}
+                mainServices={mainServices}
+                extraServices={extraServices}
+                selectedServiceOptions={selectionData.selectedServiceOptions}
+              />
             )}
           </div>
         </div>
@@ -217,92 +138,18 @@ export default function Home() {
           
           {/* Price Summary - Mobile */}
           {selectionData.size && selectionData.material && totalPrice > 0 && (
-            <div className="bg-gradient-to-t from-white via-white to-white/95 backdrop-blur-sm border-t border-gray-200 shadow-lg p-4">
-              <div className="space-y-3">
-                {/* Header */}
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-6 h-6 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
-                    <span className="text-white text-xs">💰</span>
-                  </div>
-                  <h3 className="text-base font-bold text-gray-800">สรุปราคา</h3>
-                </div>
-                
-                {/* Area and Base Price */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-gray-600">พื้นที่รวม</span>
-                    <span className="font-semibold text-gray-800">
-                      {(selectionData.dimensions.width * selectionData.dimensions.length).toFixed(2)} ตร.ม.
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-gray-600">ราคาต่อ ตร.ม.</span>
-                    <span className="font-semibold text-gray-800">
-                      ฿{selectionData.material.pricePerSqm[selectionData.size.id].toLocaleString()}
-                    </span>
-                  </div>
-                </div>
-                
-                {/* Services */}
-                {selectionData.selectedServices.length > 0 && (
-                  <div className="border-t border-gray-200 pt-2">
-                    <div className="text-xs font-medium text-gray-500 mb-1">บริการที่เลือก</div>
-                    <div className="space-y-1">
-                      {mainServices
-                        .filter((service) => selectionData.selectedServices.includes(service.id))
-                        .map((service) => {
-                          let servicePrice = service.price;
-                          const selectedOption = selectionData.selectedServiceOptions[service.id];
-                          if (selectedOption && service.options) {
-                            const option = service.options.find(opt => opt.id === selectedOption);
-                            if (option) {
-                              servicePrice += option.price;
-                            }
-                          }
-                          return (
-                            <div key={service.id} className="flex justify-between text-xs">
-                              <span className="text-gray-600">{service.name}</span>
-                              <span className="font-medium text-gray-800">฿{servicePrice.toLocaleString()}</span>
-                            </div>
-                          );
-                        })}
-                    </div>
-                  </div>
-                )}
-                
-                {/* Extra Services */}
-                {Object.keys(selectionData.selectedExtras).some(key => selectionData.selectedExtras[key]) && (
-                  <div className="border-t border-gray-200 pt-2">
-                    <div className="text-xs font-medium text-gray-500 mb-1">บริการเสริม</div>
-                    <div className="space-y-1">
-                      {Object.entries(selectionData.selectedExtras)
-                        .filter(([_, optionId]) => optionId)
-                        .map(([serviceId, optionId]) => {
-                          const service = extraServices.find((s) => s.id === serviceId);
-                          const option = service?.options.find((o) => o.id === optionId);
-                          if (!service || !option) return null;
-                          return (
-                            <div key={serviceId} className="flex justify-between text-xs">
-                              <span className="text-gray-600">{service.name}</span>
-                              <span className="font-medium text-gray-800">฿{option.price.toLocaleString()}</span>
-                            </div>
-                          );
-                        })}
-                    </div>
-                  </div>
-                )}
-                
-                {/* Total */}
-                <div className="border-t border-gray-300 pt-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-bold text-gray-800">ราคารวมทั้งหมด</span>
-                    <span className="text-lg font-bold text-primary-600">
-                      ฿{totalPrice.toLocaleString()}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PriceSummary 
+              material={selectionData.material}
+              selectedSize={selectionData.size}
+              dimensions={selectionData.dimensions}
+              totalPrice={totalPrice}
+              selectedServices={selectionData.selectedServices}
+              selectedExtras={selectionData.selectedExtras}
+              mainServices={mainServices}
+              extraServices={extraServices}
+              selectedServiceOptions={selectionData.selectedServiceOptions}
+              isMobile={true}
+            />
           )}
         </div>
       </div>
