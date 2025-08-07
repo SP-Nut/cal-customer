@@ -75,18 +75,19 @@ export function MaterialPreview({
             
             {/* Main Content */}
             <div className="flex-1 flex items-center justify-center py-4 lg:py-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center w-full max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center w-full max-w-6xl mx-auto"
+                   style={{ transform: 'translateX(0)' }}>
                 
                 {/* Content Section */}
-                <div className="text-center lg:text-left space-y-3 lg:space-y-4 order-2 lg:order-1">
-                  <div className="flex items-center justify-center lg:justify-start space-x-3 lg:space-x-4 mb-3 lg:mb-4">
-                    <div className="w-8 lg:w-16 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
+                <div className="text-center lg:text-left space-y-2 lg:space-y-3 order-2 lg:order-1">
+                  <div className="flex items-center justify-center lg:justify-start space-x-2 lg:space-x-3 mb-2 lg:mb-3">
+                    <div className="w-6 lg:w-12 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
                     <p className="text-xs lg:text-sm font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent uppercase tracking-widest">
                       ระบบคำนวณมืออาชีพ
                     </p>
                   </div>
                   
-                  <h2 className="text-2xl sm:text-3xl lg:text-5xl xl:text-7xl font-extralight mb-4 lg:mb-6 leading-tight text-slate-800">
+                  <h2 className="text-xl sm:text-2xl lg:text-4xl xl:text-5xl font-extralight mb-2 lg:mb-4 leading-tight text-slate-800">
                     สร้างโซลูชั่น<br />
                     <span className="font-normal bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                       กันสาดและหลังคา
@@ -97,16 +98,16 @@ export function MaterialPreview({
                     </span>
                   </h2>
                   
-                  <div className="bg-transparent p-3 lg:p-6 mb-4 lg:mb-6">
-                    <p className="text-sm lg:text-lg text-slate-700 leading-relaxed font-normal">
+                  <div className="bg-transparent p-2 lg:p-4 mb-2 lg:mb-4">
+                    <p className="text-xs lg:text-base text-slate-700 leading-snug font-normal">
                       ระบบคำนวณราคากันสาดและหลังคาแบบมืออาชีพ คำนวณราคาแม่นยำครบครันทุกรายการ 
                       ด้วยประสบการณ์มากกว่า 15 ปี พร้อมบริการครบวงจร
                     </p>
                   </div>
                   
                   {/* Professional Image - Mobile Only */}
-                  <div className="block lg:hidden relative mb-4 lg:mb-6">
-                    <div className="relative w-full max-w-sm mx-auto">
+                  <div className="block lg:hidden relative mb-2 lg:mb-4">
+                    <div className="relative w-full max-w-xs mx-auto">
                       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-50/60 via-white/40 to-slate-50/50 backdrop-blur-sm"></div>
                       
                       {/* Enhanced Floating Elements - Mobile */}
@@ -176,32 +177,32 @@ export function MaterialPreview({
                   </div>
                   
                   {/* Feature Cards */}
-                  <div className="grid gap-2 lg:gap-3 mb-4 lg:mb-6">
+                  <div className="grid gap-1.5 lg:gap-2 mb-2 lg:mb-4">
                     {[
                       { icon: '✓', title: 'คำนวณราคาแม่นยำ', desc: 'ไม่มีค่าใช้จ่ายแอบแฝง โปร่งใสทุกรายการ', bg: 'from-blue-500 via-purple-500 to-pink-500' },
                       { icon: '⚡', title: 'วัสดุคุณภาพสูง', desc: 'มาตรฐานสากล ทนทาน ใช้งานได้ยาวนาน', bg: 'from-purple-500 via-blue-500 to-cyan-500' },
                       { icon: '🏠', title: 'ทีมช่างมืออาชีพ', desc: 'รับประกันงาน บริการหลังการขายครบถ้วน', bg: 'from-pink-500 via-purple-500 to-blue-500' }
                     ].map((item, index) => (
-                      <div key={index} className="group bg-transparent p-3 lg:p-5 hover:bg-white/10 transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/10">
+                      <div key={index} className="group bg-transparent p-2 lg:p-3 hover:bg-white/10 transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/10">
                         {/* Mobile Layout - Icon on top */}
                         <div className="text-center lg:hidden">
-                          <div className={`w-8 h-8 bg-gradient-to-br ${item.bg} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 mx-auto mb-2`}>
-                            <span className="text-white font-bold text-sm">{item.icon}</span>
+                          <div className={`w-6 h-6 bg-gradient-to-br ${item.bg} rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 mx-auto mb-1`}>
+                            <span className="text-white font-bold text-xs">{item.icon}</span>
                           </div>
                           <div>
-                            <h4 className="font-bold text-slate-800 text-sm mb-0.5">{item.title}</h4>
-                            <p className="text-slate-600 text-xs">{item.desc}</p>
+                            <h4 className="font-bold text-slate-800 text-xs mb-0">{item.title}</h4>
+                            <p className="text-slate-600 text-xs leading-tight">{item.desc}</p>
                           </div>
                         </div>
                         
                         {/* Desktop Layout - Icon on left */}
-                        <div className="hidden lg:flex items-center space-x-5">
-                          <div className={`w-12 h-12 bg-gradient-to-br ${item.bg} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                            <span className="text-white font-bold text-lg">{item.icon}</span>
+                        <div className="hidden lg:flex items-center space-x-3">
+                          <div className={`w-10 h-10 bg-gradient-to-br ${item.bg} rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                            <span className="text-white font-bold text-base">{item.icon}</span>
                           </div>
                           <div>
-                            <h4 className="font-bold text-slate-800 text-lg mb-1">{item.title}</h4>
-                            <p className="text-slate-600 text-base">{item.desc}</p>
+                            <h4 className="font-bold text-slate-800 text-base mb-0.5">{item.title}</h4>
+                            <p className="text-slate-600 text-sm leading-tight">{item.desc}</p>
                           </div>
                         </div>
                       </div>
@@ -211,7 +212,7 @@ export function MaterialPreview({
                 
                 {/* Image Section - Desktop Only */}
                 <div className="relative order-1 lg:order-2 hidden lg:block">
-                  <div className="relative w-full max-w-lg mx-auto">
+                  <div className="relative w-full max-w-md mx-auto">
                     <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-50/60 via-white/40 to-slate-50/50 backdrop-blur-sm"></div>
                     
                     {/* Enhanced Floating Elements */}
@@ -284,31 +285,32 @@ export function MaterialPreview({
           </div>
           
           {/* Contact Information Section - Hidden on Mobile, Visible on Desktop */}
-          <div className="hidden lg:block mt-4 lg:mt-8 pt-4 lg:pt-8 border-t border-white/20 w-full">
-            <div className="text-center space-y-4 lg:space-y-6 w-full">
-              <div className="flex items-center justify-center space-x-3 lg:space-x-4 mb-4 lg:mb-6">
-                <div className="w-12 lg:w-20 h-0.5 lg:h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
-                <h3 className="text-xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
+          <div className="hidden lg:block mt-2 lg:mt-4 pt-2 lg:pt-4 border-t border-white/20 w-full">
+            <div className="text-center space-y-2 lg:space-y-4 w-full max-w-6xl mx-auto"
+                 style={{ transform: 'translateX(0)' }}>
+              <div className="flex items-center justify-center space-x-2 lg:space-x-3 mb-2 lg:mb-4">
+                <div className="w-8 lg:w-16 h-0.5 lg:h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
+                <h3 className="text-lg lg:text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
                   ติดต่อเราเพื่อรับคำปรึกษา
                 </h3>
-                <div className="w-12 lg:w-20 h-0.5 lg:h-1 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full"></div>
+                <div className="w-8 lg:w-16 h-0.5 lg:h-1 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full"></div>
               </div>
               
               {/* Contact Grid - 3 columns top, 3 columns bottom */}
-              <div className="space-y-3 lg:space-y-6">
+              <div className="space-y-2 lg:space-y-4">
                 {/* Top Row - 3 columns */}
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 w-full">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-1.5 lg:gap-4 w-full">
                   {/* Phone Contact */}
-                  <div className="group bg-white/40 backdrop-blur-sm p-3 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1">
-                    <div className="text-center space-y-2 lg:space-y-4">
+                  <div className="group bg-white/40 backdrop-blur-sm p-2 lg:p-6 rounded-lg lg:rounded-xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1">
+                    <div className="text-center space-y-1 lg:space-y-3">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <svg className="w-8 h-8 lg:w-12 lg:h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                        <svg className="w-6 h-6 lg:w-10 lg:h-10 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                         </svg>
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-800 text-sm lg:text-lg mb-1 lg:mb-2">โทรศัพท์</h4>
-                        <p className="text-gray-700 text-xs lg:text-base font-medium">02-123-4567</p>
+                        <h4 className="font-bold text-gray-800 text-xs lg:text-base mb-0.5 lg:mb-1">โทรศัพท์</h4>
+                        <p className="text-gray-700 text-xs lg:text-sm font-medium">02-123-4567</p>
                         <p className="text-gray-500 text-xs">จันทร์-เสาร์ 8:00-18:00</p>
                       </div>
                     </div>
@@ -481,18 +483,18 @@ export function MaterialPreview({
               </div>
 
               {/* Right Column - Material Details & Size Selection */}
-              <div className="order-2 lg:order-2 space-y-3">
+              <div className="order-2 lg:order-2 space-y-2">
                 {/* Material Description */}
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-800 mb-2">{material.name}</h4>
-                  <p className="text-slate-600 text-sm leading-relaxed">{material.description}</p>
+                  <h4 className="text-sm font-semibold text-slate-800 mb-1">{material.name}</h4>
+                  <p className="text-slate-600 text-sm leading-snug">{material.description}</p>
                 </div>
 
                 {/* Size Information */}
                 {selectedSize ? (
                   /* Selected Size Display - Without Image */
                   <div className="bg-slate-50 rounded-lg border border-slate-200 p-3">
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <h5 className="text-sm font-semibold text-slate-800">ขนาดที่เลือก</h5>
                         <button 
@@ -503,7 +505,7 @@ export function MaterialPreview({
                         </button>
                       </div>
                       
-                      <div className="space-y-2">
+                      <div className="space-y-1.5">
                         <div>
                           <div className="text-base font-bold text-slate-800">{selectedSize.name}</div>
                           <div className="text-xs text-slate-500">วัสดุ: {material.name}</div>
@@ -525,7 +527,7 @@ export function MaterialPreview({
                 ) : (
                   /* All Sizes Display - Compact Grid */
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-800 mb-2">เลือกขนาด</h4>
+                    <h4 className="text-sm font-semibold text-slate-800 mb-1.5">เลือกขนาด</h4>
                     <div className="grid grid-cols-2 gap-2">
                       {material.sizes.map((size, index) => (
                         <div
@@ -535,7 +537,7 @@ export function MaterialPreview({
                           onClick={() => onSizeSelect?.(size.id)}
                         >
                           <div className="text-center">
-                            <div className="text-xs font-semibold text-slate-800 mb-1">{size.name}</div>
+                            <div className="text-xs font-semibold text-slate-800 mb-0.5">{size.name}</div>
                             {material.pricePerSqm[size.id] > 0 ? (
                               <div className="text-xs text-slate-600">
                                 ฿{material.pricePerSqm[size.id].toLocaleString()}/ตร.ม.
