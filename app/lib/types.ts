@@ -16,18 +16,12 @@ export interface Material {
   pricePerSqm: Record<SizeId, number>;
 }
 
-export type SizeId = 'S' | 'M' | 'M_PLUS' | 'L' | 'L_PLUS' | 'STAINLESS_S' | 'STAINLESS_M' | 'STAINLESS_L';
+export type SizeId = 'M' | 'M_PLUS' | 'L' | 'L_PLUS' | 'STAINLESS_S' | 'STAINLESS_M';
 
 export interface Size {
   id: SizeId;
   name: string;
-  description: string;
-}
-
-export interface ServiceOption {
-  id: string;
-  name: string;
-  price: number;
+  description?: string;
 }
 
 export interface ServiceOption {

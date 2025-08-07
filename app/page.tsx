@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Navbar from './components/Navbar';
 import { materials, materialCategories, mainServices, extraServices } from './lib/data';
-import { Material, Size } from './lib/types';
+import { Material, Size, Service, ExtraService } from './lib/types';
 import { MaterialSelector } from './components/calculator/MaterialSelector';
 import { MaterialPreview } from './components/calculator/MaterialPreview';
 import { PriceSummary } from './components/PriceSummary';
@@ -26,21 +26,21 @@ export default function Home() {
   const totalPrice = selectionData.material && selectionData.size && isValidDimensions
     ? area * selectionData.material.pricePerSqm[selectionData.size.id] +
       mainServices
-        .filter((service) => selectionData.selectedServices.includes(service.id))
-        .reduce((sum, service) => {
+        .filter((service: Service) => selectionData.selectedServices.includes(service.id))
+        .reduce((sum: number, service: Service) => {
           let servicePrice = service.price;
           const selectedOption = selectionData.selectedServiceOptions[service.id];
           if (selectedOption && service.options) {
-            const option = service.options.find(opt => opt.id === selectedOption);
+            const option = service.options.find((opt: any) => opt.id === selectedOption);
             if (option) servicePrice += option.price;
           }
           return sum + servicePrice;
         }, 0) +
       Object.entries(selectionData.selectedExtras)
         .filter(([_, optionId]) => optionId)
-        .reduce((sum, [serviceId, optionId]) => {
-          const service = extraServices.find((s) => s.id === serviceId);
-          const option = service?.options.find((o) => o.id === optionId);
+        .reduce((sum: number, [serviceId, optionId]) => {
+          const service = extraServices.find((s: ExtraService) => s.id === serviceId);
+          const option = service?.options.find((o: any) => o.id === optionId);
           return sum + (option?.price || 0);
         }, 0)
     : 0;

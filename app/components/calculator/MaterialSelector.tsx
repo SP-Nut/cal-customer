@@ -210,7 +210,7 @@ export function MaterialSelector({
                     <div className="flex-1">
                       <h4 className="font-medium text-gray-800 text-sm lg:text-base">{material.name}</h4>
                       <div className="text-xs lg:text-sm font-semibold text-blue-600 mt-1 lg:mt-2">
-                        เริ่มต้น ฿{Math.min(...Object.values(material.pricePerSqm).filter(p => p > 0)).toLocaleString()} ต่อ ตร.ม.
+                        เริ่มต้น ฿{Math.min(...Object.values(material.pricePerSqm)).toLocaleString()} ต่อ ตร.ม.
                       </div>
                     </div>
                   </div>
@@ -225,28 +225,35 @@ export function MaterialSelector({
           <div className="space-y-2 lg:space-y-3">
             <h3 className="text-xs lg:text-sm font-semibold text-gray-700">เลือกขนาด</h3>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
-              {selectedMaterial.sizes.map((size) => (
-                <button
-                  key={size.id}
-                  className={`p-3 rounded-lg border-2 text-center transition-all ${
-                    selectedSize?.id === size.id
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
-                  }`}
-                  onClick={() => handleSizeSelect(size)}
-                >
-                  <div className="font-medium text-gray-800 text-sm mb-1">{size.name}</div>
-                  <div className="text-sm font-semibold text-blue-600">
-                    {selectedMaterial.pricePerSqm[size.id] > 0 
-                      ? `฿${selectedMaterial.pricePerSqm[size.id].toLocaleString()}`
-                      : 'ไม่รองรับ'
-                    }
-                  </div>
-                  {selectedMaterial.pricePerSqm[size.id] > 0 && (
-                    <div className="text-xs text-gray-500">/ตร.ม.</div>
-                  )}
-                </button>
-              ))}
+              {selectedMaterial.sizes.map((size) => {
+                const price = selectedMaterial.pricePerSqm[size.id];
+                return (
+                  <button
+                    key={size.id}
+                    className={`p-3 rounded-lg border-2 text-center transition-all ${
+                      selectedSize?.id === size.id
+                        ? 'border-blue-500 bg-blue-50'
+                        : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
+                    }`}
+                    onClick={() => handleSizeSelect(size)}
+                    disabled={!price || price === 0}
+                  >
+                    <div className="font-medium text-gray-800 text-sm mb-1">{size.name}</div>
+                    <div className="text-sm font-semibold text-blue-600">
+                      {price && price > 0 
+                        ? `฿${price.toLocaleString()}`
+                        : 'ไม่รองรับ'
+                      }
+                    </div>
+                    {price && price > 0 && (
+                      <div className="text-xs text-gray-500">/ตร.ม.</div>
+                    )}
+                    {size.description && (
+                      <div className="text-xs text-gray-500 mt-1">{size.description}</div>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
