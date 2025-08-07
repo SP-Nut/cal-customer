@@ -94,8 +94,8 @@ export function MaterialSelector({
     }
   }, [selectedMaterial, mainServices]);
 
-  // Update parent whenever any selection changes
-  const updateParent = () => {
+  // Update parent whenever any selection changes - ใช้ useEffect แทน setTimeout
+  useEffect(() => {
     onSelectionChange({
       material: selectedMaterial,
       size: selectedSize,
@@ -105,7 +105,16 @@ export function MaterialSelector({
       selectedServiceOptions,
       selectedExtras,
     });
-  };
+  }, [
+    selectedMaterial,
+    selectedSize, 
+    dimensions,
+    hasColumn,
+    selectedServices,
+    selectedServiceOptions,
+    selectedExtras,
+    onSelectionChange
+  ]);
 
   const getCurrentStep = () => {
     if (!selectedType) return 1;
@@ -137,7 +146,6 @@ export function MaterialSelector({
     setSelectedServices([]);
     setSelectedServiceOptions({});
     setSelectedExtras({});
-    setTimeout(updateParent, 0);
   };
 
   const handleSizeSelect = (size: Size) => {
@@ -147,7 +155,6 @@ export function MaterialSelector({
     setSelectedServices([]);
     setSelectedServiceOptions({});
     setSelectedExtras({});
-    setTimeout(updateParent, 0);
   };
 
   return (
@@ -273,12 +280,10 @@ export function MaterialSelector({
                   placeholder="0.0"
                   value={dimensions.width || ''}
                   onChange={(e) => {
-                    const newDimensions = {
+                    setDimensions({
                       width: parseFloat(e.target.value) || 0,
                       length: dimensions.length,
-                    };
-                    setDimensions(newDimensions);
-                    setTimeout(updateParent, 0);
+                    });
                   }}
                 />
               </div>
@@ -292,12 +297,10 @@ export function MaterialSelector({
                   placeholder="0.0"
                   value={dimensions.length || ''}
                   onChange={(e) => {
-                    const newDimensions = {
+                    setDimensions({
                       width: dimensions.width,
                       length: parseFloat(e.target.value) || 0,
-                    };
-                    setDimensions(newDimensions);
-                    setTimeout(updateParent, 0);
+                    });
                   }}
                 />
               </div>
@@ -323,10 +326,7 @@ export function MaterialSelector({
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
                 }`}
-                onClick={() => {
-                  setHasColumn(true);
-                  setTimeout(updateParent, 0);
-                }}
+                onClick={() => setHasColumn(true)}
               >
                 <div className="text-xl lg:text-2xl mb-1 lg:mb-2">🏗️</div>
                 <div className="font-medium text-gray-700 text-sm lg:text-base">แบบมีเสา</div>
@@ -338,10 +338,7 @@ export function MaterialSelector({
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50'
                 }`}
-                onClick={() => {
-                  setHasColumn(false);
-                  setTimeout(updateParent, 0);
-                }}
+                onClick={() => setHasColumn(false)}
               >
                 <div className="text-xl lg:text-2xl mb-1 lg:mb-2">🏠</div>
                 <div className="font-medium text-gray-700 text-sm lg:text-base">แบบไร้เสา</div>
@@ -382,7 +379,6 @@ export function MaterialSelector({
                               ? selectedServices.filter(id => id !== service.id)
                               : [...selectedServices, service.id];
                             setSelectedServices(newServices);
-                            setTimeout(updateParent, 0);
                           }}
                         >
                           <div className="flex justify-between items-center">
@@ -435,7 +431,6 @@ export function MaterialSelector({
                                   
                                   setSelectedServiceOptions(newOptions);
                                   setSelectedServices(newServices);
-                                  setTimeout(updateParent, 0);
                                 }}
                               >
                                 <div className="flex items-center gap-1 lg:gap-2">
@@ -484,12 +479,10 @@ export function MaterialSelector({
                         className="w-full p-2 lg:p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white text-sm"
                         value={selectedExtras[service.id] || ''}
                         onChange={(e) => {
-                          const newExtras = {
+                          setSelectedExtras({
                             ...selectedExtras,
                             [service.id]: e.target.value,
-                          };
-                          setSelectedExtras(newExtras);
-                          setTimeout(updateParent, 0);
+                          });
                         }}
                       >
                         <option value="">ไม่ต้องการ</option>

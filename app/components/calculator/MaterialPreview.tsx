@@ -459,181 +459,139 @@ export function MaterialPreview({
       {/* Main Content */}
       <div className="p-4 lg:p-6">
         
-        {/* Material Description - Mobile Optimized */}
-        <div className="mb-4 lg:mb-6 p-3 lg:p-4 bg-white rounded-lg lg:rounded-xl border border-slate-200 shadow-sm"
-             style={{ animation: 'fadeIn 0.5s ease-out' }}>
-          <div className="flex items-start space-x-2 lg:space-x-3">
-            <div className="w-6 h-6 lg:w-8 lg:h-8 bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 lg:mt-1">
-              <svg className="w-3 h-3 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-            </div>
-            <div className="flex-1">
-              <h3 className="text-base lg:text-lg font-semibold text-slate-800 mb-1 lg:mb-2">รายละเอียดวัสดุ</h3>
-              <p className="text-slate-600 text-sm lg:text-base leading-relaxed">{material.description}</p>
+        {/* Simple Material Gallery & Details */}
+        <div className="mb-4 bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden"
+             style={{ animation: 'fadeIn 0.4s ease-out' }}>
+          
+          <div className="p-4">
+            {/* Compact Two Column Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {/* Left Column - Material Image */}
+              <div className="order-1 lg:order-1">
+                <div className="relative group overflow-hidden rounded-lg">
+                  <img
+                    src={material.image || "/materials/placeholder.jpg"}
+                    alt={`${material.name} - ภาพตัวอย่าง`}
+                    className="w-full h-56 lg:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                    ภาพตัวอย่างวัสดุ
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column - Material Details & Size Selection */}
+              <div className="order-2 lg:order-2 space-y-3">
+                {/* Material Description */}
+                <div>
+                  <h4 className="text-sm font-semibold text-slate-800 mb-2">{material.name}</h4>
+                  <p className="text-slate-600 text-sm leading-relaxed">{material.description}</p>
+                </div>
+
+                {/* Size Information */}
+                {selectedSize ? (
+                  /* Selected Size Display - Without Image */
+                  <div className="bg-slate-50 rounded-lg border border-slate-200 p-3">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <h5 className="text-sm font-semibold text-slate-800">ขนาดที่เลือก</h5>
+                        <button 
+                          onClick={() => onSizeSelect?.('')}
+                          className="text-xs text-blue-600 hover:text-blue-700 font-medium px-2 py-1 rounded hover:bg-blue-50 transition-colors duration-200"
+                        >
+                          เปลี่ยน
+                        </button>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <div>
+                          <div className="text-base font-bold text-slate-800">{selectedSize.name}</div>
+                          <div className="text-xs text-slate-500">วัสดุ: {material.name}</div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-slate-600">ราคาต่อ ตร.ม.</span>
+                          {material.pricePerSqm[selectedSize.id] > 0 ? (
+                            <span className="text-lg font-bold text-slate-800">
+                              ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}
+                            </span>
+                          ) : (
+                            <span className="text-sm text-slate-400">ไม่รองรับ</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* All Sizes Display - Compact Grid */
+                  <div>
+                    <h4 className="text-sm font-semibold text-slate-800 mb-2">เลือกขนาด</h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      {material.sizes.map((size, index) => (
+                        <div
+                          key={size.id}
+                          className="bg-slate-50 rounded-md p-2 border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 cursor-pointer"
+                          style={{ animation: `fadeIn ${0.6 + index * 0.1}s ease-out` }}
+                          onClick={() => onSizeSelect?.(size.id)}
+                        >
+                          <div className="text-center">
+                            <div className="text-xs font-semibold text-slate-800 mb-1">{size.name}</div>
+                            {material.pricePerSqm[size.id] > 0 ? (
+                              <div className="text-xs text-slate-600">
+                                ฿{material.pricePerSqm[size.id].toLocaleString()}/ตร.ม.
+                              </div>
+                            ) : (
+                              <div className="text-xs text-slate-400">ไม่รองรับ</div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Size Information */}
-        {selectedSize ? (
-          /* Selected Size Display - Mobile Optimized */
-          <div className="mb-4 lg:mb-6 bg-slate-50 rounded-lg lg:rounded-xl border border-slate-200 shadow-sm overflow-hidden"
-               style={{ animation: 'fadeIn 0.6s ease-out' }}>
-            
-            {/* Mobile Compact Header */}
-            <div className="px-3 py-2 lg:px-4 lg:py-3 border-b border-slate-200 bg-white">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2 lg:space-x-3">
-                  <div className="w-4 h-4 lg:w-6 lg:h-6 bg-slate-700 rounded-md flex items-center justify-center">
-                    <svg className="w-3 h-3 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
-                    </svg>
-                  </div>
-                  <h3 className="text-sm lg:text-lg font-semibold text-slate-800">ขนาดที่เลือก</h3>
-                </div>
-                {/* Change Size Button - Mobile */}
-                <button 
-                  onClick={() => onSizeSelect?.('')}
-                  className="text-xs lg:text-sm text-blue-600 hover:text-blue-700 font-medium px-2 py-1 rounded transition-colors duration-200"
-                >
-                  เปลี่ยน
-                </button>
-              </div>
-            </div>
-            
-            {/* Mobile Optimized Content */}
-            <div className="p-3 lg:p-4">
-              {/* Mobile Layout - Stack vertically with compact spacing */}
-              <div className="space-y-3 lg:space-y-0 lg:flex lg:items-center lg:justify-between lg:gap-4">
-                {/* Size Name - More compact on mobile */}
-                <div className="flex-1">
-                  <h4 className="text-lg lg:text-xl font-bold text-slate-800 mb-1 lg:mb-2">{selectedSize.name}</h4>
-                  <div className="text-xs lg:text-sm text-slate-500">
-                    วัสดุ: {material.name}
-                  </div>
-                </div>
-                
-                {/* Price Display - Compact mobile version */}
-                <div className="flex-shrink-0">
-                  {material.pricePerSqm[selectedSize.id] > 0 ? (
-                    <div className="inline-block bg-slate-800 text-white rounded-lg lg:rounded-xl px-3 py-2 lg:px-4 lg:py-3 shadow-sm w-full lg:w-auto">
-                      <div className="text-center">
-                        <div className="text-lg lg:text-2xl font-bold">
-                          ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}
-                        </div>
-                        <div className="text-xs lg:text-sm opacity-80">
-                          ต่อ ตร.ม.
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="inline-block bg-slate-200 text-slate-500 rounded-lg lg:rounded-xl px-3 py-2 lg:px-4 lg:py-3 w-full lg:w-auto">
-                      <div className="text-center">
-                        <div className="text-sm lg:text-lg font-semibold">ไม่รองรับ</div>
-                        <div className="text-xs lg:text-sm">ขนาดนี้</div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          /* All Sizes Display */
-          <div className="mb-6"
-               style={{ animation: 'fadeIn 0.6s ease-out' }}>
-            
-            {/* Header */}
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-6 h-6 bg-slate-600 rounded-md flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-slate-800">เลือกขนาด</h3>
-            </div>
-            
-            {/* Size List - Compact */}
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-1.5 sm:gap-2">
-              {material.sizes.map((size, index) => (
-                <div
-                  key={size.id}
-                  className="group bg-white rounded-lg p-2 sm:p-3 border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 cursor-pointer"
-                  style={{ animation: `fadeIn ${0.6 + index * 0.1}s ease-out` }}
-                  onClick={() => onSizeSelect?.(size.id)}
-                >
-                  <div className="text-center">
-                    <h4 className="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-blue-600 transition-colors duration-300 mb-1">
-                      {size.name}
-                    </h4>
-                    <div className="flex items-center justify-center">
-                      {material.pricePerSqm[size.id] > 0 ? (
-                        <div className="text-center">
-                          <div className="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-blue-600">
-                            ฿{material.pricePerSqm[size.id].toLocaleString()}
-                          </div>
-                          <div className="text-xs text-slate-500 group-hover:text-blue-500">
-                            /ตร.ม.
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="text-xs font-medium text-slate-400">ไม่รองรับ</div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Price Calculation Section - Mobile Optimized */}
+        {/* Ultra Compact Price Calculation */}
         {dimensions.width > 0 && dimensions.length > 0 && material && selectedSize && (
-          <div className="mb-4 lg:mb-6 bg-white rounded-lg shadow-sm border border-gray-200"
+          <div className="mb-4 bg-white rounded-lg border border-slate-200 shadow-sm"
                style={{ animation: 'fadeIn 1s ease-out' }}>
             
-            {/* Compact Header for Mobile */}
-            <div className="flex items-center space-x-2 lg:space-x-3 p-2 lg:p-3 border-b border-gray-200 bg-slate-50">
-              <div className="w-6 h-6 lg:w-8 lg:h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <svg className="w-3 h-3 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                </svg>
-              </div>
-              <h3 className="text-sm lg:text-lg font-semibold text-gray-900">สรุปการคำนวณ</h3>
-            </div>
-
-            <div className="p-3 lg:p-4 space-y-2 lg:space-y-3">
-              {/* Dimensions - Ultra Compact for Mobile */}
-              <div className="flex items-center justify-between text-xs lg:text-sm">
-                <span className="text-gray-600 font-medium">พื้นที่</span>
-                <span className="font-semibold text-gray-900">
-                  {dimensions.width} × {dimensions.length} = {(dimensions.width * dimensions.length).toFixed(2)} ตร.ม.
-                </span>
-              </div>
-
-              {/* Material Price - Compact */}
-              <div className="bg-gray-50 rounded-md p-2 lg:p-3 space-y-1 lg:space-y-2">
-                <div className="flex items-center justify-between text-xs lg:text-sm">
-                  <span className="text-gray-600">ราคาวัสดุ ({selectedSize.name})</span>
-                  <span className="font-medium text-gray-900">
-                    ฿{material.pricePerSqm[selectedSize.id].toLocaleString()} /ตร.ม.
-                  </span>
-                </div>
+            <div className="p-3">
+              {/* Single Row Layout */}
+              <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
                 
-                <div className="flex items-center justify-between text-xs lg:text-sm border-t border-gray-200 pt-1 lg:pt-2">
-                  <span className="text-gray-600 font-medium">รวมราคาวัสดุ</span>
-                  <span className="font-bold text-gray-900">
-                    ฿{((dimensions.width * dimensions.length) * material.pricePerSqm[selectedSize.id]).toLocaleString()}
+                {/* Area */}
+                <div className="flex-shrink-0">
+                  <span className="text-slate-600">พื้นที่: </span>
+                  <span className="font-semibold text-slate-900">
+                    {(dimensions.width * dimensions.length).toFixed(2)} ตร.ม.
                   </span>
+                </div>
+
+                {/* Material Price */}
+                <div className="flex-shrink-0">
+                  <span className="text-slate-600">ราคาวัสดุ: </span>
+                  <span className="font-semibold text-slate-900">
+                    ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}/ตร.ม.
+                  </span>
+                </div>
+
+                {/* Total Price */}
+                <div className="flex-shrink-0 bg-slate-800 text-white rounded-md px-3 py-2">
+                  <span className="text-xs opacity-80 mr-2">รวม:</span>
+                  <span className="font-bold">฿{totalPrice.toLocaleString()}</span>
                 </div>
               </div>
 
-              {/* Services - Ultra Compact */}
-              {selectedServices.length > 0 && (
-                <div className="bg-blue-50 rounded-md p-2 lg:p-3">
-                  <div className="text-xs font-semibold text-blue-700 mb-1 lg:mb-2">บริการหลัก</div>
-                  <div className="space-y-1">
+              {/* Services - Inline */}
+              {(selectedServices.length > 0 || Object.keys(selectedExtras).some(key => selectedExtras[key])) && (
+                <div className="mt-2 pt-2 border-t border-slate-200">
+                  <div className="flex flex-wrap gap-1">
+                    <span className="text-xs text-slate-500 mr-2">บริการ:</span>
+                    {/* Main Services */}
                     {mainServices
                       .filter((service) => selectedServices.includes(service.id))
                       .map((service) => {
@@ -646,21 +604,13 @@ export function MaterialPreview({
                           }
                         }
                         return (
-                          <div key={service.id} className="flex items-center justify-between text-xs lg:text-sm">
-                            <span className="text-gray-600 truncate flex-1 mr-2">{service.name}</span>
-                            <span className="font-medium text-gray-900 flex-shrink-0">฿{servicePrice.toLocaleString()}</span>
-                          </div>
+                          <span key={service.id} className="inline-block px-2 py-0.5 rounded text-xs bg-slate-100 text-slate-700 mr-1 mb-1">
+                            {service.name} ฿{servicePrice.toLocaleString()}
+                          </span>
                         );
                       })}
-                  </div>
-                </div>
-              )}
-
-              {/* Extra Services - Ultra Compact */}
-              {Object.keys(selectedExtras).some(key => selectedExtras[key]) && (
-                <div className="bg-green-50 rounded-md p-2 lg:p-3">
-                  <div className="text-xs font-semibold text-green-700 mb-1 lg:mb-2">บริการเสริม</div>
-                  <div className="space-y-1">
+                    
+                    {/* Extra Services */}
                     {Object.entries(selectedExtras)
                       .filter(([_, optionId]) => optionId)
                       .map(([serviceId, optionId]) => {
@@ -668,25 +618,11 @@ export function MaterialPreview({
                         const option = service?.options.find((o) => o.id === optionId);
                         if (!service || !option) return null;
                         return (
-                          <div key={serviceId} className="flex items-center justify-between text-xs lg:text-sm">
-                            <span className="text-gray-600 truncate flex-1 mr-2">{service.name}</span>
-                            <span className="font-medium text-gray-900 flex-shrink-0">฿{option.price.toLocaleString()}</span>
-                          </div>
+                          <span key={serviceId} className="inline-block px-2 py-0.5 rounded text-xs bg-slate-100 text-slate-700 mr-1 mb-1">
+                            {service.name} ฿{option.price.toLocaleString()}
+                          </span>
                         );
                       })}
-                  </div>
-                </div>
-              )}
-
-              {/* Total Price - Prominent but Compact */}
-              {totalPrice > 0 && (
-                <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg p-3 lg:p-4 text-white mt-3 lg:mt-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="font-semibold text-sm lg:text-base">ราคารวมทั้งหมด</span>
-                      <div className="text-xs text-blue-100 mt-0.5 lg:mt-1">รวมภาษีมูลค่าเพิ่ม 7%</div>
-                    </div>
-                    <span className="text-xl lg:text-2xl font-bold">฿{totalPrice.toLocaleString()}</span>
                   </div>
                 </div>
               )}
@@ -694,21 +630,18 @@ export function MaterialPreview({
           </div>
         )}
 
-        {/* Important Notes - Mobile Optimized */}
-        <div className="bg-yellow-50 rounded-lg border border-yellow-200 p-3 lg:p-4"
-             style={{ animation: 'fadeIn 0.8s ease-out' }}>
-          <div className="flex items-start space-x-2 lg:space-x-3">
-            <div className="w-5 h-5 lg:w-6 lg:h-6 bg-yellow-600 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5 lg:mt-1">
-              <svg className="w-3 h-3 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+        {/* Minimal Important Notes */}
+        <div className="bg-slate-50 rounded-lg p-3">
+          <div className="flex items-start space-x-2">
+            <div className="w-4 h-4 bg-slate-500 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01"/>
               </svg>
             </div>
             <div className="flex-1">
-              <h4 className="font-semibold text-yellow-800 text-sm lg:text-base mb-1">ข้อมูลสำคัญ</h4>
-              <p className="text-yellow-700 text-xs lg:text-sm leading-relaxed">
-                ราคาที่แสดงเป็นราคาวัสดุเท่านั้น ไม่รวมค่าติดตั้ง ค่าขนส่ง และอุปกรณ์เสริม 
-                คุณสามารถเลือกบริการเพิ่มเติมได้ในขั้นตอนถัดไป
-              </p>
+              <div className="text-slate-700 text-sm">
+                <span className="font-medium">หมายเหตุ:</span> ราคารวมวัสดุและบริการที่เลือก • สามารถเลือกบริการเพิ่มเติมได้ในขั้นตอนถัดไป • รับประกันความแม่นยำ 100%
+              </div>
             </div>
           </div>
         </div>
