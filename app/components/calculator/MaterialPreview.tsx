@@ -431,7 +431,7 @@ export function MaterialPreview({
       `}</style>
       
       {/* Hero Section - Material Image */}
-      <div className="relative h-48 lg:h-56 overflow-hidden">
+      <div className="relative h-96 lg:h-[28rem] overflow-hidden">
         <img
           src={material.image || "/materials/placeholder.jpg"}
           alt={material.name}
