@@ -47,11 +47,38 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-8">
+      <style jsx global>{`
+        .custom-scrollbar {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        
+        /* Hide all scrollbars globally */
+        * {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        *::-webkit-scrollbar {
+          display: none;
+        }
+        
+        /* Ensure body and html have no scrollbars */
+        html, body {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        html::-webkit-scrollbar, body::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
       <Navbar totalPrice={totalPrice} />
       {/* Desktop Layout */}
       <div className="hidden lg:flex h-[calc(100vh-2rem)] p-8 gap-3 mt-6">
-        {/* Left Side - Material Preview (80%) */}
-        <div id="materials" className="w-[80%]">
+        {/* Left Side - Material Preview (flex-1) */}
+        <div id="materials" className="flex-1">
           <div className="h-full rounded-3xl overflow-auto shadow-xl border border-gray-200/50 custom-scrollbar bg-white/95 backdrop-blur-sm">
             <MaterialPreview 
               material={selectionData.material} 
@@ -67,8 +94,8 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Right Side - Calculator (20%) */}
-        <div className="w-[20%] bg-white/95 backdrop-blur-sm border border-gray-200/50 h-full relative shadow-xl rounded-3xl overflow-hidden">
+        {/* Right Side - Calculator (Fixed width 400px) */}
+        <div className="w-96 bg-white/95 backdrop-blur-sm border border-gray-200/50 h-full relative shadow-xl rounded-3xl overflow-hidden">
           <div className="h-full flex flex-col">
             {/* Main Content - Scrollable */}
             <div className="flex-1 overflow-auto custom-scrollbar p-6">
@@ -108,7 +135,7 @@ export default function Home() {
       <div className="lg:hidden flex flex-col min-h-[calc(100vh-2rem)] p-4 gap-4 mt-4">
         {/* Top - Material Preview */}
         <div className="flex-1 min-h-[50vh]">
-          <div className="h-full rounded-2xl overflow-auto shadow-xl border border-gray-200/50 bg-white/95 backdrop-blur-sm">
+          <div className="h-full rounded-2xl overflow-auto custom-scrollbar shadow-xl border border-gray-200/50 bg-white/95 backdrop-blur-sm">
             <MaterialPreview 
               material={selectionData.material} 
               selectedSize={selectionData.size}

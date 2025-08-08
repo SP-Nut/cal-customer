@@ -2,11 +2,11 @@ import { Material } from '../types';
 
 export const opaqueMaterials: Material[] = [
   {
-    id: 'aluminum-roof',
+    id: 'aluminum-roof-3mm',
     type: 'opaque',
-    name: 'Aluminum Roof หนา 3 มม.',
+    name: 'หลังคาอลูมิเนียม 3 มม.',
     image: '/materials/aluminum-roof.png',
-    description: 'หลังคาอลูมิเนียมคุณภาพสูง ความหนา 3 มม. ทนทานต่อสภาพอากาศ',
+    description: 'หลังคาอลูมิเนียมรูฟคุณภาพสูง หนา 3 มิลลิเมตร ทนทานต่อสภาพอากาศ มีความแข็งแรง ไม่เป็นสนิม เหมาะสำหรับการใช้งานในบ้านเรือน โรงงาน หรือสิ่งปลูกสร้างทั่วไป',
     sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
@@ -25,12 +25,12 @@ export const opaqueMaterials: Material[] = [
     }
   },
   {
-    id: 'vinyl-dream-roof',
+    id: 'vinyl-dream-roof-6mm',
     type: 'opaque',
-    name: 'หลังคาไวนิล รุ่นดรีมรูฟ Vinyl Dream Roof ท้องเรียบ คลิป-ล็อค หนา 6 มม.',
+    name: 'หลังคาไวนิล ดรีมรูฟ 6 มม.',
     image: '/materials/vinyl-dream-roof.jpg',
-    description: 'หลังคาไวนิลรุ่นดรีมรูฟ ท้องเรียบพร้อมระบบคลิป-ล็อค ความหนา 6 มม.',
-     sizes: [
+    description: 'หลังคาไวนิลรุ่นดรีมรูฟ ท้องเรียบ ระบบคลิป-ล็อค หนา 6 มิลลิเมตร ผิวเรียบสวยงาม ติดตั้งง่าย ทนทานต่อแสงแดดและฝน มีคุณสมบัติกันความร้อนได้ดี เหมาะสำหรับบ้านพักอาศัย',
+    sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
       { id: 'L', name: 'L'},
@@ -48,11 +48,11 @@ export const opaqueMaterials: Material[] = [
     }
   },
   {
-    id: 'vinyl-smooth-roof',
+    id: 'vinyl-smooth-round-square-6mm',
     type: 'opaque',
-    name: 'หลังคาไวนิล รุ่นท้องเรียบหัวกลม/หัวเหลี่ยม Vinyl หนา 6 มม.',
+    name: 'หลังคาไวนิล ท้องเรียบ หัวกลม/เหลี่ยม 6 มม.',
     image: '/materials/vinyl-smooth-roof.jpg',
-    description: 'หลังคาไวนิลท้องเรียบแบบหัวกลม/หัวเหลี่ยม ความหนา 6 มม.',
+    description: 'หลังคาไวนิลรุ่นท้องเรียบ มีหัวแบบกลมและเหลี่ยม หนา 6 มิลลิเมตร ผิวเรียบ สีสวย ทนทานต่อสภาพอากาศ ไม่แตกหัก ไม่เปื่อยเน่า เหมาะสำหรับโครงสร้างหลังคาแบบต่างๆ',
     sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
@@ -71,11 +71,11 @@ export const opaqueMaterials: Material[] = [
     }
   },
   {
-    id: 'vinyl-pr6-roof',
+    id: 'vinyl-smooth-square-5mm-pr6',
     type: 'opaque',
-    name: 'หลังคาไวนิล รุ่นท้องเรียบหัวเหลี่ยม Vinyl หนา 5 มม. (PR-6)',
+    name: 'หลังคาไวนิล ท้องเรียบ หัวเหลี่ยม 5 มม. (PR-6)',
     image: '/materials/vinyl-pr6-roof.jpg',
-    description: 'หลังคาไวนิลรุ่น PR-6 ท้องเรียบหัวเหลี่ยม ความหนา 5 มม.',
+    description: 'หลังคาไวนิลรุ่น PR-6 ท้องเรียบหัวเหลี่ยม หนา 5 มิลลิเมตร คุณภาพมาตรฐาน น้ำหนักเบา ทนทานต่อแสง UV ไม่ซีดจาง เหมาะสำหรับงบประมาณประหยัด แต่ยังคงคุณภาพดี',
     sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
@@ -94,11 +94,11 @@ export const opaqueMaterials: Material[] = [
     }
   },
   {
-    id: 'winter-roof',
+    id: 'winter-roof-2mm',
     type: 'opaque',
-    name: 'หลังคาวินเทอร์รูฟ Winter roof หนา 2 มม.',
+    name: 'หลังคาวินเทอร์รูฟ 2 มม.',
     image: '/materials/winter-roof.jpg',
-    description: 'หลังคาวินเทอร์รูฟ ความหนา 2 มม. น้ำหนักเบา ทนทาน',
+    description: 'หลังคาวินเทอร์รูฟ หนา 2 มิลลิเมตร วัสดุเกรดพรีเมียม ออกแบบให้ทนทานในสภาพอากาศหนาว ป้องกันการควบแน่นของไอน้ำ มีความยืดหยุ่นสูง ไม่แตกเมื่อเจอการขยายตัวของโครงสร้าง',
     sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
@@ -117,34 +117,11 @@ export const opaqueMaterials: Material[] = [
     }
   },
   {
-    id: 'metal-sheet-sandwich-bluescope',
+    id: 'metal-sheet-sandwich-35mm-pu25',
     type: 'opaque',
-    name: 'หลังคาเมทัลชีท หนา 0.35 มม. แผ่นแซนวิช หนา 0.35 มม. ติดฉนวน PU หนา 25 มม. บูลสโคป',
+    name: 'เมทัลชีท แผ่นแซนวิช 0.35 มม. + ฉนวน PU 25 มม.',
     image: '/materials/metal-sheet-sandwich.jpg',
-    description: 'เมทัลชีทแผ่นแซนวิช พร้อมฉนวน PU หนา 25 มม. บูลสโคป)',
-    sizes: [
-      { id: 'M', name: 'M'},
-      { id: 'M_PLUS', name: 'M+'},
-      { id: 'L', name: 'L'},
-      { id: 'L_PLUS', name: 'L+'},
-      { id: 'STAINLESS_S', name: 'Stainless S'},
-      { id: 'STAINLESS_M', name: 'Stainless M'}
-    ],
-    pricePerSqm: {
-      'M': 2350,
-      'M_PLUS': 2450,
-      'L': 2550,
-      'L_PLUS': 2650,
-      'STAINLESS_S': 3900,
-      'STAINLESS_M': 5000
-    }
-  },
-    {
-    id: 'metal-sheet-sandwich',
-    type: 'opaque',
-    name: 'หลังคาเมทัลชีท หนา 0.35 มม. แผ่นแซนวิช หนา 0.35 มม. ติดฉนวน PU หนา 25 มม.',
-    image: '/materials/metal-sheet-sandwich.jpg',
-    description: 'เมทัลชีทแผ่นแซนวิช พร้อมฉนวน PU หนา 25 มม. (บูลสโคป เพิ่ม 200 บาท)',
+    description: 'หลังคาเมทัลชีทแผ่นแซนวิช หนา 0.35 มิลลิเมตร ติดฉนวนโพลียูรีเทน (PU) หนา 25 มิลลิเมตร ป้องกันความร้อนได้ดีเยี่ยม ลดเสียงรบกวน โครงสร้างแข็งแรง เหมาะสำหรับโรงงาน คลังสินค้า',
     sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
@@ -163,11 +140,34 @@ export const opaqueMaterials: Material[] = [
     }
   },
   {
-    id: 'metal-sheet-snaplock',
+    id: 'metal-sheet-sandwich-bluescope-35mm-pu25',
     type: 'opaque',
-    name: 'หลังคาเมทัลชีท หนา 0.35 มม. ลอนสแนปล็อค ติดฉนวนกันความร้อน PU หนา 25 มม.',
+    name: 'เมทัลชีท แผ่นแซนวิช บลูสโคป 0.35 มม. + ฉนวน PU 25 มม.',
+    image: '/materials/metal-sheet-sandwich.jpg',
+    description: 'หลังคาเมทัลชีทแผ่นแซนวิช แบรนด์บลูสโคป หนา 0.35 มิลลิเมตร ติดฉนวน PU 25 มิลลิเมตร คุณภาพพรีเมียม ทนสนิมดีกว่าเหล็กปกติ สีสวยทนนาน เหมาะสำหรับงานคุณภาพสูง (ราคาเพิ่ม 200 บาท)',
+    sizes: [
+      { id: 'M', name: 'M'},
+      { id: 'M_PLUS', name: 'M+'},
+      { id: 'L', name: 'L'},
+      { id: 'L_PLUS', name: 'L+'},
+      { id: 'STAINLESS_S', name: 'Stainless S'},
+      { id: 'STAINLESS_M', name: 'Stainless M'}
+    ],
+    pricePerSqm: {
+      'M': 2350,
+      'M_PLUS': 2450,
+      'L': 2550,
+      'L_PLUS': 2650,
+      'STAINLESS_S': 3900,
+      'STAINLESS_M': 5000
+    }
+  },
+  {
+    id: 'metal-sheet-snaplock-35mm-pu25',
+    type: 'opaque',
+    name: 'เมทัลชีท ลอนสแนปล็อค 0.35 มม. + ฉนวน PU 25 มม.',
     image: '/materials/metal-sheet-snaplock.jpg',
-    description: 'เมทัลชีทลอนสแนปล็อค พร้อมฉนวน PU หนา 25 มม.',
+    description: 'หลังคาเมทัลชีทลอนสแนปล็อค หนา 0.35 มิลลิเมตร ติดฉนวนกันความร้อน PU หนา 25 มิลลิเมตร ระบบล็อคพิเศษ กันน้ำรั่วซึม ป้องกันความร้อนดี เหมาะสำหรับบ้านพักอาศัยและอาคารพาณิชย์',
     sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
@@ -186,11 +186,11 @@ export const opaqueMaterials: Material[] = [
     }
   },
   {
-    id: 'metal-sheet-pu-25',
+    id: 'metal-sheet-35mm-pu25',
     type: 'opaque',
-    name: 'หลังคาเมทัลชีท หนา 0.35 มม. ติดฉนวนกันความร้อน PU หนา 25 มม.',
+    name: 'เมทัลชีท 0.35 มม. + ฉนวน PU 25 มม.',
     image: '/materials/metal-sheet-pu-25.jpg',
-    description: 'เมทัลชีท พร้อมฉนวน PU หนา 25 มม. (PU หนา 50 มม. เพิ่ม 200 บาท)',
+    description: 'หลังคาเมทัลชีทมาตรฐาน หนา 0.35 มิลลิเมตร ติดฉนวนโพลียูรีเทน หนา 25 มิลลิเมตร ช่วยป้องกันความร้อน ลดค่าไฟฟ้า โครงสร้างแข็งแรง ราคาประหยัด เหมาะสำหรับการใช้งานทั่วไป',
     sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
@@ -209,12 +209,35 @@ export const opaqueMaterials: Material[] = [
     }
   },
   {
-    id: 'metal-sheet-pe',
+    id: 'metal-sheet-35mm-pu50',
     type: 'opaque',
-    name: 'หลังคาเมทัลชีท หนา 0.35 มม. ติดฉนวนกันความร้อน PE หนา 5 มม.',
+    name: 'เมทัลชีท 0.35 มม. + ฉนวน PU 50 มม.',
+    image: '/materials/metal-sheet-pu-25.jpg',
+    description: 'หลังคาเมทัลชีทหนา 0.35 มิลลิเมตร ติดฉนวน PU หนา 50 มิลลิเมตร ป้องกันความร้อนได้ดีกว่าฉนวน 25 มม. เหมาะสำหรับพื้นที่ที่ต้องการการป้องกันความร้อนสูง เช่น โรงงาน คลังเก็บสินค้า (ราคาเพิ่ม 200 บาท)',
+    sizes: [
+      { id: 'M', name: 'M'},
+      { id: 'M_PLUS', name: 'M+'},
+      { id: 'L', name: 'L'},
+      { id: 'L_PLUS', name: 'L+'},
+      { id: 'STAINLESS_S', name: 'Stainless S'},
+      { id: 'STAINLESS_M', name: 'Stainless M'}
+    ],
+    pricePerSqm: {
+      'M': 2000,
+      'M_PLUS': 2100,
+      'L': 2200,
+      'L_PLUS': 2300,
+      'STAINLESS_S': 3500,
+      'STAINLESS_M': 4600
+    }
+  },
+  {
+    id: 'metal-sheet-35mm-pe5',
+    type: 'opaque',
+    name: 'เมทัลชีท 0.35 มม. + ฉนวน PE 5 มม.',
     image: '/materials/metal-sheet-pe.jpg',
-    description: 'เมทัลชีท พร้อมฉนวน PE หนา 5 มม.',
-  sizes: [
+    description: 'หลังคาเมทัลชีทหนา 0.35 มิลลิเมตร ติดฉนวนโพลีเอทิลีน (PE) หนา 5 มิลลิเมตร วัสดุฉนวนเบื้องต้น ช่วยป้องกันความร้อนและลดเสียงในระดับปานกลาง ราคาประหยัด เหมาะสำหรับงบประมาณจำกัด',
+    sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
       { id: 'L', name: 'L'},
@@ -232,12 +255,12 @@ export const opaqueMaterials: Material[] = [
     }
   },
   {
-    id: 'metal-sheet-bluescope-snaplock',
+    id: 'metal-sheet-bluescope-35mm-snaplock',
     type: 'opaque',
-    name: 'หลังคาเมทัลชีท บูลสโคป หนา 0.35 มม. ลอนสแนปล็อค ไม่ติดฉนวนกันความร้อน',
+    name: 'บลูสโคป ลอนสแนปล็อค 0.35 มม.',
     image: '/materials/metal-sheet-bluescope-snaplock.jpg',
-    description: 'เมทัลชีทบูลสโคป ลอนสแนปล็อค (0.40 เพิ่ม 100 บาท / 0.47 เพิ่ม 200 บาท)',
-     sizes: [
+    description: 'หลังคาเมทัลชีท บลูสโคป หนา 0.35 มิลลิเมตร ลอนสแนปล็อค ไม่ติดฉนวน คุณภาพพรีเมียม ทนสนิมดีเยี่ยม สีทนนาน โครงสร้างแข็งแรง เหมาะสำหรับโครงการที่ต้องการคุณภาพสูง',
+    sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
       { id: 'L', name: 'L'},
@@ -255,12 +278,58 @@ export const opaqueMaterials: Material[] = [
     }
   },
   {
-    id: 'metal-sheet-external-snaplock',
+    id: 'metal-sheet-bluescope-40mm-snaplock',
     type: 'opaque',
-    name: 'หลังคาเมทัลชีท เหล็กนอก หนา 0.35 มม. ลอนสแนปล็อค ไม่ติดฉนวนกันความร้อน',
+    name: 'บลูสโคป ลอนสแนปล็อค 0.40 มม.',
+    image: '/materials/metal-sheet-bluescope-snaplock.jpg',
+    description: 'หลังคาเมทัลชีท บลูสโคป หนา 0.40 มิลลิเมตร ลอนสแนปล็อค ไม่ติดฉนวน หนากว่าแบบ 0.35 มม. ทนทานมากขึ้น เหมาะสำหรับโครงสร้างขนาดใหญ่ที่ต้องการความแข็งแรงเพิ่มเติม (ราคาเพิ่ม 100 บาท)',
+    sizes: [
+      { id: 'M', name: 'M'},
+      { id: 'M_PLUS', name: 'M+'},
+      { id: 'L', name: 'L'},
+      { id: 'L_PLUS', name: 'L+'},
+      { id: 'STAINLESS_S', name: 'Stainless S'},
+      { id: 'STAINLESS_M', name: 'Stainless M'}
+    ],
+    pricePerSqm: {
+      'M': 1900,
+      'M_PLUS': 2000,
+      'L': 2100,
+      'L_PLUS': 2200,
+      'STAINLESS_S': 3400,
+      'STAINLESS_M': 4500
+    }
+  },
+  {
+    id: 'metal-sheet-bluescope-47mm-snaplock',
+    type: 'opaque',
+    name: 'บลูสโคป ลอนสแนปล็อค 0.47 มม.',
+    image: '/materials/metal-sheet-bluescope-snaplock.jpg',
+    description: 'หลังคาเมทัลชีท บลูสโคป หนา 0.47 มิลลิเมตร ลอนสแนปล็อค ไม่ติดฉนวน หนาที่สุดในกลุ่มนี้ ทนทานสูงสุด เหมาะสำหรับโครงสร้างหนัก โรงงานอุตสาหกรรม หรือพื้นที่ที่มีภาระลมแรง (ราคาเพิ่ม 200 บาท)',
+    sizes: [
+      { id: 'M', name: 'M'},
+      { id: 'M_PLUS', name: 'M+'},
+      { id: 'L', name: 'L'},
+      { id: 'L_PLUS', name: 'L+'},
+      { id: 'STAINLESS_S', name: 'Stainless S'},
+      { id: 'STAINLESS_M', name: 'Stainless M'}
+    ],
+    pricePerSqm: {
+      'M': 2000,
+      'M_PLUS': 2100,
+      'L': 2200,
+      'L_PLUS': 2300,
+      'STAINLESS_S': 3500,
+      'STAINLESS_M': 4600
+    }
+  },
+  {
+    id: 'metal-sheet-outdoor-steel-35mm-snaplock',
+    type: 'opaque',
+    name: 'เหล็กนอก ลอนสแนปล็อค 0.35 มม.',
     image: '/materials/metal-sheet-external-snaplock.jpg',
-    description: 'เมทัลชีทเหล็กนอก ลอนสแนปล็อค (0.40 เพิ่ม 100 บาท / 0.47 เพิ่ม 200 บาท)',
-     sizes: [
+    description: 'หลังคาเมทัลชีท เหล็กนอก หนา 0.35 มิลลิเมตร ลอนสแนปล็อค ไม่ติดฉนวน วัสดุคุณภาพมาตรฐาน ราคาประหยัด โครงสร้างแข็งแรง เหมาะสำหรับงานทั่วไป โรงเก็บของ หรือพื้นที่ที่ไม่ต้องการฉนวนกันความร้อน',
+    sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
       { id: 'L', name: 'L'},
@@ -278,11 +347,57 @@ export const opaqueMaterials: Material[] = [
     }
   },
   {
-    id: 'metal-sheet-bluescope-cool',
+    id: 'metal-sheet-outdoor-steel-40mm-snaplock',
     type: 'opaque',
-    name: 'หลังคาเมทัลชีท บลูสโคป แซคส์® คูล หนา 0.35 มม. ไม่ติดฉนวนกันความร้อน',
+    name: 'เหล็กนอก ลอนสแนปล็อค 0.40 มม.',
+    image: '/materials/metal-sheet-external-snaplock.jpg',
+    description: 'หลังคาเมทัลชีท เหล็กนอก หนา 0.40 มิลลิเมตร ลอนสแนปล็อค ไม่ติดฉนวน หนากว่าแบบ 0.35 มม. ทนทานมากขึ้น เหมาะสำหรับโครงการที่ต้องการความแข็งแรงเพิ่มเติม (ราคาเพิ่ม 100 บาท)',
+    sizes: [
+      { id: 'M', name: 'M'},
+      { id: 'M_PLUS', name: 'M+'},
+      { id: 'L', name: 'L'},
+      { id: 'L_PLUS', name: 'L+'},
+      { id: 'STAINLESS_S', name: 'Stainless S'},
+      { id: 'STAINLESS_M', name: 'Stainless M'}
+    ],
+    pricePerSqm: {
+      'M': 1800,
+      'M_PLUS': 1900,
+      'L': 2000,
+      'L_PLUS': 2100,
+      'STAINLESS_S': 3300,
+      'STAINLESS_M': 4400
+    }
+  },
+  {
+    id: 'metal-sheet-outdoor-steel-47mm-snaplock',
+    type: 'opaque',
+    name: 'เหล็กนอก ลอนสแนปล็อค 0.47 มม.',
+    image: '/materials/metal-sheet-external-snaplock.jpg',
+    description: 'หลังคาเมทัลชีท เหล็กนอก หนา 0.47 มิลลิเมตร ลอนสแนปล็อค ไม่ติดฉนวน หนาที่สุด ทนทานสูงสุดในกลุ่มเหล็กนอก เหมาะสำหรับโครงสร้างหนัก โรงงาน หรือพื้นที่ที่มีภาระลมแรง (ราคาเพิ่ม 200 บาท)',
+    sizes: [
+      { id: 'M', name: 'M'},
+      { id: 'M_PLUS', name: 'M+'},
+      { id: 'L', name: 'L'},
+      { id: 'L_PLUS', name: 'L+'},
+      { id: 'STAINLESS_S', name: 'Stainless S'},
+      { id: 'STAINLESS_M', name: 'Stainless M'}
+    ],
+    pricePerSqm: {
+      'M': 1900,
+      'M_PLUS': 2000,
+      'L': 2100,
+      'L_PLUS': 2200,
+      'STAINLESS_S': 3400,
+      'STAINLESS_M': 4500
+    }
+  },
+  {
+    id: 'metal-sheet-bluescope-zacs-cool-35mm',
+    type: 'opaque',
+    name: 'บลูสโคป แซคส์ คูล 0.35 มม.',
     image: '/materials/metal-sheet-bluescope-cool.jpg',
-    description: 'เมทัลชีทบลูสโคป แซคส์® คูล ไม่ติดฉนวน',
+    description: 'หลังคาเมทัลชีท บลูสโคป แซคส์® คูล หนา 0.35 มิลลิเมตร ไม่ติดฉนวน เทคโนโลยีพิเศษช่วยสะท้อนความร้อน ลดอุณหภูมิใต้หลังคา ประหยัดพลังงาน สีสวยทนนาน เหมาะสำหรับพื้นที่ร้อน',
     sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
@@ -301,11 +416,11 @@ export const opaqueMaterials: Material[] = [
     }
   },
   {
-    id: 'metal-sheet-basic',
+    id: 'metal-sheet-35mm-no-insulation',
     type: 'opaque',
-    name: 'หลังคาเมทัลชีท หนา 0.35 มม. ไม่ติดฉนวนกันความร้อน',
+    name: 'เมทัลชีท มาตรฐาน 0.35 มม.',
     image: '/materials/metal-sheet-basic.jpg',
-    description: 'เมทัลชีทพื้นฐาน ไม่ติดฉนวน (0.40 เพิ่ม 100 บาท / 0.47 เพิ่ม 200 บาท)',
+    description: 'หลังคาเมทัลชีทมาตรฐาน หนา 0.35 มิลลิเมตร ไม่ติดฉนวนกันความร้อน วัสดุพื้นฐาน ราคาประหยัดที่สุด โครงสร้างแข็งแรงพอใช้ เหมาะสำหรับงานทั่วไป โรงเก็บของ หรือพื้นที่ที่ไม่ต้องการความเย็น',
     sizes: [
       { id: 'M', name: 'M'},
       { id: 'M_PLUS', name: 'M+'},
@@ -321,6 +436,52 @@ export const opaqueMaterials: Material[] = [
       'L_PLUS': 1800,
       'STAINLESS_S': 3000,
       'STAINLESS_M': 4100
+    }
+  },
+  {
+    id: 'metal-sheet-40mm-no-insulation',
+    type: 'opaque',
+    name: 'เมทัลชีท มาตรฐาน 0.40 มม.',
+    image: '/materials/metal-sheet-basic.jpg',
+    description: 'หลังคาเมทัลชีทมาตรฐาน หนา 0.40 มิลลิเมตร ไม่ติดฉนวนกันความร้อน หนากว่าแบบ 0.35 มม. ทนทานมากขึ้น โครงสร้างแข็งแรงกว่า เหมาะสำหรับโครงการที่ต้องการความทนทานเพิ่มเติม (ราคาเพิ่ม 100 บาท)',
+    sizes: [
+      { id: 'M', name: 'M'},
+      { id: 'M_PLUS', name: 'M+'},
+      { id: 'L', name: 'L'},
+      { id: 'L_PLUS', name: 'L+'},
+      { id: 'STAINLESS_S', name: 'Stainless S'},
+      { id: 'STAINLESS_M', name: 'Stainless M'}
+    ],
+    pricePerSqm: {
+      'M': 1600,
+      'M_PLUS': 1700,
+      'L': 1800,
+      'L_PLUS': 1900,
+      'STAINLESS_S': 3100,
+      'STAINLESS_M': 4200
+    }
+  },
+  {
+    id: 'metal-sheet-47mm-no-insulation',
+    type: 'opaque',
+    name: 'เมทัลชีท มาตรฐาน 0.47 มม.',
+    image: '/materials/metal-sheet-basic.jpg',
+    description: 'หลังคาเมทัลชีทมาตรฐาน หนา 0.47 มิลลิเมตร ไม่ติดฉนวนกันความร้อน หนาที่สุดในกลุ่มมาตรฐาน ทนทานสูงสุด เหมาะสำหรับโครงสร้างหนัก โรงงานอุตสาหกรรม หรือพื้นที่ที่มีภาระลมแรง (ราคาเพิ่ม 200 บาท)',
+    sizes: [
+      { id: 'M', name: 'M'},
+      { id: 'M_PLUS', name: 'M+'},
+      { id: 'L', name: 'L'},
+      { id: 'L_PLUS', name: 'L+'},
+      { id: 'STAINLESS_S', name: 'Stainless S'},
+      { id: 'STAINLESS_M', name: 'Stainless M'}
+    ],
+    pricePerSqm: {
+      'M': 1700,
+      'M_PLUS': 1800,
+      'L': 1900,
+      'L_PLUS': 2000,
+      'STAINLESS_S': 3200,
+      'STAINLESS_M': 4300
     }
   }
 ];

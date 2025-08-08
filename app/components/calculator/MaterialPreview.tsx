@@ -35,6 +35,13 @@ export function MaterialPreview({
       <div className="h-full relative overflow-y-auto bg-gradient-to-br from-blue-50 via-white to-slate-50" 
            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         <style jsx>{`
+          * {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+          }
+          *::-webkit-scrollbar {
+            display: none;
+          }
           div::-webkit-scrollbar {
             display: none;
           }
@@ -423,6 +430,13 @@ export function MaterialPreview({
     <div className="h-full relative overflow-y-auto bg-gradient-to-br from-gray-50 to-slate-100"
          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
       <style jsx>{`
+        * {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        *::-webkit-scrollbar {
+          display: none;
+        }
         div::-webkit-scrollbar {
           display: none;
         }

@@ -26,42 +26,51 @@ export function PriceSummary({
   isMobile = false
 }: PriceSummaryProps) {
   const area = dimensions.width * dimensions.length;
-  const headerClass = isMobile ? "text-base" : "text-lg";
-  const textClass = isMobile ? "text-xs" : "text-sm";
-  const priceClass = isMobile ? "text-lg" : "text-xl";
-  const iconClass = isMobile ? "w-6 h-6" : "w-8 h-8";
-  const iconTextClass = isMobile ? "text-xs" : "text-sm";
+
+  // Debug log for selectedExtras
+  console.log('PriceSummary - selectedExtras:', selectedExtras);
+  console.log('PriceSummary - extraServices:', extraServices);
+  console.log('PriceSummary - filtered extras:', Object.entries(selectedExtras).filter(([_, optionId]) => optionId));
 
   return (
-    <div className={`bg-gradient-to-t from-white via-white to-white/95 backdrop-blur-sm border-t border-gray-200 shadow-lg ${isMobile ? 'p-4' : 'p-6'}`}>
+    <div className={`bg-gradient-to-br from-slate-50 via-white to-blue-50/50 backdrop-blur-sm border-t border-slate-200/50 shadow-sm ${isMobile ? 'p-3' : 'p-4'}`}>
       <div className={isMobile ? 'space-y-3' : 'space-y-4'}>
         {/* Header */}
-        <div className={`flex items-center gap-${isMobile ? '2' : '3'} ${isMobile ? 'mb-3' : 'mb-4'}`}>
-          <div className={`${iconClass} bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center`}>
-            <span className={`text-white ${iconTextClass}`}>💰</span>
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-5 h-5 bg-gradient-to-br from-blue-500 to-purple-500 rounded-md flex items-center justify-center">
+            <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+            </svg>
           </div>
-          <h3 className={`${headerClass} font-bold text-gray-800`}>สรุปราคา</h3>
+          <h3 className={`${isMobile ? 'text-sm' : 'text-base'} font-semibold text-slate-800`}>สรุปราคา</h3>
         </div>
         
         {/* Area and Base Price */}
-        <div className={isMobile ? 'space-y-2' : 'space-y-3'}>
-          <div className={`flex justify-between items-center ${textClass}`}>
-            <span className="text-gray-600">พื้นที่รวม</span>
-            <span className="font-semibold text-gray-800">{area.toFixed(2)} ตร.ม.</span>
+        <div className={`${isMobile ? 'space-y-1.5' : 'space-y-2'} bg-slate-50/50 rounded-md p-2`}>
+          <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-slate-600 mb-1`}>วัสดุพื้นฐาน</div>
+          <div className={`flex justify-between items-center ${isMobile ? 'text-xs' : 'text-sm'}`}>
+            <span className="text-slate-600">พื้นที่รวม</span>
+            <span className="font-medium text-slate-800">{area.toFixed(2)} ตร.ม.</span>
           </div>
-          <div className={`flex justify-between items-center ${textClass}`}>
-            <span className="text-gray-600">ราคาต่อ ตร.ม.</span>
-            <span className="font-semibold text-gray-800">
+          <div className={`flex justify-between items-center ${isMobile ? 'text-xs' : 'text-sm'}`}>
+            <span className="text-slate-600">ราคาต่อ ตร.ม.</span>
+            <span className="font-medium text-slate-800">
               ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}
+            </span>
+          </div>
+          <div className={`flex justify-between items-center ${isMobile ? 'text-xs' : 'text-sm'} border-t border-slate-200 pt-1 mt-1`}>
+            <span className="text-slate-700 font-medium">รวมค่าวัสดุ</span>
+            <span className="font-semibold text-slate-800">
+              ฿{(area * material.pricePerSqm[selectedSize.id]).toLocaleString()}
             </span>
           </div>
         </div>
         
         {/* Services */}
         {selectedServices.length > 0 && (
-          <div className={`border-t border-gray-200 ${isMobile ? 'pt-2' : 'pt-3'}`}>
-            <div className={`${textClass} font-medium text-gray-500 ${isMobile ? 'mb-1' : 'mb-2'}`}>บริการที่เลือก</div>
-            <div className="space-y-1">
+          <div>
+            <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-blue-600 ${isMobile ? 'mb-1' : 'mb-1.5'}`}>บริการหลัก</div>
+            <div className="space-y-1 bg-blue-50/30 rounded-md p-2">
               {mainServices
                 .filter((service) => selectedServices.includes(service.id))
                 .map((service) => {
@@ -72,9 +81,9 @@ export function PriceSummary({
                     if (option) servicePrice += option.price;
                   }
                   return (
-                    <div key={service.id} className={`flex justify-between ${textClass}`}>
-                      <span className="text-gray-600">{service.name}</span>
-                      <span className="font-medium text-gray-800">฿{servicePrice.toLocaleString()}</span>
+                    <div key={service.id} className={`flex justify-between ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      <span className="text-blue-700 font-medium">{service.name}</span>
+                      <span className="font-semibold text-blue-800">฿{servicePrice.toLocaleString()}</span>
                     </div>
                   );
                 })}
@@ -83,20 +92,28 @@ export function PriceSummary({
         )}
         
         {/* Extra Services */}
-        {Object.keys(selectedExtras).some(key => selectedExtras[key]) && (
-          <div className={`border-t border-gray-200 ${isMobile ? 'pt-2' : 'pt-3'}`}>
-            <div className={`${textClass} font-medium text-gray-500 ${isMobile ? 'mb-1' : 'mb-2'}`}>บริการเสริม</div>
-            <div className="space-y-1">
+        {(() => {
+          const hasExtras = Object.keys(selectedExtras).some(key => selectedExtras[key]);
+          console.log('Has extras check:', hasExtras, selectedExtras);
+          return hasExtras;
+        })() && (
+          <div>
+            <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-emerald-600 ${isMobile ? 'mb-1' : 'mb-1.5'}`}>บริการเสริม</div>
+            <div className="space-y-1 bg-emerald-50/50 rounded-md p-2 border-2 border-emerald-200">
               {Object.entries(selectedExtras)
-                .filter(([_, optionId]) => optionId)
+                .filter(([_, optionId]) => {
+                  console.log('Filtering extra service:', _, optionId);
+                  return optionId;
+                })
                 .map(([serviceId, optionId]) => {
                   const service = extraServices.find((s) => s.id === serviceId);
                   const option = service?.options.find((o) => o.id === optionId);
+                  console.log('Rendering extra service:', serviceId, service?.name, option?.name, option?.price);
                   if (!service || !option) return null;
                   return (
-                    <div key={serviceId} className={`flex justify-between ${textClass}`}>
-                      <span className="text-gray-600">{service.name}</span>
-                      <span className="font-medium text-gray-800">฿{option.price.toLocaleString()}</span>
+                    <div key={serviceId} className={`flex justify-between ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      <span className="text-emerald-700 font-medium">+ {service.name}</span>
+                      <span className="font-semibold text-emerald-800">฿{option.price.toLocaleString()}</span>
                     </div>
                   );
                 })}
@@ -105,10 +122,10 @@ export function PriceSummary({
         )}
         
         {/* Total */}
-        <div className={`border-t border-gray-300 ${isMobile ? 'pt-3' : 'pt-4'}`}>
+        <div className={`border-t-2 border-slate-300/80 ${isMobile ? 'pt-3' : 'pt-4'} ${isMobile ? 'mt-2' : 'mt-3'}`}>
           <div className="flex justify-between items-center">
-            <span className={`${isMobile ? 'text-sm' : 'text-base'} font-bold text-gray-800`}>ราคารวมทั้งหมด</span>
-            <span className={`${priceClass} font-bold text-primary-600`}>
+            <span className={`${isMobile ? 'text-sm' : 'text-base'} font-semibold text-slate-800`}>ราคารวมทั้งหมด</span>
+            <span className={`${isMobile ? 'text-base' : 'text-lg'} font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent`}>
               ฿{totalPrice.toLocaleString()}
             </span>
           </div>
