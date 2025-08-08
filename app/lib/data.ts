@@ -92,5 +92,14 @@ export const extraServices: ExtraService[] = [
       { id: 'pvc', name: 'รางน้ำ PVC', price: 2000 },
       { id: 'stainless', name: 'รางน้ำสแตนเลส', price: 4000 }
     ]
+  },
+  {
+    id: 'pipe',
+    name: 'งานท่อน้ำ',
+    description: 'ระบบท่อระบายน้ำลง',
+    options: [
+      { id: 'basic', name: 'ท่อน้ำพื้นฐาน', price: 1500 },
+      { id: 'premium', name: 'ท่อน้ำพิเศษ', price: 2500 }
+    ]
   }
 ];

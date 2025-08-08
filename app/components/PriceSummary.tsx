@@ -1,4 +1,5 @@
 import { Material, Size, Service, ExtraService } from '../lib/types';
+import { gutterMaterials } from '../lib/materials/gutterMaterials';
 
 interface PriceSummaryProps {
   material: Material;
@@ -10,6 +11,7 @@ interface PriceSummaryProps {
   mainServices: Service[];
   extraServices: ExtraService[];
   selectedServiceOptions: Record<string, string>;
+  gutterMaterials?: Record<string, string>;
   isMobile?: boolean;
 }
 
@@ -23,6 +25,7 @@ export function PriceSummary({
   mainServices,
   extraServices,
   selectedServiceOptions,
+  gutterMaterials: selectedGutterMaterials = {},
   isMobile = false
 }: PriceSummaryProps) {
   const area = dimensions.width * dimensions.length;
@@ -94,8 +97,10 @@ export function PriceSummary({
         {/* Extra Services */}
         {(() => {
           const hasExtras = Object.keys(selectedExtras).some(key => selectedExtras[key]);
+          const hasGutterMaterials = Object.keys(selectedGutterMaterials).some(key => selectedGutterMaterials[key]);
           console.log('Has extras check:', hasExtras, selectedExtras);
-          return hasExtras;
+          console.log('Has gutter materials check:', hasGutterMaterials, selectedGutterMaterials);
+          return hasExtras || hasGutterMaterials;
         })() && (
           <div>
             <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-emerald-600 ${isMobile ? 'mb-1' : 'mb-1.5'}`}>บริการเสริม</div>
@@ -110,10 +115,54 @@ export function PriceSummary({
                   const option = service?.options.find((o) => o.id === optionId);
                   console.log('Rendering extra service:', serviceId, service?.name, option?.name, option?.price);
                   if (!service || !option) return null;
+                  
                   return (
-                    <div key={serviceId} className={`flex justify-between ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                      <span className="text-emerald-700 font-medium">+ {service.name}</span>
-                      <span className="font-semibold text-emerald-800">฿{option.price.toLocaleString()}</span>
+                    <div key={serviceId} className="space-y-1">
+                      <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                        <span className="text-emerald-700 font-medium">+ {service.name}</span>
+                        <span className="font-semibold text-emerald-800">฿{option.price.toLocaleString()}</span>
+                      </div>
+                      
+                      {/* แสดงวัสดุรางน้ำเมื่อเลือกบริการรางน้ำ */}
+                      {serviceId === 'gutter' && selectedGutterMaterials[serviceId] && (
+                        <div className={`ml-4 ${isMobile ? 'text-xs' : 'text-sm'} text-emerald-600`}>
+                          {(() => {
+                            const selectedGutter = gutterMaterials.find(g => g.id === selectedGutterMaterials[serviceId]);
+                            if (!selectedGutter) return null;
+                            const gutterTotalPrice = selectedGutter.price * dimensions.length;
+                            return (
+                              <div className="flex justify-between bg-emerald-100/50 px-2 py-1 rounded">
+                                <span>• {selectedGutter.name} ({dimensions.length} ม.)</span>
+                                <span className="font-semibold">฿{gutterTotalPrice.toLocaleString()}</span>
+                              </div>
+                            );
+                          })()}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              
+              {/* แสดงรางน้ำที่เลือกแยกต่างหาก (กรณีไม่ได้เลือกผ่าน selectedExtras) */}
+              {Object.entries(selectedGutterMaterials)
+                .filter(([serviceId, materialId]) => materialId && serviceId === 'gutter')
+                .map(([serviceId, materialId]) => {
+                  const selectedGutter = gutterMaterials.find(g => g.id === materialId);
+                  if (!selectedGutter) return null;
+                  const gutterTotalPrice = selectedGutter.price * dimensions.length;
+                  
+                  return (
+                    <div key={`gutter-${serviceId}`} className="space-y-1">
+                      <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                        <span className="text-emerald-700 font-medium">+ งานรางน้ำ</span>
+                        <span className="font-semibold text-emerald-800">฿0</span>
+                      </div>
+                      <div className={`ml-4 ${isMobile ? 'text-xs' : 'text-sm'} text-emerald-600`}>
+                        <div className="flex justify-between bg-emerald-100/50 px-2 py-1 rounded">
+                          <span>• {selectedGutter.name} ({dimensions.length} ม.)</span>
+                          <span className="font-semibold">฿{gutterTotalPrice.toLocaleString()}</span>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}

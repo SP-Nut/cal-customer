@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Navbar from './components/Navbar';
 import { materials, materialCategories, mainServices, extraServices } from './lib/data';
 import { Material, Size, Service, ExtraService } from './lib/types';
+import { gutterMaterials } from './lib/materials/gutterMaterials';
 import { MaterialSelector } from './components/calculator/MaterialSelector';
 import { MaterialPreview } from './components/calculator/MaterialPreview';
 import { PriceSummary } from './components/PriceSummary';
@@ -17,6 +18,7 @@ export default function Home() {
     selectedServices: [] as string[],
     selectedServiceOptions: {} as Record<string, string>,
     selectedExtras: {} as Record<string, string>,
+    gutterMaterials: {} as Record<string, string>,
   });
 
   // Validation and calculation
@@ -41,7 +43,17 @@ export default function Home() {
         .reduce((sum: number, [serviceId, optionId]) => {
           const service = extraServices.find((s: ExtraService) => s.id === serviceId);
           const option = service?.options.find((o: any) => o.id === optionId);
-          return sum + (option?.price || 0);
+          let extraPrice = option?.price || 0;
+          
+          // เพิ่มราคารางน้ำถ้ามีการเลือกวัสดุรางน้ำ
+          if (serviceId === 'gutter' && selectionData.gutterMaterials[serviceId]) {
+            const selectedGutter = gutterMaterials.find(g => g.id === selectionData.gutterMaterials[serviceId]);
+            if (selectedGutter) {
+              extraPrice += selectedGutter.price * selectionData.dimensions.length;
+            }
+          }
+          
+          return sum + extraPrice;
         }, 0)
     : 0;
 
@@ -107,6 +119,7 @@ export default function Home() {
                     categories={materialCategories}
                     mainServices={mainServices}
                     extraServices={extraServices}
+                    gutterMaterials={gutterMaterials}
                     onSelectionChange={setSelectionData}
                   />
                 </div>
@@ -125,6 +138,7 @@ export default function Home() {
                 mainServices={mainServices}
                 extraServices={extraServices}
                 selectedServiceOptions={selectionData.selectedServiceOptions}
+                gutterMaterials={selectionData.gutterMaterials}
               />
             )}
           </div>
@@ -146,6 +160,7 @@ export default function Home() {
               mainServices={mainServices}
               extraServices={extraServices}
               selectedServiceOptions={selectionData.selectedServiceOptions}
+              gutterMaterials={selectionData.gutterMaterials}
             />
           </div>
         </div>
@@ -159,6 +174,7 @@ export default function Home() {
               categories={materialCategories}
               mainServices={mainServices}
               extraServices={extraServices}
+              gutterMaterials={gutterMaterials}
               onSelectionChange={setSelectionData}
             />
           </div>
@@ -175,6 +191,7 @@ export default function Home() {
               mainServices={mainServices}
               extraServices={extraServices}
               selectedServiceOptions={selectionData.selectedServiceOptions}
+              gutterMaterials={selectionData.gutterMaterials}
               isMobile={true}
             />
           )}

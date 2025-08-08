@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { gutterMaterials, GutterMaterial } from "../../lib/materials/gutterMaterials";
+
 import type {
   Material,
   MaterialCategory,
@@ -15,6 +17,7 @@ interface MaterialSelectorProps {
   categories: MaterialCategory[];
   mainServices: Service[];
   extraServices: ExtraService[];
+  gutterMaterials: GutterMaterial[];
   onSelectionChange: (data: {
     material: Material | null;
     size: Size | null;
@@ -23,6 +26,7 @@ interface MaterialSelectorProps {
     selectedServices: string[];
     selectedServiceOptions: Record<string, string>;
     selectedExtras: Record<string, string>;
+    gutterMaterials: Record<string, string>; // เพิ่มการส่งข้อมูลรางน้ำ
   }) => void;
 }
 
@@ -123,6 +127,7 @@ export function MaterialSelector({
   categories,
   mainServices,
   extraServices,
+  gutterMaterials: gutterMaterialsProps,
   onSelectionChange,
 }: MaterialSelectorProps) {
   const [selectedType, setSelectedType] = useState<string | null>(null);
@@ -137,6 +142,9 @@ export function MaterialSelector({
     Record<string, string>
   >({});
   const [selectedExtras, setSelectedExtras] = useState<Record<string, string>>(
+    {}
+  );
+  const [selectedGutterMaterials, setSelectedGutterMaterials] = useState<Record<string, string>>(
     {}
   );
 
@@ -175,6 +183,7 @@ export function MaterialSelector({
       selectedServices,
       selectedServiceOptions,
       selectedExtras,
+      gutterMaterials: selectedGutterMaterials,
     });
   }, [
     selectedMaterial,
@@ -184,8 +193,23 @@ export function MaterialSelector({
     selectedServices,
     selectedServiceOptions,
     selectedExtras,
+    selectedGutterMaterials,
     onSelectionChange,
   ]);
+
+  // Debug gutterMaterials
+  useEffect(() => {
+    console.log('=== DEBUG GUTTER MATERIALS ===');
+    console.log('All gutterMaterials (imported):', gutterMaterials);
+    console.log('Props gutterMaterials:', gutterMaterialsProps);
+    console.log('Length (imported):', gutterMaterials.length);
+    console.log('Length (props):', gutterMaterialsProps?.length || 'undefined');
+    console.log('Categories (imported):', gutterMaterials.map(g => g.category));
+    console.log('Special category items (imported):', gutterMaterials.filter(g => g.category === 'special'));
+    console.log('Standard category items (imported):', gutterMaterials.filter(g => g.category === 'standard'));
+    console.log('Vinyl category items (imported):', gutterMaterials.filter(g => g.category === 'vinyl'));
+    console.log('==============================');
+  }, []); // ลบ dependency ออกเพื่อรันครั้งเดียว
 
   const getCurrentStep = () => {
     if (!selectedType) return 1;
@@ -224,6 +248,7 @@ export function MaterialSelector({
     setSelectedServices([]);
     setSelectedServiceOptions({});
     setSelectedExtras({});
+    setSelectedGutterMaterials({});
   };
 
   const handleSizeSelect = (size: Size) => {
@@ -233,6 +258,7 @@ export function MaterialSelector({
     setSelectedServices([]);
     setSelectedServiceOptions({});
     setSelectedExtras({});
+    setSelectedGutterMaterials({});
   };
 
   return (
@@ -596,23 +622,107 @@ export function MaterialSelector({
                         <div className="font-medium text-gray-800 text-[13px] truncate">{service.name}</div>
                         <div className="text-[12px] text-gray-600 truncate">{service.description}</div>
                       </div>
-                      <select
-                        className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-[13px] font-medium transition-all"
-                        value={selectedExtras[service.id] || ""}
-                        onChange={(e) => {
-                          setSelectedExtras({
-                            ...selectedExtras,
-                            [service.id]: e.target.value,
-                          });
-                        }}
-                      >
-                        <option value="">ไม่ต้องการ</option>
-                        {service.options.map((option) => (
-                          <option key={option.id} value={option.id}>
-                            {option.name} - ฿{option.price.toLocaleString()}
-                          </option>
-                        ))}
-                      </select>
+                      
+                      {/* ถ้าเป็นบริการรางน้ำ ให้ใช้ gutterMaterials แทน service.options */}
+                      {service.id === 'gutter' ? (
+                        <div className="space-y-2">
+                          <select
+                            className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-[13px] font-medium transition-all"
+                            value={selectedGutterMaterials[service.id] || ""}
+                            onChange={(e) => {
+                              if (e.target.value) {
+                                setSelectedExtras({
+                                  ...selectedExtras,
+                                  [service.id]: 'selected',
+                                });
+                                setSelectedGutterMaterials({
+                                  ...selectedGutterMaterials,
+                                  [service.id]: e.target.value,
+                                });
+                              } else {
+                                // ถ้าเลือก "ไม่ต้องการ" ให้ลบทั้งสอง
+                                const newExtras = { ...selectedExtras };
+                                const newGutterMaterials = { ...selectedGutterMaterials };
+                                delete newExtras[service.id];
+                                delete newGutterMaterials[service.id];
+                                setSelectedExtras(newExtras);
+                                setSelectedGutterMaterials(newGutterMaterials);
+                              }
+                            }}
+                          >
+                            <option value="">ไม่ต้องการ</option>
+                            
+                            {/* รางน้ำพับพิเศษ */}
+                            <optgroup label="รางน้ำพับพิเศษ">
+                              {gutterMaterials
+                                .filter(gutter => gutter.category === 'special')
+                                .map((gutter) => (
+                                  <option key={gutter.id} value={gutter.id}>
+                                    {gutter.name} - ฿{gutter.price.toLocaleString()}/ม.
+                                  </option>
+                                ))}
+                            </optgroup>
+
+                            {/* รางน้ำมาตรฐาน */}
+                            <optgroup label="รางน้ำมาตรฐาน">
+                              {gutterMaterials
+                                .filter(gutter => gutter.category === 'standard')
+                                .map((gutter) => (
+                                  <option key={gutter.id} value={gutter.id}>
+                                    {gutter.name} - ฿{gutter.price.toLocaleString()}/ม.
+                                  </option>
+                                ))}
+                            </optgroup>
+
+                            {/* รางน้ำไวนิล */}
+                            <optgroup label="รางน้ำไวนิล">
+                              {gutterMaterials
+                                .filter(gutter => gutter.category === 'vinyl')
+                                .map((gutter) => (
+                                  <option key={gutter.id} value={gutter.id}>
+                                    {gutter.name} - ฿{gutter.price.toLocaleString()}/ม.
+                                  </option>
+                                ))}
+                            </optgroup>
+                          </select>
+                          
+                          {/* แสดงราคารวมรางน้ำ */}
+                          {selectedGutterMaterials[service.id] && dimensions.length > 0 && (
+                            <div className="mt-2 p-2 bg-blue-50 rounded-lg border border-blue-200">
+                              <div className="text-[12px] text-blue-700">
+                                {(() => {
+                                  const selectedGutter = gutterMaterials.find(g => g.id === selectedGutterMaterials[service.id]);
+                                  const totalGutterPrice = selectedGutter ? selectedGutter.price * dimensions.length : 0;
+                                  return (
+                                    <div className="flex justify-between">
+                                      <span>ราคารางน้ำ ({dimensions.length} เมตร):</span>
+                                      <span className="font-semibold">฿{totalGutterPrice.toLocaleString()}</span>
+                                    </div>
+                                  );
+                                })()}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <select
+                          className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-[13px] font-medium transition-all"
+                          value={selectedExtras[service.id] || ""}
+                          onChange={(e) => {
+                            setSelectedExtras({
+                              ...selectedExtras,
+                              [service.id]: e.target.value,
+                            });
+                          }}
+                        >
+                          <option value="">ไม่ต้องการ</option>
+                          {service.options.map((option) => (
+                            <option key={option.id} value={option.id}>
+                              {option.name} - ฿{option.price.toLocaleString()}
+                            </option>
+                          ))}
+                        </select>
+                      )}
                     </div>
                   ))}
               </div>

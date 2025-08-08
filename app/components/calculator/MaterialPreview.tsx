@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Material, Size, Service, ExtraService } from '../../lib/types';
+import { gutterMaterials } from '../../lib/materials/gutterMaterials';
 
 interface MaterialPreviewProps {
   material: Material | null;
@@ -13,6 +14,7 @@ interface MaterialPreviewProps {
   mainServices?: Service[];
   extraServices?: ExtraService[];
   selectedServiceOptions?: Record<string, string>;
+  gutterMaterials?: Record<string, string>;
   onNext?: () => void;
   onSizeSelect?: (sizeId: string) => void;
 }
@@ -27,6 +29,7 @@ export function MaterialPreview({
   mainServices = [],
   extraServices = [],
   selectedServiceOptions = {},
+  gutterMaterials: selectedGutterMaterials = {},
   onNext,
   onSizeSelect 
 }: MaterialPreviewProps) {
@@ -603,7 +606,7 @@ export function MaterialPreview({
               </div>
 
               {/* Services - Inline */}
-              {(selectedServices.length > 0 || Object.keys(selectedExtras).some(key => selectedExtras[key])) && (
+              {(selectedServices.length > 0 || Object.keys(selectedExtras).some(key => selectedExtras[key]) || Object.keys(selectedGutterMaterials).some(key => selectedGutterMaterials[key])) && (
                 <div className="mt-2 pt-2 border-t border-slate-200">
                   <div className="flex flex-wrap gap-1">
                     <span className="text-xs text-slate-500 mr-2">บริการ:</span>
@@ -636,6 +639,20 @@ export function MaterialPreview({
                         return (
                           <span key={serviceId} className="inline-block px-2 py-0.5 rounded text-xs bg-slate-100 text-slate-700 mr-1 mb-1">
                             {service.name} ฿{option.price.toLocaleString()}
+                          </span>
+                        );
+                      })}
+                    
+                    {/* Gutter Materials */}
+                    {Object.entries(selectedGutterMaterials)
+                      .filter(([_, materialId]) => materialId)
+                      .map(([serviceId, materialId]) => {
+                        const selectedGutter = gutterMaterials.find(g => g.id === materialId);
+                        if (!selectedGutter) return null;
+                        const gutterTotalPrice = selectedGutter.price * dimensions.length;
+                        return (
+                          <span key={`gutter-${serviceId}`} className="inline-block px-2 py-0.5 rounded text-xs bg-emerald-100 text-emerald-700 mr-1 mb-1">
+                            รางน้ำ: {selectedGutter.name} ฿{gutterTotalPrice.toLocaleString()}
                           </span>
                         );
                       })}
