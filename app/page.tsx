@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Navbar from './components/Navbar';
+import FloatingPreview from './components/FloatingPreview';
 import { materials, materialCategories, mainServices, extraServices } from './lib/data';
 import { Material, Size, Service, ExtraService } from './lib/types';
 import { gutterMaterials } from './lib/materials/gutterMaterials';
@@ -20,6 +21,8 @@ export default function Home() {
     selectedExtras: {} as Record<string, string>,
     gutterMaterials: {} as Record<string, string>,
   });
+
+  const [showFloatingPreview, setShowFloatingPreview] = useState(false);
 
   // Validation and calculation
   const isValidDimensions = selectionData.dimensions.width > 0 && selectionData.dimensions.length > 0;
@@ -87,6 +90,15 @@ export default function Home() {
         }
       `}</style>
       <Navbar totalPrice={totalPrice} />
+      
+      {/* Floating Preview - Test: Show when material and size selected */}
+      <FloatingPreview 
+        material={selectionData.material}
+        selectedSize={selectionData.size}
+        dimensions={selectionData.dimensions}
+        isVisible={selectionData.material !== null && selectionData.size !== null}
+      />
+      
       {/* Desktop Layout */}
       <div className="hidden lg:flex h-[calc(100vh-2rem)] p-8 gap-3 mt-6">
         {/* Left Side - Material Preview (flex-1) */}
@@ -102,6 +114,7 @@ export default function Home() {
               mainServices={mainServices}
               extraServices={extraServices}
               selectedServiceOptions={selectionData.selectedServiceOptions}
+              onFloatingPreviewChange={setShowFloatingPreview}
             />
           </div>
         </div>
@@ -147,26 +160,31 @@ export default function Home() {
 
       {/* Mobile Layout */}
       <div className="lg:hidden flex flex-col min-h-[calc(100vh-2rem)] p-4 gap-4 mt-4">
-        {/* Top - Material Preview */}
-        <div className="flex-1 min-h-[50vh]">
-          <div className="h-full rounded-2xl overflow-auto custom-scrollbar shadow-xl border border-gray-200/50 bg-white/95 backdrop-blur-sm">
-            <MaterialPreview 
-              material={selectionData.material} 
-              selectedSize={selectionData.size}
-              dimensions={selectionData.dimensions}
-              totalPrice={totalPrice}
-              selectedServices={selectionData.selectedServices}
-              selectedExtras={selectionData.selectedExtras}
-              mainServices={mainServices}
-              extraServices={extraServices}
-              selectedServiceOptions={selectionData.selectedServiceOptions}
-              gutterMaterials={selectionData.gutterMaterials}
-            />
+        {/* Top - Material Preview - ซ่อนเมื่อเลือกแล้ว */}
+        {!(selectionData.material && selectionData.size) && (
+          <div className="flex-1 min-h-[50vh]">
+            <div className="h-full rounded-2xl overflow-auto custom-scrollbar shadow-xl border border-gray-200/50 bg-white/95 backdrop-blur-sm">
+              <MaterialPreview 
+                material={selectionData.material} 
+                selectedSize={selectionData.size}
+                dimensions={selectionData.dimensions}
+                totalPrice={totalPrice}
+                selectedServices={selectionData.selectedServices}
+                selectedExtras={selectionData.selectedExtras}
+                mainServices={mainServices}
+                extraServices={extraServices}
+                selectedServiceOptions={selectionData.selectedServiceOptions}
+                gutterMaterials={selectionData.gutterMaterials}
+                onFloatingPreviewChange={setShowFloatingPreview}
+              />
+            </div>
           </div>
-        </div>
+        )}
         
-        {/* Bottom - Calculator */}
-        <div className="bg-white/95 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-xl">
+        {/* Bottom - Calculator - ขยายเต็มหน้าจอเมื่อเลือกแล้ว */}
+        <div className={`bg-white/95 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-xl ${
+          selectionData.material && selectionData.size ? 'flex-1' : ''
+        }`}>
           {/* Material Selector */}
           <div className="p-4">
             <MaterialSelector
