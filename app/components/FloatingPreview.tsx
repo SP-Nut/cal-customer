@@ -82,7 +82,7 @@ export default function FloatingPreview({
           <div className="px-4 py-3">
             {/* Material Image - อยู่ด้านบน */}
             <div className="w-full mb-3">
-              <div className="relative w-full h-32 rounded-lg overflow-hidden border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition-shadow"
+              <div className="relative w-full h-40 rounded-lg overflow-hidden border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition-shadow"
                    onClick={(e) => {
                      e.stopPropagation();
                      setShowFullImage(true);
@@ -103,12 +103,12 @@ export default function FloatingPreview({
             
             {/* Material Info - อยู่ด้านล่างรูป */}
             <div className="w-full">
-              <h4 className="text-sm font-bold text-slate-800 truncate">{material.name}</h4>
-              <p className="text-xs text-slate-500 mb-2">{material.description}</p>
+              <h4 className="text-xs font-bold text-slate-800 truncate">{material.name}</h4>
+              <p className="text-xs text-slate-500 mb-1">{material.description}</p>
               
-              <div className="space-y-1 mb-2">
+              <div className="space-y-0.5 mb-1">
                 <div className="flex items-center space-x-2">
-                  <span className="text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-700">
+                  <span className="text-xs px-1.5 py-0.5 rounded bg-slate-100 text-slate-700">
                     {material.type === 'translucent' ? 'โปร่งแสง' : 'ทึบแสง'}
                   </span>
                   <span className="text-xs text-slate-600">{selectedSize.name}</span>
