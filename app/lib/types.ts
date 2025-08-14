@@ -52,5 +52,12 @@ export interface ExtraService {
     id: string;
     name: string;
     price: number;
+    description?: string;
   }[];
+  requiresLength?: boolean;
+  pricePerMeter?: boolean;
+  minimumLength?: number;
+  requiresQuantity?: boolean;
+  pricePerPoint?: boolean;
+  unit?: string;
 }

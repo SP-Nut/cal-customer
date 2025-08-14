@@ -26,7 +26,9 @@ interface MaterialSelectorProps {
     selectedServices: string[];
     selectedServiceOptions: Record<string, string>;
     selectedExtras: Record<string, string>;
-    gutterMaterials: Record<string, string>; // เพิ่มการส่งข้อมูลรางน้ำ
+    gutterMaterials: Record<string, string>;
+    pipeLength: Record<string, number>; // เพิ่มการส่งความยาวท่อน้ำ
+    electricalPoints: Record<string, number>; // เพิ่มการส่งจำนวนจุดไฟฟ้า
   }) => void;
 }
 
@@ -147,6 +149,8 @@ export function MaterialSelector({
   const [selectedGutterMaterials, setSelectedGutterMaterials] = useState<Record<string, string>>(
     {}
   );
+  const [pipeLength, setPipeLength] = useState<Record<string, number>>({});
+  const [electricalPoints, setElectricalPoints] = useState<Record<string, number>>({});
 
   const filteredMaterials = selectedType
     ? materials.filter((m) => m.type === selectedType)
@@ -184,6 +188,8 @@ export function MaterialSelector({
       selectedServiceOptions,
       selectedExtras,
       gutterMaterials: selectedGutterMaterials,
+      pipeLength,
+      electricalPoints,
     });
   }, [
     selectedMaterial,
@@ -194,6 +200,8 @@ export function MaterialSelector({
     selectedServiceOptions,
     selectedExtras,
     selectedGutterMaterials,
+    pipeLength,
+    electricalPoints,
     onSelectionChange,
   ]);
 
@@ -249,6 +257,7 @@ export function MaterialSelector({
     setSelectedServiceOptions({});
     setSelectedExtras({});
     setSelectedGutterMaterials({});
+    setPipeLength({}); // รีเซ็ตความยาวท่อน้ำ
   };
 
   const handleSizeSelect = (size: Size) => {
@@ -259,6 +268,7 @@ export function MaterialSelector({
     setSelectedServiceOptions({});
     setSelectedExtras({});
     setSelectedGutterMaterials({});
+    setPipeLength({}); // รีเซ็ตความยาวท่อน้ำ
   };
 
   return (
@@ -701,6 +711,211 @@ export function MaterialSelector({
                                   );
                                 })()}
                               </div>
+                            </div>
+                          )}
+                        </div>
+                      ) : service.id === 'pipe' && service.requiresLength ? (
+                        /* ส่วนจัดการท่อน้ำพิเศษ */
+                        <div className="space-y-2">
+                          <select
+                            className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-[13px] font-medium transition-all"
+                            value={selectedExtras[service.id] || ""}
+                            onChange={(e) => {
+                              if (e.target.value) {
+                                setSelectedExtras({
+                                  ...selectedExtras,
+                                  [service.id]: e.target.value,
+                                });
+                                // ตั้งค่าเริ่มต้นเป็นความยาวขั้นต่ำ
+                                if (!pipeLength[service.id]) {
+                                  setPipeLength({
+                                    ...pipeLength,
+                                    [service.id]: service.minimumLength || 3,
+                                  });
+                                }
+                              } else {
+                                // ถ้าเลือก "ไม่ต้องการ" ให้ลบทั้งสอง
+                                const newExtras = { ...selectedExtras };
+                                const newPipeLength = { ...pipeLength };
+                                delete newExtras[service.id];
+                                delete newPipeLength[service.id];
+                                setSelectedExtras(newExtras);
+                                setPipeLength(newPipeLength);
+                              }
+                            }}
+                          >
+                            <option value="">ไม่ต้องการ</option>
+                            {service.options.map((option) => (
+                              <option key={option.id} value={option.id}>
+                                {option.name} - ฿{option.price.toLocaleString()}/ม.
+                              </option>
+                            ))}
+                          </select>
+                          
+                          {/* ช่องกรอกความยาวท่อน้ำ */}
+                          {selectedExtras[service.id] && (
+                            <div className="space-y-2">
+                              <div>
+                                <label className="block text-[12px] text-gray-700 mb-1 font-medium">
+                                  ความยาวท่อน้ำ (เมตร) - ขั้นต่ำ {service.minimumLength || 3} เมตร
+                                </label>
+                                <input
+                                  type="number"
+                                  min={service.minimumLength || 3}
+                                  step="0.1"
+                                  className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-[13px] font-medium transition-all"
+                                  placeholder={`${service.minimumLength || 3}.0`}
+                                  value={pipeLength[service.id] || ""}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (value === "") {
+                                      // อนุญาตให้ลบเป็นค่าว่าง
+                                      const newPipeLength = { ...pipeLength };
+                                      delete newPipeLength[service.id];
+                                      setPipeLength(newPipeLength);
+                                    } else {
+                                      const length = parseFloat(value);
+                                      if (!isNaN(length)) {
+                                        const minLength = service.minimumLength || 3;
+                                        setPipeLength({
+                                          ...pipeLength,
+                                          [service.id]: Math.max(length, minLength),
+                                        });
+                                      }
+                                    }
+                                  }}
+                                />
+                              </div>
+                              
+                              {/* แสดงราคารวมท่อน้ำ */}
+                              {pipeLength[service.id] && selectedExtras[service.id] && (
+                                <div className="p-2 bg-orange-50 rounded-lg border border-orange-200">
+                                  <div className="text-[12px] text-orange-700">
+                                    {(() => {
+                                      const selectedOption = service.options.find(opt => opt.id === selectedExtras[service.id]);
+                                      const length = pipeLength[service.id] || 0;
+                                      const pricePerMeter = selectedOption?.price || 0;
+                                      const totalPrice = pricePerMeter * length;
+                                      return (
+                                        <div className="space-y-1">
+                                          <div className="flex justify-between">
+                                            <span>ความยาว:</span>
+                                            <span className="font-semibold">{length} เมตร</span>
+                                          </div>
+                                          <div className="flex justify-between">
+                                            <span>ราคารวม:</span>
+                                            <span className="font-semibold">฿{totalPrice.toLocaleString()}</span>
+                                          </div>
+                                        </div>
+                                      );
+                                    })()}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      ) : service.id === 'electrical' && service.requiresQuantity ? (
+                        /* ส่วนจัดการงานไฟฟ้าพิเศษ */
+                        <div className="space-y-2">
+                          <select
+                            className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-[13px] font-medium transition-all"
+                            value={selectedExtras[service.id] || ""}
+                            onChange={(e) => {
+                              if (e.target.value) {
+                                setSelectedExtras({
+                                  ...selectedExtras,
+                                  [service.id]: e.target.value,
+                                });
+                                // ตั้งค่าเริ่มต้นเป็น 1 จุด
+                                if (!electricalPoints[service.id]) {
+                                  setElectricalPoints({
+                                    ...electricalPoints,
+                                    [service.id]: 1,
+                                  });
+                                }
+                              } else {
+                                // ถ้าเลือก "ไม่ต้องการ" ให้ลบทั้งสอง
+                                const newExtras = { ...selectedExtras };
+                                const newElectricalPoints = { ...electricalPoints };
+                                delete newExtras[service.id];
+                                delete newElectricalPoints[service.id];
+                                setSelectedExtras(newExtras);
+                                setElectricalPoints(newElectricalPoints);
+                              }
+                            }}
+                          >
+                            <option value="">ไม่ต้องการ</option>
+                            {service.options.map((option) => (
+                              <option key={option.id} value={option.id}>
+                                {option.name} - ฿{option.price.toLocaleString()}/{service.unit || 'จุด'}
+                              </option>
+                            ))}
+                          </select>
+                          
+                          {/* ช่องกรอกจำนวนจุดไฟฟ้า */}
+                          {selectedExtras[service.id] && (
+                            <div className="space-y-2">
+                              <div>
+                                <label className="block text-[12px] text-gray-700 mb-1 font-medium">
+                                  จำนวนจุดไฟฟ้า (ขั้นต่ำ 1 จุด)
+                                </label>
+                                <input
+                                  type="number"
+                                  min="1"
+                                  step="1"
+                                  className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-[13px] font-medium transition-all"
+                                  placeholder="1"
+                                  value={electricalPoints[service.id] || ""}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (value === "") {
+                                      // อนุญาตให้ลบเป็นค่าว่าง
+                                      const newElectricalPoints = { ...electricalPoints };
+                                      delete newElectricalPoints[service.id];
+                                      setElectricalPoints(newElectricalPoints);
+                                    } else {
+                                      const points = parseInt(value);
+                                      if (!isNaN(points)) {
+                                        setElectricalPoints({
+                                          ...electricalPoints,
+                                          [service.id]: Math.max(points, 1),
+                                        });
+                                      }
+                                    }
+                                  }}
+                                />
+                              </div>
+                              
+                              {/* แสดงราคารวมงานไฟฟ้า */}
+                              {electricalPoints[service.id] && selectedExtras[service.id] && (
+                                <div className="p-2 bg-yellow-50 rounded-lg border border-yellow-200">
+                                  <div className="text-[12px] text-yellow-700">
+                                    {(() => {
+                                      const selectedOption = service.options.find(opt => opt.id === selectedExtras[service.id]);
+                                      const points = electricalPoints[service.id] || 0;
+                                      const pricePerPoint = selectedOption?.price || 0;
+                                      const totalPrice = pricePerPoint * points;
+                                      return (
+                                        <div className="space-y-1">
+                                          <div className="flex justify-between">
+                                            <span>จำนวนจุด:</span>
+                                            <span className="font-semibold">{points} จุด</span>
+                                          </div>
+                                          <div className="flex justify-between">
+                                            <span>ราคาต่อจุด:</span>
+                                            <span className="font-semibold">฿{pricePerPoint.toLocaleString()}</span>
+                                          </div>
+                                          <div className="flex justify-between">
+                                            <span>ราคารวม:</span>
+                                            <span className="font-semibold">฿{totalPrice.toLocaleString()}</span>
+                                          </div>
+                                        </div>
+                                      );
+                                    })()}
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>

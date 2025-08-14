@@ -9,6 +9,7 @@ import { gutterMaterials } from './lib/materials/gutterMaterials';
 import { MaterialSelector } from './components/calculator/MaterialSelector';
 import { MaterialPreview } from './components/calculator/MaterialPreview';
 import { PriceSummary } from './components/PriceSummary';
+import { QuoteRequestModal } from './components/QuoteModal';
 
 export default function Home() {
   const [selectionData, setSelectionData] = useState({
@@ -20,9 +21,12 @@ export default function Home() {
     selectedServiceOptions: {} as Record<string, string>,
     selectedExtras: {} as Record<string, string>,
     gutterMaterials: {} as Record<string, string>,
+    pipeLength: {} as Record<string, number>,
+    electricalPoints: {} as Record<string, number>,
   });
 
   const [showFloatingPreview, setShowFloatingPreview] = useState(false);
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
 
   // Validation and calculation
   const isValidDimensions = selectionData.dimensions.width > 0 && selectionData.dimensions.length > 0;
@@ -66,6 +70,20 @@ export default function Home() {
             }
           }
           
+          // เพิ่มราคาท่อน้ำถ้ามีการระบุความยาว
+          if (serviceId === 'pipe' && selectionData.pipeLength[serviceId] && service?.pricePerMeter) {
+            const length = selectionData.pipeLength[serviceId];
+            const minLength = service.minimumLength || 3;
+            const actualLength = Math.max(length, minLength);
+            extraPrice = (option?.price || 0) * actualLength;
+          }
+          
+          // เพิ่มราคาไฟฟ้าถ้ามีการระบุจำนวนจุด
+          if (serviceId === 'electrical' && selectionData.electricalPoints[serviceId] && service?.pricePerPoint) {
+            const points = selectionData.electricalPoints[serviceId];
+            extraPrice = (option?.price || 0) * points;
+          }
+          
           return sum + extraPrice;
         }, 0)
     : 0;
@@ -99,9 +117,13 @@ export default function Home() {
           display: none;
         }
       `}</style>
-      <Navbar totalPrice={totalPrice} />
+
+      <Navbar 
+        totalPrice={totalPrice} 
+        onQuoteRequest={() => setIsQuoteModalOpen(true)}
+      />
       
-      {/* Floating Preview - Test: Show when material and size selected */}
+      {/* Floating Preview - ปรากฏเมื่อเลือกวัสดุแล้ว */}
       <FloatingPreview 
         material={selectionData.material}
         selectedSize={selectionData.size}
@@ -109,9 +131,8 @@ export default function Home() {
         isVisible={selectionData.material !== null && selectionData.size !== null}
       />
       
-      {/* Desktop Layout */}
+      {/* Desktop Layout - เหมือนเดิม */}
       <div className="hidden lg:flex h-[calc(100vh-2rem)] p-8 gap-3 mt-6">
-        {/* Left Side - Material Preview (flex-1) */}
         <div id="materials" className="flex-1">
           <div className="h-full rounded-3xl overflow-auto shadow-xl border border-gray-200/50 custom-scrollbar bg-white/95 backdrop-blur-sm">
             <MaterialPreview 
@@ -129,13 +150,10 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Right Side - Calculator (Fixed width 400px) */}
         <div className="w-96 bg-white/95 backdrop-blur-sm border border-gray-200/50 h-full relative shadow-xl rounded-3xl overflow-hidden">
           <div className="h-full flex flex-col">
-            {/* Main Content - Scrollable */}
             <div className="flex-1 overflow-auto custom-scrollbar p-6">
               <div className="space-y-8">
-                {/* Material Selector */}
                 <div className="space-y-6">
                   <MaterialSelector
                     materials={materials}
@@ -149,7 +167,6 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Price Summary - Fixed at bottom */}
             {selectionData.size && selectionData.material && totalPrice > 0 && (
               <PriceSummary 
                 material={selectionData.material}
@@ -162,40 +179,38 @@ export default function Home() {
                 extraServices={extraServices}
                 selectedServiceOptions={selectionData.selectedServiceOptions}
                 gutterMaterials={selectionData.gutterMaterials}
+                pipeLength={selectionData.pipeLength}
+                electricalPoints={selectionData.electricalPoints}
+                onQuoteRequest={() => setIsQuoteModalOpen(true)}
               />
             )}
           </div>
         </div>
       </div>
 
-      {/* Mobile Layout */}
-      <div className="lg:hidden flex flex-col min-h-[calc(100vh-2rem)] p-4 gap-4 mt-4">
-        {/* Top - Material Preview - ซ่อนเมื่อเลือกแล้ว */}
-        {!(selectionData.material && selectionData.size) && (
-          <div className="flex-1 min-h-[50vh]">
-            <div className="h-full rounded-2xl overflow-auto custom-scrollbar shadow-xl border border-gray-200/50 bg-white/95 backdrop-blur-sm">
-              <MaterialPreview 
-                material={selectionData.material} 
-                selectedSize={selectionData.size}
-                dimensions={selectionData.dimensions}
-                totalPrice={totalPrice}
-                selectedServices={selectionData.selectedServices}
-                selectedExtras={selectionData.selectedExtras}
-                mainServices={mainServices}
-                extraServices={extraServices}
-                selectedServiceOptions={selectionData.selectedServiceOptions}
-                gutterMaterials={selectionData.gutterMaterials}
-                onFloatingPreviewChange={setShowFloatingPreview}
-              />
-            </div>
+      {/* Mobile Layout - โครงสร้างใหม่ที่เรียบง่าย */}
+      <div className="lg:hidden p-4 mt-4">
+        {/* Preview Section - ก่อนเลือกวัสดุ */}
+        {!selectionData.material && (
+          <div className="mb-4 bg-white/95 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-xl">
+            <MaterialPreview 
+              material={selectionData.material} 
+              selectedSize={selectionData.size}
+              dimensions={selectionData.dimensions}
+              totalPrice={totalPrice}
+              selectedServices={selectionData.selectedServices}
+              selectedExtras={selectionData.selectedExtras}
+              mainServices={mainServices}
+              extraServices={extraServices}
+              selectedServiceOptions={selectionData.selectedServiceOptions}
+              gutterMaterials={selectionData.gutterMaterials}
+              onFloatingPreviewChange={setShowFloatingPreview}
+            />
           </div>
         )}
         
-        {/* Bottom - Calculator - ขยายเต็มหน้าจอเมื่อเลือกแล้ว */}
-        <div className={`bg-white/95 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-xl ${
-          selectionData.material && selectionData.size ? 'flex-1' : ''
-        }`}>
-          {/* Material Selector */}
+        {/* Selector Section - แสดงเสมอ */}
+        <div className="bg-white/95 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-xl mb-4">
           <div className="p-4">
             <MaterialSelector
               materials={materials}
@@ -206,25 +221,48 @@ export default function Home() {
               onSelectionChange={setSelectionData}
             />
           </div>
-          
-          {/* Price Summary - Mobile */}
-          {selectionData.size && selectionData.material && totalPrice > 0 && (
-            <PriceSummary 
-              material={selectionData.material}
-              selectedSize={selectionData.size}
-              dimensions={selectionData.dimensions}
-              totalPrice={totalPrice}
-              selectedServices={selectionData.selectedServices}
-              selectedExtras={selectionData.selectedExtras}
-              mainServices={mainServices}
-              extraServices={extraServices}
-              selectedServiceOptions={selectionData.selectedServiceOptions}
-              gutterMaterials={selectionData.gutterMaterials}
-              isMobile={true}
-            />
-          )}
         </div>
+        
+        {/* Price Summary - เมื่อมีข้อมูลครบ */}
+        {selectionData.size && selectionData.material && totalPrice > 0 && (
+          <PriceSummary 
+            material={selectionData.material}
+            selectedSize={selectionData.size}
+            dimensions={selectionData.dimensions}
+            totalPrice={totalPrice}
+            selectedServices={selectionData.selectedServices}
+            selectedExtras={selectionData.selectedExtras}
+            mainServices={mainServices}
+            extraServices={extraServices}
+            selectedServiceOptions={selectionData.selectedServiceOptions}
+            gutterMaterials={selectionData.gutterMaterials}
+            pipeLength={selectionData.pipeLength}
+            electricalPoints={selectionData.electricalPoints}
+            isMobile={true}
+            onQuoteRequest={() => setIsQuoteModalOpen(true)}
+          />
+        )}
       </div>
+      
+      {/* Quote Request Modal */}
+      {selectionData.material && selectionData.size && totalPrice > 0 && (
+        <QuoteRequestModal
+          isOpen={isQuoteModalOpen}
+          onClose={() => setIsQuoteModalOpen(false)}
+          material={selectionData.material}
+          selectedSize={selectionData.size}
+          dimensions={selectionData.dimensions}
+          totalPrice={totalPrice}
+          selectedServices={selectionData.selectedServices}
+          selectedExtras={selectionData.selectedExtras}
+          mainServices={mainServices}
+          extraServices={extraServices}
+          selectedServiceOptions={selectionData.selectedServiceOptions}
+          gutterMaterials={selectionData.gutterMaterials}
+          pipeLength={selectionData.pipeLength}
+          electricalPoints={selectionData.electricalPoints}
+        />
+      )}
     </main>
   );
 }

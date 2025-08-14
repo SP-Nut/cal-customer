@@ -12,7 +12,10 @@ interface PriceSummaryProps {
   extraServices: ExtraService[];
   selectedServiceOptions: Record<string, string>;
   gutterMaterials?: Record<string, string>;
+  pipeLength?: Record<string, number>;
+  electricalPoints?: Record<string, number>;
   isMobile?: boolean;
+  onQuoteRequest?: () => void;
 }
 
 export function PriceSummary({
@@ -26,7 +29,10 @@ export function PriceSummary({
   extraServices,
   selectedServiceOptions,
   gutterMaterials: selectedGutterMaterials = {},
-  isMobile = false
+  pipeLength = {},
+  electricalPoints = {},
+  isMobile = false,
+  onQuoteRequest
 }: PriceSummaryProps) {
   const area = dimensions.width * dimensions.length;
 
@@ -138,8 +144,23 @@ export function PriceSummary({
                     <div key={serviceId} className="space-y-1">
                       <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         <span className="text-emerald-700 font-medium">+ {service.name}</span>
-                        <span className="font-semibold text-emerald-800">฿{option.price.toLocaleString()}</span>
+                        <span className="font-semibold text-emerald-800">
+                          {service.pricePerMeter && pipeLength[serviceId] ? 
+                            `฿${(option.price * pipeLength[serviceId]).toLocaleString()}` : 
+                            `฿${option.price.toLocaleString()}`
+                          }
+                        </span>
                       </div>
+                      
+                      {/* แสดงรายละเอียดท่อน้ำเมื่อเป็นบริการท่อน้ำ */}
+                      {serviceId === 'pipe' && service.pricePerMeter && pipeLength[serviceId] && (
+                        <div className={`ml-4 ${isMobile ? 'text-xs' : 'text-sm'} text-emerald-600`}>
+                          <div className="flex justify-between bg-emerald-100/50 px-2 py-1 rounded">
+                            <span>• {option.name} ({pipeLength[serviceId]} ม.)</span>
+                            <span className="font-semibold">฿{option.price.toLocaleString()}/ม.</span>
+                          </div>
+                        </div>
+                      )}
                       
                       {/* แสดงวัสดุรางน้ำเมื่อเลือกบริการรางน้ำ */}
                       {serviceId === 'gutter' && selectedGutterMaterials[serviceId] && (
@@ -195,6 +216,16 @@ export function PriceSummary({
             <span className={`${isMobile ? 'text-base' : 'text-lg'} font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent`}>
               ฿{totalPrice.toLocaleString()}
             </span>
+          </div>
+          
+          {/* Quote Request Button */}
+          <div className={`${isMobile ? 'mt-3' : 'mt-4'}`}>
+            <button
+              onClick={onQuoteRequest}
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+            >
+              ขอใบเสนอราคา
+            </button>
           </div>
         </div>
       </div>

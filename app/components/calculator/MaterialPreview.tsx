@@ -492,32 +492,6 @@ export function MaterialPreview({
       `}</style>
       
       <div className="h-screen flex flex-col">
-        {/* Hero Section - Material Image - Fixed at 30% viewport height on mobile */}
-        <div className="h-[30vh] lg:h-[28rem] overflow-hidden lg:relative flex-shrink-0">
-          <img
-            src={material.image || "/materials/placeholder.jpg"}
-            alt={material.name}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/30 to-transparent" />
-          
-          {/* Material Type Badge */}
-          <div className="absolute top-2 right-2 lg:top-4 lg:right-4">
-            <div className="inline-flex items-center px-2 py-1 lg:px-3 lg:py-1.5 rounded-full bg-white/95 backdrop-blur-sm text-xs lg:text-sm font-medium text-slate-700 shadow-md">
-              <span className="mr-1 lg:mr-2">
-                {material.type === 'translucent' ? '🔆' : '🛡️'}
-              </span>
-              {material.type === 'translucent' ? 'โปร่งแสง' : 'ทึบแสง'}
-            </div>
-          </div>
-          
-          {/* Material Title */}
-          <div className="absolute bottom-0 left-0 right-0 p-3 lg:p-6 text-white">
-            <h1 className="text-base lg:text-3xl font-bold drop-shadow-lg mb-1">{material.name}</h1>
-            <p className="text-xs lg:text-sm text-slate-200 drop-shadow-md">วัสดุคุณภาพสูง สำหรับงานก่อสร้าง</p>
-          </div>
-        </div>
-
         {/* Main Content - Mobile First Design */}
         <div 
           ref={scrollContainerRef}
@@ -525,119 +499,141 @@ export function MaterialPreview({
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           
-          {/* Mobile Layout - Compact */}
+          {/* Mobile Layout - Simple Image and Description */}
           <div className="lg:hidden">
             {material && (
-              <>
-                {/* Material Info - Compact */}
-                <div className="bg-white p-3">
-                  <h2 className="text-lg font-bold text-slate-800 mb-1">{material.name}</h2>
-                  <p className="text-slate-600 text-xs mb-3 leading-relaxed">{material.description}</p>
-                  
-                  {/* Price Info - Compact */}
-                  {selectedSize && (
-                    <div className="bg-blue-50 rounded-lg p-3 border border-blue-100">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs text-slate-600">ขนาด: {selectedSize.name}</span>
-                        <span className="text-sm font-bold text-blue-600">
-                          ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}/ตร.ม.
+              <div className="bg-white">
+                {/* Material Header with Image */}
+                <div className="relative">
+                  {/* Material Image */}
+                  <div className="h-48 sm:h-56 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50">
+                    <img
+                      src={material.image || "/materials/placeholder.jpg"}
+                      alt={material.name}
+                      className="w-full h-full object-cover"
+                    />
+                    
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                    
+                    {/* Material Type Badge */}
+                    <div className="absolute top-3 right-3">
+                      <div className="inline-flex items-center px-2 py-1 rounded-full bg-white/95 backdrop-blur-sm text-xs font-medium text-slate-700 shadow-lg">
+                        <span className="mr-1">
+                          {material.type === 'translucent' ? '🔆' : '🛡️'}
                         </span>
+                        {material.type === 'translucent' ? 'โปร่งแสง' : 'ทึบแสง'}
                       </div>
-                      
-                      {dimensions.width > 0 && dimensions.length > 0 && (
-                        <div className="border-t border-blue-200 pt-1 mt-1">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs text-slate-600">
-                              {dimensions.width}×{dimensions.length} ม.
-                            </span>
-                            <span className="text-lg font-bold text-blue-700">
-                              ฿{totalPrice.toLocaleString()}
-                            </span>
-                          </div>
+                    </div>
+                    
+                    {/* Material Name Overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <h2 className="text-xl font-bold text-white drop-shadow-lg mb-1">
+                        {material.name}
+                      </h2>
+                      {selectedSize && (
+                        <div className="text-white/90 text-sm">
+                          ขนาด: {selectedSize.name}
                         </div>
                       )}
                     </div>
-                  )}
-                </div>
-                
-                {/* Size Selection - Grid Layout */}
-                <div className="bg-slate-50 p-3">
-                  <h3 className="text-base font-semibold text-slate-800 mb-3">เลือกขนาด</h3>
-                  
-                  <div className="grid grid-cols-2 gap-2">
-                    {material.sizes.map((size) => (
-                      <button
-                        key={size.id}
-                        onClick={() => onSizeSelect?.(size.id)}
-                        className={`p-3 rounded-lg border-2 text-left transition-all duration-200 ${
-                          selectedSize?.id === size.id
-                            ? 'border-blue-500 bg-blue-50'
-                            : 'border-slate-200 bg-white hover:border-slate-300'
-                        }`}
-                      >
-                        <div className="space-y-1">
-                          <h5 className="font-medium text-slate-800 text-sm">{size.name}</h5>
-                          <p className="text-xs text-slate-600 leading-tight">{size.description}</p>
-                          <div className="pt-1">
-                            <p className="font-bold text-blue-600 text-sm">
-                              ฿{material.pricePerSqm[size.id].toLocaleString()}
-                            </p>
-                            <p className="text-xs text-slate-500">ต่อ ตร.ม.</p>
-                          </div>
-                        </div>
-                      </button>
-                    ))}
                   </div>
                 </div>
-              </>
+
+                {/* Material Details */}
+                <div className="p-4">
+                  {/* Description */}
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-800 mb-2">รายละเอียดวัสดุ</h3>
+                    <p className="text-slate-600 text-sm leading-relaxed">{material.description}</p>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
           
           {/* Desktop Content */}
           <div className="hidden lg:block p-6">
           
-          {/* Material Details & Size Selection */}
+          {/* Material Image Section */}
           <div className="mb-4 bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden"
+               style={{ animation: 'fadeIn 0.3s ease-out' }}>
+            <div className="relative h-[28rem] overflow-hidden">
+              <img
+                src={material.image || "/materials/placeholder.jpg"}
+                alt={material.name}
+                className="w-full h-full object-cover"
+              />
+              
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+              
+              {/* Material Type Badge */}
+              <div className="absolute top-4 right-4">
+                <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-sm text-sm font-medium text-slate-700 shadow-lg">
+                  <span className="mr-2">
+                    {material.type === 'translucent' ? '🔆' : '🛡️'}
+                  </span>
+                  {material.type === 'translucent' ? 'โปร่งแสง' : 'ทึบแสง'}
+                </div>
+              </div>
+              
+              {/* Material Name Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <h2 className="text-2xl font-bold text-white drop-shadow-lg mb-2">
+                  {material.name}
+                </h2>
+                {selectedSize && (
+                  <div className="text-white/90 text-base">
+                    ขนาด: {selectedSize.name}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          
+          {/* Material Details & Size Selection */}
+          <div className="mb-3 bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden"
                style={{ animation: 'fadeIn 0.4s ease-out' }}>
           
-          <div className="p-4">
+          <div className="p-3">
             {/* Single Column Layout - Material Details & Size Selection */}
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {/* Material Description */}
               <div>
-                <h4 className="text-sm font-semibold text-slate-800 mb-1">{material.name}</h4>
-                <p className="text-slate-600 text-sm leading-snug">{material.description}</p>
+                <h4 className="text-sm font-semibold text-slate-800 mb-0.5">{material.name}</h4>
+                <p className="text-slate-600 text-xs leading-tight">{material.description}</p>
               </div>
 
               {/* Size Information */}
               {selectedSize ? (
                 /* Selected Size Display - Without Image */
-                <div className="bg-slate-50 rounded-lg border border-slate-200 p-3">
-                  <div className="space-y-2">
+                <div className="bg-slate-50 rounded-lg border border-slate-200 p-2">
+                  <div className="space-y-1">
                     <div className="flex items-center justify-between">
-                      <h5 className="text-sm font-semibold text-slate-800">ขนาดที่เลือก</h5>
+                      <h5 className="text-xs font-semibold text-slate-800">ขนาดที่เลือก</h5>
                       <button 
                         onClick={() => onSizeSelect?.('')}
-                        className="text-xs text-blue-600 hover:text-blue-700 font-medium px-2 py-1 rounded hover:bg-blue-50 transition-colors duration-200"
+                        className="text-xs text-blue-600 hover:text-blue-700 font-medium px-1 py-0.5 rounded hover:bg-blue-50 transition-colors duration-200"
                       >
                         เปลี่ยน
                       </button>
                     </div>
                     
-                    <div className="space-y-1.5">
+                    <div className="space-y-1">
                       <div>
-                        <div className="text-base font-bold text-slate-800">{selectedSize.name}</div>
+                        <div className="text-sm font-bold text-slate-800">{selectedSize.name}</div>
                         <div className="text-xs text-slate-500">วัสดุ: {material.name}</div>
                       </div>
                       
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-slate-600">ราคาต่อ ตร.ม.</span>
+                        <span className="text-xs text-slate-600">ราคาต่อ ตร.ม.</span>
                         {material.pricePerSqm[selectedSize.id] > 0 ? (
-                          <span className="text-lg font-bold text-slate-800">
+                          <span className="text-sm font-bold text-slate-800">
                             ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}
                           </span>
                         ) : (
-                          <span className="text-sm text-slate-400">ไม่รองรับ</span>
+                          <span className="text-xs text-slate-400">ไม่รองรับ</span>
                         )}
                       </div>
                     </div>
@@ -646,12 +642,12 @@ export function MaterialPreview({
               ) : (
                 /* All Sizes Display - Compact Grid */
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-800 mb-1.5">เลือกขนาด</h4>
-                  <div className="grid grid-cols-2 gap-2">
+                  <h4 className="text-xs font-semibold text-slate-800 mb-1">เลือกขนาด</h4>
+                  <div className="grid grid-cols-2 gap-1.5">
                     {material.sizes.map((size, index) => (
                       <div
                         key={size.id}
-                        className="bg-slate-50 rounded-md p-2 border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 cursor-pointer"
+                        className="bg-slate-50 rounded-md p-1.5 border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 cursor-pointer"
                         style={{ animation: `fadeIn ${0.6 + index * 0.1}s ease-out` }}
                         onClick={() => onSizeSelect?.(size.id)}
                       >
@@ -674,14 +670,14 @@ export function MaterialPreview({
           </div>
         </div>
 
-        {/* Ultra Compact Price Calculation */}
+        {/* Compact Price Calculation */}
         {dimensions.width > 0 && dimensions.length > 0 && material && selectedSize && (
-          <div className="mb-4 bg-white rounded-lg border border-slate-200 shadow-sm"
+          <div className="mb-3 bg-white rounded-lg border border-slate-200 shadow-sm"
                style={{ animation: 'fadeIn 1s ease-out' }}>
             
-            <div className="p-3">
+            <div className="p-2">
               {/* Single Row Layout */}
-              <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
                 
                 {/* Area */}
                 <div className="flex-shrink-0">
@@ -700,17 +696,17 @@ export function MaterialPreview({
                 </div>
 
                 {/* Total Price */}
-                <div className="flex-shrink-0 bg-slate-800 text-white rounded-md px-3 py-2">
-                  <span className="text-xs opacity-80 mr-2">รวม:</span>
+                <div className="flex-shrink-0 bg-slate-800 text-white rounded-md px-2 py-1">
+                  <span className="text-xs opacity-80 mr-1">รวม:</span>
                   <span className="font-bold">฿{totalPrice.toLocaleString()}</span>
                 </div>
               </div>
 
               {/* Services - Inline */}
               {(selectedServices.length > 0 || Object.keys(selectedExtras).some(key => selectedExtras[key]) || Object.keys(selectedGutterMaterials).some(key => selectedGutterMaterials[key])) && (
-                <div className="mt-2 pt-2 border-t border-slate-200">
+                <div className="mt-1.5 pt-1.5 border-t border-slate-200">
                   <div className="flex flex-wrap gap-1">
-                    <span className="text-xs text-slate-500 mr-2">บริการ:</span>
+                    <span className="text-xs text-slate-500 mr-1">บริการ:</span>
                     {/* Main Services */}
                     {mainServices
                       .filter((service) => selectedServices.includes(service.id))
@@ -730,7 +726,7 @@ export function MaterialPreview({
                         }
                         
                         return (
-                          <span key={service.id} className="inline-block px-2 py-0.5 rounded text-xs bg-slate-100 text-slate-700 mr-1 mb-1">
+                          <span key={service.id} className="inline-block px-1.5 py-0.5 rounded text-xs bg-slate-100 text-slate-700 mr-1 mb-1">
                             {service.name} ฿{servicePrice.toLocaleString()}
                           </span>
                         );
@@ -744,7 +740,7 @@ export function MaterialPreview({
                         const option = service?.options.find((o) => o.id === optionId);
                         if (!service || !option) return null;
                         return (
-                          <span key={serviceId} className="inline-block px-2 py-0.5 rounded text-xs bg-slate-100 text-slate-700 mr-1 mb-1">
+                          <span key={serviceId} className="inline-block px-1.5 py-0.5 rounded text-xs bg-slate-100 text-slate-700 mr-1 mb-1">
                             {service.name} ฿{option.price.toLocaleString()}
                           </span>
                         );
@@ -758,7 +754,7 @@ export function MaterialPreview({
                         if (!selectedGutter) return null;
                         const gutterTotalPrice = selectedGutter.price * dimensions.length;
                         return (
-                          <span key={`gutter-${serviceId}`} className="inline-block px-2 py-0.5 rounded text-xs bg-emerald-100 text-emerald-700 mr-1 mb-1">
+                          <span key={`gutter-${serviceId}`} className="inline-block px-1.5 py-0.5 rounded text-xs bg-emerald-100 text-emerald-700 mr-1 mb-1">
                             รางน้ำ: {selectedGutter.name} ฿{gutterTotalPrice.toLocaleString()}
                           </span>
                         );

@@ -136,11 +136,18 @@ export const extraServices: ExtraService[] = [
   {
     id: 'electrical',
     name: 'งานไฟฟ้า',
-    description: 'ระบบไฟฟ้าและแสงสว่าง',
+    description: 'ระบบไฟฟ้าและแสงสว่าง (1,500 บาท/จุด)',
     options: [
-      { id: 'basic', name: 'ไฟส่องสว่างพื้นฐาน', price: 3000 },
-      { id: 'premium', name: 'ระบบไฟอัตโนมัติ', price: 6000 }
-    ]
+      { 
+        id: 'lighting', 
+        name: 'จุดไฟส่องสว่าง', 
+        price: 1500,
+        description: 'ติดตั้งจุดไฟส่องสว่าง 1,500 บาท/จุด'
+      }
+    ],
+    requiresQuantity: true,
+    pricePerPoint: true,
+    unit: 'จุด'
   },
   {
     id: 'gutter',
@@ -154,10 +161,17 @@ export const extraServices: ExtraService[] = [
   {
     id: 'pipe',
     name: 'งานท่อน้ำ',
-    description: 'ระบบท่อระบายน้ำลง',
+    description: 'ระบบท่อระบายน้ำลง (550 บาท/เมตร ขั้นต่ำ 3 เมตร)',
     options: [
-      { id: 'basic', name: 'ท่อน้ำพื้นฐาน', price: 1500 },
-      { id: 'premium', name: 'ท่อน้ำพิเศษ', price: 2500 }
-    ]
+      { 
+        id: 'standard', 
+        name: 'ท่อระบายน้ำมาตรฐาน', 
+        price: 550,
+        description: 'ท่อระบายน้ำคุณภาพดี ราคา 550 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
+      }
+    ],
+    requiresLength: true,
+    pricePerMeter: true,
+    minimumLength: 3
   }
 ];

@@ -5,7 +5,7 @@ export const translucentMaterials: Material[] = [
     id: 'shinkolite-prime',
     type: 'translucent',
     name: 'อะคริลิค Shinkolite Prime 10 มม.',
-    image: '/materials/shinkolite-prime.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาอะคริลิคชิงโคไลท์ รุ่น Prime หนา 10 มิลลิเมตร คุณภาพพรีเมียมสูงสุด ใสแจ๋วเหมือนกระจก ทนทานต่อแสง UV สูงสุด ไม่เหลือง ไม่เปราะแตก เหมาะสำหรับงานคุณภาพสูง อาคารหรูหรา ที่ต้องการความใสสวยงามและทนทานยาวนาน',
     sizes: [
       { id: 'M', name: 'M' },
@@ -28,7 +28,7 @@ export const translucentMaterials: Material[] = [
     id: 'shinkolite-heat-cut',
     type: 'translucent',
     name: 'อะคริลิค Shinkolite Heat Cut/Nature 6 มม.',
-    image: '/materials/shinkolite-heat.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาอะคริลิคชิงโคไลท์ รุ่น Heat Cut/Nature หนา 6 มิลลิเมตร เคลือบสารป้องกัน UV พิเศษ ลดความร้อนได้ดีเยี่ยม ใสใส ทนทานต่อสภาพอากาศ ไม่เหลือง เหมาะสำหรับพื้นที่ที่ต้องการแสงธรรมชาติแต่ลดความร้อน',
     sizes: [
       { id: 'M', name: 'M' },
@@ -51,7 +51,7 @@ export const translucentMaterials: Material[] = [
     id: 'shinkolite-superior',
     type: 'translucent',
     name: 'อะคริลิค Shinkolite Superior 6 มม.',
-    image: '/materials/shinkolite-superior.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาอะคริลิคชิงโคไลท์ รุ่น Superior หนา 6 มิลลิเมตร คุณภาพสูง โปร่งแสงดี ทนทานต่อแสง UV ไม่เหลือง ไม่แตก น้ำหนักเบา ติดตั้งง่าย เหมาะสำหรับบ้านพักอาศัย อาคารพาณิชย์ ที่ต้องการแสงธรรมชาติและราคาคุ้มค่า',
     sizes: [
       { id: 'M', name: 'M' },
@@ -74,7 +74,7 @@ export const translucentMaterials: Material[] = [
     id: 'shinkolite-shade',
     type: 'translucent',
     name: 'อะคริลิค Shinkolite Shade Series 4 มม.',
-    image: '/materials/shinkolite-shade.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาอะคริลิคชิงโคไลท์ รุ่น Shade Series หนา 4 มิลลิเมตร ซีรีส์พิเศษ มีเฉดสีสวยงาม ลดแสงฉาบ ให้แสงนุ่มๆ ทนทานต่อแสง UV น้ำหนักเบาที่สุด เหมาะสำหรับงานตะแกรง หลังคาโรงเรียน หรือพื้นที่ที่ต้องการแสงกรองนุ่มๆ',
     sizes: [
       { id: 'M', name: 'M' },
@@ -97,7 +97,7 @@ export const translucentMaterials: Material[] = [
     id: 'polycarbonate-embossed',
     type: 'translucent',
     name: 'โพลีคาร์บอเนต Embossed Sheet 3 มม.',
-    image: '/materials/polycarbonate-embossed.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาโพลีคาร์บอเนต แบบ Embossed Sheet หนา 3 มิลลิเมตร ผิวนูนลึก ช่วยกระจายแสงให้นุ่มๆ ลดแสงฉาบ ทนทานต่อการกระแทก ไม่แตกง่าย น้ำหนักเบา เหมาะสำหรับหลังคาโรงรถ ระเบียง หรือพื้นที่ที่ต้องการแสงกรอง',
     sizes: [
       { id: 'M', name: 'M' },
@@ -120,7 +120,7 @@ export const translucentMaterials: Material[] = [
     id: 'fiberglass-smooth',
     type: 'translucent',
     name: 'ไฟเบอร์กลาส ลอนเรียบ D-Lite 1.5 มม. / J-Roof 1.2 มม.',
-    image: '/materials/fiberglass-smooth.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาไฟเบอร์กลาสลอนเรียบ แบรนด์ D-Lite หนา 1.5 มิลลิเมตร หรือ J-Roof หนา 1.2 มิลลิเมตร ผิวเรียบสวยงาม โปร่งแสงดี ทนทานต่อสภาพอากาศ น้ำหนักเบา ราคาประหยัด เหมาะสำหรับโรงเก็บของ หลังคาโรงงาน หรือการใช้งานทั่วไป',
     sizes: [
       { id: 'M', name: 'M' },
@@ -143,7 +143,7 @@ export const translucentMaterials: Material[] = [
     id: 'fiberglass-wave-gray',
     type: 'translucent',
     name: 'ไฟเบอร์กลาส ลอนคลื่น D-Lite 1.2 มม. (สีเทาอัลลอยด์)',
-    image: '/materials/fiberglass-wave-gray.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาไฟเบอร์กลาสลอนคลื่น D-Lite หนา 1.2 มิลลิเมตร สีเทาอัลลอยด์พิเศษ ลดแสงฉาบ ให้แสงนุ่มๆ ทนทานต่อสภาพอากาศ ไม่ซีดจาง เหมาะสำหรับพื้นที่ที่ต้องการแสงธรรมชาติแต่ไม่ต้องการแสงจ้า เช่น โรงเรียน สำนักงาน',
     sizes: [
       { id: 'M', name: 'M' },
@@ -166,7 +166,7 @@ export const translucentMaterials: Material[] = [
     id: 'fiberglass-wave',
     type: 'translucent',
     name: 'ไฟเบอร์กลาส ลอนคลื่น D-Lite 1.2 มม.',
-    image: '/materials/fiberglass-wave.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาไฟเบอร์กลาสลอนคลื่น D-Lite หนา 1.2 มิลลิเมตร แบบใส โปร่งแสงดี ทนทานต่อสภาพอากาศ น้ำหนักเบา ราคาประหยัด ติดตั้งง่าย เหมาะสำหรับโรงงาน โรงเก็บของ หรือพื้นที่ที่ต้องการแสงธรรมชาติมากๆ',
     sizes: [
       { id: 'M', name: 'M' },
@@ -189,7 +189,7 @@ export const translucentMaterials: Material[] = [
     id: 'poly-corrugated',
     type: 'translucent',
     name: 'โพลีลอนเล็ก 1.2 มม./1.5 มม.',
-    image: '/materials/poly-corrugated.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาโพลีลอนเล็ก หนา 1.2 มิลลิเมตร หรือ 1.5 มิลลิเมตร วัสดุพลาสติกใส โปร่งแสงดี น้ำหนักเบาที่สุด ราคาประหยัดที่สุด ติดตั้งง่าย เหมาะสำหรับงบประมาณจำกัด โรงเก็บของชั่วคราว หรือการใช้งานเบื้องต้น',
     sizes: [
       { id: 'M', name: 'M' },
@@ -212,7 +212,7 @@ export const translucentMaterials: Material[] = [
     id: 'clear-metal-sheet',
     type: 'translucent',
     name: 'แผ่นใสไฟเบอร์กลาส/โพลี ลอนเมทัลชีท 1.2 มม.',
-    image: '/materials/clear-metal-sheet.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาแผ่นใสไฟเบอร์กลาสลอนเมทัลชีท หรือโพลีลอนเมทัลชีท หนา 1.2 มิลลิเมตร ออกแบบให้เข้ากับลอนเมทัลชีท โปร่งแสงดี สามารถผสมผสานกับหลังคาเมทัลชีทได้สวยงาม เหมาะสำหรับโรงงาน คลังสินค้า ที่ต้องการแสงธรรมชาติบางจุด',
     sizes: [
       { id: 'M', name: 'M' },
@@ -235,7 +235,7 @@ export const translucentMaterials: Material[] = [
     id: 'polycarbonate-10mm',
     type: 'translucent',
     name: 'โพลีคาร์บอเนต 10 มม.',
-    image: '/materials/polycarbonate-10mm.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาโพลีคาร์บอเนต หนา 10 มิลลิเมตร โครงสร้างแผ่นคู่ ป้องกันความร้อนได้ดีที่สุด ทนทานต่อการกระแทกสูง โปร่งแสงดี น้ำหนักเบา เหมาะสำหรับพื้นที่ที่ต้องการทั้งแสงธรรมชาติและการป้องกันความร้อน เช่น สำนักงาน โรงเรียน',
     sizes: [
       { id: 'M', name: 'M' },
@@ -258,7 +258,7 @@ export const translucentMaterials: Material[] = [
     id: 'polycarbonate-8mm',
     type: 'translucent',
     name: 'โพลีคาร์บอเนต 8 มม.',
-    image: '/materials/polycarbonate-8mm.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาโพลีคาร์บอเนต หนา 8 มิลลิเมตร โครงสร้างแผ่นคู่ ป้องกันความร้อนได้ดี ทนทานต่อการกระแทก โปร่งแสงดี น้ำหนักเบา ราคาปานกลาง เหมาะสำหรับหลังคาบ้าน ระเบียง โรงรถ ที่ต้องการทั้งแสงและการป้องกันความร้อนในระดับดี',
     sizes: [
       { id: 'M', name: 'M' },
@@ -281,7 +281,7 @@ export const translucentMaterials: Material[] = [
     id: 'polycarbonate-6mm',
     type: 'translucent',
     name: 'โพลีคาร์บอเนต 6 มม.',
-    image: '/materials/polycarbonate-6mm.jpg',
+    image: '/materials/aluminum-roof.jpg',
     description: 'หลังคาโพลีคาร์บอเนต หนา 6 มิลลิเมตร โครงสร้างแผ่นคู่ ป้องกันความร้อนได้ในระดับพื้นฐาน ทนทานต่อการกระแทก โปร่งแสงดี น้ำหนักเบา ราคาประหยัด เหมาะสำหรับหลังคาทั่วไป โรงรถ ระเบียง ที่ต้องการแสงธรรมชาติและราคาคุ้มค่า',
     sizes: [
       { id: 'M', name: 'M' },
