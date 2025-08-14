@@ -501,12 +501,12 @@ export function MaterialSelector({
         {/* Step 6 — full-bleed */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
           <>
-            <div className="-mx-3 px-3 bg-white border-b border-gray-100 py-4">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-2 h-6 bg-blue-500 rounded-full" />
-                <h3 className="text-[15px] font-bold text-gray-800">บริการหลัก</h3>
+            <div className="-mx-3 px-3 bg-white border-b border-gray-100 py-3">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-5 bg-blue-500 rounded-full" />
+                <h3 className="text-[14px] font-bold text-gray-800">บริการหลัก</h3>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {mainServices
                   .filter((service) => {
                     // @ts-ignore optional fields exist in data
@@ -517,7 +517,7 @@ export function MaterialSelector({
                   .map((service) => (
                     <div
                       key={service.id}
-                      className={`p-4 rounded-lg border transition-all duration-150 ${
+                      className={`p-3 rounded-lg border transition-all duration-150 ${
                         selectedServices.includes(service.id)
                           ? "border-blue-500 bg-blue-50 shadow"
                           : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/40"
@@ -534,34 +534,34 @@ export function MaterialSelector({
                             setSelectedServices(newServices);
                           }}
                         >
-                          <div className="flex justify-between items-center gap-3">
+                          <div className="flex justify-between items-center gap-2">
                             <div className="min-w-0">
-                              <div className="font-semibold text-gray-800 text-[14px] truncate">{service.name}</div>
-                              <div className="text-[12px] text-gray-600 mt-0.5">{service.description}</div>
+                              <div className="font-semibold text-gray-800 text-[13px] truncate">{service.name}</div>
+                              <div className="text-[11px] text-gray-600 leading-tight">{service.description}</div>
                             </div>
-                            <div className="text-[15px] font-bold text-blue-600 shrink-0">
-                              ฿{service.price.toLocaleString()}
+                            <div className="text-[13px] font-bold text-blue-600 shrink-0">
+                              {service.price ? `฿${service.price.toLocaleString()}` : 'ตามพื้นที่'}
                             </div>
                           </div>
                         </button>
                       ) : (
                         <div>
-                          <div className="flex justify-between items-center gap-3 mb-3">
+                          <div className="flex justify-between items-center gap-2 mb-2">
                             <div className="min-w-0">
-                              <div className="font-semibold text-gray-800 text-[14px] truncate">{service.name}</div>
-                              <div className="text-[12px] text-gray-600">{service.description}</div>
+                              <div className="font-semibold text-gray-800 text-[13px] truncate">{service.name}</div>
+                              <div className="text-[11px] text-gray-600 leading-tight">{service.description}</div>
                             </div>
-                            <div className="text-[15px] font-bold text-blue-600 shrink-0">
-                              ฿{service.price.toLocaleString()}
+                            <div className="text-[13px] font-bold text-blue-600 shrink-0">
+                              {service.price ? `฿${service.price.toLocaleString()}` : 'ตามพื้นที่'}
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-2 gap-2 mt-2">
+                          <div className="grid grid-cols-2 gap-1.5">
                             {/* @ts-ignore */}
                             {service.options.map((option: any) => (
                               <button
                                 key={option.id}
-                                className={`p-3 rounded-lg border transition-all duration-150 ${
+                                className={`p-2 rounded-md border transition-all duration-150 ${
                                   selectedServiceOptions[service.id] === option.id
                                     ? "border-blue-500 bg-blue-50 shadow"
                                     : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/40"
@@ -583,17 +583,17 @@ export function MaterialSelector({
                                   setSelectedServices(newServices);
                                 }}
                               >
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1.5">
                                   {option.color && (
                                     <div
-                                      className="w-3.5 h-3.5 rounded-full border border-gray-400"
+                                      className="w-3 h-3 rounded-full border border-gray-400"
                                       style={{ backgroundColor: option.color }}
                                     />
                                   )}
-                                  <span className="text-[13px] font-semibold truncate">{option.name}</span>
+                                  <span className="text-[12px] font-medium truncate">{option.name}</span>
                                 </div>
                                 {option.price > 0 && (
-                                  <div className="text-[12px] text-blue-600 mt-1 font-bold">
+                                  <div className="text-[11px] text-blue-600 mt-0.5 font-semibold">
                                     +฿{option.price.toLocaleString()}
                                   </div>
                                 )}

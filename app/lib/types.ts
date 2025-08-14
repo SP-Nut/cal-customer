@@ -30,16 +30,18 @@ export interface ServiceOption {
   price: number;
   color?: string;
   isDefault?: boolean;
+  description?: string;
 }
 
 export interface Service {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price?: number;
   requiresSize?: string;
   options?: ServiceOption[];
   isSelectedByDefault?: boolean;
+  pricePerSqm?: boolean;
 }
 
 export interface ExtraService {

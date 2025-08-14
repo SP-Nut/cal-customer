@@ -715,7 +715,7 @@ export function MaterialPreview({
                     {mainServices
                       .filter((service) => selectedServices.includes(service.id))
                       .map((service) => {
-                        let servicePrice = service.price;
+                        let servicePrice = service.price || 0;
                         const selectedOption = selectedServiceOptions[service.id];
                         if (selectedOption && service.options) {
                           const option = service.options.find(opt => opt.id === selectedOption);
@@ -723,6 +723,12 @@ export function MaterialPreview({
                             servicePrice += option.price;
                           }
                         }
+                        
+                        // For per-sqm services, calculate total price
+                        if (service.pricePerSqm && dimensions.width > 0 && dimensions.length > 0) {
+                          servicePrice = servicePrice * dimensions.width * dimensions.length;
+                        }
+                        
                         return (
                           <span key={service.id} className="inline-block px-2 py-0.5 rounded text-xs bg-slate-100 text-slate-700 mr-1 mb-1">
                             {service.name} ฿{servicePrice.toLocaleString()}

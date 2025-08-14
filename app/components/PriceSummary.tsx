@@ -77,15 +77,33 @@ export function PriceSummary({
               {mainServices
                 .filter((service) => selectedServices.includes(service.id))
                 .map((service) => {
-                  let servicePrice = service.price;
+                  let servicePrice = service.price || 0;
                   const selectedOption = selectedServiceOptions[service.id];
                   if (selectedOption && service.options) {
                     const option = service.options.find(opt => opt.id === selectedOption);
-                    if (option) servicePrice += option.price;
+                    if (option) {
+                      // ถ้าบริการคิดราคาตามตารางเมตร ให้คูณกับพื้นที่
+                      if (service.pricePerSqm) {
+                        servicePrice = option.price * area;
+                      } else {
+                        servicePrice += option.price;
+                      }
+                    }
+                  } else if (service.pricePerSqm && service.price) {
+                    // ถ้าไม่มี option แต่บริการคิดตามตารางเมตร
+                    servicePrice = service.price * area;
                   }
+                  
                   return (
                     <div key={service.id} className={`flex justify-between ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                      <span className="text-blue-700 font-medium">{service.name}</span>
+                      <span className="text-blue-700 font-medium">
+                        {service.name}
+                        {service.pricePerSqm && selectedOption && service.options && (
+                          <span className="text-blue-600 text-xs ml-1">
+                            ({service.options.find(opt => opt.id === selectedOption)?.name})
+                          </span>
+                        )}
+                      </span>
                       <span className="font-semibold text-blue-800">฿{servicePrice.toLocaleString()}</span>
                     </div>
                   );

@@ -33,11 +33,21 @@ export default function Home() {
       mainServices
         .filter((service: Service) => selectionData.selectedServices.includes(service.id))
         .reduce((sum: number, service: Service) => {
-          let servicePrice = service.price;
+          let servicePrice = service.price || 0;
           const selectedOption = selectionData.selectedServiceOptions[service.id];
           if (selectedOption && service.options) {
             const option = service.options.find((opt: any) => opt.id === selectedOption);
-            if (option) servicePrice += option.price;
+            if (option) {
+              // ถ้าบริการคิดราคาตามตารางเมตร ให้คูณกับพื้นที่
+              if (service.pricePerSqm) {
+                servicePrice = option.price * area;
+              } else {
+                servicePrice += option.price;
+              }
+            }
+          } else if (service.pricePerSqm && service.price) {
+            // ถ้าไม่มี option แต่บริการคิดตามตารางเมตร
+            servicePrice = service.price * area;
           }
           return sum + servicePrice;
         }, 0) +

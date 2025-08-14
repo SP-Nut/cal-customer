@@ -26,42 +26,100 @@ export const mainServices: Service[] = [
     id: 'poles',
     name: 'งานเสา',
     description: 'ติดตั้งเสารองรับโครงสร้างกันสาด',
-    price: 2000
+    options: [
+      { 
+        id: 'single', 
+        name: 'เสาเดี่ยว', 
+        price: 2000, 
+        isDefault: true,
+        description: 'เสาเดี่ยว เหมาะสำหรับพื้นที่ขนาดเล็ก-กลาง (2,000 บาท/ต้น)'
+      },
+      { 
+        id: 'cantilever', 
+        name: 'เสาระแนง', 
+        price: 3500,
+        description: 'เสาระแนง รองรับได้ดี เหมาะสำหรับพื้นที่กว้าง (3,500 บาท/ต้น)'
+      },
+      { 
+        id: 'extension', 
+        name: 'แขนดึง', 
+        price: 2800,
+        description: 'แขนดึง ติดตั้งง่าย ประหยัดพื้นที่ (2,800 บาท/ต้น)'
+      }
+    ]
   },
   {
     id: 'steel-painting',
-    name: 'งานสีเหล็ก',
-    description: 'ทาสีโครงสร้างเหล็กเพื่อป้องกันสนิม',
+    name: 'สีโครงสร้าง',
+    description: 'ทาสีโครงสร้างเหล็กเพื่อป้องกันสนิมและความสวยงาม',
     options: [
       { 
-        id: 'standard', 
-        name: 'สีมาตรฐาน (น้ำเงิน)', 
+        id: 'black-matte', 
+        name: 'ดำด้าน', 
         price: 0, 
         isDefault: true,
-        color: '#1F1885'
+        color: '#2D2D2D',
+        description: 'สีดำด้าน คลาสสิก ไม่สะท้อนแสง'
       },
       { 
-        id: 'modern', 
-        name: 'สีโมเดิร์น (ฟ้า)', 
-        price: 200,
-        color: '#00A7E1'
+        id: 'black-gloss', 
+        name: 'ดำเงา', 
+        price: 0,
+        color: '#000000',
+        description: 'สีดำเงา เงางาม หรูหรา'
       },
       { 
-        id: 'accent', 
-        name: 'สีพิเศษ (ชมพู)', 
-        price: 300,
-        color: '#E4007C'
+        id: 'black-oak', 
+        name: 'สีโอ๊คดำ', 
+        price: 0,
+        color: '#3C2415',
+        description: 'สีโอ๊คดำ ลายไม้ธรรมชาติ'
+      },
+      { 
+        id: 'gray', 
+        name: 'สีเทา', 
+        price: 0,
+        color: '#6B7280',
+        description: 'สีเทา โทนสีสบายตา'
+      },
+      { 
+        id: 'white', 
+        name: 'สีขาว', 
+        price: 0,
+        color: '#FFFFFF',
+        description: 'สีขาว สะอาด สดใส'
+      },
+      { 
+        id: 'custom', 
+        name: 'สีผสม (พิเศษ)', 
+        price: 1000,
+        color: '#FF6B6B',
+        description: 'สีผสมตามต้องการ +1,000 บาท'
       }
     ],
-    price: 1500,
     isSelectedByDefault: true
   },
   {
     id: 'ceiling',
     name: 'งานฝ้า',
-    description: 'ติดตั้งฝ้าเพดาน',
-    price: 3000,
-    requiresSize: 'L_PLUS'
+    description: 'ติดตั้งฝ้าเพดาน (คิดตามตารางเมตร)',
+    options: [
+      { 
+        id: 'corrugated', 
+        name: 'ฝ้าลอนระแนง', 
+        price: 1000, 
+        isDefault: true,
+        description: 'ฝ้าแบบลอนระแนง เหมาะสำหรับการระบายอากาศ (1,000 บาท/ตร.ม.)'
+      },
+      { 
+        id: 'smooth', 
+        name: 'ฉาบเรียบ', 
+        price: 800,
+        description: 'ฝ้าฉาบเรียบ สวยงาม เหมาะกับงานตกแต่ง (800 บาท/ตร.ม.)'
+      }
+    ],
+    requiresSize: 'L_PLUS',
+    pricePerSqm: true
   }
 ];
 
