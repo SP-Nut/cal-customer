@@ -49,8 +49,23 @@ export default function FloatingPreview({
 
   return (
     <>
+      {/* Floating Icon when collapsed */}
+      {show && isCollapsed && (
+        <div className="lg:hidden fixed top-20 right-4 z-50">
+          <button
+            onClick={() => setIsCollapsed(false)}
+            className="w-12 h-12 bg-gradient-to-r from-blue-800 to-blue-900 hover:from-blue-900 hover:to-slate-900 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2z" />
+            </svg>
+          </button>
+        </div>
+      )}
+
+      {/* Full Panel when expanded */}
       <div className={`lg:hidden fixed top-14 left-0 right-0 z-50 bg-white border-b border-slate-200 shadow-xl transition-all duration-300 ${
-        show ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+        show && !isCollapsed ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
       }`}>
         {/* Header with Toggle Button */}
         <div className="flex items-center justify-between px-4 py-2 border-b border-slate-100">
@@ -63,22 +78,18 @@ export default function FloatingPreview({
             className="p-1 rounded-md hover:bg-slate-100 transition-colors"
           >
             <svg 
-              className={`w-4 h-4 text-slate-600 transition-transform duration-200 ${
-                isCollapsed ? 'rotate-180' : ''
-              }`} 
+              className="w-4 h-4 text-slate-600" 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
         {/* Content - Collapsible */}
-        <div className={`transition-all duration-300 overflow-hidden ${
-          isCollapsed ? 'max-h-0' : 'max-h-96'
-        }`}>
+        <div className="transition-all duration-300 overflow-hidden">
           <div className="px-4 py-3">
             {/* Material Image - อยู่ด้านบน */}
             <div className="w-full mb-3">
