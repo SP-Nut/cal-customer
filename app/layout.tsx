@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Prompt, Inter } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import FloatingContact from './components/FloatingContact';
 
@@ -39,6 +40,7 @@ export default function RootLayout({
       <body className="antialiased bg-gray-50 text-gray-900 font-prompt selection:bg-primary-100 selection:text-primary-900">
         {children}
         <FloatingContact />
+        <Analytics />
       </body>
     </html>
   );
