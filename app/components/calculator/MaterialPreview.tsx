@@ -40,6 +40,12 @@ export function MaterialPreview({
   useEffect(() => {
     console.log('MaterialPreview mounted with callback:', !!onFloatingPreviewChange);
     
+    // เรียก onFloatingPreviewChange(true) ทันทีเมื่อมีการเลือกวัสดุ
+    if (material && onFloatingPreviewChange) {
+      console.log('Material selected, showing floating preview immediately');
+      onFloatingPreviewChange(true);
+    }
+    
     const handleScroll = () => {
       if (scrollContainerRef.current && onFloatingPreviewChange) {
         const scrollContainer = scrollContainerRef.current;
@@ -73,7 +79,7 @@ export function MaterialPreview({
       scrollContainer.addEventListener('scroll', handleScroll);
       return () => scrollContainer.removeEventListener('scroll', handleScroll);
     }
-  }, [onFloatingPreviewChange]);
+  }, [onFloatingPreviewChange, material]);
 
   if (!material) {
     return (
@@ -607,59 +613,87 @@ export function MaterialPreview({
 
               {/* Size Information */}
               {selectedSize ? (
-                /* Selected Size Display - Without Image */
-                <div className="bg-slate-50 rounded-lg border border-slate-200 p-2">
-                  <div className="space-y-1">
+                /* Selected Size Display - With Image */
+                <div className="bg-slate-50 rounded-lg border border-slate-200 p-3">
+                  <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <h5 className="text-xs font-semibold text-slate-800">ขนาดที่เลือก</h5>
+                      <h5 className="text-sm font-semibold text-slate-800">ขนาดที่เลือก</h5>
                       <button 
                         onClick={() => onSizeSelect?.('')}
-                        className="text-xs text-blue-600 hover:text-blue-700 font-medium px-1 py-0.5 rounded hover:bg-blue-50 transition-colors duration-200"
+                        className="text-xs text-blue-600 hover:text-blue-700 font-medium px-2 py-1 rounded hover:bg-blue-50 transition-colors duration-200"
                       >
                         เปลี่ยน
                       </button>
                     </div>
                     
-                    <div className="space-y-1">
-                      <div>
-                        <div className="text-sm font-bold text-slate-800">{selectedSize.name}</div>
-                        <div className="text-xs text-slate-500">วัสดุ: {material.name}</div>
-                      </div>
+                    <div className="flex items-start space-x-3">
+                      {/* Size Image */}
+                      {selectedSize.image && (
+                        <div className="w-24 h-24 rounded-lg overflow-hidden border border-slate-200 bg-white flex-shrink-0 shadow-sm">
+                          <img
+                            src={selectedSize.image}
+                            alt={`ขนาด ${selectedSize.name}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
                       
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-slate-600">ราคาต่อ ตร.ม.</span>
-                        {material.pricePerSqm[selectedSize.id] > 0 ? (
-                          <span className="text-sm font-bold text-slate-800">
-                            ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}
-                          </span>
-                        ) : (
-                          <span className="text-xs text-slate-400">ไม่รองรับ</span>
-                        )}
+                      {/* Size Details */}
+                      <div className="space-y-1 flex-1">
+                        <div>
+                          <div className="text-sm font-bold text-slate-800">{selectedSize.name}</div>
+                          <div className="text-xs text-slate-500">วัสดุ: {material.name}</div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-slate-600">ราคาต่อ ตร.ม.</span>
+                          {material.pricePerSqm[selectedSize.id] > 0 ? (
+                            <span className="text-sm font-bold text-slate-800">
+                              ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}
+                            </span>
+                          ) : (
+                            <span className="text-xs text-slate-400">ไม่รองรับ</span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               ) : (
-                /* All Sizes Display - Compact Grid */
+                /* All Sizes Display - Grid with Images */
                 <div>
-                  <h4 className="text-xs font-semibold text-slate-800 mb-1">เลือกขนาด</h4>
-                  <div className="grid grid-cols-2 gap-1.5">
+                  <h4 className="text-xs font-semibold text-slate-800 mb-2">เลือกขนาด</h4>
+                  <div className="grid grid-cols-2 gap-2">
                     {material.sizes.map((size, index) => (
                       <div
                         key={size.id}
-                        className="bg-slate-50 rounded-md p-1.5 border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 cursor-pointer"
+                        className="bg-slate-50 rounded-lg p-2 border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 cursor-pointer"
                         style={{ animation: `fadeIn ${0.6 + index * 0.1}s ease-out` }}
                         onClick={() => onSizeSelect?.(size.id)}
                       >
-                        <div className="text-center">
-                          <div className="text-xs font-semibold text-slate-800 mb-0.5">{size.name}</div>
-                          {material.pricePerSqm[size.id] > 0 ? (
-                            <div className="text-xs text-slate-600">
-                              ฿{material.pricePerSqm[size.id].toLocaleString()}/ตร.ม.
+                        <div className="flex items-center space-x-2">
+                          {/* Size Image */}
+                          {size.image && (
+                            <div className="w-16 h-16 rounded-lg overflow-hidden border border-slate-200 bg-white flex-shrink-0 shadow-sm">
+                              <img
+                                src={size.image}
+                                alt={`ขนาด ${size.name}`}
+                                className="w-full h-full object-cover"
+                              />
                             </div>
-                          ) : (
-                            <div className="text-xs text-slate-400">ไม่รองรับ</div>
                           )}
+                          
+                          {/* Size Details */}
+                          <div className="flex-1 text-left">
+                            <div className="text-xs font-semibold text-slate-800 mb-0.5">{size.name}</div>
+                            {material.pricePerSqm[size.id] > 0 ? (
+                              <div className="text-xs text-slate-600">
+                                ฿{material.pricePerSqm[size.id].toLocaleString()}/ตร.ม.
+                              </div>
+                            ) : (
+                              <div className="text-xs text-slate-400">ไม่รองรับ</div>
+                            )}
+                          </div>
                         </div>
                       </div>
                     ))}

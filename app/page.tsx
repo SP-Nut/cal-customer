@@ -27,6 +27,7 @@ export default function Home() {
 
   const [showFloatingPreview, setShowFloatingPreview] = useState(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   // Validation and calculation
   const isValidDimensions = selectionData.dimensions.width > 0 && selectionData.dimensions.length > 0;
@@ -128,7 +129,8 @@ export default function Home() {
         material={selectionData.material}
         selectedSize={selectionData.size}
         dimensions={selectionData.dimensions}
-        isVisible={selectionData.material !== null && selectionData.size !== null}
+        isVisible={selectionData.material !== null}
+        isInputFocused={isInputFocused}
       />
       
       {/* Desktop Layout - เหมือนเดิม */}

@@ -22,6 +22,7 @@ export interface Size {
   id: SizeId;
   name: string;
   description?: string;
+  image?: string;
 }
 
 export interface ServiceOption {

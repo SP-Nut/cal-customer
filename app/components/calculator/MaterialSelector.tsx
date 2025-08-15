@@ -27,8 +27,8 @@ interface MaterialSelectorProps {
     selectedServiceOptions: Record<string, string>;
     selectedExtras: Record<string, string>;
     gutterMaterials: Record<string, string>;
-    pipeLength: Record<string, number>; // เพิ่มการส่งความยาวท่อน้ำ
-    electricalPoints: Record<string, number>; // เพิ่มการส่งจำนวนจุดไฟฟ้า
+    pipeLength: Record<string, number>;
+    electricalPoints: Record<string, number>;
   }) => void;
 }
 

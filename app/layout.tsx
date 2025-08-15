@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Prompt, Inter } from 'next/font/google';
 import './globals.css';
+import FloatingContact from './components/FloatingContact';
 
 const prompt = Prompt({
   weight: ['300', '400', '500', '600', '700', '800'],
@@ -37,6 +38,7 @@ export default function RootLayout({
     <html lang="th" className={`scroll-smooth ${prompt.variable} ${inter.variable}`}>
       <body className="antialiased bg-gray-50 text-gray-900 font-prompt selection:bg-primary-100 selection:text-primary-900">
         {children}
+        <FloatingContact />
       </body>
     </html>
   );
