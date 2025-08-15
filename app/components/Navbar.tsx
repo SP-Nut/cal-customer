@@ -21,7 +21,7 @@ export default function Navbar({ totalPrice, onQuoteRequest }: NavbarProps) {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/40 backdrop-blur-md shadow-lg">
+    <nav className="fixed top-0 left-0 right-0 z-[100] bg-white/40 backdrop-blur-md shadow-lg">
       <div className="container mx-auto px-4 lg:px-6">
         <div className="flex justify-between items-center h-14 lg:h-16">
           {/* Left Side - Logo & Brand */}
@@ -95,8 +95,19 @@ export default function Navbar({ totalPrice, onQuoteRequest }: NavbarProps) {
             {/* Action Button - Show when price > 0 */}
             {totalPrice > 0 && (
               <button 
-                onClick={onQuoteRequest}
-                className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-600 text-white px-4 py-2.5 rounded-2xl font-medium transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-purple-500/25 text-sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log('Navbar button clicked!', { totalPrice, onQuoteRequest });
+                  if (onQuoteRequest) {
+                    onQuoteRequest();
+                  }
+                }}
+                onMouseDown={(e) => {
+                  console.log('Button mousedown detected');
+                }}
+                className="relative z-[60] pointer-events-auto bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-600 text-white px-4 py-2.5 rounded-2xl font-medium transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-purple-500/25 text-sm cursor-pointer"
+                style={{ pointerEvents: 'auto' }}
               >
                 ขอใบเสนอราคา
               </button>
