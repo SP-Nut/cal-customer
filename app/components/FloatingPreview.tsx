@@ -22,6 +22,7 @@ export default function FloatingPreview({
   const [showFullImage, setShowFullImage] = useState(false);
   const [showSizeImage, setShowSizeImage] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     console.log('FloatingPreview debug:', { 
@@ -34,6 +35,9 @@ export default function FloatingPreview({
     if (material && isVisible) {
       console.log('FloatingPreview: Setting show to TRUE');
       setShow(true);
+      // แสดง tooltip เมื่อปรากฏ
+      setShowTooltip(true);
+      setTimeout(() => setShowTooltip(false), 4000); // หายไปหลัง 4 วิ
       // ถ้ากำลังกรอกข้อมูล ให้พับ preview ลง
       if (isInputFocused) {
         setIsCollapsed(true);
@@ -41,6 +45,7 @@ export default function FloatingPreview({
     } else {
       console.log('FloatingPreview: Setting show to FALSE');
       setShow(false);
+      setShowTooltip(false);
     }
   }, [isVisible, material, selectedSize, isInputFocused]);
 
@@ -59,7 +64,14 @@ export default function FloatingPreview({
     <>
       {/* Floating Preview with Icon and Text - Smaller size */}
       {show && (
-        <div className="lg:hidden fixed bottom-24 right-4 z-50">
+        <div className="lg:hidden fixed bottom-24 right-8 z-50">
+          {/* Tooltip */}
+          {showTooltip && (
+            <div className="absolute bottom-full right-0 mb-2 bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap animate-pulse">
+              แตะเพื่อดูรูปวัสดุ
+            </div>
+          )}
+          
           <button
             onClick={() => {
               // ถ้ามีรูปขนาด ให้แสดงรูปขนาดก่อน ถ้าไม่มีให้แสดงรูปวัสดุ
@@ -69,31 +81,23 @@ export default function FloatingPreview({
                 setShowFullImage(true);
               }
             }}
-            className="relative group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-white/20 overflow-hidden"
+            className="relative group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-white/20"
             style={{
               animation: 'fadeInUp 0.5s ease-out',
             }}
           >
-            {/* Icon and Text Content */}
-            <div className="flex items-center px-3 py-2 space-x-2">
-              <svg className="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12z" />
+            {/* Icon Content */}
+            <div className="flex items-center justify-center p-3">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
               </svg>
-              <div className="text-white">
-                <div className="text-xs font-semibold leading-tight truncate max-w-20">
-                  {material.name}
-                </div>
-                {selectedSize && (
-                  <div className="text-[10px] text-white/90 leading-tight truncate">
-                    ขนาด {selectedSize.name}
-                  </div>
-                )}
-              </div>
             </div>
             
             {/* Badge indicator for multiple images */}
             {selectedSize?.image && (
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-orange-500 rounded-full flex items-center justify-center">
+              <div className="absolute -top-2 -right-2 w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg z-10">
                 <span className="text-[10px] font-bold text-white">2</span>
               </div>
             )}
@@ -110,6 +114,17 @@ export default function FloatingPreview({
                 opacity: 1;
                 transform: translateY(0) scale(1);
               }
+            }
+            @keyframes pulse {
+              0%, 100% {
+                opacity: 1;
+              }
+              50% {
+                opacity: 0.5;
+              }
+            }
+            .animate-pulse {
+              animation: pulse 1.5s ease-in-out infinite;
             }
           `}</style>
         </div>
