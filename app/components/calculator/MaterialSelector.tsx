@@ -805,7 +805,7 @@ export function MaterialSelector({
             <div id="step-services" className="-mx-3 px-2 sm:px-3 bg-white border-b border-gray-100 py-2 sm:py-3">
               <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
                 <div className="w-1.5 sm:w-2 h-4 sm:h-5 bg-blue-500 rounded-full" />
-                <h3 className="text-xs sm:text-[14px] font-bold text-gray-800">บริการหลัก</h3>
+                <h3 className="text-base sm:text-lg font-bold text-gray-800">บริการหลัก</h3>
               </div>
               <div className="space-y-1.5 sm:space-y-2">
                 {mainServices
@@ -837,10 +837,10 @@ export function MaterialSelector({
                         >
                           <div className="flex justify-between items-center gap-2">
                             <div className="min-w-0">
-                              <div className="font-semibold text-gray-800 text-xs sm:text-[13px] truncate">{service.name}</div>
-                              <div className="text-[10px] sm:text-[11px] text-gray-600 leading-tight">{service.description}</div>
+                              <div className="font-semibold text-gray-800 text-sm sm:text-base truncate">{service.name}</div>
+                              <div className="text-xs sm:text-sm text-gray-600 leading-tight">{service.description}</div>
                             </div>
-                            <div className="text-xs sm:text-[13px] font-bold text-blue-600 shrink-0">
+                            <div className="text-sm sm:text-base font-bold text-blue-600 shrink-0">
                               {service.price ? `฿${service.price.toLocaleString()}` : 'ตามพื้นที่'}
                             </div>
                           </div>
@@ -849,10 +849,10 @@ export function MaterialSelector({
                         <div>
                           <div className="flex justify-between items-center gap-2 mb-1.5 sm:mb-2">
                             <div className="min-w-0">
-                              <div className="font-semibold text-gray-800 text-xs sm:text-[13px] truncate">{service.name}</div>
-                              <div className="text-[10px] sm:text-[11px] text-gray-600 leading-tight">{service.description}</div>
+                              <div className="font-semibold text-gray-800 text-sm sm:text-base truncate">{service.name}</div>
+                              <div className="text-xs sm:text-sm text-gray-600 leading-tight">{service.description}</div>
                             </div>
-                            <div className="text-xs sm:text-[13px] font-bold text-blue-600 shrink-0">
+                            <div className="text-sm sm:text-base font-bold text-blue-600 shrink-0">
                               {service.price ? `฿${service.price.toLocaleString()}` : 'ตามพื้นที่'}
                             </div>
                           </div>
@@ -891,10 +891,10 @@ export function MaterialSelector({
                                       style={{ backgroundColor: option.color }}
                                     />
                                   )}
-                                  <span className="text-[10px] sm:text-[12px] font-medium truncate leading-tight">{option.name}</span>
+                                  <span className="text-xs sm:text-sm font-medium truncate leading-tight">{option.name}</span>
                                 </div>
                                 {option.price > 0 && (
-                                  <div className="text-[9px] sm:text-[11px] text-blue-600 mt-0.5 font-semibold">
+                                  <div className="text-xs sm:text-sm text-blue-600 mt-0.5 font-semibold">
                                     +฿{option.price.toLocaleString()}
                                   </div>
                                 )}
@@ -912,7 +912,7 @@ export function MaterialSelector({
             <div className="-mx-3 px-2 sm:px-3 bg-white py-3 sm:py-4 pb-6 sm:pb-8">
               <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
                 <div className="w-1.5 sm:w-2 h-5 sm:h-6 bg-blue-500 rounded-full" />
-                <h3 className="text-sm sm:text-[15px] font-bold text-gray-800">บริการเสริม (ตัวเลือก)</h3>
+                <h3 className="text-base sm:text-lg font-bold text-gray-800">บริการเสริม (ตัวเลือก)</h3>
               </div>
               <div className="space-y-1.5 sm:space-y-2">
                 {extraServices
@@ -920,15 +920,15 @@ export function MaterialSelector({
                   .map((service) => (
                     <div key={service.id} className="p-2 sm:p-3 bg-gray-50 rounded-lg border border-gray-200">
                       <div className="mb-0.5 sm:mb-1">
-                        <div className="font-medium text-gray-800 text-xs sm:text-[13px] truncate">{service.name}</div>
-                        <div className="text-[10px] sm:text-[12px] text-gray-600 truncate leading-tight">{service.description}</div>
+                        <div className="font-medium text-gray-800 text-sm sm:text-base truncate">{service.name}</div>
+                        <div className="text-xs sm:text-sm text-gray-600 truncate leading-tight">{service.description}</div>
                       </div>
                       
                       {/* ถ้าเป็นบริการรางน้ำ ให้ใช้ gutterMaterials แทน service.options */}
                       {service.id === 'gutter' ? (
                         <div className="space-y-1.5 sm:space-y-2">
                           <select
-                            className="w-full p-2 sm:p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-xs sm:text-[13px] font-medium transition-all"
+                            className="w-full p-2 sm:p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-sm sm:text-base font-medium transition-all"
                             value={selectedGutterMaterials[service.id] || ""}
                             onChange={(e) => {
                               if (e.target.value) {

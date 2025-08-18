@@ -152,7 +152,7 @@ export default function Home() {
           </div>
         </div>
         
-        <div className="w-96 bg-white/95 backdrop-blur-sm border border-gray-200/50 h-full relative shadow-xl rounded-3xl overflow-hidden">
+        <div className="w-[500px] bg-white/95 backdrop-blur-sm border border-gray-200/50 h-full relative shadow-xl rounded-3xl overflow-hidden">
           <div className="h-full flex flex-col">
             <div className="flex-1 overflow-auto custom-scrollbar p-6">
               <div className="space-y-8">

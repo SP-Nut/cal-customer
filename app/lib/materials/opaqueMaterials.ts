@@ -5,7 +5,7 @@ export const opaqueMaterials: Material[] = [
     id: 'aluminum-roof-3mm',
     type: 'opaque',
     name: 'หลังคาอลูมิเนียม 3 มม.',
-    image: '/materials/aluminum-roof.jpg',
+    image: '/materials/opaque/alr.webp',
     description: 'หลังคาอลูมิเนียมรูฟคุณภาพสูง หนา 3 มิลลิเมตร ทนทานต่อสภาพอากาศ มีความแข็งแรง ไม่เป็นสนิม เหมาะสำหรับการใช้งานในบ้านเรือน โรงงาน หรือสิ่งปลูกสร้างทั่วไป',
     sizes: [
       { id: 'M', name: 'M', image: '/size/size-m.png' },
@@ -27,8 +27,8 @@ export const opaqueMaterials: Material[] = [
   {
     id: 'vinyl-dream-roof-6mm',
     type: 'opaque',
-    name: 'หลังคาไวนิล ดรีมรูฟ 6 มม.',
-    image: '/materials/aluminum-roof.jpg',
+    name: 'หลังคาไวนิล ดรีมรูฟ ไวนิลคริปล๊อค 6 มม.',
+    image: '/materials/opaque/ไวนิลคริปล๊อค.webp',
     description: 'หลังคาไวนิลรุ่นดรีมรูฟ ท้องเรียบ ระบบคลิป-ล็อค หนา 6 มิลลิเมตร ผิวเรียบสวยงาม ติดตั้งง่าย ทนทานต่อแสงแดดและฝน มีคุณสมบัติกันความร้อนได้ดี เหมาะสำหรับบ้านพักอาศัย',
     sizes: [
       { id: 'M', name: 'M', image: '/size/size-m.png' },
@@ -120,7 +120,7 @@ export const opaqueMaterials: Material[] = [
     id: 'metal-sheet-sandwich-35mm-pu25',
     type: 'opaque',
     name: 'เมทัลชีท แผ่นแซนวิช 0.35 มม. + ฉนวน PU 25 มม.',
-    image: '/materials/aluminum-roof.jpg',
+    image: '/materials/opaque/PU.webp',
     description: 'หลังคาเมทัลชีทแผ่นแซนวิช หนา 0.35 มิลลิเมตร ติดฉนวนโพลียูรีเทน (PU) หนา 25 มิลลิเมตร ป้องกันความร้อนได้ดีเยี่ยม ลดเสียงรบกวน โครงสร้างแข็งแรง เหมาะสำหรับโรงงาน คลังสินค้า',
     sizes: [
       { id: 'M', name: 'M', image: '/size/size-m.png' },
@@ -143,7 +143,7 @@ export const opaqueMaterials: Material[] = [
     id: 'metal-sheet-sandwich-bluescope-35mm-pu25',
     type: 'opaque',
     name: 'เมทัลชีท แผ่นแซนวิช บลูสโคป 0.35 มม. + ฉนวน PU 25 มม.',
-    image: '/materials/aluminum-roof.jpg',
+     image: '/materials/opaque/PU.webp',
     description: 'หลังคาเมทัลชีทแผ่นแซนวิช แบรนด์บลูสโคป หนา 0.35 มิลลิเมตร ติดฉนวน PU 25 มิลลิเมตร คุณภาพพรีเมียม ทนสนิมดีกว่าเหล็กปกติ สีสวยทนนาน เหมาะสำหรับงานคุณภาพสูง (ราคาเพิ่ม 200 บาท)',
     sizes: [
       { id: 'M', name: 'M', image: '/size/size-m.png' },
@@ -166,7 +166,7 @@ export const opaqueMaterials: Material[] = [
     id: 'metal-sheet-snaplock-35mm-pu25',
     type: 'opaque',
     name: 'เมทัลชีท ลอนสแนปล็อค 0.35 มม. + ฉนวน PU 25 มม.',
-    image: '/materials/aluminum-roof.jpg',
+    image: '/materials/opaque/PU.webp',
     description: 'หลังคาเมทัลชีทลอนสแนปล็อค หนา 0.35 มิลลิเมตร ติดฉนวนกันความร้อน PU หนา 25 มิลลิเมตร ระบบล็อคพิเศษ กันน้ำรั่วซึม ป้องกันความร้อนดี เหมาะสำหรับบ้านพักอาศัยและอาคารพาณิชย์',
     sizes: [
       { id: 'M', name: 'M', image: '/size/size-m.png' },
@@ -419,7 +419,7 @@ export const opaqueMaterials: Material[] = [
     id: 'metal-sheet-35mm-no-insulation',
     type: 'opaque',
     name: 'เมทัลชีท มาตรฐาน 0.35 มม.',
-    image: '/materials/aluminum-roof.jpg',
+     image: '/materials/opaque/PU.webp',
     description: 'หลังคาเมทัลชีทมาตรฐาน หนา 0.35 มิลลิเมตร ไม่ติดฉนวนกันความร้อน วัสดุพื้นฐาน ราคาประหยัดที่สุด โครงสร้างแข็งแรงพอใช้ เหมาะสำหรับงานทั่วไป โรงเก็บของ หรือพื้นที่ที่ไม่ต้องการความเย็น',
     sizes: [
       { id: 'M', name: 'M', image: '/size/size-m.png' },
@@ -441,8 +441,8 @@ export const opaqueMaterials: Material[] = [
   {
     id: 'metal-sheet-40mm-no-insulation',
     type: 'opaque',
-    name: 'เมทัลชีท มาตรฐาน 0.40 มม.',
-    image: '/materials/aluminum-roof.jpg',
+    name: 'เมทัลชีท มาตรฐาน 0.40 มม.',  
+    image: '/materials/opaque/PU.webp',
     description: 'หลังคาเมทัลชีทมาตรฐาน หนา 0.40 มิลลิเมตร ไม่ติดฉนวนกันความร้อน หนากว่าแบบ 0.35 มม. ทนทานมากขึ้น โครงสร้างแข็งแรงกว่า เหมาะสำหรับโครงการที่ต้องการความทนทานเพิ่มเติม (ราคาเพิ่ม 100 บาท)',
     sizes: [
       { id: 'M', name: 'M', image: '/size/size-m.png' },
@@ -465,7 +465,7 @@ export const opaqueMaterials: Material[] = [
     id: 'metal-sheet-47mm-no-insulation',
     type: 'opaque',
     name: 'เมทัลชีท มาตรฐาน 0.47 มม.',
-    image: '/materials/aluminum-roof.jpg',
+     image: '/materials/opaque/เมทัลชีท1.webp',
     description: 'หลังคาเมทัลชีทมาตรฐาน หนา 0.47 มิลลิเมตร ไม่ติดฉนวนกันความร้อน หนาที่สุดในกลุ่มมาตรฐาน ทนทานสูงสุด เหมาะสำหรับโครงสร้างหนัก โรงงานอุตสาหกรรม หรือพื้นที่ที่มีภาระลมแรง (ราคาเพิ่ม 200 บาท)',
     sizes: [
       { id: 'M', name: 'M', image: '/size/size-m.png' },

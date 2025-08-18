@@ -48,13 +48,13 @@ export function PriceSummary({
       <div className="space-y-1">
         {/* Header */}
         <div className="flex items-center gap-1.5">
-          <h3 className={`${isMobile ? 'text-sm' : 'text-sm'} font-medium text-slate-700`}>สรุปราคา</h3>
+          <h3 className={`${isMobile ? 'text-base' : 'text-lg'} font-medium text-slate-700`}>สรุปราคา</h3>
         </div>
         
         {/* Area and Base Price */}
         <div className="bg-slate-50 rounded p-1">
-          <div className={`${isMobile ? 'text-xs' : 'text-xs'} text-slate-600 mb-0.5`}>วัสดุพื้นฐาน</div>
-          <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-xs'}`}>
+          <div className={`${isMobile ? 'text-sm' : 'text-base'} text-slate-600 mb-0.5`}>วัสดุพื้นฐาน</div>
+          <div className={`flex justify-between ${isMobile ? 'text-sm' : 'text-base'}`}>
             <span className="text-slate-600">{area.toFixed(2)} ตร.ม. × ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}</span>
             <span className="font-medium text-slate-800">
               ฿{(area * material.pricePerSqm[selectedSize.id]).toLocaleString()}
@@ -65,7 +65,7 @@ export function PriceSummary({
         {/* Services */}
         {selectedServices.length > 0 && (
           <div className="bg-slate-50 rounded p-1">
-            <div className={`${isMobile ? 'text-xs' : 'text-xs'} text-slate-600 mb-0.5`}>บริการหลัก</div>
+            <div className={`${isMobile ? 'text-sm' : 'text-base'} text-slate-600 mb-0.5`}>บริการหลัก</div>
             <div className="space-y-0.5">
               {mainServices
                 .filter((service) => selectedServices.includes(service.id))
@@ -88,7 +88,7 @@ export function PriceSummary({
                   }
                   
                   return (
-                    <div key={service.id} className={`flex justify-between ${isMobile ? 'text-xs' : 'text-xs'}`}>
+                    <div key={service.id} className={`flex justify-between ${isMobile ? 'text-sm' : 'text-base'}`}>
                       <span className="text-slate-700">
                         {service.name}
                         {service.pricePerSqm && selectedOption && service.options && (
@@ -114,7 +114,7 @@ export function PriceSummary({
           return hasExtras || hasGutterMaterials;
         })() && (
           <div className="bg-slate-50 rounded p-1">
-            <div className={`${isMobile ? 'text-xs' : 'text-xs'} text-slate-600 mb-0.5`}>บริการเสริม</div>
+            <div className={`${isMobile ? 'text-sm' : 'text-base'} text-slate-600 mb-0.5`}>บริการเสริม</div>
             <div className="space-y-0.5">
               {Object.entries(selectedExtras)
                 .filter(([_, optionId]) => {
@@ -148,7 +148,7 @@ export function PriceSummary({
                   
                   return (
                     <div key={serviceId} className="space-y-0.5">
-                      <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-xs'}`}>
+                      <div className={`flex justify-between ${isMobile ? 'text-sm' : 'text-base'}`}>
                         <span className="text-slate-700">+ {service.name}</span>
                         <span className="font-medium text-slate-800">
                           ฿{totalServicePrice.toLocaleString()}
@@ -157,7 +157,7 @@ export function PriceSummary({
                       
                       {/* แสดงรายละเอียดท่อน้ำเมื่อเป็นบริการท่อน้ำ */}
                       {serviceId === 'pipe' && service.pricePerMeter && pipeLength[serviceId] && (
-                        <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
+                        <div className={`ml-2 ${isMobile ? 'text-sm' : 'text-base'} text-slate-500`}>
                           <div className="flex justify-between">
                             <span>• {option.name} ({pipeLength[serviceId]} ม.)</span>
                             <span>฿{(option.price * pipeLength[serviceId]).toLocaleString()}</span>
@@ -167,7 +167,7 @@ export function PriceSummary({
                       
                       {/* แสดงรายละเอียดงานไฟฟ้าเมื่อเป็นบริการไฟฟ้า */}
                       {serviceId === 'electrical' && service.pricePerPoint && electricalPoints[serviceId] && (
-                        <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
+                        <div className={`ml-2 ${isMobile ? 'text-sm' : 'text-base'} text-slate-500`}>
                           <div className="flex justify-between">
                             <span>• {option.name} ({electricalPoints[serviceId]} จุด)</span>
                             <span>฿{(option.price * electricalPoints[serviceId]).toLocaleString()}</span>
@@ -177,7 +177,7 @@ export function PriceSummary({
                       
                       {/* แสดงวัสดุรางน้ำเมื่อเลือกบริการรางน้ำ */}
                       {serviceId === 'gutter' && selectedGutterMaterials[serviceId] && (
-                        <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
+                        <div className={`ml-2 ${isMobile ? 'text-sm' : 'text-base'} text-slate-500`}>
                           {(() => {
                             const selectedGutter = gutterMaterials.find(g => g.id === selectedGutterMaterials[serviceId]);
                             if (!selectedGutter) return null;
@@ -194,7 +194,7 @@ export function PriceSummary({
                       
                       {/* แสดงรายละเอียดบริการทั่วไป (ไม่ใช่ท่อน้ำ ไฟฟ้า หรือรางน้ำ) */}
                       {serviceId !== 'pipe' && serviceId !== 'electrical' && serviceId !== 'gutter' && (
-                        <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
+                        <div className={`ml-2 ${isMobile ? 'text-sm' : 'text-base'} text-slate-500`}>
                           <div className="flex justify-between">
                             <span>• {option.name}</span>
                             <span>฿{option.price.toLocaleString()}</span>
@@ -215,11 +215,11 @@ export function PriceSummary({
                   
                   return (
                     <div key={`gutter-${serviceId}`} className="space-y-0.5">
-                      <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-xs'}`}>
+                      <div className={`flex justify-between ${isMobile ? 'text-sm' : 'text-base'}`}>
                         <span className="text-slate-700">+ งานรางน้ำ</span>
                         <span className="font-medium text-slate-800">฿0</span>
                       </div>
-                      <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
+                      <div className={`ml-2 ${isMobile ? 'text-sm' : 'text-base'} text-slate-500`}>
                         <div className="flex justify-between">
                           <span>• {selectedGutter.name} ({dimensions.length} ม.)</span>
                           <span>฿{gutterTotalPrice.toLocaleString()}</span>
@@ -235,8 +235,8 @@ export function PriceSummary({
         {/* Total */}
         <div className="border-t border-slate-200 pt-1">
           <div className="flex justify-between items-center">
-            <span className={`${isMobile ? 'text-sm' : 'text-sm'} font-medium text-slate-800`}>ราคารวม</span>
-            <span className={`${isMobile ? 'text-base' : 'text-lg'} font-bold text-slate-900`}>
+            <span className={`${isMobile ? 'text-base' : 'text-lg'} font-medium text-slate-800`}>ราคารวม</span>
+            <span className={`${isMobile ? 'text-lg' : 'text-xl'} font-bold text-slate-900`}>
               ฿{totalPrice.toLocaleString()}
             </span>
           </div>
