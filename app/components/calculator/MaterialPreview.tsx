@@ -508,7 +508,7 @@ export function MaterialPreview({
                             </h3>
                             
                             {/* Price Display */}
-                            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl px-4 py-3 border border-blue-200">
+                            <div className="bg-blue-50 rounded-xl px-4 py-3 border border-blue-100">
                               <div className="text-slate-600 text-xs mb-1">ราคาต่อตารางเมตร</div>
                               {material.pricePerSqm[selectedSize.id] > 0 ? (
                                 <div className="text-blue-700 text-xl font-bold mb-1">
@@ -517,11 +517,11 @@ export function MaterialPreview({
                               ) : (
                                 <div className="text-slate-400 text-lg">ไม่รองรับ</div>
                               )}
-                              <div className="text-slate-500 text-xs">รวม VAT แล้ว</div>
+                              <div className="text-slate-500 text-xs">ไม่รวม VAT</div>
                             </div>
                             
-                            <div className="inline-flex items-center px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 mt-3">
-                              <span className="text-cyan-700 text-xs font-medium">เหมาะสำหรับโครงการทุกขนาด</span>
+                            <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 border border-blue-100 mt-3">
+                              <span className="text-blue-700 text-xs font-medium">เหมาะสำหรับโครงการทุกขนาด</span>
                             </div>
                           </div>
                         </div>
@@ -674,7 +674,7 @@ export function MaterialPreview({
                       </h3>
                       
                       {/* Price Display */}
-                      <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl px-6 py-4 border border-blue-200">
+                      <div className="bg-blue-50 rounded-xl px-6 py-4 border border-blue-100">
                         <div className="text-slate-600 text-sm mb-2">ราคาต่อตารางเมตร</div>
                         {material.pricePerSqm[selectedSize.id] > 0 ? (
                           <div className="text-blue-700 text-2xl font-bold mb-1">
@@ -683,11 +683,11 @@ export function MaterialPreview({
                         ) : (
                           <div className="text-slate-400 text-xl">ไม่รองรับ</div>
                         )}
-                        <div className="text-slate-500 text-sm">รวม VAT แล้ว</div>
+                        <div className="text-slate-500 text-sm">ไม่รวม VAT</div>
                       </div>
                       
-                      <div className="inline-flex items-center px-4 py-2 rounded-full bg-cyan-50 border border-cyan-200 mt-4">
-                        <span className="text-cyan-700 text-sm font-medium">เหมาะสำหรับโครงการทุกขนาด</span>
+                      <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mt-4">
+                        <span className="text-blue-700 text-sm font-medium">เหมาะสำหรับโครงการทุกขนาด</span>
                       </div>
                     </div>
                   </div>
@@ -827,92 +827,56 @@ export function MaterialPreview({
 
           {/* Size Selection Section - Hidden by default, only shown when specifically requested */}
 
-          {/* Enhanced Price Calculation */}
+          {/* Simple Price Summary with Subtle Company Colors */}
           {dimensions.width > 0 && dimensions.length > 0 && material && selectedSize && (
-            <div className="mb-8" style={{ animation: 'fadeIn 1.2s ease-out' }}>
-              <div className="bg-gradient-to-r from-blue-50 via-white to-purple-50 rounded-3xl border border-slate-200 shadow-xl p-8">
+            <div className="mb-8">
+              <div className="bg-white rounded-lg border border-blue-100 p-6 shadow-sm">
                 
                 {/* Header */}
-                <div className="text-center mb-8">
-                  <div className="inline-flex items-center space-x-3 mb-4">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                    <h3 className="text-2xl font-bold text-slate-800">สรุปการคำนวณราคา</h3>
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                  </div>
-                  <p className="text-slate-600 text-lg">รายละเอียดการคำนวณและราคารวมทั้งหมด</p>
+                <div className="border-b border-blue-100 pb-4 mb-6">
+                  <h3 className="text-2xl font-bold text-gray-800">สรุปการคำนวณราคา</h3>
+                  <p className="text-gray-600">ราคารวมทั้งหมดสำหรับโครงการของคุณ</p>
                 </div>
 
-                {/* Main Calculation Grid */}
-                <div className="grid lg:grid-cols-3 gap-8 mb-8">
-                  
-                  {/* Area Calculation */}
-                  <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <div className="text-center space-y-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto">
-                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-sm text-slate-600 mb-2">พื้นที่รวม</div>
-                        <div className="text-3xl font-bold text-slate-800 mb-1">
-                          {(dimensions.width * dimensions.length).toFixed(2)}
-                        </div>
-                        <div className="text-sm text-slate-500">ตารางเมตร</div>
-                      </div>
+                {/* Main Price */}
+                <div className="text-center mb-6">
+                  <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
+                    <div className="text-gray-600 text-lg mb-2">ราคารวมทั้งหมด</div>
+                    <div className="text-4xl font-bold text-blue-700 mb-2">
+                      ฿{totalPrice.toLocaleString()}
+                    </div>
+                    <div className="text-gray-500">บาท (ไม่รวม VAT)</div>
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  <div className="text-center">
+                    <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                      <div className="text-xl font-bold text-blue-700">{(dimensions.width * dimensions.length).toFixed(1)}</div>
+                      <div className="text-gray-600 text-sm">ตารางเมตร</div>
                     </div>
                   </div>
-
-                  {/* Material Price */}
-                  <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <div className="text-center space-y-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center mx-auto">
-                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-sm text-slate-600 mb-2">ราคาต่อ ตร.ม.</div>
-                        <div className="text-3xl font-bold text-slate-800 mb-1">
-                          ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}
-                        </div>
-                        <div className="text-sm text-slate-500">{selectedSize.name}</div>
-                      </div>
+                  <div className="text-center">
+                    <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                      <div className="text-xl font-bold text-blue-700">฿{material.pricePerSqm[selectedSize.id].toLocaleString()}</div>
+                      <div className="text-gray-600 text-sm">ต่อ ตร.ม.</div>
                     </div>
                   </div>
-
-                  {/* Total Price */}
-                  <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-6 shadow-lg transform hover:scale-105 transition-all duration-300">
-                    <div className="text-center space-y-4">
-                      <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto">
-                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-sm text-white/80 mb-2">ราคารวมทั้งหมด</div>
-                        <div className="text-4xl font-bold text-white mb-1">
-                          ฿{totalPrice.toLocaleString()}
-                        </div>
-                        <div className="text-sm text-white/80">บาท (รวม VAT)</div>
-                      </div>
+                  <div className="text-center">
+                    <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                      <div className="text-xl font-bold text-blue-700">{selectedSize.name}</div>
+                      <div className="text-gray-600 text-sm">ขนาดที่เลือก</div>
                     </div>
                   </div>
                 </div>
 
-                {/* Enhanced Services Summary */}
+                {/* Services List */}
                 {(selectedServices.length > 0 || Object.keys(selectedExtras).some(key => selectedExtras[key]) || Object.keys(selectedGutterMaterials).some(key => selectedGutterMaterials[key])) && (
-                  <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-lg">
-                    <div className="flex items-center mb-6">
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4">
-                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                      </div>
-                      <h4 className="text-xl font-bold text-slate-800">บริการที่เลือก</h4>
-                    </div>
+                  <div className="border-t border-blue-100 pt-6">
+                    <h4 className="text-lg font-bold text-gray-800 mb-4">บริการที่เลือก</h4>
                     
-                    <div className="space-y-4">
+                    <div className="space-y-2">
                       {/* Main Services */}
                       {mainServices
                         .filter((service) => selectedServices.includes(service.id))
@@ -926,25 +890,14 @@ export function MaterialPreview({
                             }
                           }
                           
-                          // For per-sqm services, calculate total price
                           if (service.pricePerSqm && dimensions.width > 0 && dimensions.length > 0) {
                             servicePrice = servicePrice * dimensions.width * dimensions.length;
                           }
                           
                           return (
-                            <div key={service.id} className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border border-blue-200 hover:shadow-md transition-all duration-300">
-                              <div className="flex items-center space-x-3">
-                                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                                  <span className="text-white text-sm">🔧</span>
-                                </div>
-                                <div>
-                                  <div className="font-semibold text-slate-800 text-lg">{service.name}</div>
-                                  <div className="text-sm text-slate-600">{service.description}</div>
-                                </div>
-                              </div>
-                              <div className="text-xl font-bold text-blue-600">
-                                ฿{servicePrice.toLocaleString()}
-                              </div>
+                            <div key={service.id} className="flex justify-between items-center py-3 px-4 bg-blue-50 rounded-lg border border-blue-100">
+                              <span className="text-gray-700 font-medium">{service.name}</span>
+                              <span className="text-blue-700 font-bold">฿{servicePrice.toLocaleString()}</span>
                             </div>
                           );
                         })}
@@ -957,19 +910,9 @@ export function MaterialPreview({
                           const option = service?.options.find((o) => o.id === optionId);
                           if (!service || !option) return null;
                           return (
-                            <div key={serviceId} className="flex justify-between items-center p-4 bg-gradient-to-r from-cyan-50 to-cyan-100 rounded-xl border border-cyan-200 hover:shadow-md transition-all duration-300">
-                              <div className="flex items-center space-x-3">
-                                <div className="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center">
-                                  <span className="text-white text-sm">⭐</span>
-                                </div>
-                                <div>
-                                  <div className="font-semibold text-slate-800 text-lg">{service.name}</div>
-                                  <div className="text-sm text-slate-600">{option.name}</div>
-                                </div>
-                              </div>
-                              <div className="text-xl font-bold text-cyan-600">
-                                ฿{option.price.toLocaleString()}
-                              </div>
+                            <div key={serviceId} className="flex justify-between items-center py-3 px-4 bg-blue-50 rounded-lg border border-blue-100">
+                              <span className="text-gray-700 font-medium">{service.name}</span>
+                              <span className="text-blue-700 font-bold">฿{option.price.toLocaleString()}</span>
                             </div>
                           );
                         })}
@@ -982,74 +925,71 @@ export function MaterialPreview({
                           if (!selectedGutter) return null;
                           const gutterTotalPrice = selectedGutter.price * dimensions.length;
                           return (
-                            <div key={`gutter-${serviceId}`} className="flex justify-between items-center p-4 bg-gradient-to-r from-slate-50 to-slate-100 rounded-xl border border-slate-200 hover:shadow-md transition-all duration-300">
-                              <div className="flex items-center space-x-3">
-                                <div className="w-8 h-8 bg-slate-500 rounded-lg flex items-center justify-center">
-                                  <span className="text-white text-sm">🚿</span>
-                                </div>
-                                <div>
-                                  <div className="font-semibold text-slate-800 text-lg">รางน้ำ: {selectedGutter.name}</div>
-                                  <div className="text-sm text-slate-600">{dimensions.length} เมตร × ฿{selectedGutter.price.toLocaleString()}/ม.</div>
-                                </div>
-                              </div>
-                              <div className="text-xl font-bold text-slate-600">
-                                ฿{gutterTotalPrice.toLocaleString()}
-                              </div>
+                            <div key={`gutter-${serviceId}`} className="flex justify-between items-center py-3 px-4 bg-blue-50 rounded-lg border border-blue-100">
+                              <span className="text-gray-700 font-medium">รางน้ำ: {selectedGutter.name}</span>
+                              <span className="text-blue-700 font-bold">฿{gutterTotalPrice.toLocaleString()}</span>
                             </div>
                           );
                         })}
                     </div>
                   </div>
                 )}
+
+                {/* Contact Note */}
+                <div className="border-t border-blue-100 pt-6 mt-6">
+                  <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                    <p className="text-gray-700 text-center mb-2">ติดต่อเราเพื่อรับใบเสนอราคาที่แม่นยำ</p>
+                    <p className="text-gray-500 text-sm text-center">*ราคานี้เป็นการประมาณการเบื้องต้น ไม่รวม VAT 7% และอาจมีการปรับเปลี่ยนตามสภาพพื้นที่จริง</p>
+                  </div>
+                </div>
               </div>
             </div>
           )}
 
-          {/* Enhanced Professional Notes - Compact & Beautiful */}
-          <div className="bg-gradient-to-r from-slate-50 via-blue-50 to-slate-50 rounded-2xl border border-slate-200 p-6 shadow-md"
-               style={{ animation: 'fadeIn 1.4s ease-out' }}>
+          {/* Simple Professional Notes with Subtle Blue Accent */}
+          <div className="bg-white rounded-lg border border-blue-100 p-6 shadow-sm">
             <div className="flex items-start space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <div className="w-12 h-12 bg-blue-50 rounded-lg border border-blue-100 flex items-center justify-center flex-shrink-0">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
               </div>
               <div className="flex-1">
-                <h4 className="text-xl font-bold text-slate-800 mb-4">ข้อมูลสำคัญ</h4>
+                <h4 className="text-xl font-bold text-gray-800 mb-4">ข้อมูลสำคัญ</h4>
                 <div className="grid lg:grid-cols-3 gap-4 text-sm">
-                  <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+                  <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                          <span className="text-white text-sm">💰</span>
+                        <div className="w-8 h-8 bg-blue-100 rounded-lg border border-blue-200 flex items-center justify-center">
+                          <span className="text-blue-600 text-sm">💰</span>
                         </div>
-                        <div className="font-bold text-slate-700 text-base">ความโปร่งใส</div>
+                        <div className="font-bold text-gray-700 text-base">ความโปร่งใส</div>
                       </div>
-                      <div className="text-slate-600 leading-relaxed text-sm">ราคารวมวัสดุและบริการที่เลือก ไม่มีค่าใช้จ่ายแอบแฝง</div>
+                      <div className="text-gray-600 leading-relaxed text-sm">ราคารวมวัสดุและบริการที่เลือก ไม่มีค่าใช้จ่ายแอบแฝง</div>
                     </div>
                   </div>
                   
-                  <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+                  <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
-                          <span className="text-white text-sm">🔧</span>
+                        <div className="w-8 h-8 bg-blue-100 rounded-lg border border-blue-200 flex items-center justify-center">
+                          <span className="text-blue-600 text-sm">🔧</span>
                         </div>
-                        <div className="font-bold text-slate-700 text-base">ความยืดหยุ่น</div>
+                        <div className="font-bold text-gray-700 text-base">ความยืดหยุ่น</div>
                       </div>
-                      <div className="text-slate-600 leading-relaxed text-sm">เลือกบริการเพิ่มเติมได้ ปรับแต่งตามความต้องการ</div>
+                      <div className="text-gray-600 leading-relaxed text-sm">เลือกบริการเพิ่มเติมได้ ปรับแต่งตามความต้องการ</div>
                     </div>
                   </div>
                   
-                  <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+                  <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                          <span className="text-white text-sm">✅</span>
+                        <div className="w-8 h-8 bg-blue-100 rounded-lg border border-blue-200 flex items-center justify-center">
+                          <span className="text-blue-600 text-sm">✅</span>
                         </div>
-                        <div className="font-bold text-slate-700 text-base">การรับประกัน</div>
+                        <div className="font-bold text-gray-700 text-base">การรับประกัน</div>
                       </div>
-                      <div className="text-slate-600 leading-relaxed text-sm">รับประกันงานติดตั้ง บริการหลังการขายครบถ้วน</div>
+                      <div className="text-gray-600 leading-relaxed text-sm">รับประกันงานติดตั้ง บริการหลังการขายครบถ้วน</div>
                     </div>
                   </div>
                 </div>
