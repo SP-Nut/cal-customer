@@ -52,7 +52,7 @@ export default function Navbar({ totalPrice, onQuoteRequest }: NavbarProps) {
                 </svg>
                 <div>
                   <span className="text-xs text-gray-500">โทรศัพท์</span>
-                  <p className="text-sm font-semibold text-gray-700">081-234-5678</p>
+                  <p className="text-sm font-semibold text-gray-700">084-909-7777</p>
                 </div>
               </div>
               
@@ -64,7 +64,7 @@ export default function Navbar({ totalPrice, onQuoteRequest }: NavbarProps) {
                 </svg>
                 <div>
                   <span className="text-xs text-gray-500">เวลาทำการ</span>
-                  <p className="text-sm font-semibold text-gray-700">8:00-18:00</p>
+                  <p className="text-sm font-semibold text-gray-700">8:00-17:00</p>
                 </div>
               </div>
 

@@ -32,7 +32,7 @@ interface MaterialSelectorProps {
   }) => void;
 }
 
-/** Header step indicator — full width, compact, pretty */
+/** Header step indicator — enhanced for better clarity */
 const StepIndicator = ({
   currentStep,
   totalSteps,
@@ -43,26 +43,26 @@ const StepIndicator = ({
   stepName: string;
 }) => (
   <div className="sticky top-0 inset-x-0 z-20">
-    <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-t-xl shadow-md">
-      <div className="px-4 py-3">
-        <div className="flex items-center gap-3">
-          <div className="w-7 h-7 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-            <span className="text-white font-bold text-sm leading-none">
+    <div className="bg-gradient-to-r from-blue-600 to-cyan-500 rounded-t-xl shadow-lg">
+      <div className="px-4 py-4">
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md">
+            <span className="text-blue-600 font-bold text-lg">
               {currentStep}
             </span>
           </div>
-          <div className="min-w-0">
-            <h3 className="font-semibold text-white text-[13px] truncate">
+          <div className="min-w-0 flex-1">
+            <h3 className="font-bold text-white text-base leading-tight">
               {stepName}
             </h3>
-            <p className="text-[11px] text-blue-100">
-              ขั้นที่ {currentStep} จาก {totalSteps}
+            <p className="text-sm text-blue-100 mt-0.5">
+              ขั้นตอนที่ {currentStep} จาก {totalSteps} - {Math.round((currentStep / totalSteps) * 100)}% เสร็จสิ้น
             </p>
           </div>
         </div>
-        <div className="mt-2 h-1.5 bg-white/25 rounded-full overflow-hidden">
+        <div className="mt-3 h-2 bg-white/20 rounded-full overflow-hidden">
           <div
-            className="h-full bg-white rounded-full transition-all duration-300 ease-out"
+            className="h-full bg-white rounded-full transition-all duration-500 ease-out shadow-sm"
             style={{ width: `${(currentStep / totalSteps) * 100}%` }}
           />
         </div>
@@ -81,43 +81,96 @@ const buttonClass = (isSelected: boolean, disabled?: boolean) =>
       : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/40"
   }`;
 
-/** Empty state — โชว์เมื่อยังไม่เลือกประเภทวัสดุ */
+/** Enhanced empty state with clear call-to-action */
 const EmptyState = () => (
-  <div className="-mx-3 px-3 py-3">
-    <div className="bg-white rounded-xl border border-gray-200 p-3">
-      <div className="flex items-center justify-between">
-        <div className="font-semibold text-gray-800 text-[14px]">
-          เริ่มต้นคำนวณราคา
+  <div className="-mx-3 px-4 py-6">
+    <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl border border-blue-200 p-6 shadow-sm">
+      <div className="text-center mb-6">
+        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+          </svg>
         </div>
+        <h3 className="text-xl font-bold text-gray-800 mb-2">
+          เริ่มต้นคำนวณราคากันสาด
+        </h3>
+        <p className="text-gray-600 text-base leading-relaxed mb-4">
+          ระบบจะนำคุณผ่านขั้นตอนง่าย ๆ เพียง 6 ขั้นตอน<br/>
+          เพื่อคำนวณราคาที่แม่นยำที่สุด
+        </p>
         <button
-          className="px-3 py-1.5 text-[12px] font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 active:scale-[0.99] transition"
-          onClick={() =>
-            document
-              .getElementById("step-type")
-              ?.scrollIntoView({ behavior: "smooth", block: "start" })
-          }
+          className="px-6 py-3 text-base font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white hover:from-blue-700 hover:to-cyan-600 active:scale-[0.98] transition-all duration-200 shadow-md hover:shadow-lg"
+          onClick={() => {
+            console.log('เริ่มเลือกวัสดุ button clicked - scrolling to bottom');
+            
+            // Scroll to bottom of the page
+            const scrollToBottom = () => {
+              const isMobile = window.innerWidth < 1024;
+              console.log(`Device is mobile: ${isMobile}, scrolling to bottom`);
+              
+              if (isMobile) {
+                // Mobile scroll to bottom with smooth behavior
+                window.scrollTo({
+                  top: document.documentElement.scrollHeight,
+                  behavior: 'smooth'
+                });
+                
+                console.log(`Mobile scroll to bottom: ${document.documentElement.scrollHeight}`);
+              } else {
+                // Desktop scroll to bottom
+                window.scrollTo({
+                  top: document.documentElement.scrollHeight,
+                  behavior: 'smooth'
+                });
+                
+                console.log(`Desktop scroll to bottom: ${document.documentElement.scrollHeight}`);
+              }
+            };
+            
+            setTimeout(scrollToBottom, 100);
+          }}
         >
-          เริ่มเลือกวัสดุ
+          🚀 เริ่มเลือกวัสดุ
         </button>
       </div>
 
-      <ul className="mt-2 text-[12px] text-gray-600 space-y-1.5">
-        <li>• เลือกประเภทวัสดุ → เลือกรุ่น/ขนาด → กรอกกว้าง×ยาว → เลือกบริการ</li>
-        <li>• ระบบคำนวณพื้นที่และราคาให้อัตโนมัติ พร้อมแสดงสรุปท้ายหน้า</li>
-      </ul>
+      <div className="space-y-3 mb-6">
+        <h4 className="font-semibold text-gray-800 text-center text-lg mb-4">ขั้นตอนการใช้งาน</h4>
+        {[
+          { step: 1, title: "เลือกประเภทวัสดุ", desc: "เลือกระหว่างวัสดุโปร่งแสงหรือทึบแสง" },
+          { step: 2, title: "เลือกชนิดวัสดุ", desc: "เลือกวัสดุที่ต้องการติดตั้ง" },
+          { step: 3, title: "เลือกขนาดวัสดุ", desc: "เลือกขนาดที่เหมาะสมกับงาน" },
+          { step: 4, title: "กรอกขนาดพื้นที่", desc: "ระบุความกว้างและความยาว" },
+          { step: 5, title: "เลือกรูปแบบติดตั้ง", desc: "แบบมีเสาหรือไร้เสา" },
+          { step: 6, title: "เลือกบริการเสริม", desc: "เลือกบริการเพิ่มเติมตามต้องการ" }
+        ].map((item) => (
+          <div key={item.step} className="flex items-start gap-3 p-3 bg-white rounded-lg border border-gray-200">
+            <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <span className="text-blue-600 font-bold text-sm">{item.step}</span>
+            </div>
+            <div>
+              <div className="font-semibold text-gray-800 text-sm">{item.title}</div>
+              <div className="text-gray-600 text-xs mt-0.5">{item.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
 
-      <div className="grid grid-cols-3 gap-2 mt-3">
-        <div className="p-2.5 bg-gray-50 rounded-lg border border-gray-200">
-          <div className="text-[11px] text-gray-600">ติดตั้งไว</div>
-          <div className="text-[13px] font-semibold">เสร็จใน 1 วัน</div>
+      <div className="grid grid-cols-3 gap-3">
+        <div className="p-4 bg-white rounded-xl border border-gray-200 text-center">
+          <div className="text-2xl mb-2">⚡</div>
+          <div className="text-xs text-gray-600 mb-1">ติดตั้งไว</div>
+          <div className="text-sm font-semibold text-gray-800">เสร็จใน 1 วัน</div>
         </div>
-        <div className="p-2.5 bg-gray-50 rounded-lg border border-gray-200">
-          <div className="text-[11px] text-gray-600">รับประกัน</div>
-          <div className="text-[13px] font-semibold">สูงสุด 15 ปี</div>
+        <div className="p-4 bg-white rounded-xl border border-gray-200 text-center">
+          <div className="text-2xl mb-2">🛡️</div>
+          <div className="text-xs text-gray-600 mb-1">รับประกัน</div>
+          <div className="text-sm font-semibold text-gray-800">สูงสุด 15 ปี</div>
         </div>
-        <div className="p-2.5 bg-gray-50 rounded-lg border border-gray-200">
-          <div className="text-[11px] text-gray-600">คำนวณแม่น</div>
-          <div className="text-[13px] font-semibold">อัปเดตราคาใหม่</div>
+        <div className="p-4 bg-white rounded-xl border border-gray-200 text-center">
+          <div className="text-2xl mb-2">💯</div>
+          <div className="text-xs text-gray-600 mb-1">คำนวณแม่น</div>
+          <div className="text-sm font-semibold text-gray-800">ราคาล่าสุด</div>
         </div>
       </div>
     </div>
@@ -156,6 +209,72 @@ export function MaterialSelector({
     ? materials.filter((m) => m.type === selectedType)
     : [];
   const area = dimensions.width * dimensions.length;
+
+  // Enhanced scroll function for both mobile and desktop
+  const scrollToNextStep = (targetId: string, delay = 200) => {
+    console.log(`scrollToNextStep called with targetId: ${targetId}, delay: ${delay}`);
+    
+    setTimeout(() => {
+      const targetElement = document.getElementById(targetId);
+      console.log(`Target element found:`, targetElement);
+      
+      if (targetElement) {
+        // For mobile devices, use more reliable scrolling
+        const isMobile = window.innerWidth < 1024; // Changed from 768 to 1024
+        console.log(`Device is mobile: ${isMobile}, window width: ${window.innerWidth}`);
+        
+        if (isMobile) {
+          // Mobile scroll with enhanced behavior
+          console.log(`Scrolling to ${targetId} on mobile`);
+          
+          // First attempt - native scrollIntoView
+          targetElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start',
+            inline: 'nearest'
+          });
+          
+          // Second attempt with manual calculation
+          setTimeout(() => {
+            const rect = targetElement.getBoundingClientRect();
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const targetTop = rect.top + scrollTop - 80; // Increased padding to 80px
+            
+            window.scrollTo({
+              top: targetTop,
+              behavior: 'smooth'
+            });
+            
+            console.log(`Manual scroll to position: ${targetTop}`);
+          }, 150);
+          
+          // Third attempt for stubborn mobile browsers
+          setTimeout(() => {
+            const finalRect = targetElement.getBoundingClientRect();
+            console.log(`Final position check - top: ${finalRect.top}`);
+            if (finalRect.top > 100) { // If still not in good position
+              const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+              const finalTop = finalRect.top + scrollTop - 60;
+              window.scrollTo({
+                top: finalTop,
+                behavior: 'smooth'
+              });
+              console.log(`Final adjustment scroll to: ${finalTop}`);
+            }
+          }, 300);
+        } else {
+          // Desktop scroll
+          targetElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+          });
+          console.log(`Desktop scroll completed for ${targetId}`);
+        }
+      } else {
+        console.error(`Element with ID '${targetId}' not found!`);
+      }
+    }, delay);
+  };
 
   // defaults when material changes
   useEffect(() => {
@@ -232,19 +351,19 @@ export function MaterialSelector({
     const step = getCurrentStep();
     switch (step) {
       case 1:
-        return "เลือกประเภทวัสดุ";
+        return "🏗️ เลือกประเภทวัสดุ";
       case 2:
-        return "เลือกชนิดวัสดุ";
+        return "🎯 เลือกชนิดวัสดุ";
       case 3:
-        return "เลือกขนาดวัสดุ";
+        return "📏 เลือกขนาดวัสดุ";
       case 4:
-        return "ระบุขนาดพื้นที่";
+        return "📐 ระบุขนาดพื้นที่";
       case 5:
-        return "รูปแบบการติดตั้ง";
+        return "⚙️ รูปแบบการติดตั้ง";
       case 6:
-        return "เลือกบริการ";
+        return "🛠️ เลือกบริการเสริม";
       default:
-        return "คำนวณราคา";
+        return "✅ คำนวณราคา";
     }
   };
 
@@ -258,6 +377,11 @@ export function MaterialSelector({
     setSelectedExtras({});
     setSelectedGutterMaterials({});
     setPipeLength({}); // รีเซ็ตความยาวท่อน้ำ
+    
+    // Auto scroll to size selection step
+    if (material) {
+      scrollToNextStep('step-size');
+    }
   };
 
   const handleSizeSelect = (size: Size) => {
@@ -269,6 +393,44 @@ export function MaterialSelector({
     setSelectedExtras({});
     setSelectedGutterMaterials({});
     setPipeLength({}); // รีเซ็ตความยาวท่อน้ำ
+    
+    // Auto scroll to dimensions step
+    scrollToNextStep('step-dimensions');
+  };
+
+  const handleTypeSelect = (categoryId: string) => {
+    console.log(`Type selected: ${categoryId}`);
+    setSelectedType(categoryId);
+    if (selectedMaterial?.type !== categoryId) {
+      handleMaterialSelect(null);
+    }
+    
+    // Auto scroll to material selection step with proper timing
+    console.log('Triggering scroll to step-material');
+    
+    // Wait for the step-material element to be rendered, then scroll
+    setTimeout(() => {
+      const checkAndScroll = (attempts = 0) => {
+        const element = document.getElementById('step-material');
+        if (element && attempts < 10) {
+          console.log(`step-material element found after ${attempts} attempts`);
+          scrollToNextStep('step-material', 0); // Immediate scroll once found
+        } else if (attempts < 10) {
+          console.log(`step-material not found, attempt ${attempts + 1}`);
+          setTimeout(() => checkAndScroll(attempts + 1), 100);
+        } else {
+          console.error('step-material element not found after 10 attempts');
+        }
+      };
+      checkAndScroll();
+    }, 100); // Small delay to allow React to render the conditional element
+  };
+
+  const handleColumnSelect = (hasColumnValue: boolean) => {
+    setHasColumn(hasColumnValue);
+    
+    // Auto scroll to services step
+    scrollToNextStep('step-services');
   };
 
   return (
@@ -303,85 +465,165 @@ export function MaterialSelector({
         {/* Empty state — full-bleed */}
         {!selectedType && <EmptyState />}
 
-        {/* Step 1 — full-bleed */}
-        <div id="step-type" className="-mx-3 px-3 bg-white border-b border-gray-100 py-4">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-2 h-6 bg-blue-500 rounded-full" />
-            <h3 className="text-[15px] font-bold text-gray-800">
-              เลือกประเภทวัสดุ
-            </h3>
+        {/* Step 1 — Enhanced material type selection */}
+        <div id="step-type" className="-mx-3 px-4 bg-white border-b border-gray-100 py-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-3 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
+            <div>
+              <h3 className="text-lg font-bold text-gray-800">
+                ขั้นตอนที่ 1: เลือกประเภทวัสดุ
+              </h3>
+              <p className="text-sm text-gray-600 mt-1">เลือกประเภทวัสดุที่ต้องการติดตั้ง</p>
+            </div>
           </div>
-          <div className="space-y-2">
-            {categories.map((category) => (
+          <div className="space-y-3">
+            {categories.map((category, index) => (
               <button
                 key={category.id}
-                className={buttonClass(selectedType === category.id)}
+                className={`w-full p-4 rounded-xl border-2 transition-all duration-200 text-left hover:translate-y-[-2px] hover:shadow-lg ${
+                  selectedType === category.id
+                    ? "border-blue-500 bg-blue-50 shadow-md"
+                    : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/50"
+                }`}
                 onClick={() => {
-                  setSelectedType(category.id);
-                  if (selectedMaterial?.type !== category.id)
-                    handleMaterialSelect(null);
+                  handleTypeSelect(category.id);
                 }}
               >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`w-3.5 h-3.5 rounded-full ${
-                      selectedType === category.id ? "bg-blue-500" : "bg-gray-300"
-                    } transition-all duration-150`}
-                  />
+                <div className="flex items-center gap-4">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 ${
+                    selectedType === category.id 
+                      ? "bg-blue-500 text-white" 
+                      : "bg-gray-100 text-gray-600"
+                  }`}>
+                    <span className="text-xl font-bold">{index + 1}</span>
+                  </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-gray-800 text-[14px] leading-tight">
+                    <h4 className="font-bold text-gray-800 text-base leading-tight mb-1">
                       {category.name}
                     </h4>
-                    <p className="text-[12px] text-gray-600 mt-0.5 line-clamp-2">
+                    <p className="text-sm text-gray-600 leading-relaxed">
                       {category.description}
                     </p>
+                  </div>
+                  <div className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
+                    selectedType === category.id
+                      ? "border-blue-500 bg-blue-500"
+                      : "border-gray-300 bg-white"
+                  }`}>
+                    {selectedType === category.id && (
+                      <svg className="w-full h-full text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                      </svg>
+                    )}
                   </div>
                 </div>
               </button>
             ))}
           </div>
+          
+          {/* Next step hint */}
+          {selectedType && (
+            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                  <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-green-800 font-semibold text-sm">เยี่ยม! ขั้นตอนถัดไป</p>
+                  <p className="text-green-700 text-sm">เลือกชนิดวัสดุที่ต้องการ</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Step 2 — full-bleed */}
+        {/* Step 2 — Enhanced material selection */}
         {selectedType && (
-          <div className="-mx-3 px-3 bg-white border-b border-gray-100 py-4">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-2 h-6 bg-blue-500 rounded-full" />
-              <h3 className="text-[15px] font-bold text-gray-800">เลือกวัสดุ</h3>
+          <div id="step-material" className="-mx-3 px-4 bg-white border-b border-gray-100 py-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-3 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">
+                  ขั้นตอนที่ 2: เลือกชนิดวัสดุ
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">เลือกวัสดุที่เหมาะสมกับความต้องการ</p>
+              </div>
             </div>
-            <div className="space-y-2 max-h-80 overflow-y-auto scrollbar-hide">
-              {filteredMaterials.map((material) => (
+            <div className="space-y-3 max-h-96 overflow-y-auto scrollbar-hide">
+              {filteredMaterials.map((material, index) => (
                 <button
                   key={material.id}
-                  className={buttonClass(selectedMaterial?.id === material.id)}
+                  className={`w-full p-4 rounded-xl border-2 transition-all duration-200 text-left hover:translate-y-[-2px] hover:shadow-lg ${
+                    selectedMaterial?.id === material.id
+                      ? "border-blue-500 bg-blue-50 shadow-md"
+                      : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/50"
+                  }`}
                   onClick={() => handleMaterialSelect(material)}
                 >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-3.5 h-3.5 rounded-full ${
-                        selectedMaterial?.id === material.id ? "bg-blue-500" : "bg-gray-300"
-                      } transition-all duration-150`}
-                    />
+                  <div className="flex items-center gap-4">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 ${
+                      selectedMaterial?.id === material.id 
+                        ? "bg-blue-500 text-white" 
+                        : "bg-gray-100 text-gray-600"
+                    }`}>
+                      <span className="text-xl font-bold">{index + 1}</span>
+                    </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-gray-800 text-[14px] leading-tight truncate">
+                      <h4 className="font-bold text-gray-800 text-base leading-tight truncate">
                         {material.name}
                       </h4>
+                      <p className="text-sm text-gray-600 mt-1">คุณภาพสูง ทนทาน</p>
+                    </div>
+                    <div className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
+                      selectedMaterial?.id === material.id
+                        ? "border-blue-500 bg-blue-500"
+                        : "border-gray-300 bg-white"
+                    }`}>
+                      {selectedMaterial?.id === material.id && (
+                        <svg className="w-full h-full text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                        </svg>
+                      )}
                     </div>
                   </div>
                 </button>
               ))}
             </div>
+            
+            {/* Next step hint */}
+            {selectedMaterial && (
+              <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                    <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-green-800 font-semibold text-sm">เลือกแล้ว! ขั้นตอนถัดไป</p>
+                    <p className="text-green-700 text-sm">เลือกขนาดที่เหมาะสม</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
-        {/* Step 3 — full-bleed */}
+        {/* Step 3 — Enhanced size selection */}
         {selectedMaterial && (
-          <div className="-mx-3 px-3 bg-white border-b border-gray-100 py-4">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-2 h-6 bg-blue-500 rounded-full" />
-              <h3 className="text-[15px] font-bold text-gray-800">เลือกขนาด</h3>
+          <div id="step-size" className="-mx-3 px-4 bg-white border-b border-gray-100 py-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-3 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">
+                  ขั้นตอนที่ 3: เลือกขนาดวัสดุ
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">เลือกขนาดที่เหมาะสมกับพื้นที่ใช้งาน</p>
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-4">
               {["M", "M+", "L", "L+", "Stainless S", "Stainless M"].map((sizeName) => {
                 const size = selectedMaterial.sizes.find((s) => s.name === sizeName);
                 const price = size ? selectedMaterial.pricePerSqm[size.id] : 0;
@@ -390,11 +632,11 @@ export function MaterialSelector({
                 return (
                   <button
                     key={sizeName}
-                    className={`p-3 rounded-lg border text-center transition-all duration-150 ${
+                    className={`p-4 rounded-xl border-2 text-center transition-all duration-200 hover:translate-y-[-2px] ${
                       selectedSize?.name === sizeName
-                        ? "border-blue-500 bg-blue-50 shadow"
+                        ? "border-blue-500 bg-blue-50 shadow-md"
                         : isAvailable
-                        ? "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/40"
+                        ? "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/50 hover:shadow-lg"
                         : "border-gray-200 bg-gray-50 cursor-not-allowed opacity-60"
                     }`}
                     onClick={() => {
@@ -402,81 +644,180 @@ export function MaterialSelector({
                     }}
                     disabled={!isAvailable}
                   >
-                    <div className="font-bold text-gray-800 text-[14px] mb-1">{sizeName}</div>
+                    <div className={`w-12 h-12 mx-auto mb-3 rounded-lg flex items-center justify-center transition-all duration-200 ${
+                      selectedSize?.name === sizeName
+                        ? "bg-blue-500 text-white"
+                        : isAvailable
+                        ? "bg-gray-100 text-gray-600"
+                        : "bg-gray-200 text-gray-400"
+                    }`}>
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                      </svg>
+                    </div>
+                    <div className="font-bold text-gray-800 text-base mb-2">{sizeName}</div>
                     {isAvailable ? (
                       <>
-                        <div className="text-[15px] font-bold text-blue-600">฿{price.toLocaleString()}</div>
-                        <div className="text-[12px] text-gray-500">/ตร.ม.</div>
+                        <div className="text-lg font-bold text-blue-600 mb-1">฿{price.toLocaleString()}</div>
+                        <div className="text-sm text-gray-500">ต่อ ตร.ม.</div>
                       </>
                     ) : (
-                      <div className="text-[12px] text-gray-400 font-medium">ไม่รองรับ</div>
+                      <div className="text-sm text-gray-400 font-medium">ไม่มีขายในขนาดนี้</div>
                     )}
                   </button>
                 );
               })}
             </div>
+            
+            {/* Next step hint */}
+            {selectedSize && (
+              <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                    <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-green-800 font-semibold text-sm">ดีมาก! ขั้นตอนถัดไป</p>
+                    <p className="text-green-700 text-sm">กรอกขนาดพื้นที่ที่ต้องการติดตั้ง</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
-        {/* Step 4 — full-bleed */}
+        {/* Step 4 — Enhanced dimensions input */}
         {selectedSize && (
-          <div className="-mx-3 px-3 bg-white border-b border-gray-100 py-4">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-2 h-6 bg-blue-500 rounded-full" />
-              <h3 className="text-[15px] font-bold text-gray-800">ระบุขนาดพื้นที่</h3>
+          <div id="step-dimensions" className="-mx-3 px-4 bg-white border-b border-gray-100 py-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-3 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">
+                  ขั้นตอนที่ 4: ระบุขนาดพื้นที่
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">กรอกความกว้างและความยาวของพื้นที่</p>
+              </div>
             </div>
-            <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-[13px] text-gray-700 mb-1.5 font-medium">ความกว้าง (เมตร)</label>
-                  <input
-                    type="number"
-                    min="0"
-                    step="0.1"
-                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-[14px] font-medium transition-all"
-                    placeholder="0.0"
-                    value={dimensions.width || ""}
-                    onChange={(e) =>
-                      setDimensions({
-                        width: parseFloat(e.target.value) || 0,
-                        length: dimensions.length,
-                      })
-                    }
-                  />
+            
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">
+                    <span className="flex items-center gap-2">
+                      <span>ความกว้าง (เมตร)</span>
+                      <span className="text-red-500">*</span>
+                    </span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.1"
+                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 text-base font-medium transition-all placeholder-gray-400"
+                      placeholder="เช่น 5.0"
+                      value={dimensions.width || ""}
+                      onChange={(e) =>
+                        setDimensions({
+                          width: parseFloat(e.target.value) || 0,
+                          length: dimensions.length,
+                        })
+                      }
+                    />
+                    <div className="absolute right-3 top-3 text-gray-500 text-sm font-medium">ม.</div>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-[13px] text-gray-700 mb-1.5 font-medium">ความยาว (เมตร)</label>
-                  <input
-                    type="number"
-                    min="0"
-                    step="0.1"
-                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-[14px] font-medium transition-all"
-                    placeholder="0.0"
-                    value={dimensions.length || ""}
-                    onChange={(e) =>
-                      setDimensions({
-                        width: dimensions.width,
-                        length: parseFloat(e.target.value) || 0,
-                      })
-                    }
-                  />
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">
+                    <span className="flex items-center gap-2">
+                      <span>ความยาว (เมตร)</span>
+                      <span className="text-red-500">*</span>
+                    </span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.1"
+                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 text-base font-medium transition-all placeholder-gray-400"
+                      placeholder="เช่น 10.0"
+                      value={dimensions.length || ""}
+                      onChange={(e) =>
+                        setDimensions({
+                          width: dimensions.width,
+                          length: parseFloat(e.target.value) || 0,
+                        })
+                      }
+                    />
+                    <div className="absolute right-3 top-3 text-gray-500 text-sm font-medium">ม.</div>
+                  </div>
                 </div>
               </div>
 
+              {/* Area calculation display */}
               {area > 0 && (
-                <div className="text-center p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 shadow">
-                  <div className="text-[15px] font-bold text-blue-600">
-                    พื้นที่รวม: {area.toFixed(2)} ตร.ม.
+                <div className="text-center p-6 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl border-2 border-blue-200 shadow-sm">
+                  <div className="flex items-center justify-center gap-3 mb-2">
+                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                      <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="text-sm text-blue-700 font-medium">พื้นที่รวมทั้งหมด</div>
+                      <div className="text-2xl font-bold text-blue-600">
+                        {area.toFixed(2)} ตารางเมตร
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-sm text-blue-600">
+                    {dimensions.width} × {dimensions.length} = {area.toFixed(2)} ตร.ม.
                   </div>
                 </div>
               )}
+              
+              {/* Helper info */}
+              <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-amber-800 font-semibold text-sm mb-1">💡 เคล็ดลับการวัด</p>
+                    <ul className="text-amber-700 text-sm space-y-1 list-disc list-inside">
+                      <li>วัดจากขอบถึงขอบของพื้นที่ที่ต้องการติดตั้ง</li>
+                      <li>สามารถกรอกทศนิยมได้ เช่น 5.5 เมตร</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
+            
+            {/* Next step hint */}
+            {area > 0 && (
+              <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                    <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-green-800 font-semibold text-sm">สุดยอด! ขั้นตอนถัดไป</p>
+                    <p className="text-green-700 text-sm">เลือกรูปแบบการติดตั้ง</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
         {/* Step 5 — full-bleed */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
-          <div className="-mx-3 px-3 bg-white border-b border-gray-100 py-4">
+          <div id="step-installation" className="-mx-3 px-3 bg-white border-b border-gray-100 py-4">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-2 h-6 bg-blue-500 rounded-full" />
               <h3 className="text-[15px] font-bold text-gray-800">รูปแบบติดตั้ง</h3>
@@ -511,7 +852,7 @@ export function MaterialSelector({
         {/* Step 6 — full-bleed */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
           <>
-            <div className="-mx-3 px-3 bg-white border-b border-gray-100 py-3">
+            <div id="step-services" className="-mx-3 px-3 bg-white border-b border-gray-100 py-3">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2 h-5 bg-blue-500 rounded-full" />
                 <h3 className="text-[14px] font-bold text-gray-800">บริการหลัก</h3>
