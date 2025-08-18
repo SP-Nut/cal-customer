@@ -176,7 +176,7 @@ export function MaterialPreview({
                           className="w-full h-auto object-contain relative z-10 drop-shadow-lg transition-transform duration-500 group-hover:scale-105 max-h-96"
                         />
                         <div className="absolute top-2 left-2 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-md">
-                          <span className="text-sm font-semibold text-blue-600">รับประกันสูงสุด 5 ปี</span>
+                          <span className="text-sm font-semibold text-blue-600">รับประกัน 5 ปี</span>
                         </div>
                       </div>
                     </div>

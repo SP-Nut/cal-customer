@@ -96,7 +96,7 @@ const EmptyState = () => (
         </h3>
         <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-3 sm:mb-4 px-2">
           ระบบจะนำคุณผ่านขั้นตอนง่าย ๆ เพียง 6 ขั้นตอน<br/>
-          เพื่อคำนวณราคาที่แม่นยำที่สุด
+          เพื่อคำนวณราคาเบื้องต้น
         </p>
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
           <p className="text-blue-800 text-xs sm:text-sm text-center font-medium leading-relaxed">
@@ -118,9 +118,9 @@ const EmptyState = () => (
           <div className="text-xs sm:text-sm font-semibold text-gray-800 leading-tight">สูงสุด 5 ปี</div>
         </div>
         <div className="p-3 sm:p-4 bg-white rounded-xl border border-gray-200 text-center">
-          <div className="text-xl sm:text-2xl mb-1 sm:mb-2">💯</div>
-          <div className="text-xs text-gray-600 mb-1">คำนวณแม่น</div>
-          <div className="text-xs sm:text-sm font-semibold text-gray-800 leading-tight">ราคาล่าสุด</div>
+          <div className="text-xl sm:text-2xl mb-1 sm:mb-2">�</div>
+          <div className="text-xs text-gray-600 mb-1">ราคาเบื้องต้น</div>
+          <div className="text-xs sm:text-sm font-semibold text-gray-800 leading-tight">คำนวณได้</div>
         </div>
       </div>
     </div>
