@@ -44,23 +44,23 @@ const StepIndicator = ({
 }) => (
   <div className="sticky top-0 inset-x-0 z-20">
     <div className="bg-gradient-to-r from-blue-600 to-cyan-500 rounded-t-xl shadow-lg">
-      <div className="px-4 py-4">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md">
-            <span className="text-blue-600 font-bold text-lg">
+      <div className="px-3 sm:px-4 py-3 sm:py-4">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full flex items-center justify-center shadow-md flex-shrink-0">
+            <span className="text-blue-600 font-bold text-sm sm:text-lg">
               {currentStep}
             </span>
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="font-bold text-white text-base leading-tight">
+            <h3 className="font-bold text-white text-sm sm:text-base leading-tight">
               {stepName}
             </h3>
-            <p className="text-sm text-blue-100 mt-0.5">
-              ขั้นตอนที่ {currentStep} จาก {totalSteps} - {Math.round((currentStep / totalSteps) * 100)}% เสร็จสิ้น
+            <p className="text-xs sm:text-sm text-blue-100 mt-0.5 leading-tight">
+              ขั้นตอนที่ {currentStep} จาก {totalSteps} - {Math.round((currentStep / totalSteps) * 100)}% เสร็จ
             </p>
           </div>
         </div>
-        <div className="mt-3 h-2 bg-white/20 rounded-full overflow-hidden">
+        <div className="mt-2 sm:mt-3 h-2 bg-white/20 rounded-full overflow-hidden">
           <div
             className="h-full bg-white rounded-full transition-all duration-500 ease-out shadow-sm"
             style={{ width: `${(currentStep / totalSteps) * 100}%` }}
@@ -83,94 +83,44 @@ const buttonClass = (isSelected: boolean, disabled?: boolean) =>
 
 /** Enhanced empty state with clear call-to-action */
 const EmptyState = () => (
-  <div className="-mx-3 px-4 py-6">
-    <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl border border-blue-200 p-6 shadow-sm">
-      <div className="text-center mb-6">
-        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+  <div className="-mx-3 px-3 sm:px-4 py-4 sm:py-6">
+    <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl border border-blue-200 p-4 sm:p-6 shadow-sm">
+      <div className="text-center mb-4 sm:mb-6">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+          <svg className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
           </svg>
         </div>
-        <h3 className="text-xl font-bold text-gray-800 mb-2">
+        <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 leading-tight">
           เริ่มต้นคำนวณราคากันสาด
         </h3>
-        <p className="text-gray-600 text-base leading-relaxed mb-4">
+        <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-3 sm:mb-4 px-2">
           ระบบจะนำคุณผ่านขั้นตอนง่าย ๆ เพียง 6 ขั้นตอน<br/>
           เพื่อคำนวณราคาที่แม่นยำที่สุด
         </p>
-        <button
-          className="px-6 py-3 text-base font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white hover:from-blue-700 hover:to-cyan-600 active:scale-[0.98] transition-all duration-200 shadow-md hover:shadow-lg"
-          onClick={() => {
-            console.log('เริ่มเลือกวัสดุ button clicked - scrolling to bottom');
-            
-            // Scroll to bottom of the page
-            const scrollToBottom = () => {
-              const isMobile = window.innerWidth < 1024;
-              console.log(`Device is mobile: ${isMobile}, scrolling to bottom`);
-              
-              if (isMobile) {
-                // Mobile scroll to bottom with smooth behavior
-                window.scrollTo({
-                  top: document.documentElement.scrollHeight,
-                  behavior: 'smooth'
-                });
-                
-                console.log(`Mobile scroll to bottom: ${document.documentElement.scrollHeight}`);
-              } else {
-                // Desktop scroll to bottom
-                window.scrollTo({
-                  top: document.documentElement.scrollHeight,
-                  behavior: 'smooth'
-                });
-                
-                console.log(`Desktop scroll to bottom: ${document.documentElement.scrollHeight}`);
-              }
-            };
-            
-            setTimeout(scrollToBottom, 100);
-          }}
-        >
-          🚀 เริ่มเลือกวัสดุ
-        </button>
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+          <p className="text-blue-800 text-xs sm:text-sm text-center font-medium leading-relaxed">
+            💡 <strong>วิธีใช้:</strong> เลื่อนลงไปด้านล่างเพื่อเริ่มเลือกวัสดุ<br/>
+            ระบบจะพาคุณผ่านทุกขั้นตอนอย่างชัดเจน
+          </p>
+        </div>
       </div>
 
-      <div className="space-y-3 mb-6">
-        <h4 className="font-semibold text-gray-800 text-center text-lg mb-4">ขั้นตอนการใช้งาน</h4>
-        {[
-          { step: 1, title: "เลือกประเภทวัสดุ", desc: "เลือกระหว่างวัสดุโปร่งแสงหรือทึบแสง" },
-          { step: 2, title: "เลือกชนิดวัสดุ", desc: "เลือกวัสดุที่ต้องการติดตั้ง" },
-          { step: 3, title: "เลือกขนาดวัสดุ", desc: "เลือกขนาดที่เหมาะสมกับงาน" },
-          { step: 4, title: "กรอกขนาดพื้นที่", desc: "ระบุความกว้างและความยาว" },
-          { step: 5, title: "เลือกรูปแบบติดตั้ง", desc: "แบบมีเสาหรือไร้เสา" },
-          { step: 6, title: "เลือกบริการเสริม", desc: "เลือกบริการเพิ่มเติมตามต้องการ" }
-        ].map((item) => (
-          <div key={item.step} className="flex items-start gap-3 p-3 bg-white rounded-lg border border-gray-200">
-            <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="text-blue-600 font-bold text-sm">{item.step}</span>
-            </div>
-            <div>
-              <div className="font-semibold text-gray-800 text-sm">{item.title}</div>
-              <div className="text-gray-600 text-xs mt-0.5">{item.desc}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-3 gap-3">
-        <div className="p-4 bg-white rounded-xl border border-gray-200 text-center">
-          <div className="text-2xl mb-2">⚡</div>
+      <div className="grid grid-cols-3 gap-2 sm:gap-3">
+        <div className="p-3 sm:p-4 bg-white rounded-xl border border-gray-200 text-center">
+          <div className="text-xl sm:text-2xl mb-1 sm:mb-2">⚡</div>
           <div className="text-xs text-gray-600 mb-1">ติดตั้งไว</div>
-          <div className="text-sm font-semibold text-gray-800">เสร็จใน 1 วัน</div>
+          <div className="text-xs sm:text-sm font-semibold text-gray-800 leading-tight">เสร็จใน 1 วัน</div>
         </div>
-        <div className="p-4 bg-white rounded-xl border border-gray-200 text-center">
-          <div className="text-2xl mb-2">🛡️</div>
+        <div className="p-3 sm:p-4 bg-white rounded-xl border border-gray-200 text-center">
+          <div className="text-xl sm:text-2xl mb-1 sm:mb-2">🛡️</div>
           <div className="text-xs text-gray-600 mb-1">รับประกัน</div>
-          <div className="text-sm font-semibold text-gray-800">สูงสุด 15 ปี</div>
+          <div className="text-xs sm:text-sm font-semibold text-gray-800 leading-tight">สูงสุด 5 ปี</div>
         </div>
-        <div className="p-4 bg-white rounded-xl border border-gray-200 text-center">
-          <div className="text-2xl mb-2">💯</div>
+        <div className="p-3 sm:p-4 bg-white rounded-xl border border-gray-200 text-center">
+          <div className="text-xl sm:text-2xl mb-1 sm:mb-2">💯</div>
           <div className="text-xs text-gray-600 mb-1">คำนวณแม่น</div>
-          <div className="text-sm font-semibold text-gray-800">ราคาล่าสุด</div>
+          <div className="text-xs sm:text-sm font-semibold text-gray-800 leading-tight">ราคาล่าสุด</div>
         </div>
       </div>
     </div>
@@ -466,21 +416,21 @@ export function MaterialSelector({
         {!selectedType && <EmptyState />}
 
         {/* Step 1 — Enhanced material type selection */}
-        <div id="step-type" className="-mx-3 px-4 bg-white border-b border-gray-100 py-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-3 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
+        <div id="step-type" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-4 sm:py-6">
+          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
             <div>
-              <h3 className="text-lg font-bold text-gray-800">
+              <h3 className="text-base sm:text-lg font-bold text-gray-800 leading-tight">
                 ขั้นตอนที่ 1: เลือกประเภทวัสดุ
               </h3>
-              <p className="text-sm text-gray-600 mt-1">เลือกประเภทวัสดุที่ต้องการติดตั้ง</p>
+              <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">เลือกประเภทวัสดุที่ต้องการติดตั้ง</p>
             </div>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {categories.map((category, index) => (
               <button
                 key={category.id}
-                className={`w-full p-4 rounded-xl border-2 transition-all duration-200 text-left hover:translate-y-[-2px] hover:shadow-lg ${
+                className={`w-full p-3 sm:p-4 rounded-xl border-2 transition-all duration-200 text-left hover:translate-y-[-2px] hover:shadow-lg ${
                   selectedType === category.id
                     ? "border-blue-500 bg-blue-50 shadow-md"
                     : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/50"
@@ -489,23 +439,23 @@ export function MaterialSelector({
                   handleTypeSelect(category.id);
                 }}
               >
-                <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 ${
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-200 flex-shrink-0 ${
                     selectedType === category.id 
                       ? "bg-blue-500 text-white" 
                       : "bg-gray-100 text-gray-600"
                   }`}>
-                    <span className="text-xl font-bold">{index + 1}</span>
+                    <span className="text-base sm:text-xl font-bold">{index + 1}</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-gray-800 text-base leading-tight mb-1">
+                    <h4 className="font-bold text-gray-800 text-sm sm:text-base leading-tight mb-1">
                       {category.name}
                     </h4>
-                    <p className="text-sm text-gray-600 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                       {category.description}
                     </p>
                   </div>
-                  <div className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
+                  <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 transition-all duration-200 flex-shrink-0 ${
                     selectedType === category.id
                       ? "border-blue-500 bg-blue-500"
                       : "border-gray-300 bg-white"
@@ -523,16 +473,16 @@ export function MaterialSelector({
           
           {/* Next step hint */}
           {selectedType && (
-            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                  <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                   </svg>
                 </div>
-                <div>
-                  <p className="text-green-800 font-semibold text-sm">เยี่ยม! ขั้นตอนถัดไป</p>
-                  <p className="text-green-700 text-sm">เลือกชนิดวัสดุที่ต้องการ</p>
+                <div className="min-w-0">
+                  <p className="text-green-800 font-semibold text-xs sm:text-sm">เยี่ยม! ขั้นตอนถัดไป</p>
+                  <p className="text-green-700 text-xs sm:text-sm leading-tight">เลือกชนิดวัสดุที่ต้องการ</p>
                 </div>
               </div>
             </div>
@@ -541,42 +491,42 @@ export function MaterialSelector({
 
         {/* Step 2 — Enhanced material selection */}
         {selectedType && (
-          <div id="step-material" className="-mx-3 px-4 bg-white border-b border-gray-100 py-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-3 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
+          <div id="step-material" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-4 sm:py-6">
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+              <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
               <div>
-                <h3 className="text-lg font-bold text-gray-800">
+                <h3 className="text-base sm:text-lg font-bold text-gray-800 leading-tight">
                   ขั้นตอนที่ 2: เลือกชนิดวัสดุ
                 </h3>
-                <p className="text-sm text-gray-600 mt-1">เลือกวัสดุที่เหมาะสมกับความต้องการ</p>
+                <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">เลือกวัสดุที่เหมาะสมกับความต้องการ</p>
               </div>
             </div>
-            <div className="space-y-3 max-h-96 overflow-y-auto scrollbar-hide">
+            <div className="space-y-2 sm:space-y-3 max-h-80 sm:max-h-96 overflow-y-auto scrollbar-hide">
               {filteredMaterials.map((material, index) => (
                 <button
                   key={material.id}
-                  className={`w-full p-4 rounded-xl border-2 transition-all duration-200 text-left hover:translate-y-[-2px] hover:shadow-lg ${
+                  className={`w-full p-3 sm:p-4 rounded-xl border-2 transition-all duration-200 text-left hover:translate-y-[-2px] hover:shadow-lg ${
                     selectedMaterial?.id === material.id
                       ? "border-blue-500 bg-blue-50 shadow-md"
                       : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/50"
                   }`}
                   onClick={() => handleMaterialSelect(material)}
                 >
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 ${
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-200 flex-shrink-0 ${
                       selectedMaterial?.id === material.id 
                         ? "bg-blue-500 text-white" 
                         : "bg-gray-100 text-gray-600"
                     }`}>
-                      <span className="text-xl font-bold">{index + 1}</span>
+                      <span className="text-base sm:text-xl font-bold">{index + 1}</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-bold text-gray-800 text-base leading-tight truncate">
+                      <h4 className="font-bold text-gray-800 text-sm sm:text-base leading-tight truncate">
                         {material.name}
                       </h4>
-                      <p className="text-sm text-gray-600 mt-1">คุณภาพสูง ทนทาน</p>
+                      <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">คุณภาพสูง ทนทาน</p>
                     </div>
-                    <div className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
+                    <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 transition-all duration-200 flex-shrink-0 ${
                       selectedMaterial?.id === material.id
                         ? "border-blue-500 bg-blue-500"
                         : "border-gray-300 bg-white"
@@ -594,16 +544,16 @@ export function MaterialSelector({
             
             {/* Next step hint */}
             {selectedMaterial && (
-              <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                   </div>
-                  <div>
-                    <p className="text-green-800 font-semibold text-sm">เลือกแล้ว! ขั้นตอนถัดไป</p>
-                    <p className="text-green-700 text-sm">เลือกขนาดที่เหมาะสม</p>
+                  <div className="min-w-0">
+                    <p className="text-green-800 font-semibold text-xs sm:text-sm">เลือกแล้ว! ขั้นตอนถัดไป</p>
+                    <p className="text-green-700 text-xs sm:text-sm leading-tight">เลือกขนาดที่เหมาะสม</p>
                   </div>
                 </div>
               </div>
@@ -613,17 +563,17 @@ export function MaterialSelector({
 
         {/* Step 3 — Enhanced size selection */}
         {selectedMaterial && (
-          <div id="step-size" className="-mx-3 px-4 bg-white border-b border-gray-100 py-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-3 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
+          <div id="step-size" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-4 sm:py-6">
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+              <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
               <div>
-                <h3 className="text-lg font-bold text-gray-800">
+                <h3 className="text-base sm:text-lg font-bold text-gray-800 leading-tight">
                   ขั้นตอนที่ 3: เลือกขนาดวัสดุ
                 </h3>
-                <p className="text-sm text-gray-600 mt-1">เลือกขนาดที่เหมาะสมกับพื้นที่ใช้งาน</p>
+                <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">เลือกขนาดที่เหมาะสมกับพื้นที่ใช้งาน</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-2 sm:gap-4">
               {["M", "M+", "L", "L+", "Stainless S", "Stainless M"].map((sizeName) => {
                 const size = selectedMaterial.sizes.find((s) => s.name === sizeName);
                 const price = size ? selectedMaterial.pricePerSqm[size.id] : 0;
@@ -632,7 +582,7 @@ export function MaterialSelector({
                 return (
                   <button
                     key={sizeName}
-                    className={`p-4 rounded-xl border-2 text-center transition-all duration-200 hover:translate-y-[-2px] ${
+                    className={`p-3 sm:p-4 rounded-xl border-2 text-center transition-all duration-200 hover:translate-y-[-2px] ${
                       selectedSize?.name === sizeName
                         ? "border-blue-500 bg-blue-50 shadow-md"
                         : isAvailable
@@ -644,25 +594,25 @@ export function MaterialSelector({
                     }}
                     disabled={!isAvailable}
                   >
-                    <div className={`w-12 h-12 mx-auto mb-3 rounded-lg flex items-center justify-center transition-all duration-200 ${
+                    <div className={`w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 rounded-lg flex items-center justify-center transition-all duration-200 ${
                       selectedSize?.name === sizeName
                         ? "bg-blue-500 text-white"
                         : isAvailable
                         ? "bg-gray-100 text-gray-600"
                         : "bg-gray-200 text-gray-400"
                     }`}>
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                       </svg>
                     </div>
-                    <div className="font-bold text-gray-800 text-base mb-2">{sizeName}</div>
+                    <div className="font-bold text-gray-800 text-xs sm:text-base mb-1 sm:mb-2 leading-tight">{sizeName}</div>
                     {isAvailable ? (
                       <>
-                        <div className="text-lg font-bold text-blue-600 mb-1">฿{price.toLocaleString()}</div>
-                        <div className="text-sm text-gray-500">ต่อ ตร.ม.</div>
+                        <div className="text-sm sm:text-lg font-bold text-blue-600 mb-0.5 sm:mb-1">฿{price.toLocaleString()}</div>
+                        <div className="text-xs sm:text-sm text-gray-500">ต่อ ตร.ม.</div>
                       </>
                     ) : (
-                      <div className="text-sm text-gray-400 font-medium">ไม่มีขายในขนาดนี้</div>
+                      <div className="text-xs sm:text-sm text-gray-400 font-medium leading-tight">ไม่มีขาย<br className="sm:hidden"/>ในขนาดนี้</div>
                     )}
                   </button>
                 );
@@ -671,16 +621,16 @@ export function MaterialSelector({
             
             {/* Next step hint */}
             {selectedSize && (
-              <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                   </div>
-                  <div>
-                    <p className="text-green-800 font-semibold text-sm">ดีมาก! ขั้นตอนถัดไป</p>
-                    <p className="text-green-700 text-sm">กรอกขนาดพื้นที่ที่ต้องการติดตั้ง</p>
+                  <div className="min-w-0">
+                    <p className="text-green-800 font-semibold text-xs sm:text-sm">ดีมาก! ขั้นตอนถัดไป</p>
+                    <p className="text-green-700 text-xs sm:text-sm leading-tight">กรอกขนาดพื้นที่ที่ต้องการติดตั้ง</p>
                   </div>
                 </div>
               </div>
@@ -690,22 +640,22 @@ export function MaterialSelector({
 
         {/* Step 4 — Enhanced dimensions input */}
         {selectedSize && (
-          <div id="step-dimensions" className="-mx-3 px-4 bg-white border-b border-gray-100 py-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-3 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
+          <div id="step-dimensions" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-4 sm:py-6">
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+              <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
               <div>
-                <h3 className="text-lg font-bold text-gray-800">
+                <h3 className="text-base sm:text-lg font-bold text-gray-800 leading-tight">
                   ขั้นตอนที่ 4: ระบุขนาดพื้นที่
                 </h3>
-                <p className="text-sm text-gray-600 mt-1">กรอกความกว้างและความยาวของพื้นที่</p>
+                <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">กรอกความกว้างและความยาวของพื้นที่</p>
               </div>
             </div>
             
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700">
-                    <span className="flex items-center gap-2">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <div className="space-y-1 sm:space-y-2">
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-700">
+                    <span className="flex items-center gap-1 sm:gap-2">
                       <span>ความกว้าง (เมตร)</span>
                       <span className="text-red-500">*</span>
                     </span>
@@ -715,7 +665,7 @@ export function MaterialSelector({
                       type="number"
                       min="0"
                       step="0.1"
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 text-base font-medium transition-all placeholder-gray-400"
+                      className="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 text-sm sm:text-base font-medium transition-all placeholder-gray-400"
                       placeholder="เช่น 5.0"
                       value={dimensions.width || ""}
                       onChange={(e) =>
@@ -725,12 +675,12 @@ export function MaterialSelector({
                         })
                       }
                     />
-                    <div className="absolute right-3 top-3 text-gray-500 text-sm font-medium">ม.</div>
+                    <div className="absolute right-2 top-2 sm:right-3 sm:top-3 text-gray-500 text-xs sm:text-sm font-medium">ม.</div>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700">
-                    <span className="flex items-center gap-2">
+                <div className="space-y-1 sm:space-y-2">
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-700">
+                    <span className="flex items-center gap-1 sm:gap-2">
                       <span>ความยาว (เมตร)</span>
                       <span className="text-red-500">*</span>
                     </span>
@@ -740,7 +690,7 @@ export function MaterialSelector({
                       type="number"
                       min="0"
                       step="0.1"
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 text-base font-medium transition-all placeholder-gray-400"
+                      className="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 text-sm sm:text-base font-medium transition-all placeholder-gray-400"
                       placeholder="เช่น 10.0"
                       value={dimensions.length || ""}
                       onChange={(e) =>
@@ -750,44 +700,44 @@ export function MaterialSelector({
                         })
                       }
                     />
-                    <div className="absolute right-3 top-3 text-gray-500 text-sm font-medium">ม.</div>
+                    <div className="absolute right-2 top-2 sm:right-3 sm:top-3 text-gray-500 text-xs sm:text-sm font-medium">ม.</div>
                   </div>
                 </div>
               </div>
 
               {/* Area calculation display */}
               {area > 0 && (
-                <div className="text-center p-6 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl border-2 border-blue-200 shadow-sm">
-                  <div className="flex items-center justify-center gap-3 mb-2">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                      <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <div className="text-center p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl border-2 border-blue-200 shadow-sm">
+                  <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2">
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                      <svg className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                       </svg>
                     </div>
                     <div>
-                      <div className="text-sm text-blue-700 font-medium">พื้นที่รวมทั้งหมด</div>
-                      <div className="text-2xl font-bold text-blue-600">
+                      <div className="text-xs sm:text-sm text-blue-700 font-medium">พื้นที่รวมทั้งหมด</div>
+                      <div className="text-lg sm:text-2xl font-bold text-blue-600">
                         {area.toFixed(2)} ตารางเมตร
                       </div>
                     </div>
                   </div>
-                  <div className="text-sm text-blue-600">
+                  <div className="text-xs sm:text-sm text-blue-600">
                     {dimensions.width} × {dimensions.length} = {area.toFixed(2)} ตร.ม.
                   </div>
                 </div>
               )}
               
               {/* Helper info */}
-              <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+              <div className="p-3 sm:p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                <div className="flex items-start gap-2 sm:gap-3">
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
                     </svg>
                   </div>
                   <div>
-                    <p className="text-amber-800 font-semibold text-sm mb-1">💡 เคล็ดลับการวัด</p>
-                    <ul className="text-amber-700 text-sm space-y-1 list-disc list-inside">
+                    <p className="text-amber-800 font-semibold text-xs sm:text-sm mb-1">💡 เคล็ดลับการวัด</p>
+                    <ul className="text-amber-700 text-xs sm:text-sm space-y-0.5 sm:space-y-1 list-disc list-inside leading-tight">
                       <li>วัดจากขอบถึงขอบของพื้นที่ที่ต้องการติดตั้ง</li>
                       <li>สามารถกรอกทศนิยมได้ เช่น 5.5 เมตร</li>
                     </ul>
@@ -798,16 +748,16 @@ export function MaterialSelector({
             
             {/* Next step hint */}
             {area > 0 && (
-              <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                   </div>
-                  <div>
-                    <p className="text-green-800 font-semibold text-sm">สุดยอด! ขั้นตอนถัดไป</p>
-                    <p className="text-green-700 text-sm">เลือกรูปแบบการติดตั้ง</p>
+                  <div className="min-w-0">
+                    <p className="text-green-800 font-semibold text-xs sm:text-sm">สุดยอด! ขั้นตอนถัดไป</p>
+                    <p className="text-green-700 text-xs sm:text-sm leading-tight">เลือกรูปแบบการติดตั้ง</p>
                   </div>
                 </div>
               </div>
@@ -817,33 +767,33 @@ export function MaterialSelector({
 
         {/* Step 5 — full-bleed */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
-          <div id="step-installation" className="-mx-3 px-3 bg-white border-b border-gray-100 py-4">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-2 h-6 bg-blue-500 rounded-full" />
-              <h3 className="text-[15px] font-bold text-gray-800">รูปแบบติดตั้ง</h3>
+          <div id="step-installation" className="-mx-3 px-2 sm:px-3 bg-white border-b border-gray-100 py-3 sm:py-4">
+            <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+              <div className="w-1.5 sm:w-2 h-5 sm:h-6 bg-blue-500 rounded-full" />
+              <h3 className="text-sm sm:text-[15px] font-bold text-gray-800">รูปแบบติดตั้ง</h3>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
               <button
-                className={`p-4 rounded-lg border text-center transition-all duration-150 ${
+                className={`p-3 sm:p-4 rounded-lg border text-center transition-all duration-150 ${
                   hasColumn === true
                     ? "border-blue-500 bg-blue-50 shadow"
                     : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/40"
                 }`}
                 onClick={() => setHasColumn(true)}
               >
-                <div className="font-bold text-gray-700 text-[14px] mb-0.5">แบบมีเสา</div>
-                <div className="text-[12px] text-gray-600">มีเสาค้ำยัน</div>
+                <div className="font-bold text-gray-700 text-xs sm:text-[14px] mb-0.5">แบบมีเสา</div>
+                <div className="text-[10px] sm:text-[12px] text-gray-600 leading-tight">มีเสาค้ำยัน</div>
               </button>
               <button
-                className={`p-4 rounded-lg border text-center transition-all duration-150 ${
+                className={`p-3 sm:p-4 rounded-lg border text-center transition-all duration-150 ${
                   hasColumn === false
                     ? "border-blue-500 bg-blue-50 shadow"
                     : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/40"
                 }`}
                 onClick={() => setHasColumn(false)}
               >
-                <div className="font-bold text-gray-700 text-[14px] mb-0.5">แบบไร้เสา</div>
-                <div className="text-[12px] text-gray-600">ไม่มีเสาค้ำยัน</div>
+                <div className="font-bold text-gray-700 text-xs sm:text-[14px] mb-0.5">แบบไร้เสา</div>
+                <div className="text-[10px] sm:text-[12px] text-gray-600 leading-tight">ไม่มีเสาค้ำยัน</div>
               </button>
             </div>
           </div>
@@ -852,12 +802,12 @@ export function MaterialSelector({
         {/* Step 6 — full-bleed */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
           <>
-            <div id="step-services" className="-mx-3 px-3 bg-white border-b border-gray-100 py-3">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-5 bg-blue-500 rounded-full" />
-                <h3 className="text-[14px] font-bold text-gray-800">บริการหลัก</h3>
+            <div id="step-services" className="-mx-3 px-2 sm:px-3 bg-white border-b border-gray-100 py-2 sm:py-3">
+              <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                <div className="w-1.5 sm:w-2 h-4 sm:h-5 bg-blue-500 rounded-full" />
+                <h3 className="text-xs sm:text-[14px] font-bold text-gray-800">บริการหลัก</h3>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-1.5 sm:space-y-2">
                 {mainServices
                   .filter((service) => {
                     // @ts-ignore optional fields exist in data
@@ -868,7 +818,7 @@ export function MaterialSelector({
                   .map((service) => (
                     <div
                       key={service.id}
-                      className={`p-3 rounded-lg border transition-all duration-150 ${
+                      className={`p-2 sm:p-3 rounded-lg border transition-all duration-150 ${
                         selectedServices.includes(service.id)
                           ? "border-blue-500 bg-blue-50 shadow"
                           : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/40"
@@ -887,32 +837,32 @@ export function MaterialSelector({
                         >
                           <div className="flex justify-between items-center gap-2">
                             <div className="min-w-0">
-                              <div className="font-semibold text-gray-800 text-[13px] truncate">{service.name}</div>
-                              <div className="text-[11px] text-gray-600 leading-tight">{service.description}</div>
+                              <div className="font-semibold text-gray-800 text-xs sm:text-[13px] truncate">{service.name}</div>
+                              <div className="text-[10px] sm:text-[11px] text-gray-600 leading-tight">{service.description}</div>
                             </div>
-                            <div className="text-[13px] font-bold text-blue-600 shrink-0">
+                            <div className="text-xs sm:text-[13px] font-bold text-blue-600 shrink-0">
                               {service.price ? `฿${service.price.toLocaleString()}` : 'ตามพื้นที่'}
                             </div>
                           </div>
                         </button>
                       ) : (
                         <div>
-                          <div className="flex justify-between items-center gap-2 mb-2">
+                          <div className="flex justify-between items-center gap-2 mb-1.5 sm:mb-2">
                             <div className="min-w-0">
-                              <div className="font-semibold text-gray-800 text-[13px] truncate">{service.name}</div>
-                              <div className="text-[11px] text-gray-600 leading-tight">{service.description}</div>
+                              <div className="font-semibold text-gray-800 text-xs sm:text-[13px] truncate">{service.name}</div>
+                              <div className="text-[10px] sm:text-[11px] text-gray-600 leading-tight">{service.description}</div>
                             </div>
-                            <div className="text-[13px] font-bold text-blue-600 shrink-0">
+                            <div className="text-xs sm:text-[13px] font-bold text-blue-600 shrink-0">
                               {service.price ? `฿${service.price.toLocaleString()}` : 'ตามพื้นที่'}
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-2 gap-1.5">
+                          <div className="grid grid-cols-2 gap-1 sm:gap-1.5">
                             {/* @ts-ignore */}
                             {service.options.map((option: any) => (
                               <button
                                 key={option.id}
-                                className={`p-2 rounded-md border transition-all duration-150 ${
+                                className={`p-1.5 sm:p-2 rounded-md border transition-all duration-150 ${
                                   selectedServiceOptions[service.id] === option.id
                                     ? "border-blue-500 bg-blue-50 shadow"
                                     : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/40"
@@ -934,17 +884,17 @@ export function MaterialSelector({
                                   setSelectedServices(newServices);
                                 }}
                               >
-                                <div className="flex items-center gap-1.5">
+                                <div className="flex items-center gap-1 sm:gap-1.5">
                                   {option.color && (
                                     <div
-                                      className="w-3 h-3 rounded-full border border-gray-400"
+                                      className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full border border-gray-400 flex-shrink-0"
                                       style={{ backgroundColor: option.color }}
                                     />
                                   )}
-                                  <span className="text-[12px] font-medium truncate">{option.name}</span>
+                                  <span className="text-[10px] sm:text-[12px] font-medium truncate leading-tight">{option.name}</span>
                                 </div>
                                 {option.price > 0 && (
-                                  <div className="text-[11px] text-blue-600 mt-0.5 font-semibold">
+                                  <div className="text-[9px] sm:text-[11px] text-blue-600 mt-0.5 font-semibold">
                                     +฿{option.price.toLocaleString()}
                                   </div>
                                 )}
@@ -959,26 +909,26 @@ export function MaterialSelector({
             </div>
 
             {/* Extra services — full-bleed */}
-            <div className="-mx-3 px-3 bg-white py-4 pb-8">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-6 bg-blue-500 rounded-full" />
-                <h3 className="text-[15px] font-bold text-gray-800">บริการเสริม (ตัวเลือก)</h3>
+            <div className="-mx-3 px-2 sm:px-3 bg-white py-3 sm:py-4 pb-6 sm:pb-8">
+              <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                <div className="w-1.5 sm:w-2 h-5 sm:h-6 bg-blue-500 rounded-full" />
+                <h3 className="text-sm sm:text-[15px] font-bold text-gray-800">บริการเสริม (ตัวเลือก)</h3>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-1.5 sm:space-y-2">
                 {extraServices
                   .filter((service) => (hasColumn === false ? !service.id.includes("column") : true))
                   .map((service) => (
-                    <div key={service.id} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                      <div className="mb-1">
-                        <div className="font-medium text-gray-800 text-[13px] truncate">{service.name}</div>
-                        <div className="text-[12px] text-gray-600 truncate">{service.description}</div>
+                    <div key={service.id} className="p-2 sm:p-3 bg-gray-50 rounded-lg border border-gray-200">
+                      <div className="mb-0.5 sm:mb-1">
+                        <div className="font-medium text-gray-800 text-xs sm:text-[13px] truncate">{service.name}</div>
+                        <div className="text-[10px] sm:text-[12px] text-gray-600 truncate leading-tight">{service.description}</div>
                       </div>
                       
                       {/* ถ้าเป็นบริการรางน้ำ ให้ใช้ gutterMaterials แทน service.options */}
                       {service.id === 'gutter' ? (
-                        <div className="space-y-2">
+                        <div className="space-y-1.5 sm:space-y-2">
                           <select
-                            className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-[13px] font-medium transition-all"
+                            className="w-full p-2 sm:p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-xs sm:text-[13px] font-medium transition-all"
                             value={selectedGutterMaterials[service.id] || ""}
                             onChange={(e) => {
                               if (e.target.value) {
@@ -1039,8 +989,8 @@ export function MaterialSelector({
                           
                           {/* แสดงราคารวมรางน้ำ */}
                           {selectedGutterMaterials[service.id] && dimensions.length > 0 && (
-                            <div className="mt-2 p-2 bg-blue-50 rounded-lg border border-blue-200">
-                              <div className="text-[12px] text-blue-700">
+                            <div className="mt-1.5 sm:mt-2 p-2 bg-blue-50 rounded-lg border border-blue-200">
+                              <div className="text-[10px] sm:text-[12px] text-blue-700">
                                 {(() => {
                                   const selectedGutter = gutterMaterials.find(g => g.id === selectedGutterMaterials[service.id]);
                                   const totalGutterPrice = selectedGutter ? selectedGutter.price * dimensions.length : 0;
@@ -1057,9 +1007,9 @@ export function MaterialSelector({
                         </div>
                       ) : service.id === 'pipe' && service.requiresLength ? (
                         /* ส่วนจัดการท่อน้ำพิเศษ */
-                        <div className="space-y-2">
+                        <div className="space-y-1.5 sm:space-y-2">
                           <select
-                            className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-[13px] font-medium transition-all"
+                            className="w-full p-2 sm:p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-xs sm:text-[13px] font-medium transition-all"
                             value={selectedExtras[service.id] || ""}
                             onChange={(e) => {
                               if (e.target.value) {
@@ -1095,16 +1045,16 @@ export function MaterialSelector({
                           
                           {/* ช่องกรอกความยาวท่อน้ำ */}
                           {selectedExtras[service.id] && (
-                            <div className="space-y-2">
+                            <div className="space-y-1.5 sm:space-y-2">
                               <div>
-                                <label className="block text-[12px] text-gray-700 mb-1 font-medium">
+                                <label className="block text-[10px] sm:text-[12px] text-gray-700 mb-1 font-medium leading-tight">
                                   ความยาวท่อน้ำ (เมตร) - ขั้นต่ำ {service.minimumLength || 3} เมตร
                                 </label>
                                 <input
                                   type="number"
                                   min={service.minimumLength || 3}
                                   step="0.1"
-                                  className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-[13px] font-medium transition-all"
+                                  className="w-full px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-xs sm:text-[13px] font-medium transition-all"
                                   placeholder={`${service.minimumLength || 3}.0`}
                                   value={pipeLength[service.id] || ""}
                                   onChange={(e) => {
@@ -1130,15 +1080,15 @@ export function MaterialSelector({
                               
                               {/* แสดงราคารวมท่อน้ำ */}
                               {pipeLength[service.id] && selectedExtras[service.id] && (
-                                <div className="p-2 bg-orange-50 rounded-lg border border-orange-200">
-                                  <div className="text-[12px] text-orange-700">
+                                <div className="p-1.5 sm:p-2 bg-orange-50 rounded-lg border border-orange-200">
+                                  <div className="text-[10px] sm:text-[12px] text-orange-700">
                                     {(() => {
                                       const selectedOption = service.options.find(opt => opt.id === selectedExtras[service.id]);
                                       const length = pipeLength[service.id] || 0;
                                       const pricePerMeter = selectedOption?.price || 0;
                                       const totalPrice = pricePerMeter * length;
                                       return (
-                                        <div className="space-y-1">
+                                        <div className="space-y-0.5 sm:space-y-1">
                                           <div className="flex justify-between">
                                             <span>ความยาว:</span>
                                             <span className="font-semibold">{length} เมตร</span>
@@ -1238,7 +1188,7 @@ export function MaterialSelector({
                                       const pricePerPoint = selectedOption?.price || 0;
                                       const totalPrice = pricePerPoint * points;
                                       return (
-                                        <div className="space-y-1">
+                                        <div className="space-y-0.5 sm:space-y-1">
                                           <div className="flex justify-between">
                                             <span>จำนวนจุด:</span>
                                             <span className="font-semibold">{points} จุด</span>
@@ -1262,7 +1212,7 @@ export function MaterialSelector({
                         </div>
                       ) : (
                         <select
-                          className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-[13px] font-medium transition-all"
+                          className="w-full p-2 sm:p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-xs sm:text-[13px] font-medium transition-all"
                           value={selectedExtras[service.id] || ""}
                           onChange={(e) => {
                             setSelectedExtras({
