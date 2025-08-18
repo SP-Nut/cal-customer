@@ -60,5 +60,7 @@ export interface ExtraService {
   minimumLength?: number;
   requiresQuantity?: boolean;
   pricePerPoint?: boolean;
+  requiresSize?: string;
+  pricePerSqm?: boolean;
   unit?: string;
 }

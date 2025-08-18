@@ -63,6 +63,11 @@ export default function Home() {
           const option = service?.options.find((o: any) => o.id === optionId);
           let extraPrice = option?.price || 0;
           
+          // ถ้าบริการคิดราคาตามตารางเมตร
+          if (service?.pricePerSqm && extraPrice > 0) {
+            extraPrice = extraPrice * area;
+          }
+          
           // เพิ่มราคารางน้ำถ้ามีการเลือกวัสดุรางน้ำ
           if (serviceId === 'gutter' && selectionData.gutterMaterials[serviceId]) {
             const selectedGutter = gutterMaterials.find(g => g.id === selectionData.gutterMaterials[serviceId]);

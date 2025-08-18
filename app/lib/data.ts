@@ -161,6 +161,57 @@ export const mainServices: Service[] = [
 
 export const extraServices: ExtraService[] = [
   {
+    id: 'privacy-screen',
+    name: 'งานระแนงบังตา',
+    description: 'ติดตั้งระแนงบังตาเพื่อความเป็นส่วนตัว (คิดตามตารางเมตร)',
+    options: [
+      { 
+        id: 'steel-wood-aron', 
+        name: 'ระแนงเหล็กลายไม้ Aron', 
+        price: 1800,
+        description: 'ระแนงเหล็กลายไม้ยี่ห้อ Aron คุณภาพสูง ทนทาน (1,800 บาท/ตร.ม.)'
+      },
+      { 
+        id: 'vinyl-strip-10mm', 
+        name: 'ระแนงไวนิล Vinyl Strip หนา 10 มม.', 
+        price: 1500,
+        description: 'ระแนงไวนิล Vinyl Strip หนา 10 มม. กันน้ำ ทนสภาพอากาศ (1,500 บาท/ตร.ม.)'
+      },
+      { 
+        id: 'aluminum-battens', 
+        name: 'ระแนงอลูมิเนียม Aluminum Battens', 
+        price: 2200,
+        description: 'ระแนงอลูมิเนียม Aluminum Battens น้ำหนักเบา ไม่เป็นสนิม (2,200 บาท/ตร.ม.)'
+      },
+      { 
+        id: 'shera-8mm', 
+        name: 'ระแนงเฌอร่า Shera หนา 8 มม.', 
+        price: 2200,
+        description: 'ระแนงเฌอร่า Shera หนา 8 มม. กันน้ำ ทนไฟ (2,200 บาท/ตร.ม.)'
+      },
+      { 
+        id: 'shera-8mm-covered', 
+        name: 'ระแนงเฌอร่า Shera หนา 8 มม. (โป้ะหัวหน๊อต)', 
+        price: 2500,
+        description: 'ระแนงเฌอร่า Shera หนา 8 มม. โป้ะหัวหน๊อต +300 บาท/ตร.ม. (2,500 บาท/ตร.ม.)'
+      },
+      { 
+        id: 'perforated-steel', 
+        name: 'ระแนงตะแกรงเหล็กฉีก', 
+        price: 1600,
+        description: 'ระแนงตะแกรงเหล็กฉีก ระบายอากาศดี ราคาตามรูปแบบ (1,600 บาท/ตร.ม.)'
+      },
+      { 
+        id: 'metal-sheet-scales', 
+        name: 'ระแนงเกร็ดเมทัลชีท 0.35 มม.', 
+        price: 1400,
+        description: 'ระแนงเกร็ดเมทัลชีท หนา 0.35 มม. ลายสวยงาม (1,400 บาท/ตร.ม.)'
+      }
+    ],
+    requiresSize: 'L_PLUS',
+    pricePerSqm: true
+  },
+  {
     id: 'foundation',
     name: 'งานรากฐาน',
     description: 'งานฐานรากสำหรับรองรับโครงสร้าง',

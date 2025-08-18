@@ -909,10 +909,25 @@ export function MaterialPreview({
                           const service = extraServices.find((s) => s.id === serviceId);
                           const option = service?.options.find((o) => o.id === optionId);
                           if (!service || !option) return null;
+                          
+                          // คำนวณราคาตามประเภทบริการ
+                          let finalPrice = option.price;
+                          if (service.pricePerSqm && dimensions.width > 0 && dimensions.length > 0) {
+                            const area = dimensions.width * dimensions.length;
+                            finalPrice = option.price * area;
+                          }
+                          
                           return (
                             <div key={serviceId} className="flex justify-between items-center py-3 px-4 bg-blue-50 rounded-lg border border-blue-100">
-                              <span className="text-gray-700 font-medium">{service.name}</span>
-                              <span className="text-blue-700 font-bold">฿{option.price.toLocaleString()}</span>
+                              <span className="text-gray-700 font-medium">
+                                {service.name}
+                                {service.pricePerSqm && (
+                                  <span className="text-gray-500 text-sm ml-1">
+                                    ({(dimensions.width * dimensions.length).toFixed(2)} ตร.ม.)
+                                  </span>
+                                )}
+                              </span>
+                              <span className="text-blue-700 font-bold">฿{finalPrice.toLocaleString()}</span>
                             </div>
                           );
                         })}
