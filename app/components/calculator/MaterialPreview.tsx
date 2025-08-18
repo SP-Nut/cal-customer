@@ -140,15 +140,15 @@ export function MaterialPreview({
                 <div className="text-center lg:text-left space-y-2 lg:space-y-3 order-2 lg:order-1">
                   <div className="flex items-center justify-center lg:justify-start space-x-2 lg:space-x-3 mb-2 lg:mb-3">
                     <div className="w-6 lg:w-12 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
-                    <p className="text-xs lg:text-sm font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent uppercase tracking-widest">
-                      ระบบคำนวณมืออาชีพ
+                    <p className="text-sm lg:text-sm font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent uppercase tracking-widest">
+                      ระบบคำนวณราคากันสาด
                     </p>
                   </div>
                   
-                  <h2 className="text-2xl sm:text-3xl lg:text-5xl xl:text-6xl font-extralight mb-3 lg:mb-5 leading-tight text-slate-800">
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extralight mb-3 lg:mb-5 leading-tight text-slate-800">
                     สร้างโซลูชั่น<br />
                     <span className="font-normal bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                      กันสาดและหลังคา
+                      หลังคากันสาด
                     </span>
                     <br />
                     <span className="font-normal bg-gradient-to-r from-purple-600 via-blue-500 to-slate-600 bg-clip-text text-transparent">
@@ -157,7 +157,7 @@ export function MaterialPreview({
                   </h2>
                   
                   <div className="bg-transparent p-3 lg:p-5 mb-3 lg:mb-5">
-                    <p className="text-sm lg:text-lg text-slate-700 leading-relaxed font-normal">
+                    <p className="text-base lg:text-lg text-slate-700 leading-relaxed font-normal">
                       ระบบคำนวณราคากันสาดและหลังคาแบบมืออาชีพ คำนวณราคาเบื้องต้นทุกรายการ 
                       ด้วยประสบการณ์มากกว่า 35 ปี พร้อมบริการครบวงจร
                     </p>
