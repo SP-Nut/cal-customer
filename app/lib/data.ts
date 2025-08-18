@@ -248,13 +248,25 @@ export const extraServices: ExtraService[] = [
   {
     id: 'pipe',
     name: 'งานท่อน้ำ',
-    description: 'ระบบท่อระบายน้ำลง (550 บาท/เมตร ขั้นต่ำ 3 เมตร)',
+    description: 'ระบบท่อระบายน้ำลง (ขั้นต่ำ 3 เมตร)',
     options: [
       { 
-        id: 'standard', 
-        name: 'ท่อระบายน้ำมาตรฐาน', 
+        id: 'pvc-3inch', 
+        name: 'ท่อน้ำลง PVC 3"', 
         price: 550,
-        description: 'ท่อระบายน้ำคุณภาพดี ราคา 550 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
+        description: 'ท่อน้ำลง PVC ขนาด 3 นิ้ว ราคา 550 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
+      },
+      { 
+        id: 'vinyl-vg-3inch-white', 
+        name: 'ท่อน้ำลงไวนิล Vinyl Gutter ยี่ห้อ VG 3" (สีขาว)', 
+        price: 900,
+        description: 'ท่อน้ำลงไวนิล Vinyl Gutter ยี่ห้อ VG ขนาด 3 นิ้ว สีขาว ราคา 900 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
+      },
+      { 
+        id: 'vinyl-vg-3inch-brown', 
+        name: 'ท่อน้ำลงไวนิล Vinyl Gutter ยี่ห้อ VG 3" (สีน้ำตาล)', 
+        price: 700,
+        description: 'ท่อน้ำลงไวนิล Vinyl Gutter ยี่ห้อ VG ขนาด 3 นิ้ว สีน้ำตาล ราคา 700 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
       }
     ],
     requiresLength: true,
