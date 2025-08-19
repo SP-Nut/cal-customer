@@ -116,42 +116,6 @@ export const mainServices: Service[] = [
         name: 'ฉาบเรียบ', 
         price: 800,
         description: 'ฝ้าฉาบเรียบ สวยงาม เหมาะกับงานตกแต่ง (800 บาท/ตร.ม.)'
-      },
-      { 
-        id: 'steel-wood-aron', 
-        name: 'ฝ้าระแนงเหล็กลายไม้ Aron', 
-        price: 1800,
-        description: 'ฝ้าระแนงเหล็กลายไม้ยี่ห้อ Aron คุณภาพสูง ทนทาน (1,800 บาท/ตร.ม.)'
-      },
-      { 
-        id: 'steel-under-roof', 
-        name: 'ฝ้าระแนงเหล็กใต้หลังคา', 
-        price: 1500,
-        description: 'ฝ้าระแนงเหล็กสำหรับงานใต้หลังคา (1,500 บาท/ตร.ม.)'
-      },
-      { 
-        id: 'shera-8mm', 
-        name: 'ฝ้าระแนงเฌอร่า Shera หนา 8 มม.', 
-        price: 2200,
-        description: 'ฝ้าระแนงเฌอร่า Shera หนา 8 มม. กันน้ำ ทนไฟ (2,200 บาท/ตร.ม.)'
-      },
-      { 
-        id: 'metal-sheet-normal', 
-        name: 'ฝ้าระแนงเมทัลชีท ลอนฝ้าระแนง (สีธรรมดา)', 
-        price: 1200,
-        description: 'ฝ้าระแนงเมทัลชีท ลอนฝ้าระแนง สีธรรมดา (1,200 บาท/ตร.ม.)'
-      },
-      { 
-        id: 'metal-sheet-wood', 
-        name: 'ฝ้าระแนงเมทัลชีท ลอนฝ้าระแนง (ลายไม้)', 
-        price: 1400,
-        description: 'ฝ้าระแนงเมทัลชีท ลอนฝ้าระแนง ลายไม้ สวยงาม (1,400 บาท/ตร.ม.)'
-      },
-      { 
-        id: 'perforated-steel', 
-        name: 'ฝ้าตะแกรงเหล็กฉีก', 
-        price: 1600,
-        description: 'ฝ้าตะแกรงเหล็กฉีก ระบายอากาศดี ราคาตามรูปแบบ (1,600 บาท/ตร.ม.)'
       }
     ],
     requiresSize: 'L_PLUS',
@@ -160,57 +124,6 @@ export const mainServices: Service[] = [
 ];
 
 export const extraServices: ExtraService[] = [
-  {
-    id: 'privacy-screen',
-    name: 'งานระแนงบังตา',
-    description: 'ติดตั้งระแนงบังตาเพื่อความเป็นส่วนตัว (คิดตามตารางเมตร)',
-    options: [
-      { 
-        id: 'steel-wood-aron', 
-        name: 'ระแนงเหล็กลายไม้ Aron', 
-        price: 1800,
-        description: 'ระแนงเหล็กลายไม้ยี่ห้อ Aron คุณภาพสูง ทนทาน (1,800 บาท/ตร.ม.)'
-      },
-      { 
-        id: 'vinyl-strip-10mm', 
-        name: 'ระแนงไวนิล Vinyl Strip หนา 10 มม.', 
-        price: 1500,
-        description: 'ระแนงไวนิล Vinyl Strip หนา 10 มม. กันน้ำ ทนสภาพอากาศ (1,500 บาท/ตร.ม.)'
-      },
-      { 
-        id: 'aluminum-battens', 
-        name: 'ระแนงอลูมิเนียม Aluminum Battens', 
-        price: 2200,
-        description: 'ระแนงอลูมิเนียม Aluminum Battens น้ำหนักเบา ไม่เป็นสนิม (2,200 บาท/ตร.ม.)'
-      },
-      { 
-        id: 'shera-8mm', 
-        name: 'ระแนงเฌอร่า Shera หนา 8 มม.', 
-        price: 2200,
-        description: 'ระแนงเฌอร่า Shera หนา 8 มม. กันน้ำ ทนไฟ (2,200 บาท/ตร.ม.)'
-      },
-      { 
-        id: 'shera-8mm-covered', 
-        name: 'ระแนงเฌอร่า Shera หนา 8 มม. (โป้ะหัวหน๊อต)', 
-        price: 2500,
-        description: 'ระแนงเฌอร่า Shera หนา 8 มม. โป้ะหัวหน๊อต +300 บาท/ตร.ม. (2,500 บาท/ตร.ม.)'
-      },
-      { 
-        id: 'perforated-steel', 
-        name: 'ระแนงตะแกรงเหล็กฉีก', 
-        price: 1600,
-        description: 'ระแนงตะแกรงเหล็กฉีก ระบายอากาศดี ราคาตามรูปแบบ (1,600 บาท/ตร.ม.)'
-      },
-      { 
-        id: 'metal-sheet-scales', 
-        name: 'ระแนงเกร็ดเมทัลชีท 0.35 มม.', 
-        price: 1400,
-        description: 'ระแนงเกร็ดเมทัลชีท หนา 0.35 มม. ลายสวยงาม (1,400 บาท/ตร.ม.)'
-      }
-    ],
-    requiresSize: 'L_PLUS',
-    pricePerSqm: true
-  },
   {
     id: 'foundation',
     name: 'งานรากฐาน',
@@ -248,25 +161,13 @@ export const extraServices: ExtraService[] = [
   {
     id: 'pipe',
     name: 'งานท่อน้ำ',
-    description: 'ระบบท่อระบายน้ำลง (ขั้นต่ำ 3 เมตร)',
+    description: 'ระบบท่อระบายน้ำลง (550 บาท/เมตร ขั้นต่ำ 3 เมตร)',
     options: [
       { 
-        id: 'pvc-3inch', 
-        name: 'ท่อน้ำลง PVC 3"', 
+        id: 'standard', 
+        name: 'ท่อระบายน้ำมาตรฐาน', 
         price: 550,
-        description: 'ท่อน้ำลง PVC ขนาด 3 นิ้ว ราคา 550 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
-      },
-      { 
-        id: 'vinyl-vg-3inch-white', 
-        name: 'ท่อน้ำลงไวนิล Vinyl Gutter ยี่ห้อ VG 3" (สีขาว)', 
-        price: 900,
-        description: 'ท่อน้ำลงไวนิล Vinyl Gutter ยี่ห้อ VG ขนาด 3 นิ้ว สีขาว ราคา 900 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
-      },
-      { 
-        id: 'vinyl-vg-3inch-brown', 
-        name: 'ท่อน้ำลงไวนิล Vinyl Gutter ยี่ห้อ VG 3" (สีน้ำตาล)', 
-        price: 700,
-        description: 'ท่อน้ำลงไวนิล Vinyl Gutter ยี่ห้อ VG ขนาด 3 นิ้ว สีน้ำตาล ราคา 700 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
+        description: 'ท่อระบายน้ำคุณภาพดี ราคา 550 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
       }
     ],
     requiresLength: true,

@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Material, Size, Service, ExtraService } from '../../lib/types';
 import { gutterMaterials } from '../../lib/materials/gutterMaterials';
+import { X, ZoomIn, ChevronLeft, ChevronRight, Phone, MessageCircle, Mail, MapPin, Info, DollarSign, Wrench, CheckCircle } from 'lucide-react';
 
 interface MaterialPreviewProps {
   material: Material | null;
@@ -270,9 +271,7 @@ export function MaterialPreview({
                   <div className="group bg-white/40 backdrop-blur-sm p-4 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1">
                     <div className="text-center space-y-2 lg:space-y-4">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <svg className="w-10 h-10 lg:w-12 lg:h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                        </svg>
+                        <Phone className="w-10 h-10 lg:w-12 lg:h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" />
                       </div>
                       <div>
                         <h4 className="font-bold text-gray-800 text-base lg:text-lg mb-1 lg:mb-2">โทรศัพท์</h4>
@@ -289,9 +288,7 @@ export function MaterialPreview({
                   >
                     <div className="text-center space-y-2 lg:space-y-4">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <svg className="w-10 h-10 lg:w-12 lg:h-12 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
-                        </svg>
+                        <MessageCircle className="w-10 h-10 lg:w-12 lg:h-12 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300 mx-auto" />
                       </div>
                       <div>
                         <h4 className="font-bold text-gray-800 text-base lg:text-lg mb-1 lg:mb-2">Line ID</h4>
@@ -305,9 +302,7 @@ export function MaterialPreview({
                   <div className="group bg-white/40 backdrop-blur-sm p-4 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/10 transform hover:-translate-y-1">
                     <div className="text-center space-y-2 lg:space-y-4">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <svg className="w-10 h-10 lg:w-12 lg:h-12 text-slate-600 group-hover:text-slate-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                        </svg>
+                        <Mail className="w-10 h-10 lg:w-12 lg:h-12 text-slate-600 group-hover:text-slate-700 transition-colors duration-300 mx-auto" />
                       </div>
                       <div>
                         <h4 className="font-bold text-gray-800 text-base lg:text-lg mb-1 lg:mb-2">อีเมล</h4>
@@ -363,10 +358,7 @@ export function MaterialPreview({
                        onClick={() => window.open('https://spkansard.com', '_blank')}>
                     <div className="text-center space-y-2 lg:space-y-4">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <svg className="w-10 h-10 lg:w-12 lg:h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                        </svg>
+                        <MapPin className="w-10 h-10 lg:w-12 lg:h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" />
                       </div>
                       <div>
                         <h4 className="font-bold text-gray-800 text-base lg:text-lg mb-1 lg:mb-2">สาขาทั้งหมด</h4>
@@ -599,9 +591,7 @@ export function MaterialPreview({
                       {/* Zoom Icon Overlay */}
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 rounded-full p-4">
-                          <svg className="w-8 h-8 text-slate-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
-                          </svg>
+                          <ZoomIn className="w-8 h-8 text-slate-700" />
                         </div>
                       </div>
                     </div>
@@ -627,9 +617,7 @@ export function MaterialPreview({
                       {/* Zoom Icon Overlay */}
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 rounded-full p-4">
-                          <svg className="w-8 h-8 text-slate-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
-                          </svg>
+                          <ZoomIn className="w-8 h-8 text-slate-700" />
                         </div>
                       </div>
                     </div>
@@ -725,9 +713,7 @@ export function MaterialPreview({
                     {/* Zoom Icon Overlay */}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 rounded-full p-4">
-                        <svg className="w-8 h-8 text-slate-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
-                        </svg>
+                        <ZoomIn className="w-8 h-8 text-slate-700" />
                       </div>
                     </div>
                   </div>
@@ -762,9 +748,7 @@ export function MaterialPreview({
                 onClick={closeImageModal}
                 className="absolute top-6 right-6 z-20 bg-black/50 hover:bg-black/70 rounded-full p-3 transition-all duration-300 backdrop-blur-sm"
               >
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
+                <X className="w-8 h-8 text-white" />
               </button>
 
               {/* Full Screen Image - No Other Elements */}
@@ -796,9 +780,7 @@ export function MaterialPreview({
                     }}
                     className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 rounded-full p-4 transition-all duration-300 backdrop-blur-sm"
                   >
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/>
-                    </svg>
+                    <ChevronLeft className="w-8 h-8 text-white" />
                   </button>
 
                   {/* Next Button */}
@@ -809,9 +791,7 @@ export function MaterialPreview({
                     }}
                     className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 rounded-full p-4 transition-all duration-300 backdrop-blur-sm"
                   >
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
-                    </svg>
+                    <ChevronRight className="w-8 h-8 text-white" />
                   </button>
 
                   {/* Simple Image Counter - Bottom Center */}
@@ -965,9 +945,7 @@ export function MaterialPreview({
           <div className="bg-white rounded-lg border border-blue-100 p-6 shadow-sm">
             <div className="flex items-start space-x-4">
               <div className="w-12 h-12 bg-blue-50 rounded-lg border border-blue-100 flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
+                <Info className="w-6 h-6 text-blue-600" />
               </div>
               <div className="flex-1">
                 <h4 className="text-xl font-bold text-gray-800 mb-4">ข้อมูลสำคัญ</h4>
@@ -976,7 +954,7 @@ export function MaterialPreview({
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
                         <div className="w-8 h-8 bg-blue-100 rounded-lg border border-blue-200 flex items-center justify-center">
-                          <span className="text-blue-600 text-sm">💰</span>
+                          <DollarSign className="w-4 h-4 text-blue-600" />
                         </div>
                         <div className="font-bold text-gray-700 text-base">ความโปร่งใส</div>
                       </div>
@@ -988,7 +966,7 @@ export function MaterialPreview({
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
                         <div className="w-8 h-8 bg-blue-100 rounded-lg border border-blue-200 flex items-center justify-center">
-                          <span className="text-blue-600 text-sm">🔧</span>
+                          <Wrench className="w-4 h-4 text-blue-600" />
                         </div>
                         <div className="font-bold text-gray-700 text-base">ความยืดหยุ่น</div>
                       </div>
@@ -1000,7 +978,7 @@ export function MaterialPreview({
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
                         <div className="w-8 h-8 bg-blue-100 rounded-lg border border-blue-200 flex items-center justify-center">
-                          <span className="text-blue-600 text-sm">✅</span>
+                          <CheckCircle className="w-4 h-4 text-blue-600" />
                         </div>
                         <div className="font-bold text-gray-700 text-base">การรับประกัน</div>
                       </div>

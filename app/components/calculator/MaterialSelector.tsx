@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { gutterMaterials, GutterMaterial } from "../../lib/materials/gutterMaterials";
+import { Calculator, Zap, Shield, DollarSign, FileText, Check, Square, Lightbulb, Info } from 'lucide-react';
 
 import type {
   Material,
@@ -44,23 +45,23 @@ const StepIndicator = ({
 }) => (
   <div className="sticky top-0 inset-x-0 z-20">
     <div className="bg-gradient-to-r from-blue-600 to-cyan-500 rounded-t-xl shadow-lg">
-      <div className="px-3 sm:px-4 py-3 sm:py-4">
-        <div className="flex items-center gap-3 sm:gap-4">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full flex items-center justify-center shadow-md flex-shrink-0">
-            <span className="text-blue-600 font-bold text-sm sm:text-lg">
+      <div className="px-3 sm:px-4 py-2 sm:py-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center shadow-md flex-shrink-0">
+            <span className="text-blue-600 font-bold text-xs sm:text-sm">
               {currentStep}
             </span>
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="font-bold text-white text-sm sm:text-base leading-tight">
+            <h3 className="font-bold text-white text-xs sm:text-sm leading-tight">
               {stepName}
             </h3>
-            <p className="text-xs sm:text-sm text-blue-100 mt-0.5 leading-tight">
-              ขั้นตอนที่ {currentStep} จาก {totalSteps} - {Math.round((currentStep / totalSteps) * 100)}% เสร็จ
+            <p className="text-xs text-blue-100 mt-0.5 leading-tight">
+              ขั้นตอนที่ {currentStep}/{totalSteps} ({Math.round((currentStep / totalSteps) * 100)}%)
             </p>
           </div>
         </div>
-        <div className="mt-2 sm:mt-3 h-2 bg-white/20 rounded-full overflow-hidden">
+        <div className="mt-1.5 sm:mt-2 h-1.5 bg-white/20 rounded-full overflow-hidden">
           <div
             className="h-full bg-white rounded-full transition-all duration-500 ease-out shadow-sm"
             style={{ width: `${(currentStep / totalSteps) * 100}%` }}
@@ -73,7 +74,7 @@ const StepIndicator = ({
 
 // Utility
 const buttonClass = (isSelected: boolean, disabled?: boolean) =>
-  `w-full p-3 rounded-lg border transition-all duration-150 text-left hover:translate-y-[-1px] ${
+  `w-full p-2 rounded-lg border transition-all duration-150 text-left hover:translate-y-[-1px] ${
     disabled
       ? "border-gray-200 bg-gray-50 cursor-not-allowed opacity-60"
       : isSelected
@@ -83,44 +84,46 @@ const buttonClass = (isSelected: boolean, disabled?: boolean) =>
 
 /** Enhanced empty state with clear call-to-action */
 const EmptyState = () => (
-  <div className="-mx-3 px-3 sm:px-4 py-4 sm:py-6">
-    <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl border border-blue-200 p-4 sm:p-6 shadow-sm">
-      <div className="text-center mb-4 sm:mb-6">
-        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-          <svg className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-          </svg>
+  <div className="-mx-3 px-3 sm:px-4 py-3 sm:py-4">
+    <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl border border-blue-200 p-3 sm:p-4 shadow-sm">
+      <div className="text-center mb-3 sm:mb-4">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+          <Calculator className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
         </div>
-        <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 leading-tight">
-          เริ่มต้นคำนวณราคากันสาด
+        <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-1.5 leading-tight">
+          คำนวณราคากันสาด
         </h3>
-        <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-3 sm:mb-4 px-2">
-          ระบบจะนำคุณผ่านขั้นตอนง่าย ๆ เพียง 6 ขั้นตอน<br/>
-          เพื่อคำนวณราคาเบื้องต้น
+        <p className="text-sm text-gray-600 leading-relaxed mb-2 sm:mb-3 px-2">
+          6 ขั้นตอน คำนวณง่าย ราคาชัดเจน
         </p>
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
-          <p className="text-blue-800 text-xs sm:text-sm text-center font-medium leading-relaxed">
-            💡 <strong>วิธีใช้:</strong> เลื่อนลงไปด้านล่างเพื่อเริ่มเลือกวัสดุ<br/>
-            ระบบจะพาคุณผ่านทุกขั้นตอนอย่างชัดเจน
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-2 sm:p-3 mb-2 sm:mb-3">
+          <p className="text-blue-800 text-xs text-center font-medium leading-relaxed">
+            💡 เลื่อนลงเพื่อเริ่มเลือกวัสดุ
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 sm:gap-3">
-        <div className="p-3 sm:p-4 bg-white rounded-xl border border-gray-200 text-center">
-          <div className="text-xl sm:text-2xl mb-1 sm:mb-2">⚡</div>
-          <div className="text-xs text-gray-600 mb-1">ติดตั้งไว</div>
-          <div className="text-xs sm:text-sm font-semibold text-gray-800 leading-tight">เสร็จใน 1 วัน</div>
+      <div className="grid grid-cols-3 gap-2">
+        <div className="p-2 sm:p-3 bg-white rounded-xl border border-gray-200 text-center">
+          <div className="flex justify-center mb-1">
+            <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500" />
+          </div>
+          <div className="text-xs text-gray-600 mb-0.5">ติดตั้งไว</div>
+          <div className="text-xs font-semibold text-gray-800 leading-tight">เสร็จใน 1 วัน</div>
         </div>
-        <div className="p-3 sm:p-4 bg-white rounded-xl border border-gray-200 text-center">
-          <div className="text-xl sm:text-2xl mb-1 sm:mb-2">🛡️</div>
-          <div className="text-xs text-gray-600 mb-1">รับประกัน</div>
-          <div className="text-xs sm:text-sm font-semibold text-gray-800 leading-tight">สูงสุด 5 ปี</div>
+        <div className="p-2 sm:p-3 bg-white rounded-xl border border-gray-200 text-center">
+          <div className="flex justify-center mb-1">
+            <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-green-500" />
+          </div>
+          <div className="text-xs text-gray-600 mb-0.5">รับประกัน</div>
+          <div className="text-xs font-semibold text-gray-800 leading-tight">สูงสุด 5 ปี</div>
         </div>
-        <div className="p-3 sm:p-4 bg-white rounded-xl border border-gray-200 text-center">
-          <div className="text-xl sm:text-2xl mb-1 sm:mb-2">�</div>
-          <div className="text-xs text-gray-600 mb-1">ราคาเบื้องต้น</div>
-          <div className="text-xs sm:text-sm font-semibold text-gray-800 leading-tight">คำนวณได้</div>
+        <div className="p-2 sm:p-3 bg-white rounded-xl border border-gray-200 text-center">
+          <div className="flex justify-center mb-1">
+            <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
+          </div>
+          <div className="text-xs text-gray-600 mb-0.5">ราคาเบื้องต้น</div>
+          <div className="text-xs font-semibold text-gray-800 leading-tight">คำนวณได้</div>
         </div>
       </div>
     </div>
@@ -301,17 +304,17 @@ export function MaterialSelector({
     const step = getCurrentStep();
     switch (step) {
       case 1:
-        return "🏗️ เลือกประเภทวัสดุ";
+        return "🏗️ เลือกวัสดุ";
       case 2:
-        return "🎯 เลือกชนิดวัสดุ";
+        return "🎯 เลือกชนิด";
       case 3:
-        return "📏 เลือกขนาดวัสดุ";
+        return "📏 เลือกขนาด";
       case 4:
         return "📐 ระบุขนาดพื้นที่";
       case 5:
         return "⚙️ รูปแบบการติดตั้ง";
       case 6:
-        return "🛠️ เลือกบริการเสริม";
+        return "🛠️ บริการเสริม";
       default:
         return "✅ คำนวณราคา";
     }
@@ -416,21 +419,21 @@ export function MaterialSelector({
         {!selectedType && <EmptyState />}
 
         {/* Step 1 — Enhanced material type selection */}
-        <div id="step-type" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-4 sm:py-6">
-          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+        <div id="step-type" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
+          <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
             <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
             <div>
               <h3 className="text-base sm:text-lg font-bold text-gray-800 leading-tight">
-                ขั้นตอนที่ 1: เลือกประเภทวัสดุ
+                ขั้นตอนที่ 1: เลือกวัสดุ
               </h3>
-              <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">เลือกประเภทวัสดุที่ต้องการติดตั้ง</p>
+              <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">เลือกประเภทวัสดุ</p>
             </div>
           </div>
           <div className="space-y-2 sm:space-y-3">
             {categories.map((category, index) => (
               <button
                 key={category.id}
-                className={`w-full p-3 sm:p-4 rounded-xl border-2 transition-all duration-200 text-left hover:translate-y-[-2px] hover:shadow-lg ${
+                className={`w-full p-2 sm:p-3 rounded-xl border-2 transition-all duration-200 text-left hover:translate-y-[-2px] hover:shadow-lg ${
                   selectedType === category.id
                     ? "border-blue-500 bg-blue-50 shadow-md"
                     : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/50"
@@ -439,13 +442,13 @@ export function MaterialSelector({
                   handleTypeSelect(category.id);
                 }}
               >
-                <div className="flex items-center gap-3 sm:gap-4">
-                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-200 flex-shrink-0 ${
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-all duration-200 flex-shrink-0 ${
                     selectedType === category.id 
                       ? "bg-blue-500 text-white" 
                       : "bg-gray-100 text-gray-600"
                   }`}>
-                    <span className="text-base sm:text-xl font-bold">{index + 1}</span>
+                    <span className="text-sm sm:text-base font-bold">{index + 1}</span>
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-gray-800 text-sm sm:text-base leading-tight mb-1">
@@ -461,9 +464,7 @@ export function MaterialSelector({
                       : "border-gray-300 bg-white"
                   }`}>
                     {selectedType === category.id && (
-                      <svg className="w-full h-full text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
-                      </svg>
+                      <Check className="w-full h-full text-white p-0.5" />
                     )}
                   </div>
                 </div>
@@ -473,16 +474,14 @@ export function MaterialSelector({
           
           {/* Next step hint */}
           {selectedType && (
-            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
+            <div className="mt-3 sm:mt-4 p-3 bg-green-50 border border-green-200 rounded-xl">
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
-                  </svg>
+                  <Check className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" />
                 </div>
                 <div className="min-w-0">
                   <p className="text-green-800 font-semibold text-xs sm:text-sm">เยี่ยม! ขั้นตอนถัดไป</p>
-                  <p className="text-green-700 text-xs sm:text-sm leading-tight">เลือกชนิดวัสดุที่ต้องการ</p>
+                  <p className="text-green-700 text-xs sm:text-sm leading-tight">เลือกชนิดวัสดุ</p>
                 </div>
               </div>
             </div>
@@ -491,14 +490,14 @@ export function MaterialSelector({
 
         {/* Step 2 — Enhanced material selection */}
         {selectedType && (
-          <div id="step-material" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-4 sm:py-6">
-            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div id="step-material" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
+            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
               <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
               <div>
                 <h3 className="text-base sm:text-lg font-bold text-gray-800 leading-tight">
-                  ขั้นตอนที่ 2: เลือกชนิดวัสดุ
+                  ขั้นตอนที่ 2: เลือกชนิด
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">เลือกวัสดุที่เหมาะสมกับความต้องการ</p>
+                <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">เลือกวัสดุที่เหมาะสม</p>
               </div>
             </div>
             <div className="space-y-2 sm:space-y-3 max-h-80 sm:max-h-96 overflow-y-auto scrollbar-hide">
@@ -532,9 +531,7 @@ export function MaterialSelector({
                         : "border-gray-300 bg-white"
                     }`}>
                       {selectedMaterial?.id === material.id && (
-                        <svg className="w-full h-full text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
-                        </svg>
+                        <Check className="w-full h-full text-white p-0.5" />
                       )}
                     </div>
                   </div>
@@ -547,13 +544,11 @@ export function MaterialSelector({
               <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
-                    </svg>
+                    <Check className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" />
                   </div>
                   <div className="min-w-0">
                     <p className="text-green-800 font-semibold text-xs sm:text-sm">เลือกแล้ว! ขั้นตอนถัดไป</p>
-                    <p className="text-green-700 text-xs sm:text-sm leading-tight">เลือกขนาดที่เหมาะสม</p>
+                    <p className="text-green-700 text-xs sm:text-sm leading-tight">เลือกขนาด</p>
                   </div>
                 </div>
               </div>
@@ -563,17 +558,17 @@ export function MaterialSelector({
 
         {/* Step 3 — Enhanced size selection */}
         {selectedMaterial && (
-          <div id="step-size" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-4 sm:py-6">
-            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div id="step-size" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
+            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
               <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
               <div>
                 <h3 className="text-base sm:text-lg font-bold text-gray-800 leading-tight">
-                  ขั้นตอนที่ 3: เลือกขนาดวัสดุ
+                  ขั้นตอนที่ 3: เลือกขนาด
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">เลือกขนาดที่เหมาะสมกับพื้นที่ใช้งาน</p>
+                <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">เลือกขนาดที่เหมาะสม</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-2 sm:gap-4">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
               {["M", "M+", "L", "L+", "Stainless S", "Stainless M"].map((sizeName) => {
                 const size = selectedMaterial.sizes.find((s) => s.name === sizeName);
                 const price = size ? selectedMaterial.pricePerSqm[size.id] : 0;
@@ -582,7 +577,7 @@ export function MaterialSelector({
                 return (
                   <button
                     key={sizeName}
-                    className={`p-3 sm:p-4 rounded-xl border-2 text-center transition-all duration-200 hover:translate-y-[-2px] ${
+                    className={`p-2 sm:p-3 rounded-xl border-2 text-center transition-all duration-200 hover:translate-y-[-2px] ${
                       selectedSize?.name === sizeName
                         ? "border-blue-500 bg-blue-50 shadow-md"
                         : isAvailable
@@ -601,9 +596,7 @@ export function MaterialSelector({
                         ? "bg-gray-100 text-gray-600"
                         : "bg-gray-200 text-gray-400"
                     }`}>
-                      <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                      </svg>
+                      <FileText className="w-4 h-4 sm:w-6 sm:h-6" />
                     </div>
                     <div className="font-bold text-gray-800 text-xs sm:text-base mb-1 sm:mb-2 leading-tight">{sizeName}</div>
                     {isAvailable ? (
@@ -624,9 +617,7 @@ export function MaterialSelector({
               <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
-                    </svg>
+                    <Check className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" />
                   </div>
                   <div className="min-w-0">
                     <p className="text-green-800 font-semibold text-xs sm:text-sm">ดีมาก! ขั้นตอนถัดไป</p>
@@ -640,12 +631,12 @@ export function MaterialSelector({
 
         {/* Step 4 — Enhanced dimensions input */}
         {selectedSize && (
-          <div id="step-dimensions" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-4 sm:py-6">
-            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div id="step-dimensions" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
+            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
               <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
               <div>
                 <h3 className="text-base sm:text-lg font-bold text-gray-800 leading-tight">
-                  ขั้นตอนที่ 4: ระบุขนาดพื้นที่
+                  ขั้นตอนที่ 4: ระบุพื้นที่
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">กรอกความกว้างและความยาวของพื้นที่</p>
               </div>
@@ -710,9 +701,7 @@ export function MaterialSelector({
                 <div className="text-center p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl border-2 border-blue-200 shadow-sm">
                   <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2">
                     <div className="w-8 h-8 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                      <svg className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                      </svg>
+                      <Square className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" />
                     </div>
                     <div>
                       <div className="text-xs sm:text-sm text-blue-700 font-medium">พื้นที่รวมทั้งหมด</div>
@@ -731,9 +720,7 @@ export function MaterialSelector({
               <div className="p-3 sm:p-4 bg-amber-50 border border-amber-200 rounded-xl">
                 <div className="flex items-start gap-2 sm:gap-3">
                   <div className="w-5 h-5 sm:w-6 sm:h-6 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
-                    </svg>
+                    <Info className="w-3 h-3 sm:w-4 sm:h-4 text-amber-600" />
                   </div>
                   <div>
                     <p className="text-amber-800 font-semibold text-xs sm:text-sm mb-1">💡 เคล็ดลับการวัด</p>
@@ -751,13 +738,11 @@ export function MaterialSelector({
               <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
-                    </svg>
+                    <Check className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" />
                   </div>
                   <div className="min-w-0">
                     <p className="text-green-800 font-semibold text-xs sm:text-sm">สุดยอด! ขั้นตอนถัดไป</p>
-                    <p className="text-green-700 text-xs sm:text-sm leading-tight">เลือกรูปแบบการติดตั้ง</p>
+                    <p className="text-green-700 text-xs sm:text-sm leading-tight">เลือกการติดตั้ง</p>
                   </div>
                 </div>
               </div>
@@ -767,7 +752,7 @@ export function MaterialSelector({
 
         {/* Step 5 — full-bleed */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
-          <div id="step-installation" className="-mx-3 px-2 sm:px-3 bg-white border-b border-gray-100 py-3 sm:py-4">
+          <div id="step-installation" className="-mx-3 px-2 sm:px-3 bg-white border-b border-gray-100 py-2 sm:py-3">
             <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
               <div className="w-1.5 sm:w-2 h-5 sm:h-6 bg-blue-500 rounded-full" />
               <h3 className="text-sm sm:text-[15px] font-bold text-gray-800">รูปแบบติดตั้ง</h3>
@@ -909,7 +894,7 @@ export function MaterialSelector({
             </div>
 
             {/* Extra services — full-bleed */}
-            <div className="-mx-3 px-2 sm:px-3 bg-white py-3 sm:py-4 pb-6 sm:pb-8">
+            <div className="-mx-3 px-2 sm:px-3 bg-white py-2 sm:py-3 pb-4 sm:pb-6">
               <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
                 <div className="w-1.5 sm:w-2 h-5 sm:h-6 bg-blue-500 rounded-full" />
                 <h3 className="text-base sm:text-lg font-bold text-gray-800">บริการเสริม (ตัวเลือก)</h3>
