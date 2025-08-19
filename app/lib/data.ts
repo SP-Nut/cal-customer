@@ -179,13 +179,25 @@ export const extraServices: ExtraService[] = [
   {
     id: 'pipe',
     name: 'งานท่อน้ำ',
-    description: 'ระบบท่อระบายน้ำลง (550 บาท/เมตร ขั้นต่ำ 3 เมตร)',
+    description: 'ระบบท่อระบายน้ำลง (ขั้นต่ำ 3 เมตร)',
     options: [
       { 
-        id: 'standard', 
-        name: 'ท่อระบายน้ำมาตรฐาน', 
+        id: 'pvc', 
+        name: 'ท่อน้ำลง PVC', 
         price: 550,
-        description: 'ท่อระบายน้ำคุณภาพดี ราคา 550 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
+        description: 'ท่อน้ำลง PVC คุณภาพดี ราคา 550 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
+      },
+      { 
+        id: 'vinyl-lion', 
+        name: 'ท่อน้ำลงไวนิล Lion (สีขาว)', 
+        price: 700,
+        description: 'ท่อน้ำลงไวนิล Lion สีขาว ราคา 700 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
+      },
+      { 
+        id: 'vinyl-vg', 
+        name: 'ท่อน้ำลงไวนิล VG (สีขาว)', 
+        price: 900,
+        description: 'ท่อน้ำลงไวนิล VG สีขาว คุณภาพพรีเมียม ราคา 900 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
       }
     ],
     requiresLength: true,

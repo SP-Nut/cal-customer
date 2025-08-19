@@ -255,10 +255,16 @@ export function PriceSummary({
           <div className="mt-1">
             <button
               onClick={onQuoteRequest}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-2.5 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-4 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-lg"
             >
               ขอใบเสนอราคา
             </button>
+            <p className="text-sm text-gray-500 text-center mt-2">
+              ส่งข้อมูลเพื่อขอใบเสนอราคา
+            </p>
+            <p className="text-xs text-gray-400 text-center mt-1">
+              ✓ ราคาอ้างอิงเท่านั้น ✓ ตรวจสอบและแจ้งราคาจริงภายใน 24 ชม. ✓ ปรับปรุงตามงานจริง
+            </p>
           </div>
         </div>
       </div>

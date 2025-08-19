@@ -85,7 +85,7 @@ const buttonClass = (isSelected: boolean, disabled?: boolean) =>
 
 /** Enhanced empty state with clear call-to-action */
 const EmptyState = () => (
-  <div className="-mx-3 px-3 sm:px-4 py-3 sm:py-4">
+  <div className="px-3 sm:px-4 py-3 sm:py-4">
     <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl border border-blue-200 p-3 sm:p-4 shadow-sm">
       <div className="text-center mb-3 sm:mb-4">
         <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
@@ -407,7 +407,7 @@ export function MaterialSelector({
       `}</style>
 
       {/* Header full-bleed */}
-      <div className="-mx-3">
+      <div className="">
         <StepIndicator
           currentStep={getCurrentStep()}
           totalSteps={6}
@@ -423,7 +423,7 @@ export function MaterialSelector({
         {!selectedType && <EmptyState />}
 
         {/* Step 1 — Enhanced material type selection */}
-        <div id="step-type" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
+        <div id="step-type" className="px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
           <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
             <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
             <div>
@@ -494,7 +494,7 @@ export function MaterialSelector({
 
         {/* Step 2 — Enhanced material selection */}
         {selectedType && (
-          <div id="step-material" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
+          <div id="step-material" className="px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
             <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
               <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
               <div>
@@ -562,7 +562,7 @@ export function MaterialSelector({
 
         {/* Step 3 — Enhanced size selection */}
         {selectedMaterial && (
-          <div id="step-size" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
+          <div id="step-size" className="px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
             <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
               <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
               <div>
@@ -635,7 +635,7 @@ export function MaterialSelector({
 
         {/* Step 4 — Enhanced dimensions input */}
         {selectedSize && (
-          <div id="step-dimensions" className="-mx-3 px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
+          <div id="step-dimensions" className="px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
             <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
               <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
               <div>
@@ -756,7 +756,7 @@ export function MaterialSelector({
 
         {/* Step 5 — full-bleed */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
-          <div id="step-installation" className="-mx-3 px-2 sm:px-3 bg-white border-b border-gray-100 py-2 sm:py-3">
+          <div id="step-installation" className="px-2 sm:px-3 bg-white border-b border-gray-100 py-2 sm:py-3">
             <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
               <div className="w-1.5 sm:w-2 h-5 sm:h-6 bg-blue-500 rounded-full" />
               <h3 className="text-sm sm:text-[15px] font-bold text-gray-800">รูปแบบติดตั้ง</h3>
@@ -791,10 +791,10 @@ export function MaterialSelector({
         {/* Step 6 — full-bleed */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
           <>
-            <div id="step-services" className="-mx-3 px-2 sm:px-3 bg-white border-b border-gray-100 py-2 sm:py-3">
+            <div id="step-services" className="px-2 sm:px-3 bg-white border-b border-gray-100 py-2 sm:py-3">
               <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
                 <div className="w-1.5 sm:w-2 h-4 sm:h-5 bg-blue-500 rounded-full" />
-                <h3 className="text-base sm:text-lg font-bold text-gray-800">บริการหลัก</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800">บริการหลัก</h3>
               </div>
               <div className="space-y-1.5 sm:space-y-2">
                 {mainServices
@@ -826,10 +826,10 @@ export function MaterialSelector({
                         >
                           <div className="flex justify-between items-center gap-2">
                             <div className="min-w-0">
-                              <div className="font-semibold text-gray-800 text-sm sm:text-base truncate">{service.name}</div>
-                              <div className="text-xs sm:text-sm text-gray-600 leading-tight">{service.description}</div>
+                              <div className="font-semibold text-gray-800 text-base sm:text-lg truncate">{service.name}</div>
+                              <div className="text-sm sm:text-base text-gray-600 leading-tight">{service.description}</div>
                             </div>
-                            <div className="text-sm sm:text-base font-bold text-blue-600 shrink-0">
+                            <div className="text-base sm:text-lg font-bold text-blue-600 shrink-0">
                               {service.price ? `฿${service.price.toLocaleString()}` : 'ตามพื้นที่'}
                             </div>
                           </div>
@@ -838,10 +838,10 @@ export function MaterialSelector({
                         <div>
                           <div className="flex justify-between items-center gap-2 mb-1.5 sm:mb-2">
                             <div className="min-w-0">
-                              <div className="font-semibold text-gray-800 text-sm sm:text-base truncate">{service.name}</div>
-                              <div className="text-xs sm:text-sm text-gray-600 leading-tight">{service.description}</div>
+                              <div className="font-semibold text-gray-800 text-base sm:text-lg truncate">{service.name}</div>
+                              <div className="text-sm sm:text-base text-gray-600 leading-tight">{service.description}</div>
                             </div>
-                            <div className="text-sm sm:text-base font-bold text-blue-600 shrink-0">
+                            <div className="text-base sm:text-lg font-bold text-blue-600 shrink-0">
                               {service.price ? `฿${service.price.toLocaleString()}` : 'ตามพื้นที่'}
                             </div>
                           </div>
@@ -924,10 +924,10 @@ export function MaterialSelector({
                                         style={{ backgroundColor: option.color }}
                                       />
                                     )}
-                                    <span className="text-xs sm:text-sm font-medium leading-tight truncate">{option.name}</span>
+                                    <span className="text-sm sm:text-base font-medium leading-tight truncate">{option.name}</span>
                                   </div>
                                   {option.price > 0 && (
-                                    <div className="text-xs sm:text-sm text-blue-600 font-semibold flex-shrink-0">
+                                    <div className="text-sm sm:text-base text-blue-600 font-semibold flex-shrink-0">
                                       +฿{option.price.toLocaleString()}
                                     </div>
                                   )}
@@ -943,19 +943,26 @@ export function MaterialSelector({
             </div>
 
             {/* Extra services — full-bleed */}
-            <div className="-mx-3 px-2 sm:px-3 bg-white py-2 sm:py-3 pb-4 sm:pb-6">
+            <div className="px-2 sm:px-3 bg-white py-2 sm:py-3 pb-4 sm:pb-6">
               <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
                 <div className="w-1.5 sm:w-2 h-5 sm:h-6 bg-blue-500 rounded-full" />
-                <h3 className="text-base sm:text-lg font-bold text-gray-800">บริการเสริม (ตัวเลือก)</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800">บริการเสริม (ตัวเลือก)</h3>
               </div>
               <div className="space-y-1.5 sm:space-y-2">
                 {extraServices
                   .filter((service) => (hasColumn === false ? !service.id.includes("column") : true))
                   .map((service) => (
-                    <div key={service.id} className="p-2 sm:p-3 bg-gray-50 rounded-lg border border-gray-200">
+                    <div 
+                      key={service.id} 
+                      className={`p-2 sm:p-3 rounded-lg border transition-all duration-150 ${
+                        selectedExtras[service.id]
+                          ? "border-blue-500 bg-blue-50 shadow"
+                          : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/40"
+                      }`}
+                    >
                       <div className="mb-0.5 sm:mb-1">
-                        <div className="font-medium text-gray-800 text-sm sm:text-base truncate">{service.name}</div>
-                        <div className="text-xs sm:text-sm text-gray-600 truncate leading-tight">{service.description}</div>
+                        <div className="font-semibold text-gray-800 text-base sm:text-lg truncate">{service.name}</div>
+                        <div className="text-sm sm:text-base text-gray-600 truncate leading-tight">{service.description}</div>
                       </div>
                       
                       {/* ถ้าเป็นบริการรางน้ำ ให้ใช้ gutterMaterials แทน service.options */}
