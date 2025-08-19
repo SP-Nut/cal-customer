@@ -105,17 +105,35 @@ export const mainServices: Service[] = [
     description: 'ติดตั้งฝ้าเพดาน (คิดตามตารางเมตร)',
     options: [
       { 
-        id: 'corrugated', 
-        name: 'ฝ้าลอนระแนง', 
-        price: 1000, 
-        isDefault: true,
-        description: 'ฝ้าแบบลอนระแนง เหมาะสำหรับการระบายอากาศ (1,000 บาท/ตร.ม.)'
+        id: 'aion', 
+        name: 'ฝ้าระแนงเหล็กลายไม้ Aron', 
+        price: 3700
       },
       { 
-        id: 'smooth', 
-        name: 'ฉาบเรียบ', 
-        price: 800,
-        description: 'ฝ้าฉาบเรียบ สวยงาม เหมาะกับงานตกแต่ง (800 บาท/ตร.ม.)'
+        id: 'plastic-wood', 
+        name: 'ฝ้าระแนงเหล็กใต้หลังคา', 
+        price: 1600
+      },
+      { 
+        id: 'shera', 
+        name: 'ฝ้าระแนงเชอรา หนา 8 มม.', 
+        price: 1500
+      },
+      { 
+        id: 'ceiling-smooth-white', 
+        name: 'ฝ้าระแนงเททัลชีท ลอนฝ้าระแนง (สีธรรมดา)', 
+        price: 1500
+      },
+      { 
+        id: 'ceiling-smooth-color', 
+        name: 'ฝ้าระแนงเททัลชีท ลอนฝ้าระแนง (ลายไม้)', 
+        price: 1600
+      },
+      { 
+        id: 'corrugated', 
+        name: 'ฝ้าตะแกรงเหล็ก', 
+        price: 1100, 
+        isDefault: true
       }
     ],
     requiresSize: 'L_PLUS',

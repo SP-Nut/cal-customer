@@ -889,12 +889,12 @@ export function MaterialSelector({
                             </div>
                           )}
 
-                          <div className="grid grid-cols-2 gap-1 sm:gap-1.5">
+                          <div className="space-y-1 sm:space-y-1.5">
                             {/* @ts-ignore */}
                             {service.options.map((option: any) => (
                               <button
                                 key={option.id}
-                                className={`p-1.5 sm:p-2 rounded-md border transition-all duration-150 ${
+                                className={`w-full p-1.5 sm:p-2 rounded-md border transition-all duration-150 text-left ${
                                   selectedServiceOptions[service.id] === option.id
                                     ? "border-blue-500 bg-blue-50 shadow"
                                     : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/40"
@@ -916,20 +916,22 @@ export function MaterialSelector({
                                   setSelectedServices(newServices);
                                 }}
                               >
-                                <div className="flex items-center gap-1 sm:gap-1.5">
-                                  {option.color && (
-                                    <div
-                                      className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full border border-gray-400 flex-shrink-0"
-                                      style={{ backgroundColor: option.color }}
-                                    />
-                                  )}
-                                  <span className="text-xs sm:text-sm font-medium truncate leading-tight">{option.name}</span>
-                                </div>
-                                {option.price > 0 && (
-                                  <div className="text-xs sm:text-sm text-blue-600 mt-0.5 font-semibold">
-                                    +฿{option.price.toLocaleString()}
+                                <div className="flex items-center justify-between gap-2">
+                                  <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-1">
+                                    {option.color && (
+                                      <div
+                                        className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full border border-gray-400 flex-shrink-0"
+                                        style={{ backgroundColor: option.color }}
+                                      />
+                                    )}
+                                    <span className="text-xs sm:text-sm font-medium leading-tight truncate">{option.name}</span>
                                   </div>
-                                )}
+                                  {option.price > 0 && (
+                                    <div className="text-xs sm:text-sm text-blue-600 font-semibold flex-shrink-0">
+                                      +฿{option.price.toLocaleString()}
+                                    </div>
+                                  )}
+                                </div>
                               </button>
                             ))}
                           </div>

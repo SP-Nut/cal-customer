@@ -57,6 +57,63 @@ export function QuoteRequestModal({
 
   const area = dimensions.width * dimensions.length;
 
+  const handleSubmit = async () => {
+    // Validation
+    const newErrors: Partial<FormData> = {};
+    if (!formData.name.trim()) newErrors.name = 'กรุณากรอกชื่อ-นามสกุล';
+    if (!formData.phone.trim()) newErrors.phone = 'กรุณากรอกเบอร์โทรศัพท์';
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrors({});
+
+    try {
+      const response = await fetch('/api/send-quote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          material,
+          selectedSize,
+          dimensions,
+          totalPrice,
+          selectedServices,
+          selectedExtras,
+          mainServices,
+          extraServices,
+          selectedServiceOptions,
+          gutterMaterials: selectedGutterMaterials,
+          pipeLength,
+          electricalPoints
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitSuccess(true);
+        setTimeout(() => {
+          onClose();
+          setSubmitSuccess(false);
+          setFormData({ name: '', phone: '', lineId: '', notes: '' });
+        }, 2000);
+      } else {
+        throw new Error(result.error || 'เกิดข้อผิดพลาด');
+      }
+    } catch (error) {
+      console.error('Error sending quote request:', error);
+      alert('เกิดข้อผิดพลาดในการส่งคำขอ กรุณาลองใหม่อีกครั้ง');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -130,9 +187,12 @@ export function QuoteRequestModal({
                         type="text"
                         value={formData.name}
                         onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                        className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-xs sm:text-sm bg-white/70 backdrop-blur-sm shadow-sm hover:shadow-md"
+                        className={`w-full px-3 py-2 sm:px-4 sm:py-3 border ${errors.name ? 'border-red-500' : 'border-gray-200'} rounded-lg sm:rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-xs sm:text-sm bg-white/70 backdrop-blur-sm shadow-sm hover:shadow-md`}
                         placeholder="กรุณาระบุชื่อ-นามสกุล"
                       />
+                      {errors.name && (
+                        <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+                      )}
                     </div>
 
                     {/* Phone */}
@@ -144,9 +204,12 @@ export function QuoteRequestModal({
                         type="tel"
                         value={formData.phone}
                         onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                        className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-xs sm:text-sm bg-white/70 backdrop-blur-sm shadow-sm hover:shadow-md"
+                        className={`w-full px-3 py-2 sm:px-4 sm:py-3 border ${errors.phone ? 'border-red-500' : 'border-gray-200'} rounded-lg sm:rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-xs sm:text-sm bg-white/70 backdrop-blur-sm shadow-sm hover:shadow-md`}
                         placeholder="08X-XXX-XXXX"
                       />
+                      {errors.phone && (
+                        <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
+                      )}
                     </div>
 
                     {/* Line ID */}
@@ -178,17 +241,55 @@ export function QuoteRequestModal({
                     </div>
 
                     {/* Submit Button */}
-                    <div className="pt-1 sm:pt-2">
+                    <div className="pt-1 sm:pt-2 space-y-2">
                       <button
-                        type="button"
-                        onClick={onClose}
-                        className="w-full py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm sm:text-base relative overflow-hidden group"
+                        type="submit"
+                        onClick={handleSubmit}
+                        disabled={isSubmitting}
+                        className={`w-full py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl font-bold text-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm sm:text-base relative overflow-hidden group ${
+                          isSubmitting 
+                            ? 'bg-gray-400 cursor-not-allowed' 
+                            : submitSuccess
+                              ? 'bg-green-600 hover:bg-green-700'
+                              : 'bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-700'
+                        }`}
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <span className="relative z-10">ส่งคำขอใบเสนอราคา</span>
+                        <span className="relative z-10 flex items-center justify-center gap-2">
+                          {isSubmitting ? (
+                            <>
+                              <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                              </svg>
+                              กำลังส่ง...
+                            </>
+                          ) : submitSuccess ? (
+                            <>
+                              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              ส่งสำเร็จ!
+                            </>
+                          ) : (
+                            'ส่งคำขอใบเสนอราคา'
+                          )}
+                        </span>
                       </button>
+                      
+                      {!submitSuccess && (
+                        <button
+                          type="button"
+                          onClick={onClose}
+                          disabled={isSubmitting}
+                          className="w-full py-2 sm:py-3 px-4 sm:px-6 rounded-lg sm:rounded-xl font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all duration-200 text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          ยกเลิก
+                        </button>
+                      )}
+                      
                       <p className="text-center text-xs sm:text-sm text-gray-500 mt-2 sm:mt-3 font-medium">
-                        กดส่งเพื่อให้ทีมงานติดต่อกลับภายใน 24 ชั่วโมง
+                        {submitSuccess ? 'ทีมงานจะติดต่อกลับภายใน 24 ชั่วโมง' : 'กดส่งเพื่อให้ทีมงานติดต่อกลับภายใน 24 ชั่วโมง'}
                       </p>
                     </div>
                   </form>
