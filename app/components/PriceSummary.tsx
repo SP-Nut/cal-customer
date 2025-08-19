@@ -121,6 +121,7 @@ export function PriceSummary({
           const hasGutterMaterials = Object.keys(selectedGutterMaterials).some(key => selectedGutterMaterials[key]);
           console.log('Has extras check:', hasExtras, selectedExtras);
           console.log('Has gutter materials check:', hasGutterMaterials, selectedGutterMaterials);
+          console.log('All selected gutter materials:', selectedGutterMaterials);
           return hasExtras || hasGutterMaterials;
         })() && (
           <div className="bg-slate-50 rounded p-1">

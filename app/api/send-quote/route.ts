@@ -3,6 +3,12 @@ import nodemailer from 'nodemailer';
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('=== EMAIL API DEBUG ===');
+    console.log('EMAIL_USER:', process.env.EMAIL_USER ? 'Set' : 'Not set');
+    console.log('EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? 'Set' : 'Not set');  
+    console.log('EMAIL_TO:', process.env.EMAIL_TO ? 'Set' : 'Not set');
+    console.log('=======================');
+    
     const body = await request.json();
     const {
       name,
@@ -34,7 +40,9 @@ export async function POST(request: NextRequest) {
 
     // สร้าง transporter สำหรับส่งอีเมล
     const transporter = nodemailer.createTransport({
-      service: 'gmail', // หรือใช้ SMTP server อื่น
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false, // true for 465, false for other ports
       auth: {
         user: process.env.EMAIL_USER, // อีเมลผู้ส่ง
         pass: process.env.EMAIL_PASSWORD, // App Password สำหรับ Gmail
@@ -239,9 +247,26 @@ ${servicesList || 'ไม่มีบริการเพิ่มเติม'
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Email sending error:', error);
+    console.error('Detailed email sending error:', error);
+    console.error('Error type:', typeof error);
+    console.error('Error message:', error instanceof Error ? error.message : 'Unknown error');
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+    
+    // More specific error message based on error type
+    let errorMessage = 'เกิดข้อผิดพลาดในการส่งอีเมล';
+    
+    if (error instanceof Error) {
+      if (error.message.includes('Invalid login')) {
+        errorMessage = 'ข้อมูลการเข้าสู่ระบบอีเมลไม่ถูกต้อง';
+      } else if (error.message.includes('Network')) {
+        errorMessage = 'ปัญหาการเชื่อมต่อเครือข่าย';
+      } else if (error.message.includes('Authentication')) {
+        errorMessage = 'ปัญหาการยืนยันตัวตนอีเมล';
+      }
+    }
+    
     return NextResponse.json(
-      { success: false, error: 'เกิดข้อผิดพลาดในการส่งอีเมล' },
+      { success: false, error: errorMessage, details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }
