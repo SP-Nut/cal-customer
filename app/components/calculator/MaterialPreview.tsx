@@ -833,8 +833,8 @@ export function MaterialPreview({
                   </div>
                 </div>
 
-                {/* Details */}
-                <div className="grid grid-cols-3 gap-4 mb-6">
+                {/* Project Details */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                   <div className="text-center">
                     <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
                       <div className="text-xl font-bold text-blue-700">{(dimensions.width * dimensions.length).toFixed(1)}</div>
@@ -853,6 +853,59 @@ export function MaterialPreview({
                       <div className="text-gray-600 text-sm">ขนาดที่เลือก</div>
                     </div>
                   </div>
+                  <div className="text-center">
+                    <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                      <div className="text-xl font-bold text-blue-700">{dimensions.width} × {dimensions.length}</div>
+                      <div className="text-gray-600 text-sm">กว้าง × ยาว (ม.)</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Material & Size Information */}
+                <div className="grid lg:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <h4 className="font-bold text-gray-800 text-lg mb-3">วัสดุที่เลือก</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">ชื่อวัสดุ:</span>
+                        <span className="font-medium text-gray-800">{material.name}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">ประเภท:</span>
+                        <span className="font-medium text-gray-800">วัสดุคุณภาพสูง</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">ขนาด:</span>
+                        <span className="font-medium text-gray-800">{selectedSize.name}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">ราคาต่อ ตร.ม.:</span>
+                        <span className="font-medium text-blue-700">฿{material.pricePerSqm[selectedSize.id].toLocaleString()}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <h4 className="font-bold text-gray-800 text-lg mb-3">ขนาดโครงการ</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">ความกว้าง:</span>
+                        <span className="font-medium text-gray-800">{dimensions.width} เมตร</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">ความยาว:</span>
+                        <span className="font-medium text-gray-800">{dimensions.length} เมตร</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">พื้นที่รวม:</span>
+                        <span className="font-medium text-gray-800">{(dimensions.width * dimensions.length).toFixed(1)} ตร.ม.</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">ราคาวัสดุ:</span>
+                        <span className="font-medium text-blue-700">฿{(material.pricePerSqm[selectedSize.id] * dimensions.width * dimensions.length).toLocaleString()}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Services List */}
@@ -860,16 +913,19 @@ export function MaterialPreview({
                   <div className="border-t border-blue-100 pt-6">
                     <h4 className="text-lg font-bold text-gray-800 mb-4">บริการที่เลือก</h4>
                     
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       {/* Main Services */}
                       {mainServices
                         .filter((service) => selectedServices.includes(service.id))
                         .map((service) => {
                           let servicePrice = service.price || 0;
                           const selectedOption = selectedServiceOptions[service.id];
+                          let optionName = '';
+                          
                           if (selectedOption && service.options) {
                             const option = service.options.find(opt => opt.id === selectedOption);
                             if (option) {
+                              optionName = option.name;
                               // ถ้าเป็น poles service ให้คูณกับจำนวนเสา
                               if (service.id === 'poles') {
                                 servicePrice = option.price * poleCount;
@@ -884,16 +940,25 @@ export function MaterialPreview({
                           }
                           
                           return (
-                            <div key={service.id} className="flex justify-between items-center py-3 px-4 bg-blue-50 rounded-lg border border-blue-100">
-                              <span className="text-gray-700 font-medium">
-                                {service.name}
-                                {service.id === 'poles' && poleCount > 1 && (
-                                  <span className="text-gray-500 text-sm ml-1">
-                                    ({poleCount} ต้น)
-                                  </span>
-                                )}
-                              </span>
-                              <span className="text-blue-700 font-bold">฿{servicePrice.toLocaleString()}</span>
+                            <div key={service.id} className="bg-blue-50 rounded-lg border border-blue-100 p-4">
+                              <div className="flex justify-between items-start">
+                                <div className="flex-1">
+                                  <h5 className="font-medium text-gray-800 text-base">{service.name}</h5>
+                                  {optionName && (
+                                    <p className="text-sm text-gray-600 mt-1">ตัวเลือก: {optionName}</p>
+                                  )}
+                                  <p className="text-xs text-gray-500 mt-1">{service.description}</p>
+                                  {service.id === 'poles' && poleCount > 1 && (
+                                    <p className="text-sm text-blue-600 mt-1">จำนวน: {poleCount} ต้น</p>
+                                  )}
+                                  {service.pricePerSqm && (
+                                    <p className="text-sm text-blue-600 mt-1">พื้นที่: {(dimensions.width * dimensions.length).toFixed(2)} ตร.ม.</p>
+                                  )}
+                                </div>
+                                <div className="text-right ml-4">
+                                  <span className="text-lg font-bold text-blue-700">฿{servicePrice.toLocaleString()}</span>
+                                </div>
+                              </div>
                             </div>
                           );
                         })}
@@ -927,45 +992,48 @@ export function MaterialPreview({
                           // ใช้ราคาจาก subOption หรือ option หลัก
                           const priceSource = subOption || option;
                           let finalPrice = priceSource.price;
+                          let displayName = subOption ? subOption.name : option.name;
+                          let units = '';
                           
                           // คำนวณราคาตามประเภทบริการ
                           if (service.id === 'foundation') {
                             // สำหรับรากฐาน คำนวณตามจำนวนเสา (ขั้นต่ำ 2 ชุด)
                             const foundationUnits = Math.max(poleCount, 2);
                             finalPrice = priceSource.price * foundationUnits;
+                            units = `${foundationUnits} ชุด`;
                           } else if (service.pricePerSqm && dimensions.width > 0 && dimensions.length > 0) {
                             const area = dimensions.width * dimensions.length;
                             finalPrice = priceSource.price * area;
+                            units = `${area.toFixed(2)} ตร.ม.`;
                           } else if (service.requiresQuantity) {
                             // สำหรับบริการที่ต้องระบุจำนวน เช่น ไฟฟ้า
-                            // ค่า default จำนวน 1 หน่วย
                             finalPrice = priceSource.price;
-                          }
-                          
-                          // สร้างชื่อบริการที่แสดง
-                          let displayName = service.name;
-                          if (subOption) {
-                            displayName = `${service.name}: ${subOption.name}`;
-                          } else if (option.name !== service.name) {
-                            displayName = `${service.name}: ${option.name}`;
+                            units = `1 ${service.unit || 'หน่วย'}`;
+                          } else if (service.requiresLength) {
+                            // สำหรับบริการที่คิดตามความยาว เช่น ท่อน้ำ
+                            const length = Math.max(dimensions.length, service.minimumLength || 3);
+                            finalPrice = priceSource.price * length;
+                            units = `${length} เมตร`;
                           }
                           
                           return (
-                            <div key={serviceId} className="flex justify-between items-center py-3 px-4 bg-blue-50 rounded-lg border border-blue-100">
-                              <span className="text-gray-700 font-medium">
-                                {displayName}
-                                {service.id === 'foundation' && (
-                                  <span className="text-gray-500 text-sm ml-1">
-                                    ({Math.max(poleCount, 2)} ชุด)
-                                  </span>
-                                )}
-                                {service.pricePerSqm && (
-                                  <span className="text-gray-500 text-sm ml-1">
-                                    ({(dimensions.width * dimensions.length).toFixed(2)} ตร.ม.)
-                                  </span>
-                                )}
-                              </span>
-                              <span className="text-blue-700 font-bold">฿{finalPrice.toLocaleString()}</span>
+                            <div key={serviceId} className="bg-blue-50 rounded-lg border border-blue-100 p-4">
+                              <div className="flex justify-between items-start">
+                                <div className="flex-1">
+                                  <h5 className="font-medium text-gray-800 text-base">{service.name}</h5>
+                                  <p className="text-sm text-gray-600 mt-1">ตัวเลือก: {displayName}</p>
+                                  <p className="text-xs text-gray-500 mt-1">{service.description}</p>
+                                  {subOption?.description && (
+                                    <p className="text-xs text-gray-500 mt-1">{subOption.description}</p>
+                                  )}
+                                  {units && (
+                                    <p className="text-sm text-blue-600 mt-1">จำนวน: {units}</p>
+                                  )}
+                                </div>
+                                <div className="text-right ml-4">
+                                  <span className="text-lg font-bold text-blue-700">฿{finalPrice.toLocaleString()}</span>
+                                </div>
+                              </div>
                             </div>
                           );
                         })}
@@ -976,11 +1044,22 @@ export function MaterialPreview({
                         .map(([serviceId, materialId]) => {
                           const selectedGutter = gutterMaterials.find(g => g.id === materialId);
                           if (!selectedGutter) return null;
-                          const gutterTotalPrice = selectedGutter.price * dimensions.length;
+                          const gutterLength = dimensions.length;
+                          const gutterTotalPrice = selectedGutter.price * gutterLength;
+                          
                           return (
-                            <div key={`gutter-${serviceId}`} className="flex justify-between items-center py-3 px-4 bg-blue-50 rounded-lg border border-blue-100">
-                              <span className="text-gray-700 font-medium">รางน้ำ: {selectedGutter.name}</span>
-                              <span className="text-blue-700 font-bold">฿{gutterTotalPrice.toLocaleString()}</span>
+                            <div key={`gutter-${serviceId}`} className="bg-blue-50 rounded-lg border border-blue-100 p-4">
+                              <div className="flex justify-between items-start">
+                                <div className="flex-1">
+                                  <h5 className="font-medium text-gray-800 text-base">งานรางน้ำ</h5>
+                                  <p className="text-sm text-gray-600 mt-1">วัสดุ: {selectedGutter.name}</p>
+                                  <p className="text-xs text-gray-500 mt-1">{selectedGutter.description}</p>
+                                  <p className="text-sm text-blue-600 mt-1">ความยาว: {gutterLength} เมตร × ฿{selectedGutter.price.toLocaleString()}/เมตร</p>
+                                </div>
+                                <div className="text-right ml-4">
+                                  <span className="text-lg font-bold text-blue-700">฿{gutterTotalPrice.toLocaleString()}</span>
+                                </div>
+                              </div>
                             </div>
                           );
                         })}
@@ -988,11 +1067,28 @@ export function MaterialPreview({
                   </div>
                 )}
 
-                {/* Contact Note */}
+                {/* Additional Information */}
                 <div className="border-t border-blue-100 pt-6 mt-6">
-                  <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
-                    <p className="text-gray-700 text-center mb-2">ติดต่อเราเพื่อรับใบเสนอราคาที่แม่นยำ</p>
-                    <p className="text-gray-500 text-sm text-center">*ราคานี้เป็นการประมาณการเบื้องต้น ไม่รวม VAT 7% และอาจมีการปรับเปลี่ยนตามสภาพพื้นที่จริง</p>
+                  <div className="grid lg:grid-cols-2 gap-4">
+                    <div className="bg-yellow-50 rounded-lg p-4 border border-yellow-200">
+                      <h5 className="font-bold text-yellow-800 text-base mb-2">หมายเหตุสำคัญ</h5>
+                      <ul className="text-yellow-700 text-sm space-y-1">
+                        <li>• ราคานี้เป็นการประมาณการเบื้องต้น</li>
+                        <li>• ไม่รวม VAT 7%</li>
+                        <li>• อาจมีการปรับเปลี่ยนตามสภาพพื้นที่จริง</li>
+                        <li>• ราคาขั้นสุดท้ายขึ้นอยู่กับการสำรวจหน้างาน</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+                      <h5 className="font-bold text-green-800 text-base mb-2">ติดต่อเราเพื่อรับใบเสนอราคา</h5>
+                      <div className="text-green-700 text-sm space-y-1">
+                        <p>📞 โทรศัพท์: 084-909-7777</p>
+                        <p>💬 Line: @spkansard</p>
+                        <p>📧 อีเมล: spkansards@gmail.com</p>
+                        <p className="font-medium mt-2">พร้อมให้คำปรึกษาฟรี!</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

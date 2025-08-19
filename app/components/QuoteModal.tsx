@@ -26,6 +26,7 @@ interface QuoteRequestModalProps {
   gutterMaterials?: Record<string, string>;
   pipeLength?: Record<string, number>;
   electricalPoints?: Record<string, number>;
+  poleCount?: number;
 }
 
 export function QuoteRequestModal({
@@ -42,7 +43,8 @@ export function QuoteRequestModal({
   selectedServiceOptions,
   gutterMaterials: selectedGutterMaterials = {},
   pipeLength = {},
-  electricalPoints = {}
+  electricalPoints = {},
+  poleCount = 1
 }: QuoteRequestModalProps) {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -90,7 +92,8 @@ export function QuoteRequestModal({
           selectedServiceOptions,
           gutterMaterials: selectedGutterMaterials,
           pipeLength,
-          electricalPoints
+          electricalPoints,
+          poleCount
         }),
       });
 

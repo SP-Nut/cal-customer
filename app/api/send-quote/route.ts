@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { gutterMaterials as gutterMaterialsData } from '../../lib/materials/gutterMaterials';
 
 export async function POST(request: NextRequest) {
   try {
@@ -102,6 +103,20 @@ export async function POST(request: NextRequest) {
           }
         }
       });
+
+    // จัดการรางน้ำแยกต่างหาก (เพราะไม่ได้อยู่ใน extraServices)
+    if (gutterMaterials && Object.keys(gutterMaterials).length > 0) {
+      Object.entries(gutterMaterials).forEach(([serviceId, materialId]) => {
+        if (materialId) {
+          const selectedGutter = gutterMaterialsData.find(g => g.id === materialId);
+          if (selectedGutter) {
+            const gutterLength = dimensions.length;
+            const gutterTotalPrice = selectedGutter.price * gutterLength;
+            servicesList += `- งานรางน้ำ: ${selectedGutter.name} (${gutterLength} เมตร × ฿${selectedGutter.price.toLocaleString()}/เมตร) - ฿${gutterTotalPrice.toLocaleString()}\n`;
+          }
+        }
+      });
+    }
 
     const emailContent = `
 คำขอใบเสนอราคากันสาดใหม่

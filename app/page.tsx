@@ -179,6 +179,7 @@ export default function Home() {
               mainServices={mainServices}
               extraServices={extraServices}
               selectedServiceOptions={selectionData.selectedServiceOptions}
+              gutterMaterials={selectionData.gutterMaterials}
               poleCount={selectionData.poleCount}
               onFloatingPreviewChange={setShowFloatingPreview}
             />
@@ -297,6 +298,7 @@ export default function Home() {
           gutterMaterials={selectionData.gutterMaterials}
           pipeLength={selectionData.pipeLength}
           electricalPoints={selectionData.electricalPoints}
+          poleCount={selectionData.poleCount}
         />
       )}
     </main>
