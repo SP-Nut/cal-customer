@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Material, Size, Service, ExtraService } from '../lib/types';
+import { X, Info, User } from 'lucide-react';
 
 interface FormData {
   name: string;
@@ -84,11 +85,10 @@ export function QuoteRequestModal({
               </div>
               <button
                 onClick={onClose}
+                aria-label="ปิดแบบฟอร์ม"
                 className="text-white/90 hover:text-white hover:bg-white/20 rounded-full p-2 sm:p-2.5 transition-all duration-200 flex-shrink-0 backdrop-blur-sm border border-white/20 hover:border-white/30"
               >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
           </div>
@@ -101,9 +101,7 @@ export function QuoteRequestModal({
                 <div>
                   <h3 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2 sm:mb-3 text-center flex items-center justify-center">
                     <div className="w-6 h-6 sm:w-10 sm:h-10 mr-2 sm:mr-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
-                      <svg className="w-3 h-3 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
+                      <User className="w-3 h-3 sm:w-5 sm:h-5 text-white" />
                     </div>
                     ข้อมูลการติดต่อ
                   </h3>
@@ -113,9 +111,7 @@ export function QuoteRequestModal({
                     <div className="absolute top-0 right-0 w-20 h-20 bg-blue-200/20 rounded-full -translate-y-10 translate-x-10"></div>
                     <div className="flex items-start space-x-2 sm:space-x-3 relative z-10">
                       <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
-                        <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
+                        <Info className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                       </div>
                       <div className="text-xs sm:text-sm text-blue-900">
                         <p className="font-semibold mb-1 sm:mb-1.5 text-sm sm:text-base">หลังจากส่งข้อมูลแล้ว</p>

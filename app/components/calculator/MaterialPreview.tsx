@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Material, Size, Service, ExtraService } from '../../lib/types';
 import { gutterMaterials } from '../../lib/materials/gutterMaterials';
-import { X, ZoomIn, ChevronLeft, ChevronRight, Phone, MessageCircle, Mail, MapPin, Info, DollarSign, Wrench, CheckCircle } from 'lucide-react';
+import { X, ZoomIn, ChevronLeft, ChevronRight, Phone, MessageCircle, Mail, MapPin, Info, DollarSign, Wrench, CheckCircle, PlayCircle, MessageSquare } from 'lucide-react';
 
 interface MaterialPreviewProps {
   material: Material | null;
@@ -322,9 +322,7 @@ export function MaterialPreview({
                   >
                     <div className="text-center space-y-2 lg:space-y-4">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <svg className="w-10 h-10 lg:w-12 lg:h-12 text-pink-600 group-hover:text-pink-700 transition-colors duration-300 mx-auto" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-.88-.05A6.33 6.33 0 0 0 5.16 20.5a6.33 6.33 0 0 0 10.77-4.6V7.5a8.28 8.28 0 0 0 4.88 1.56V5.61a4.84 4.84 0 0 1-1.22-.92z"/>
-                        </svg>
+                        <PlayCircle className="w-10 h-10 lg:w-12 lg:h-12 text-pink-600 group-hover:text-pink-700 transition-colors duration-300 mx-auto" />
                       </div>
                       <div>
                         <h4 className="font-bold text-gray-800 text-base lg:text-lg mb-1 lg:mb-2">TikTok</h4>
@@ -341,9 +339,7 @@ export function MaterialPreview({
                   >
                     <div className="text-center space-y-2 lg:space-y-4">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <svg className="w-10 h-10 lg:w-12 lg:h-12 text-blue-600 group-hover:text-blue-700 transition-colors duration-300 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-                        </svg>
+                        <MessageSquare className="w-10 h-10 lg:w-12 lg:h-12 text-blue-600 group-hover:text-blue-700 transition-colors duration-300 mx-auto" />
                       </div>
                       <div>
                         <h4 className="font-bold text-gray-800 text-base lg:text-lg mb-1 lg:mb-2">Facebook</h4>
@@ -370,9 +366,7 @@ export function MaterialPreview({
                         </div>
                         <p className="text-gray-500 text-xs lg:text-sm mt-2 flex items-center justify-center space-x-1">
                           <span>คลิกดูรายละเอียด</span>
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"/>
-                          </svg>
+                          <ChevronRight className="w-3 h-3" />
                         </p>
                       </div>
                     </div>

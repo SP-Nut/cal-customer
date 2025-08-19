@@ -2,7 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const data = await request.json();
+    // Read raw body to avoid JSON parse errors when body is empty
+    const raw = await request.text();
+    if (!raw) {
+      return NextResponse.json({ success: false, message: 'empty request body' }, { status: 400 });
+    }
+    let data: any;
+    try {
+      data = JSON.parse(raw);
+    } catch (e) {
+      return NextResponse.json({ success: false, message: 'invalid JSON body' }, { status: 400 });
+    }
     
     // Log ข้อมูลคำขอใบเสนอราคา
     console.log('=== คำขอใบเสนอราคาใหม่ ===');
