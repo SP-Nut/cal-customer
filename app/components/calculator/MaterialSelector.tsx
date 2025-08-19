@@ -30,6 +30,7 @@ interface MaterialSelectorProps {
     gutterMaterials: Record<string, string>;
     pipeLength: Record<string, number>;
     electricalPoints: Record<string, number>;
+    poleCount: number;
   }) => void;
 }
 
@@ -157,6 +158,7 @@ export function MaterialSelector({
   );
   const [pipeLength, setPipeLength] = useState<Record<string, number>>({});
   const [electricalPoints, setElectricalPoints] = useState<Record<string, number>>({});
+  const [poleCount, setPoleCount] = useState<number>(1); // เพิ่ม state สำหรับจำนวนเสา
 
   const filteredMaterials = selectedType
     ? materials.filter((m) => m.type === selectedType)
@@ -262,6 +264,7 @@ export function MaterialSelector({
       gutterMaterials: selectedGutterMaterials,
       pipeLength,
       electricalPoints,
+      poleCount,
     });
   }, [
     selectedMaterial,
@@ -274,6 +277,7 @@ export function MaterialSelector({
     selectedGutterMaterials,
     pipeLength,
     electricalPoints,
+    poleCount,
     onSelectionChange,
   ]);
 
@@ -841,6 +845,49 @@ export function MaterialSelector({
                               {service.price ? `฿${service.price.toLocaleString()}` : 'ตามพื้นที่'}
                             </div>
                           </div>
+
+                          {/* เพิ่มช่องกรอกจำนวนเสาสำหรับ poles service */}
+                          {service.id === 'poles' && selectedServices.includes(service.id) && (
+                            <div className="mb-2 p-2 bg-blue-50 rounded-md border border-blue-200">
+                              <div className="flex items-center gap-2">
+                                <label className="text-sm font-medium text-gray-700 shrink-0">จำนวนเสา:</label>
+                                <div className="flex items-center gap-1">
+                                  <button
+                                    type="button"
+                                    className="w-6 h-6 rounded bg-blue-100 border border-blue-300 flex items-center justify-center hover:bg-blue-200 text-blue-700 font-bold"
+                                    onClick={() => setPoleCount(Math.max(1, poleCount - 1))}
+                                  >
+                                    -
+                                  </button>
+                                  <input
+                                    type="number"
+                                    value={poleCount}
+                                    onChange={(e) => setPoleCount(Math.max(1, parseInt(e.target.value) || 1))}
+                                    className="w-12 h-6 text-center text-sm border border-gray-300 rounded px-1"
+                                    min="1"
+                                    max="20"
+                                  />
+                                  <button
+                                    type="button"
+                                    className="w-6 h-6 rounded bg-blue-100 border border-blue-300 flex items-center justify-center hover:bg-blue-200 text-blue-700 font-bold"
+                                    onClick={() => setPoleCount(Math.min(20, poleCount + 1))}
+                                  >
+                                    +
+                                  </button>
+                                  <span className="text-xs text-gray-600 ml-1">ต้น</span>
+                                </div>
+                              </div>
+                              <div className="text-xs text-blue-700 mt-1">
+                                ราคารวม: ฿{(
+                                  poleCount * (
+                                    selectedServiceOptions[service.id] ? 
+                                    (service.options?.find((opt: any) => opt.id === selectedServiceOptions[service.id])?.price || 0) : 
+                                    (service.options?.[0]?.price || 0)
+                                  )
+                                ).toLocaleString()}
+                              </div>
+                            </div>
+                          )}
 
                           <div className="grid grid-cols-2 gap-1 sm:gap-1.5">
                             {/* @ts-ignore */}

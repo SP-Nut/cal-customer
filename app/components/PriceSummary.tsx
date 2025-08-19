@@ -14,6 +14,7 @@ interface PriceSummaryProps {
   gutterMaterials?: Record<string, string>;
   pipeLength?: Record<string, number>;
   electricalPoints?: Record<string, number>;
+  poleCount?: number;
   isMobile?: boolean;
   onQuoteRequest?: () => void;
 }
@@ -31,6 +32,7 @@ export function PriceSummary({
   gutterMaterials: selectedGutterMaterials = {},
   pipeLength = {},
   electricalPoints = {},
+  poleCount = 1,
   isMobile = false,
   onQuoteRequest
 }: PriceSummaryProps) {
@@ -75,8 +77,11 @@ export function PriceSummary({
                   if (selectedOption && service.options) {
                     const option = service.options.find(opt => opt.id === selectedOption);
                     if (option) {
-                      // ถ้าบริการคิดราคาตามตารางเมตร ให้คูณกับพื้นที่
-                      if (service.pricePerSqm) {
+                      // ถ้าเป็น poles service ให้คูณกับจำนวนเสา
+                      if (service.id === 'poles') {
+                        servicePrice = option.price * poleCount;
+                      } else if (service.pricePerSqm) {
+                        // ถ้าบริการคิดราคาตามตารางเมตร ให้คูณกับพื้นที่
                         servicePrice = option.price * area;
                       } else {
                         servicePrice += option.price;
@@ -91,6 +96,11 @@ export function PriceSummary({
                     <div key={service.id} className={`flex justify-between ${isMobile ? 'text-xs' : 'text-xs'}`}>
                       <span className="text-slate-700">
                         {service.name}
+                        {service.id === 'poles' && poleCount > 1 && (
+                          <span className="text-slate-500 text-xs ml-1">
+                            ({poleCount} ต้น)
+                          </span>
+                        )}
                         {service.pricePerSqm && selectedOption && service.options && (
                           <span className="text-slate-500 text-xs ml-1">
                             ({service.options.find(opt => opt.id === selectedOption)?.name})

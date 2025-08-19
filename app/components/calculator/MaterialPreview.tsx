@@ -16,6 +16,7 @@ interface MaterialPreviewProps {
   extraServices?: ExtraService[];
   selectedServiceOptions?: Record<string, string>;
   gutterMaterials?: Record<string, string>;
+  poleCount?: number;
   onNext?: () => void;
   onSizeSelect?: (sizeId: string) => void;
   onFloatingPreviewChange?: (isVisible: boolean) => void;
@@ -32,6 +33,7 @@ export function MaterialPreview({
   extraServices = [],
   selectedServiceOptions = {},
   gutterMaterials: selectedGutterMaterials = {},
+  poleCount = 1,
   onNext,
   onSizeSelect,
   onFloatingPreviewChange
@@ -148,23 +150,22 @@ export function MaterialPreview({
         </div>
         
         <div className="relative z-10 h-full flex flex-col">
-          <div className="flex-1 flex flex-col p-4 lg:p-8 w-full">
+          <div className="flex-1 flex flex-col p-3 lg:p-6 w-full">
             
             {/* Main Content */}
-            <div className="flex-1 flex items-center justify-center py-4 lg:py-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center w-full max-w-6xl mx-auto"
-                   style={{ transform: 'translateX(0)' }}>
+            <div className="flex-1 flex items-center justify-center py-2 lg:py-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-center w-full max-w-5xl mx-auto">
                 
                 {/* Content Section */}
-                <div className="text-center lg:text-left space-y-2 lg:space-y-3 order-2 lg:order-1">
-                  <div className="flex items-center justify-center lg:justify-start space-x-2 lg:space-x-3 mb-2 lg:mb-3">
-                    <div className="w-6 lg:w-12 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
-                    <p className="text-sm lg:text-sm font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent uppercase tracking-widest">
+                <div className="text-center lg:text-left space-y-1 lg:space-y-2 order-2 lg:order-1">
+                  <div className="flex items-center justify-center lg:justify-start space-x-2 mb-1 lg:mb-2">
+                    <div className="w-4 lg:w-8 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
+                    <p className="text-xs lg:text-sm font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent uppercase tracking-wide">
                       ระบบคำนวณราคากันสาด
                     </p>
                   </div>
                   
-                  <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extralight mb-3 lg:mb-5 leading-tight text-slate-800">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-extralight mb-2 lg:mb-3 leading-tight text-slate-800">
                     สร้างโซลูชั่น<br />
                     <span className="font-normal bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                       หลังคากันสาด
@@ -175,56 +176,56 @@ export function MaterialPreview({
                     </span>
                   </h2>
                   
-                  <div className="bg-transparent p-3 lg:p-5 mb-3 lg:mb-5">
-                    <p className="text-base lg:text-lg text-slate-700 leading-relaxed font-normal">
+                  <div className="bg-transparent p-2 lg:p-3 mb-2 lg:mb-3">
+                    <p className="text-sm lg:text-base text-slate-700 leading-relaxed font-normal">
                       ระบบคำนวณราคากันสาดและหลังคาแบบมืออาชีพ คำนวณราคาเบื้องต้นทุกรายการ 
                       ด้วยประสบการณ์มากกว่า 35 ปี พร้อมบริการครบวงจร
                     </p>
                   </div>
                   
                   {/* Professional Image - Mobile Only */}
-                  <div className="block lg:hidden relative mb-3 lg:mb-4">
-                    <div className="relative w-full max-w-xl mx-auto">
-                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-50/60 via-white/40 to-slate-50/50 backdrop-blur-sm"></div>
+                  <div className="block lg:hidden relative mb-2 lg:mb-3">
+                    <div className="relative w-full max-w-lg mx-auto">
+                      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-50/60 via-white/40 to-slate-50/50 backdrop-blur-sm"></div>
                       
                       {/* Professional Image */}
                       <div className="relative z-10 group">
                         <img 
                           src="/materials/pr.png" 
                           alt="SP Kansard Professional Consultant" 
-                          className="w-full h-auto object-contain relative z-10 drop-shadow-lg transition-transform duration-500 group-hover:scale-105 max-h-96"
+                          className="w-full h-auto object-contain relative z-10 drop-shadow-lg transition-transform duration-500 group-hover:scale-105 max-h-72"
                         />
                       </div>
                     </div>
                   </div>
                   
                   {/* Feature Cards */}
-                  <div className="grid gap-2 lg:gap-2 mb-3 lg:mb-4">
+                  <div className="grid gap-1 lg:gap-2 mb-2 lg:mb-3 pl-2 lg:pl-4">
                     {[
-                      { icon: '💰', title: 'คำนวณราคาเบื้องต้น', desc: 'ประมาณการราคา โปร่งใสทุกรายการ', bg: 'from-blue-500 via-purple-500 to-pink-500' },
-                      { icon: '⚡', title: 'วัสดุคุณภาพสูง', desc: 'มาตรฐานสากล ทนทาน ใช้งานได้ยาวนาน', bg: 'from-purple-500 via-blue-500 to-cyan-500' },
-                      { icon: '🏠', title: 'ทีมช่างมืออาชีพ', desc: 'รับประกันงาน บริการหลังการขายครบถ้วน', bg: 'from-pink-500 via-purple-500 to-blue-500' }
+                      { icon: DollarSign, title: 'คำนวณราคาเบื้องต้น', desc: 'ประมาณการราคา โปร่งใสทุกรายการ', bg: 'from-blue-500 via-purple-500 to-pink-500' },
+                      { icon: CheckCircle, title: 'วัสดุคุณภาพสูง', desc: 'มาตรฐานสากล ทนทาน ใช้งานได้ยาวนาน', bg: 'from-purple-500 via-blue-500 to-cyan-500' },
+                      { icon: Wrench, title: 'ทีมช่างมืออาชีพ', desc: 'รับประกันงาน บริการหลังการขายครบถ้วน', bg: 'from-pink-500 via-purple-500 to-blue-500' }
                     ].map((item, index) => (
-                      <div key={index} className="group bg-transparent p-3 lg:p-4 hover:bg-white/10 transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/10">
+                      <div key={index} className="group bg-transparent p-2 lg:p-3 hover:bg-white/10 transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/10 min-h-[70px] lg:min-h-[80px]">
                         {/* Mobile Layout - Icon on top */}
-                        <div className="text-center lg:hidden">
-                          <div className={`w-10 h-10 bg-gradient-to-br ${item.bg} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 mx-auto mb-2`}>
-                            <span className="text-white font-bold text-base">{item.icon}</span>
+                        <div className="text-center lg:hidden flex flex-col justify-center h-full">
+                          <div className={`w-8 h-8 bg-gradient-to-br ${item.bg} rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 mx-auto mb-1`}>
+                            <item.icon className="w-4 h-4 text-white" />
                           </div>
                           <div>
-                            <h4 className="font-bold text-slate-800 text-base mb-1">{item.title}</h4>
-                            <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
+                            <h4 className="font-bold text-slate-800 text-sm mb-0">{item.title}</h4>
+                            <p className="text-slate-600 text-xs leading-none">{item.desc}</p>
                           </div>
                         </div>
                         
                         {/* Desktop Layout - Icon on left */}
-                        <div className="hidden lg:flex items-center space-x-4">
-                          <div className={`w-12 h-12 bg-gradient-to-br ${item.bg} rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                            <span className="text-white font-bold text-lg">{item.icon}</span>
+                        <div className="hidden lg:flex items-center space-x-3 h-full">
+                          <div className={`w-10 h-10 bg-gradient-to-br ${item.bg} rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                            <item.icon className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <h4 className="font-bold text-slate-800 text-lg mb-1">{item.title}</h4>
-                            <p className="text-slate-600 text-base leading-relaxed">{item.desc}</p>
+                            <h4 className="font-bold text-slate-800 text-base mb-0">{item.title}</h4>
+                            <p className="text-slate-600 text-xs leading-none">{item.desc}</p>
                           </div>
                         </div>
                       </div>
@@ -234,8 +235,8 @@ export function MaterialPreview({
                 
                 {/* Image Section - Desktop Only */}
                 <div className="relative order-1 lg:order-2 hidden lg:block">
-                  <div className="relative w-full max-w-md mx-auto">
-                    <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-50/60 via-white/40 to-slate-50/50 backdrop-blur-sm"></div>
+                  <div className="relative w-full max-w-sm mx-auto">
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-50/60 via-white/40 to-slate-50/50 backdrop-blur-sm"></div>
                     
                     {/* Professional Image */}
                     <div className="relative z-10 group">
@@ -252,119 +253,118 @@ export function MaterialPreview({
           </div>
           
           {/* Contact Information Section - Hidden on Mobile, Visible on Desktop */}
-          <div className="hidden lg:block mt-2 lg:mt-4 pt-2 lg:pt-4 border-t border-white/20 w-full">
-            <div className="text-center space-y-2 lg:space-y-4 w-full max-w-6xl mx-auto"
-                 style={{ transform: 'translateX(0)' }}>
-              <div className="flex items-center justify-center space-x-2 lg:space-x-3 mb-3 lg:mb-5">
-                <div className="w-8 lg:w-16 h-0.5 lg:h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
-                <h3 className="text-xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
+          <div className="hidden lg:block mt-1 lg:mt-2 pt-1 lg:pt-2 border-t border-white/20 w-full">
+            <div className="text-center space-y-1 lg:space-y-2 w-full max-w-5xl mx-auto">
+              <div className="flex items-center justify-center space-x-2 mb-2 lg:mb-3">
+                <div className="w-6 lg:w-12 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
+                <h3 className="text-lg lg:text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
                   ติดต่อเราเพื่อรับคำปรึกษา
                 </h3>
-                <div className="w-8 lg:w-16 h-0.5 lg:h-1 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full"></div>
+                <div className="w-6 lg:w-12 h-0.5 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full"></div>
               </div>
               
-              {/* Contact Grid - 3 columns top, 3 columns bottom */}
-              <div className="space-y-2 lg:space-y-4">
+              {/* Contact Grid - Compact Layout */}
+              <div className="space-y-1 lg:space-y-2">
                 {/* Top Row - 3 columns */}
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 w-full">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-1 lg:gap-2 w-full">
                   {/* Phone Contact */}
-                  <div className="group bg-white/40 backdrop-blur-sm p-4 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1">
-                    <div className="text-center space-y-2 lg:space-y-4">
+                  <div className="group bg-white/40 backdrop-blur-sm p-2 lg:p-4 rounded-lg lg:rounded-xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1">
+                    <div className="text-center space-y-1 lg:space-y-2">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <Phone className="w-10 h-10 lg:w-12 lg:h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" />
+                        <Phone className="w-6 h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-800 text-base lg:text-lg mb-1 lg:mb-2">โทรศัพท์</h4>
-                        <p className="text-gray-700 text-sm lg:text-base font-medium">084-909-7777</p>
-                        <p className="text-gray-500 text-xs lg:text-sm">ทุกวัน 8:00-17:00</p>
+                        <h4 className="font-bold text-gray-800 text-sm lg:text-base mb-0">โทรศัพท์</h4>
+                        <p className="text-gray-700 text-xs lg:text-sm font-medium">084-909-7777</p>
+                        <p className="text-gray-500 text-xs">ทุกวัน 8:00-17:00</p>
                       </div>
                     </div>
                   </div>
                   
                   {/* Line Contact */}
                   <div 
-                    className="group bg-white/40 backdrop-blur-sm p-4 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 transform hover:-translate-y-1 cursor-pointer"
+                    className="group bg-white/40 backdrop-blur-sm p-2 lg:p-4 rounded-lg lg:rounded-xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 transform hover:-translate-y-1 cursor-pointer"
                     onClick={() => window.open('https://page.line.me/biv3563x?oat_content=url&openQrModal=true', '_blank')}
                   >
-                    <div className="text-center space-y-2 lg:space-y-4">
+                    <div className="text-center space-y-1 lg:space-y-2">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <MessageCircle className="w-10 h-10 lg:w-12 lg:h-12 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300 mx-auto" />
+                        <MessageCircle className="w-6 h-6 lg:w-8 lg:h-8 text-emerald-600 group-hover:text-emerald-700 transition-colors duration-300 mx-auto" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-800 text-base lg:text-lg mb-1 lg:mb-2">Line ID</h4>
-                        <p className="text-gray-700 text-sm lg:text-base font-medium">@spkansard</p>
-                        <p className="text-gray-500 text-xs lg:text-sm">ตอบเร็ว 24 ชม.</p>
+                        <h4 className="font-bold text-gray-800 text-sm lg:text-base mb-0">Line ID</h4>
+                        <p className="text-gray-700 text-xs lg:text-sm font-medium">@spkansard</p>
+                        <p className="text-gray-500 text-xs">ตอบเร็ว 24 ชม.</p>
                       </div>
                     </div>
                   </div>
                   
                   {/* Email Contact */}
-                  <div className="group bg-white/40 backdrop-blur-sm p-4 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/10 transform hover:-translate-y-1">
-                    <div className="text-center space-y-2 lg:space-y-4">
+                  <div className="group bg-white/40 backdrop-blur-sm p-2 lg:p-4 rounded-lg lg:rounded-xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/10 transform hover:-translate-y-1">
+                    <div className="text-center space-y-1 lg:space-y-2">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <Mail className="w-10 h-10 lg:w-12 lg:h-12 text-slate-600 group-hover:text-slate-700 transition-colors duration-300 mx-auto" />
+                        <Mail className="w-6 h-6 lg:w-8 lg:h-8 text-slate-600 group-hover:text-slate-700 transition-colors duration-300 mx-auto" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-800 text-base lg:text-lg mb-1 lg:mb-2">อีเมล</h4>
-                        <p className="text-gray-700 text-xs lg:text-base font-medium">spkansards@gmail.com</p>
-                        <p className="text-gray-500 text-xs lg:text-sm">ตอบภายใน 24 ชม.</p>
+                        <h4 className="font-bold text-gray-800 text-sm lg:text-base mb-0">อีเมล</h4>
+                        <p className="text-gray-700 text-xs lg:text-sm font-medium">spkansards@gmail.com</p>
+                        <p className="text-gray-500 text-xs">ตอบภายใน 24 ชม.</p>
                       </div>
                     </div>
                   </div>
                 </div>
                 
                 {/* Bottom Row - 3 columns */}
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 w-full">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-1 lg:gap-2 w-full">
                   {/* TikTok Contact */}
                   <div 
-                    className="group bg-white/40 backdrop-blur-sm p-4 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/10 transform hover:-translate-y-1 cursor-pointer"
+                    className="group bg-white/40 backdrop-blur-sm p-2 lg:p-4 rounded-lg lg:rounded-xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/10 transform hover:-translate-y-1 cursor-pointer"
                     onClick={() => window.open('https://www.tiktok.com/@spkansard', '_blank')}
                   >
-                    <div className="text-center space-y-2 lg:space-y-4">
+                    <div className="text-center space-y-1 lg:space-y-2">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <PlayCircle className="w-10 h-10 lg:w-12 lg:h-12 text-pink-600 group-hover:text-pink-700 transition-colors duration-300 mx-auto" />
+                        <PlayCircle className="w-6 h-6 lg:w-8 lg:h-8 text-pink-600 group-hover:text-pink-700 transition-colors duration-300 mx-auto" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-800 text-base lg:text-lg mb-1 lg:mb-2">TikTok</h4>
-                        <p className="text-gray-700 text-sm lg:text-base font-medium">@spkansard</p>
-                        <p className="text-gray-500 text-xs lg:text-sm">ติดตามผลงานและเทคนิค</p>
+                        <h4 className="font-bold text-gray-800 text-sm lg:text-base mb-0">TikTok</h4>
+                        <p className="text-gray-700 text-xs lg:text-sm font-medium">@spkansard</p>
+                        <p className="text-gray-500 text-xs">ติดตามผลงานและเทคนิค</p>
                       </div>
                     </div>
                   </div>
                   
                   {/* Facebook Contact */}
                   <div 
-                    className="group bg-white/40 backdrop-blur-sm p-4 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 transform hover:-translate-y-1 cursor-pointer"
+                    className="group bg-white/40 backdrop-blur-sm p-2 lg:p-4 rounded-lg lg:rounded-xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 transform hover:-translate-y-1 cursor-pointer"
                     onClick={() => window.open('https://www.messenger.com/t/521641141224767/?messaging_source=source%3Apages%3Amessage_shortlink&source_id=1441792&recurring_notification=0', '_blank')}
                   >
-                    <div className="text-center space-y-2 lg:space-y-4">
+                    <div className="text-center space-y-1 lg:space-y-2">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <MessageSquare className="w-10 h-10 lg:w-12 lg:h-12 text-blue-600 group-hover:text-blue-700 transition-colors duration-300 mx-auto" />
+                        <MessageSquare className="w-6 h-6 lg:w-8 lg:h-8 text-blue-600 group-hover:text-blue-700 transition-colors duration-300 mx-auto" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-800 text-base lg:text-lg mb-1 lg:mb-2">Facebook</h4>
-                        <p className="text-gray-700 text-sm lg:text-base font-medium">SP Kansard Official</p>
-                        <p className="text-gray-500 text-xs lg:text-sm">ติดตามข่าวสารและโปรโมชั่น</p>
+                        <h4 className="font-bold text-gray-800 text-sm lg:text-base mb-0">Facebook</h4>
+                        <p className="text-gray-700 text-xs lg:text-sm font-medium">SP Kansard Official</p>
+                        <p className="text-gray-500 text-xs">ติดตามข่าวสารและโปรโมชั่น</p>
                       </div>
                     </div>
                   </div>
                   
                   {/* Address Contact */}
-                  <div className="group bg-white/40 backdrop-blur-sm p-4 lg:p-8 rounded-xl lg:rounded-2xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1 cursor-pointer"
+                  <div className="group bg-white/40 backdrop-blur-sm p-2 lg:p-4 rounded-lg lg:rounded-xl hover:bg-white/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10 transform hover:-translate-y-1 cursor-pointer"
                        onClick={() => window.open('https://spkansard.com', '_blank')}>
-                    <div className="text-center space-y-2 lg:space-y-4">
+                    <div className="text-center space-y-1 lg:space-y-2">
                       <div className="mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <MapPin className="w-10 h-10 lg:w-12 lg:h-12 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" />
+                        <MapPin className="w-6 h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-gray-900 transition-colors duration-300 mx-auto" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-800 text-base lg:text-lg mb-1 lg:mb-2">สาขาทั้งหมด</h4>
-                        <div className="text-gray-700 text-sm lg:text-base font-medium leading-relaxed space-y-1">
+                        <h4 className="font-bold text-gray-800 text-sm lg:text-base mb-0">สาขาทั้งหมด</h4>
+                        <div className="text-gray-700 text-xs lg:text-sm font-medium leading-relaxed space-y-0">
                           <p className="font-semibold text-gray-700">สำนักงานใหญ่</p>
                           <p>ปทุมธานี</p>
                           <p>• สาขาบางแวก</p>
                           <p>• สาขาบางพลี</p>
                         </div>
-                        <p className="text-gray-500 text-xs lg:text-sm mt-2 flex items-center justify-center space-x-1">
+                        <p className="text-gray-500 text-xs mt-1 flex items-center justify-center space-x-1">
                           <span>คลิกดูรายละเอียด</span>
                           <ChevronRight className="w-3 h-3" />
                         </p>
@@ -860,7 +860,12 @@ export function MaterialPreview({
                           if (selectedOption && service.options) {
                             const option = service.options.find(opt => opt.id === selectedOption);
                             if (option) {
-                              servicePrice += option.price;
+                              // ถ้าเป็น poles service ให้คูณกับจำนวนเสา
+                              if (service.id === 'poles') {
+                                servicePrice = option.price * poleCount;
+                              } else {
+                                servicePrice += option.price;
+                              }
                             }
                           }
                           
@@ -870,7 +875,14 @@ export function MaterialPreview({
                           
                           return (
                             <div key={service.id} className="flex justify-between items-center py-3 px-4 bg-blue-50 rounded-lg border border-blue-100">
-                              <span className="text-gray-700 font-medium">{service.name}</span>
+                              <span className="text-gray-700 font-medium">
+                                {service.name}
+                                {service.id === 'poles' && poleCount > 1 && (
+                                  <span className="text-gray-500 text-sm ml-1">
+                                    ({poleCount} ต้น)
+                                  </span>
+                                )}
+                              </span>
                               <span className="text-blue-700 font-bold">฿{servicePrice.toLocaleString()}</span>
                             </div>
                           );

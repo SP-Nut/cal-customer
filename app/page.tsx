@@ -23,6 +23,7 @@ export default function Home() {
     gutterMaterials: {} as Record<string, string>,
     pipeLength: {} as Record<string, number>,
     electricalPoints: {} as Record<string, number>,
+    poleCount: 1,
   });
 
   const [showFloatingPreview, setShowFloatingPreview] = useState(false);
@@ -43,8 +44,11 @@ export default function Home() {
           if (selectedOption && service.options) {
             const option = service.options.find((opt: any) => opt.id === selectedOption);
             if (option) {
-              // ถ้าบริการคิดราคาตามตารางเมตร ให้คูณกับพื้นที่
-              if (service.pricePerSqm) {
+              // ถ้าเป็น poles service ให้คูณกับจำนวนเสา
+              if (service.id === 'poles') {
+                servicePrice = option.price * selectionData.poleCount;
+              } else if (service.pricePerSqm) {
+                // ถ้าบริการคิดราคาตามตารางเมตร ให้คูณกับพื้นที่
                 servicePrice = option.price * area;
               } else {
                 servicePrice += option.price;
@@ -137,8 +141,8 @@ export default function Home() {
       <div className="hidden lg:flex h-[calc(100vh-2rem)] p-8 gap-3 mt-6">
         <div id="materials" className="flex-1">
           <div className="h-full rounded-3xl overflow-auto shadow-xl border border-gray-200/50 custom-scrollbar bg-white/95 backdrop-blur-sm">
-            <MaterialPreview 
-              material={selectionData.material} 
+            <MaterialPreview
+              material={selectionData.material}
               selectedSize={selectionData.size}
               dimensions={selectionData.dimensions}
               totalPrice={totalPrice}
@@ -147,6 +151,7 @@ export default function Home() {
               mainServices={mainServices}
               extraServices={extraServices}
               selectedServiceOptions={selectionData.selectedServiceOptions}
+              poleCount={selectionData.poleCount}
               onFloatingPreviewChange={setShowFloatingPreview}
             />
           </div>
@@ -183,6 +188,7 @@ export default function Home() {
                 gutterMaterials={selectionData.gutterMaterials}
                 pipeLength={selectionData.pipeLength}
                 electricalPoints={selectionData.electricalPoints}
+                poleCount={selectionData.poleCount}
                 onQuoteRequest={() => setIsQuoteModalOpen(true)}
               />
             )}
