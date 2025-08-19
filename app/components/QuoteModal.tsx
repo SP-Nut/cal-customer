@@ -104,11 +104,22 @@ export function QuoteRequestModal({
           setFormData({ name: '', phone: '', lineId: '', notes: '' });
         }, 2000);
       } else {
+        // Log detailed error information
+        console.error('API Error Details:', result);
         throw new Error(result.error || 'เกิดข้อผิดพลาด');
       }
     } catch (error) {
       console.error('Error sending quote request:', error);
-      alert('เกิดข้อผิดพลาดในการส่งคำขอ กรุณาลองใหม่อีกครั้ง');
+      console.error('Full error object:', error);
+      
+      // Show more detailed error message if available
+      let errorMessage = 'เกิดข้อผิดพลาดในการส่งคำขอ กรุณาลองใหม่อีกครั้ง';
+      
+      if (error instanceof Error) {
+        errorMessage = `เกิดข้อผิดพลาด: ${error.message}`;
+      }
+      
+      alert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
