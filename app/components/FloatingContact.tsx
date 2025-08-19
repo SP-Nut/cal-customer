@@ -1,34 +1,40 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Phone, MessageCircle, Facebook, Mail, X, MessageSquare } from 'lucide-react';
+import { Phone, MessageCircle, Mail, X, MessageSquare, Video } from 'lucide-react';
 
 export default function FloatingContact() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const contactMethods = [
     {
-  icon: <Phone className="w-6 h-6" />,
+      icon: <Phone className="w-6 h-6" />,
       label: 'โทรศัพท์',
-      action: () => window.open('tel:+66-XX-XXX-XXXX', '_self'),
+      action: () => window.open('tel:084-909-7777', '_self'),
       color: 'bg-green-500 hover:bg-green-600'
     },
     {
-  icon: <MessageCircle className="w-6 h-6" />,
+      icon: <MessageCircle className="w-6 h-6" />,
       label: 'Line',
-      action: () => window.open('https://line.me/ti/p/YOUR_LINE_ID', '_blank'),
+      action: () => window.open('https://lin.ee/SJ245co', '_blank'),
       color: 'bg-green-400 hover:bg-green-500'
     },
     {
-  icon: <Facebook className="w-6 h-6" />,
-      label: 'Facebook',
-      action: () => window.open('https://facebook.com/YOUR_PAGE', '_blank'),
+      icon: <MessageSquare className="w-6 h-6" />,
+      label: 'Messenger',
+      action: () => window.open('https://m.me/spkansard', '_blank'),
       color: 'bg-blue-600 hover:bg-blue-700'
     },
     {
-  icon: <Mail className="w-6 h-6" />,
+      icon: <Video className="w-6 h-6" />,
+      label: 'TikTok',
+      action: () => window.open('https://www.tiktok.com/@spkansard', '_blank'),
+      color: 'bg-black hover:bg-gray-800'
+    },
+    {
+      icon: <Mail className="w-6 h-6" />,
       label: 'อีเมล',
-      action: () => window.open('mailto:contact@yourcompany.com', '_self'),
+      action: () => window.open('mailto:spkansards@gmail.com', '_self'),
       color: 'bg-red-500 hover:bg-red-600'
     }
   ];

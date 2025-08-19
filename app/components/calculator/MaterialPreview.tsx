@@ -150,22 +150,22 @@ export function MaterialPreview({
         </div>
         
         <div className="relative z-10 h-full flex flex-col">
-          <div className="flex-1 flex flex-col p-3 lg:p-6 w-full">
+          <div className="flex-1 flex flex-col p-1 lg:p-6 w-full">
             
             {/* Main Content */}
-            <div className="flex-1 flex items-center justify-center py-2 lg:py-4">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-center w-full max-w-5xl mx-auto">
+            <div className="flex-1 flex items-center justify-center py-1 lg:py-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-8 items-center w-full max-w-5xl mx-auto">
                 
                 {/* Content Section */}
-                <div className="text-center lg:text-left space-y-1 lg:space-y-2 order-2 lg:order-1">
-                  <div className="flex items-center justify-center lg:justify-start space-x-2 mb-1 lg:mb-2">
-                    <div className="w-4 lg:w-8 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
-                    <p className="text-xs lg:text-sm font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent uppercase tracking-wide">
+                <div className="text-center lg:text-left space-y-2 lg:space-y-2 order-2 lg:order-1">
+                  <div className="flex items-center justify-center lg:justify-start space-x-2 mb-2 lg:mb-2">
+                    <div className="w-8 lg:w-8 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 rounded-full"></div>
+                    <p className="text-base lg:text-sm font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent uppercase tracking-wide">
                       ระบบคำนวณราคากันสาด
                     </p>
                   </div>
                   
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-extralight mb-2 lg:mb-3 leading-tight text-slate-800">
+                  <h2 className="text-4xl sm:text-5xl lg:text-4xl xl:text-5xl font-extralight mb-4 lg:mb-3 leading-tight text-slate-800">
                     สร้างโซลูชั่น<br />
                     <span className="font-normal bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                       หลังคากันสาด
@@ -176,16 +176,16 @@ export function MaterialPreview({
                     </span>
                   </h2>
                   
-                  <div className="bg-transparent p-2 lg:p-3 mb-2 lg:mb-3">
-                    <p className="text-sm lg:text-base text-slate-700 leading-relaxed font-normal">
+                  <div className="bg-transparent p-3 lg:p-3 mb-3 lg:mb-3">
+                    <p className="text-base lg:text-base text-slate-700 leading-relaxed font-normal">
                       ระบบคำนวณราคากันสาดและหลังคาแบบมืออาชีพ คำนวณราคาเบื้องต้นทุกรายการ 
                       ด้วยประสบการณ์มากกว่า 35 ปี พร้อมบริการครบวงจร
                     </p>
                   </div>
                   
                   {/* Professional Image - Mobile Only */}
-                  <div className="block lg:hidden relative mb-2 lg:mb-3">
-                    <div className="relative w-full max-w-lg mx-auto">
+                  <div className="block lg:hidden relative mb-4 lg:mb-3">
+                    <div className="relative w-full max-w-md mx-auto">
                       <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-50/60 via-white/40 to-slate-50/50 backdrop-blur-sm"></div>
                       
                       {/* Professional Image */}
@@ -193,28 +193,28 @@ export function MaterialPreview({
                         <img 
                           src="/materials/pr.png" 
                           alt="SP Kansard Professional Consultant" 
-                          className="w-full h-auto object-contain relative z-10 drop-shadow-lg transition-transform duration-500 group-hover:scale-105 max-h-72"
+                          className="w-full h-auto object-contain relative z-10 drop-shadow-lg transition-transform duration-500 group-hover:scale-105 max-h-96"
                         />
                       </div>
                     </div>
                   </div>
                   
                   {/* Feature Cards */}
-                  <div className="grid gap-1 lg:gap-2 mb-2 lg:mb-3 pl-2 lg:pl-4">
+                  <div className="grid gap-2 lg:gap-2 mb-3 lg:mb-3 pl-1 lg:pl-4">
                     {[
                       { icon: DollarSign, title: 'คำนวณราคาเบื้องต้น', desc: 'ประมาณการราคา โปร่งใสทุกรายการ', bg: 'from-blue-500 via-purple-500 to-pink-500' },
                       { icon: CheckCircle, title: 'วัสดุคุณภาพสูง', desc: 'มาตรฐานสากล ทนทาน ใช้งานได้ยาวนาน', bg: 'from-purple-500 via-blue-500 to-cyan-500' },
                       { icon: Wrench, title: 'ทีมช่างมืออาชีพ', desc: 'รับประกันงาน บริการหลังการขายครบถ้วน', bg: 'from-pink-500 via-purple-500 to-blue-500' }
                     ].map((item, index) => (
-                      <div key={index} className="group bg-transparent p-2 lg:p-3 hover:bg-white/10 transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/10 min-h-[70px] lg:min-h-[80px]">
+                      <div key={index} className="group bg-transparent p-3 lg:p-3 hover:bg-white/10 transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/10 min-h-[85px] lg:min-h-[80px]">
                         {/* Mobile Layout - Icon on top */}
                         <div className="text-center lg:hidden flex flex-col justify-center h-full">
-                          <div className={`w-8 h-8 bg-gradient-to-br ${item.bg} rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 mx-auto mb-1`}>
-                            <item.icon className="w-4 h-4 text-white" />
+                          <div className={`w-10 h-10 bg-gradient-to-br ${item.bg} rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 mx-auto mb-2`}>
+                            <item.icon className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <h4 className="font-bold text-slate-800 text-sm mb-0">{item.title}</h4>
-                            <p className="text-slate-600 text-xs leading-none">{item.desc}</p>
+                            <h4 className="font-bold text-slate-800 text-base mb-1">{item.title}</h4>
+                            <p className="text-slate-600 text-sm leading-tight">{item.desc}</p>
                           </div>
                         </div>
                         
@@ -424,64 +424,64 @@ export function MaterialPreview({
           {/* Mobile Layout - Updated to match Desktop concept */}
           <div className="lg:hidden">
             {material && (
-              <div className="bg-white">
+              <div className="bg-white min-h-screen">
                 {selectedSize ? (
                   <>
-                    {/* Mobile: Stacked Images */}
-                    <div className="space-y-4 p-4">
+                    {/* Mobile: Stacked Images - Larger */}
+                    <div className="space-y-2 p-2">
                       {/* Material Image */}
-                      <div className="relative overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-lg cursor-zoom-in"
+                      <div className="relative overflow-hidden rounded-xl bg-white border border-slate-200 shadow-lg cursor-zoom-in"
                            onClick={() => openImageModal(0)}>
-                        <div className="h-[40vh] overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 relative">
+                        <div className="h-[45vh] overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 relative">
                           <img
                             src={material.image || "/materials/placeholder.jpg"}
                             alt={material.name}
                             className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                           />
                           {/* Material Label */}
-                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                            <h3 className="text-white text-lg font-bold">วัสดุหลัก</h3>
-                            <p className="text-white/80 text-sm">{material.name}</p>
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                            <h3 className="text-white text-xl font-bold">วัสดุหลัก</h3>
+                            <p className="text-white/90 text-base">{material.name}</p>
                           </div>
                         </div>
                       </div>
 
                       {/* Size Image */}
-                      <div className="relative overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-lg cursor-zoom-in"
+                      <div className="relative overflow-hidden rounded-xl bg-white border border-slate-200 shadow-lg cursor-zoom-in"
                            onClick={() => openImageModal(1)}>
-                        <div className="h-[40vh] overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 relative">
+                        <div className="h-[45vh] overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 relative">
                           <img
                             src={selectedSize.image || material.image || "/materials/placeholder.jpg"}
                             alt={`ขนาด ${selectedSize.name}`}
                             className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                           />
                           {/* Size Label */}
-                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                            <h3 className="text-white text-lg font-bold">ขนาดที่เลือก</h3>
-                            <p className="text-white/80 text-sm">{selectedSize.name}</p>
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                            <h3 className="text-white text-xl font-bold">ขนาดที่เลือก</h3>
+                            <p className="text-white/90 text-base">{selectedSize.name}</p>
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Mobile: Text Content Below */}
-                    <div className="p-6 space-y-6">
+                    {/* Mobile: Text Content Below - Larger text */}
+                    <div className="p-4 space-y-6">
                       <div className="grid grid-cols-1 gap-6">
                         {/* Material Information */}
                         <div className="space-y-4">
-                          <div className="border-b border-slate-200 pb-4">
-                            <h2 className="text-2xl font-bold text-slate-800 mb-3">
+                          <div className="border-b border-slate-200 pb-6">
+                            <h2 className="text-3xl font-bold text-slate-800 mb-4 leading-tight">
                               {material.name}
                             </h2>
-                            <p className="text-slate-600 text-sm leading-relaxed">
+                            <p className="text-slate-600 text-base leading-relaxed">
                               {material.description}
                             </p>
-                            <div className="flex flex-wrap gap-2 mt-3">
-                              <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 border border-blue-200">
-                                <span className="text-blue-700 text-xs font-medium">คุณภาพพรีเมียม</span>
+                            <div className="flex flex-wrap gap-3 mt-4">
+                              <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 border border-blue-200">
+                                <span className="text-blue-700 text-sm font-medium">คุณภาพพรีเมียม</span>
                               </div>
-                              <div className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200">
-                                <span className="text-emerald-700 text-xs font-medium">รับประกัน 10 ปี</span>
+                              <div className="inline-flex items-center px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200">
+                                <span className="text-emerald-700 text-sm font-medium">รับประกัน 10 ปี</span>
                               </div>
                             </div>
                           </div>
@@ -489,26 +489,26 @@ export function MaterialPreview({
 
                         {/* Size Information */}
                         <div className="space-y-4">
-                          <div className="border-b border-slate-200 pb-4">
-                            <h3 className="text-xl font-bold text-slate-800 mb-3">
+                          <div className="border-b border-slate-200 pb-6">
+                            <h3 className="text-2xl font-bold text-slate-800 mb-4">
                               ขนาด {selectedSize.name}
                             </h3>
                             
                             {/* Price Display */}
-                            <div className="bg-blue-50 rounded-xl px-4 py-3 border border-blue-100">
-                              <div className="text-slate-600 text-xs mb-1">ราคาต่อตารางเมตร</div>
+                            <div className="bg-blue-50 rounded-xl px-6 py-4 border border-blue-100">
+                              <div className="text-slate-600 text-sm mb-2">ราคาต่อตารางเมตร</div>
                               {material.pricePerSqm[selectedSize.id] > 0 ? (
-                                <div className="text-blue-700 text-xl font-bold mb-1">
+                                <div className="text-blue-700 text-2xl font-bold mb-2">
                                   ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}
                                 </div>
                               ) : (
-                                <div className="text-slate-400 text-lg">ไม่รองรับ</div>
+                                <div className="text-slate-400 text-xl">ไม่รองรับ</div>
                               )}
-                              <div className="text-slate-500 text-xs">ไม่รวม VAT</div>
+                              <div className="text-slate-500 text-sm">ไม่รวม VAT</div>
                             </div>
                             
-                            <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 border border-blue-100 mt-3">
-                              <span className="text-blue-700 text-xs font-medium">เหมาะสำหรับโครงการทุกขนาด</span>
+                            <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mt-4">
+                              <span className="text-blue-700 text-sm font-medium">เหมาะสำหรับโครงการทุกขนาด</span>
                             </div>
                           </div>
                         </div>
@@ -517,28 +517,37 @@ export function MaterialPreview({
                   </>
                 ) : (
                   <>
-                    {/* Single Material Image */}
+                    {/* Single Material Image - Larger */}
                     <div className="relative overflow-hidden cursor-zoom-in" onClick={() => openImageModal(0)}>
-                      <div className="h-[50vh] overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 relative">
+                      <div className="h-[65vh] overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 relative">
                         <img
                           src={material.image || "/materials/placeholder.jpg"}
                           alt={material.name}
                           className="w-full h-full object-cover transition-transform duration-700"
                         />
+                        {/* Overlay Label */}
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                          <h2 className="text-white text-2xl font-bold leading-tight">
+                            {material.name}
+                          </h2>
+                          <p className="text-white/90 text-base mt-2">
+                            {material.description}
+                          </p>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Material Information Section */}
+                    {/* Material Information Section - Larger text */}
                     <div className="p-6 space-y-6">
-                      <div className="text-center space-y-4">
-                        <h2 className="text-2xl font-bold text-slate-800 leading-tight">
+                      <div className="text-center space-y-6">
+                        <h2 className="text-3xl font-bold text-slate-800 leading-tight">
                           {material.name}
                         </h2>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base leading-relaxed">
                           {material.description}
                         </p>
-                        <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium text-sm">
-                          <span className="mr-2 text-base">📏</span>
+                        <div className="inline-flex items-center px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium text-base">
+                          <span className="mr-3 text-xl">📏</span>
                           เลือกขนาดจากเมนูด้านบนเพื่อดำเนินการต่อ
                         </div>
                       </div>
