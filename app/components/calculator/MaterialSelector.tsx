@@ -158,7 +158,7 @@ export function MaterialSelector({
   );
   const [pipeLength, setPipeLength] = useState<Record<string, number>>({});
   const [electricalPoints, setElectricalPoints] = useState<Record<string, number>>({});
-  const [poleCount, setPoleCount] = useState<number>(1); // เพิ่ม state สำหรับจำนวนเสา
+  const [poleCount, setPoleCount] = useState<number>(2); // เริ่มต้น 2 เสา (ขั้นต่ำ)
 
   const filteredMaterials = selectedType
     ? materials.filter((m) => m.type === selectedType)
@@ -854,17 +854,18 @@ export function MaterialSelector({
                                 <div className="flex items-center gap-1">
                                   <button
                                     type="button"
-                                    className="w-6 h-6 rounded bg-blue-100 border border-blue-300 flex items-center justify-center hover:bg-blue-200 text-blue-700 font-bold"
-                                    onClick={() => setPoleCount(Math.max(1, poleCount - 1))}
+                                    className="w-6 h-6 rounded bg-blue-100 border border-blue-300 flex items-center justify-center hover:bg-blue-200 text-blue-700 font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                                    onClick={() => setPoleCount(Math.max(2, poleCount - 1))}
+                                    disabled={poleCount <= 2}
                                   >
                                     -
                                   </button>
                                   <input
                                     type="number"
                                     value={poleCount}
-                                    onChange={(e) => setPoleCount(Math.max(1, parseInt(e.target.value) || 1))}
+                                    onChange={(e) => setPoleCount(Math.max(2, parseInt(e.target.value) || 2))}
                                     className="w-12 h-6 text-center text-sm border border-gray-300 rounded px-1"
-                                    min="1"
+                                    min="2"
                                     max="20"
                                   />
                                   <button
@@ -874,7 +875,7 @@ export function MaterialSelector({
                                   >
                                     +
                                   </button>
-                                  <span className="text-xs text-gray-600 ml-1">ต้น</span>
+                                  <span className="text-xs text-gray-600 ml-1">ต้น (ขั้นต่ำ 2 ต้น)</span>
                                 </div>
                               </div>
                               <div className="text-xs text-blue-700 mt-1">
@@ -1250,6 +1251,136 @@ export function MaterialSelector({
                               )}
                             </div>
                           )}
+                        </div>
+                      ) : service.id === 'foundation' ? (
+                        /* ส่วนจัดการงานรากฐานแบบใหม่ */
+                        <div className="space-y-2">
+                          {/* เลือกประเภทเข็มหลัก */}
+                          <select
+                            className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-[13px] font-medium transition-all"
+                            value={(() => {
+                              // หาประเภทเข็มหลักจาก selectedExtras
+                              const selectedOptionId = selectedExtras[service.id];
+                              if (!selectedOptionId) return "";
+                              
+                              for (const mainOption of service.options) {
+                                if (mainOption.subOptions) {
+                                  const hasSubOption = mainOption.subOptions.find(sub => sub.id === selectedOptionId);
+                                  if (hasSubOption) return mainOption.id;
+                                }
+                                if (mainOption.id === selectedOptionId) return mainOption.id;
+                              }
+                              return "";
+                            })()}
+                            onChange={(e) => {
+                              if (e.target.value) {
+                                // ถ้าเลือกประเภทเข็ม ให้เซ็ตเป็นตัวเลือกแรกของ subOptions หรือ option หลัก
+                                const selectedMainOption = service.options.find(opt => opt.id === e.target.value);
+                                if (selectedMainOption) {
+                                  const defaultSubOption = selectedMainOption.subOptions?.[0];
+                                  setSelectedExtras({
+                                    ...selectedExtras,
+                                    [service.id]: defaultSubOption ? defaultSubOption.id : selectedMainOption.id,
+                                  });
+                                }
+                              } else {
+                                // ถ้าเลือก "ไม่ต้องการ" ให้ลบ
+                                const newExtras = { ...selectedExtras };
+                                delete newExtras[service.id];
+                                setSelectedExtras(newExtras);
+                              }
+                            }}
+                          >
+                            <option value="">ไม่ต้องการ</option>
+                            {service.options.map((option) => (
+                              <option key={option.id} value={option.id}>
+                                {option.name}
+                              </option>
+                            ))}
+                          </select>
+                          
+                          {/* เลือกรายละเอียดของเข็มแต่ละประเภท */}
+                          {selectedExtras[service.id] && (() => {
+                            const selectedOptionId = selectedExtras[service.id];
+                            let selectedMainOption = null;
+                            
+                            // หาประเภทเข็มหลักที่เลือก
+                            for (const mainOption of service.options) {
+                              if (mainOption.subOptions) {
+                                const hasSubOption = mainOption.subOptions.find(sub => sub.id === selectedOptionId);
+                                if (hasSubOption) {
+                                  selectedMainOption = mainOption;
+                                  break;
+                                }
+                              }
+                              if (mainOption.id === selectedOptionId) {
+                                selectedMainOption = mainOption;
+                                break;
+                              }
+                            }
+                            
+                            if (selectedMainOption?.subOptions) {
+                              return (
+                                <div className="space-y-2">
+                                  <label className="block text-[12px] text-gray-700 mb-1 font-medium">
+                                    เลือกรายละเอียด {selectedMainOption.name}
+                                  </label>
+                                  <select
+                                    className="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-gray-50 text-[13px] font-medium transition-all"
+                                    value={selectedExtras[service.id] || ""}
+                                    onChange={(e) => {
+                                      setSelectedExtras({
+                                        ...selectedExtras,
+                                        [service.id]: e.target.value,
+                                      });
+                                    }}
+                                  >
+                                    {selectedMainOption.subOptions.map((subOption) => (
+                                      <option key={subOption.id} value={subOption.id}>
+                                        {subOption.name} - ฿{subOption.price.toLocaleString()}
+                                        {subOption.id.includes('hex-') || subOption.id === 'footing-only' ? '/ชุด' : '/ต้น'}
+                                      </option>
+                                    ))}
+                                  </select>
+                                  
+                                  {/* แสดงรายละเอียดและราคารวม */}
+                                  {(() => {
+                                    const selectedSubOption = selectedMainOption.subOptions?.find(sub => sub.id === selectedExtras[service.id]);
+                                    if (!selectedSubOption) return null;
+                                    
+                                    const isSetBased = selectedSubOption.id.includes('hex-') || selectedSubOption.id === 'footing-only';
+                                    const quantity = Math.max(2, poleCount);
+                                    const totalPrice = selectedSubOption.price * quantity;
+                                    
+                                    return (
+                                      <div className="p-2 bg-green-50 rounded-lg border border-green-200">
+                                        <div className="text-[12px] text-green-700 space-y-1">
+                                          <div className="text-[11px] text-green-600 leading-tight">
+                                            {selectedSubOption.description}
+                                          </div>
+                                          <div className="flex justify-between">
+                                            <span>จำนวน:</span>
+                                            <span className="font-semibold">
+                                              {quantity} {isSetBased ? 'ชุด' : 'ต้น'}
+                                            </span>
+                                          </div>
+                                          <div className="flex justify-between">
+                                            <span>ราคาต่อ{isSetBased ? 'ชุด' : 'ต้น'}:</span>
+                                            <span className="font-semibold">฿{selectedSubOption.price.toLocaleString()}</span>
+                                          </div>
+                                          <div className="flex justify-between border-t border-green-300 pt-1">
+                                            <span>ราคารวม:</span>
+                                            <span className="font-semibold">฿{totalPrice.toLocaleString()}</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    );
+                                  })()}
+                                </div>
+                              );
+                            }
+                            return null;
+                          })()}
                         </div>
                       ) : (
                         <select

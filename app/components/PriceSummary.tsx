@@ -134,7 +134,21 @@ export function PriceSummary({
                 })
                 .map(([serviceId, optionId]) => {
                   const service = extraServices.find((s) => s.id === serviceId);
-                  const option = service?.options.find((o) => o.id === optionId);
+                  let option = service?.options.find((o) => o.id === optionId);
+                  
+                  // ถ้าไม่พบ option ในระดับแรก ให้หาใน subOptions
+                  if (!option && service) {
+                    for (const mainOption of service.options) {
+                      if (mainOption.subOptions) {
+                        const subOption = mainOption.subOptions.find(sub => sub.id === optionId);
+                        if (subOption) {
+                          option = subOption;
+                          break;
+                        }
+                      }
+                    }
+                  }
+                  
                   console.log('Rendering extra service:', serviceId, service?.name, option?.name, option?.price);
                   if (!service || !option) return null;
                   
@@ -144,6 +158,15 @@ export function PriceSummary({
                     finalPrice = option.price * pipeLength[serviceId];
                   } else if (service.pricePerPoint && electricalPoints[serviceId]) {
                     finalPrice = option.price * electricalPoints[serviceId];
+                  } else if (serviceId === 'foundation') {
+                    // คำนวณรากฐานยึดตามจำนวนเสา
+                    if (optionId.includes('hex-') || optionId === 'footing-only') {
+                      const foundationSets = Math.max(2, poleCount);
+                      finalPrice = option.price * foundationSets;
+                    } else if (optionId.includes('micropile-') || optionId.includes('steel-')) {
+                      const pileCount = Math.max(2, poleCount);
+                      finalPrice = option.price * pileCount;
+                    }
                   }
                   
                   // เพิ่มราคารางน้ำถ้ามี
@@ -203,8 +226,30 @@ export function PriceSummary({
                         </div>
                       )}
                       
-                      {/* แสดงรายละเอียดบริการทั่วไป (ไม่ใช่ท่อน้ำ ไฟฟ้า หรือรางน้ำ) */}
-                      {serviceId !== 'pipe' && serviceId !== 'electrical' && serviceId !== 'gutter' && (
+                      {/* แสดงรายละเอียดงานรากฐานเมื่อเป็นบริการรากฐาน */}
+                      {serviceId === 'foundation' && (
+                        <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
+                          <div className="flex justify-between">
+                            {optionId.includes('hex-') || optionId === 'footing-only' ? (
+                              <span>• {option.name} ({Math.max(2, poleCount)} ชุด ยึดตามเสา {poleCount} ต้น)</span>
+                            ) : (
+                              <span>• {option.name} ({Math.max(2, poleCount)} ต้น ยึดตามเสา {poleCount} ต้น)</span>
+                            )}
+                            <span>฿{finalPrice.toLocaleString()}</span>
+                          </div>
+                          <div className="text-xs text-slate-400 mt-0.5 leading-tight">
+                            {option.description}
+                          </div>
+                          {optionId.includes('steel-') && (
+                            <div className="text-xs text-slate-400 mt-0.5">
+                              รวมค่าเจาะปูน 500 บาท/ต้น
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      
+                      {/* แสดงรายละเอียดบริการทั่วไป (ไม่ใช่ท่อน้ำ ไฟฟ้า รางน้ำ หรือรากฐาน) */}
+                      {serviceId !== 'pipe' && serviceId !== 'electrical' && serviceId !== 'gutter' && serviceId !== 'foundation' && (
                         <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
                           <div className="flex justify-between">
                             <span>• {option.name}</span>

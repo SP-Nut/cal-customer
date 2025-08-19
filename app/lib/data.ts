@@ -25,26 +25,26 @@ export const mainServices: Service[] = [
   {
     id: 'poles',
     name: 'งานเสา',
-    description: 'ติดตั้งเสารองรับโครงสร้างกันสาด',
+    description: 'ติดตั้งเสารองรับโครงสร้างกันสาด (ขั้นต่ำ 2 ต้น)',
     options: [
       { 
         id: 'single', 
         name: 'เสาเดี่ยว', 
         price: 2000, 
         isDefault: true,
-        description: 'เสาเดี่ยว เหมาะสำหรับพื้นที่ขนาดเล็ก-กลาง (2,000 บาท/ต้น)'
+        description: '2,000 บาท/ต้น'
       },
       { 
         id: 'cantilever', 
         name: 'เสาระแนง', 
         price: 3500,
-        description: 'เสาระแนง รองรับได้ดี เหมาะสำหรับพื้นที่กว้าง (3,500 บาท/ต้น)'
+        description: '3,500 บาท/ต้น'
       },
       { 
         id: 'extension', 
         name: 'แขนดึง', 
         price: 2800,
-        description: 'แขนดึง ติดตั้งง่าย ประหยัดพื้นที่ (2,800 บาท/ต้น)'
+        description: '2,800 บาท/ต้น'
       }
     ]
   },
@@ -145,10 +145,117 @@ export const extraServices: ExtraService[] = [
   {
     id: 'foundation',
     name: 'งานรากฐาน',
-    description: 'งานฐานรากสำหรับรองรับโครงสร้าง',
+    description: 'งานฐานรากสำหรับรองรับโครงสร้าง เลือกประเภทเข็มที่ต้องการ',
     options: [
-      { id: 'basic', name: 'พื้นฐาน', price: 5000 },
-      { id: 'advanced', name: 'แบบพิเศษ', price: 8000 }
+      {
+        id: 'hexagonal-pile',
+        name: 'ลงเข็มหกเหลี่ยมพร้อมรากฐาน',
+        price: 0,
+        isDefault: true,
+        description: 'เข็มหกเหลี่ยมพร้อมฟุตติ้ง (ขั้นต่ำ 2 ชุด)',
+        subOptions: [
+          {
+            id: 'footing-only',
+            name: 'งานฟุตติ้ง (ไม่ลงเข็ม)',
+            price: 3000,
+            description: '3,000 บาท/ชุด'
+          },
+          {
+            id: 'hex-3m',
+            name: '3 เมตร 3 ต้น/หลุม + ฟุตติ้ง',
+            price: 5000,
+            description: '5,000 บาท/ชุด'
+          },
+          {
+            id: 'hex-4m',
+            name: '4 เมตร 3 ต้น/หลุม + ฟุตติ้ง',
+            price: 6000,
+            description: '6,000 บาท/ชุด'
+          },
+          {
+            id: 'hex-6m',
+            name: '6 เมตร 3 ต้น/หลุม + ฟุตติ้ง',
+            price: 7000,
+            description: '7,000 บาท/ชุด'
+          }
+        ]
+      },
+      {
+        id: 'micropile',
+        name: 'ลงเข็มไมโครไพล์',
+        price: 0,
+        description: 'เข็มไมโครไพล์ I18/I22 ลึก 18 เมตร',
+        subOptions: [
+          {
+            id: 'micropile-i18-1',
+            name: 'เข็มไมโครไพล์ I18 1 ต้น ลึก 18เมตร',
+            price: 20000,
+            description: '20,000 บาท/ต้น'
+          },
+          {
+            id: 'micropile-i18-2',
+            name: 'เข็มไมโครไพล์ I18 2 ต้น ลึก 18เมตร',
+            price: 17000,
+            description: '17,000 บาท/ต้น'
+          },
+          {
+            id: 'micropile-i18-3',
+            name: 'เข็มไมโครไพล์ I18 3 ต้น ลึก 18เมตร',
+            price: 15000,
+            description: '15,000 บาท/ต้น'
+          },
+          {
+            id: 'micropile-i18-4',
+            name: 'เข็มไมโครไพล์ I18 4 ต้น ลึก 18เมตร',
+            price: 13000,
+            description: '13,000 บาท/ต้น'
+          },
+          {
+            id: 'micropile-i22-1',
+            name: 'เข็มไมโครไพล์ I22 1 ต้น ลึก 18เมตร',
+            price: 22000,
+            description: '22,000 บาท/ต้น'
+          },
+          {
+            id: 'micropile-i22-2',
+            name: 'เข็มไมโครไพล์ I22 2 ต้น ลึก 18เมตร',
+            price: 19000,
+            description: '19,000 บาท/ต้น'
+          },
+          {
+            id: 'micropile-i22-3',
+            name: 'เข็มไมโครไพล์ I22 3 ต้น ลึก 18เมตร',
+            price: 17000,
+            description: '17,000 บาท/ต้น'
+          },
+          {
+            id: 'micropile-i22-4',
+            name: 'เข็มไมโครไพล์ I22 4 ต้น ลึก 18เมตร',
+            price: 13000,
+            description: '13,000 บาท/ต้น'
+          }
+        ]
+      },
+      {
+        id: 'steel-pile',
+        name: 'ลงเข็มเหล็ก',
+        price: 0,
+        description: 'เข็มเหล็ก F76 + ค่าเจาะปูน 500 บาท/ต้น',
+        subOptions: [
+          {
+            id: 'steel-f76-2m',
+            name: 'เข็มเหล็ก F76 ลึก 2 เมตร',
+            price: 9500,
+            description: '9,000 บาท/ต้น + ค่าเจาะปูน 500 บาท/ต้น'
+          },
+          {
+            id: 'steel-f76-3m',
+            name: 'เข็มเหล็ก F76 ลึก 3 เมตร',
+            price: 12500,
+            description: '12,000 บาท/ต้น + ค่าเจาะปูน 500 บาท/ต้น'
+          }
+        ]
+      }
     ]
   },
   {

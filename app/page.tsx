@@ -64,7 +64,21 @@ export default function Home() {
         .filter(([_, optionId]) => optionId)
         .reduce((sum: number, [serviceId, optionId]) => {
           const service = extraServices.find((s: ExtraService) => s.id === serviceId);
-          const option = service?.options.find((o: any) => o.id === optionId);
+          let option = service?.options.find((o: any) => o.id === optionId);
+          
+          // ถ้าไม่พบ option ในระดับแรก ให้หาใน subOptions
+          if (!option && service) {
+            for (const mainOption of service.options) {
+              if (mainOption.subOptions) {
+                const subOption = mainOption.subOptions.find(sub => sub.id === optionId);
+                if (subOption) {
+                  option = subOption;
+                  break;
+                }
+              }
+            }
+          }
+          
           let extraPrice = option?.price || 0;
           
           // เพิ่มราคารางน้ำถ้ามีการเลือกวัสดุรางน้ำ
@@ -87,6 +101,20 @@ export default function Home() {
           if (serviceId === 'electrical' && selectionData.electricalPoints[serviceId] && service?.pricePerPoint) {
             const points = selectionData.electricalPoints[serviceId];
             extraPrice = (option?.price || 0) * points;
+          }
+          
+          // เพิ่มราคารากฐานตามจำนวนเสา - ยึดตามงานเสา
+          if (serviceId === 'foundation') {
+            // สำหรับเข็มหกเหลี่ยม ใช้จำนวนชุด = จำนวนเสา (ขั้นต่ำ 2 ชุด)
+            if (optionId.includes('hex-') || optionId === 'footing-only') {
+              const foundationSets = Math.max(2, selectionData.poleCount);
+              extraPrice = (option?.price || 0) * foundationSets;
+            }
+            // สำหรับเข็มไมโครไพล์และเข็มเหล็ก ใช้จำนวนต้น = จำนวนเสา (ขั้นต่ำ 2 ต้น)
+            else if (optionId.includes('micropile-') || optionId.includes('steel-')) {
+              const pileCount = Math.max(2, selectionData.poleCount);
+              extraPrice = (option?.price || 0) * pileCount;
+            }
           }
           
           return sum + extraPrice;

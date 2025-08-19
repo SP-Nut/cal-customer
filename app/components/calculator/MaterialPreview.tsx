@@ -893,20 +893,62 @@ export function MaterialPreview({
                         .filter(([_, optionId]) => optionId)
                         .map(([serviceId, optionId]) => {
                           const service = extraServices.find((s) => s.id === serviceId);
-                          const option = service?.options.find((o) => o.id === optionId);
-                          if (!service || !option) return null;
+                          if (!service) return null;
+                          
+                          // หาตัวเลือกหลักและตัวเลือกย่อย
+                          let option = service.options.find((o) => o.id === optionId);
+                          let subOption = null;
+                          
+                          if (!option) {
+                            // หากไม่พบ option หลัก ให้หาใน subOptions
+                            for (const mainOption of service.options) {
+                              if (mainOption.subOptions) {
+                                subOption = mainOption.subOptions.find(sub => sub.id === optionId);
+                                if (subOption) {
+                                  option = mainOption;
+                                  break;
+                                }
+                              }
+                            }
+                          }
+                          
+                          if (!option) return null;
+                          
+                          // ใช้ราคาจาก subOption หรือ option หลัก
+                          const priceSource = subOption || option;
+                          let finalPrice = priceSource.price;
                           
                           // คำนวณราคาตามประเภทบริการ
-                          let finalPrice = option.price;
-                          if (service.pricePerSqm && dimensions.width > 0 && dimensions.length > 0) {
+                          if (service.id === 'foundation') {
+                            // สำหรับรากฐาน คำนวณตามจำนวนเสา (ขั้นต่ำ 2 ชุด)
+                            const foundationUnits = Math.max(poleCount, 2);
+                            finalPrice = priceSource.price * foundationUnits;
+                          } else if (service.pricePerSqm && dimensions.width > 0 && dimensions.length > 0) {
                             const area = dimensions.width * dimensions.length;
-                            finalPrice = option.price * area;
+                            finalPrice = priceSource.price * area;
+                          } else if (service.requiresQuantity) {
+                            // สำหรับบริการที่ต้องระบุจำนวน เช่น ไฟฟ้า
+                            // ค่า default จำนวน 1 หน่วย
+                            finalPrice = priceSource.price;
+                          }
+                          
+                          // สร้างชื่อบริการที่แสดง
+                          let displayName = service.name;
+                          if (subOption) {
+                            displayName = `${service.name}: ${subOption.name}`;
+                          } else if (option.name !== service.name) {
+                            displayName = `${service.name}: ${option.name}`;
                           }
                           
                           return (
                             <div key={serviceId} className="flex justify-between items-center py-3 px-4 bg-blue-50 rounded-lg border border-blue-100">
                               <span className="text-gray-700 font-medium">
-                                {service.name}
+                                {displayName}
+                                {service.id === 'foundation' && (
+                                  <span className="text-gray-500 text-sm ml-1">
+                                    ({Math.max(poleCount, 2)} ชุด)
+                                  </span>
+                                )}
                                 {service.pricePerSqm && (
                                   <span className="text-gray-500 text-sm ml-1">
                                     ({(dimensions.width * dimensions.length).toFixed(2)} ตร.ม.)

@@ -45,16 +45,25 @@ export interface Service {
   pricePerSqm?: boolean;
 }
 
-export interface ExtraService {
+export interface ExtraServiceOption {
   id: string;
   name: string;
-  description: string;
-  options: {
+  price: number;
+  description?: string;
+  isDefault?: boolean;
+  subOptions?: {
     id: string;
     name: string;
     price: number;
     description?: string;
   }[];
+}
+
+export interface ExtraService {
+  id: string;
+  name: string;
+  description: string;
+  options: ExtraServiceOption[];
   requiresLength?: boolean;
   pricePerMeter?: boolean;
   minimumLength?: number;
