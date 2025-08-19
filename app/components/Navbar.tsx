@@ -71,7 +71,7 @@ export default function Navbar({ totalPrice, onQuoteRequest }: NavbarProps) {
                 <ShieldCheck className="w-6 h-6 text-blue-600" />
                 <div>
                   <span className="text-xs text-gray-500">รับประกัน</span>
-                  <p className="text-sm font-semibold text-gray-700">5 ปี</p>
+                  <p className="text-sm font-semibold text-gray-700">สูงสุด 5 ปี</p>
                 </div>
               </div>
             </div>

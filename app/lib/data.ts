@@ -290,21 +290,21 @@ export const extraServices: ExtraService[] = [
     options: [
       { 
         id: 'pvc', 
-        name: 'ท่อน้ำลง PVC', 
+        name: 'ท่อน้ำลง PVC 3"', 
         price: 550,
-        description: 'ท่อน้ำลง PVC คุณภาพดี ราคา 550 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
+        description: 'ท่อน้ำลง PVC 3 นิ้ว ราคา 550 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
       },
       { 
         id: 'vinyl-lion', 
-        name: 'ท่อน้ำลงไวนิล Lion (สีขาว)', 
+        name: 'ท่อน้ำลงไวนิล Vinyl Gutter ยี่ห้อ Lion 3" (สีขาว)', 
         price: 700,
-        description: 'ท่อน้ำลงไวนิล Lion สีขาว ราคา 700 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
+        description: 'ท่อน้ำลงไวนิล Vinyl Gutter ยี่ห้อ Lion 3 นิ้ว สีขาว ราคา 700 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
       },
       { 
         id: 'vinyl-vg', 
-        name: 'ท่อน้ำลงไวนิล VG (สีขาว)', 
+        name: 'ท่อน้ำลงไวนิล Vinyl Gutter ยี่ห้อ VG 3" (สีขาว)', 
         price: 900,
-        description: 'ท่อน้ำลงไวนิล VG สีขาว คุณภาพพรีเมียม ราคา 900 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
+        description: 'ท่อน้ำลงไวนิล Vinyl Gutter ยี่ห้อ VG 3 นิ้ว สีขาว ราคา 900 บาท/เมตร (ขั้นต่ำ 3 เมตร)'
       }
     ],
     requiresLength: true,

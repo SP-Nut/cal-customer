@@ -259,7 +259,7 @@ export function QuoteRequestModal({
                     <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                     <div className="text-sm text-blue-800">
                       <p className="font-medium">หลังจากส่งข้อมูลแล้ว</p>
-                      <p>ทีมงานจะติดต่อเพื่อสำรวจพื้นที่และให้ใบเสนอราคาที่แม่นยำ</p>
+                      <p>ทีมงาน SP จะติดต่อเพื่อนัดวันสำรวจพื้นที่ พร้อมส่งใบเสนอราคาที่แม่นยำ</p>
                     </div>
                   </div>
                 </div>

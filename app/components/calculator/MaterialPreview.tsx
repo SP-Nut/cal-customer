@@ -360,9 +360,10 @@ export function MaterialPreview({
                         <h4 className="font-bold text-gray-800 text-sm lg:text-base mb-0">สาขาทั้งหมด</h4>
                         <div className="text-gray-700 text-xs lg:text-sm font-medium leading-relaxed space-y-0">
                           <p className="font-semibold text-gray-700">สำนักงานใหญ่</p>
-                          <p>ปทุมธานี</p>
+                       
                           <p>• สาขาบางแวก</p>
-                          <p>• สาขาบางพลี</p>
+                             <p>• สาขาราชพฤกษ์</p>
+                          <p>• สาขาบางปทุมธานี</p>
                         </div>
                         <p className="text-gray-500 text-xs mt-1 flex items-center justify-center space-x-1">
                           <span>คลิกดูรายละเอียด</span>

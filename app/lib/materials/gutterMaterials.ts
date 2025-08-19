@@ -12,45 +12,70 @@ export interface GutterMaterial {
 }
 
 export const gutterMaterials: GutterMaterial[] = [
-  // รางน้ำพับพิเศษ
+  // รางน้ำพับพิเศษ สำหรับหลังบ้าน (L1)
   {
-    id: "l1",
-    name: "รางน้ำพับพิเศษ L1 (หลังบ้าน)",
+    id: "l1_stainless",
+    name: "รางน้ำพับพิเศษ L1 สแตนเลส 304  (หลังบ้าน) ",
     price: 2600,
     category: "special",
-    description: "รางน้ำพับสั่งทำพิเศษ เหมาะสำหรับหลังบ้าน คุณภาพพรีเมียม แข็งแรงทนทาน"
+    description: "รางน้ำพับพิเศษ สำหรับหลังบ้าน สแตนเลส 304"
   },
   {
-    id: "l2", 
-    name: "รางน้ำพับพิเศษ L2 (ซ่อนราง งานฝ้า)",
+    id: "l1_aluminum",
+    name: "รางน้ำพับพิเศษ L1 อลูมิเนียม (หลังบ้าน) ",
     price: 1600,
     category: "special",
-    description: "รางน้ำพับแบบซ่อนราง สำหรับงานฝ้าและหลังบ้าน ดีไซน์เรียบหรู"
+    description: "รางน้ำพับพิเศษ สำหรับหลังบ้าน อลูมิเนียม"
+  },
+
+  // รางน้ำพับพิเศษ สำหรับงานฝ้า หลังบ้าน (ซ่อนราง) (L2)
+  {
+    id: "l2_stainless",
+    name: "รางน้ำพับพิเศษ L2 สแตนเลส 304 (ซ่อนราง)",
+    price: 1600,
+    category: "special",
+    description: "รางน้ำพับพิเศษ สำหรับงานฝ้า หลังบ้าน (ซ่อนราง) สแตนเลส 304"
   },
   {
-    id: "l3",
-    name: "รางน้ำพับพิเศษ L3 (ซ่อนราง หน้าบ้าน)", 
+    id: "l2_aluminum",
+    name: "รางน้ำพับพิเศษ L2 อลูมิเนียม (ซ่อนราง)",
+    price: 850,
+    category: "special",
+    description: "รางน้ำพับพิเศษ สำหรับงานฝ้า หลังบ้าน (ซ่อนราง) อลูมิเนียม"
+  },
+
+  // รางน้ำพับพิเศษ สำหรับหน้าบ้าน (ซ่อนราง) (L3)
+  {
+    id: "l3_stainless",
+    name: "รางน้ำพับพิเศษ L3 สแตนเลส 304 (หน้าบ้าน)",
     price: 1500,
     category: "special",
-    description: "รางน้ำพับแบบซ่อนราง สำหรับหน้าบ้าน สวยงามไม่เสียทัศนียภาพ"
+    description: "รางน้ำพับพิเศษ สำหรับหน้าบ้าน (ซ่อนราง) สแตนเลส 304"
+  },
+  {
+    id: "l3_aluminum",
+    name: "รางน้ำพับพิเศษ L3 อลูมิเนียม (หน้าบ้าน)",
+    price: 550,
+    category: "special",
+    description: "รางน้ำพับพิเศษ สำหรับหน้าบ้าน (ซ่อนราง) อลูมิเนียม"
   },
   
-  // รางน้ำมาตรฐาน สแตนเลส
+  // รางน้ำมาตรฐาน
   {
     id: "standard6",
-    name: "รางน้ำสแตนเลส 6 นิ้ว (เกรด 304)",
+    name: "รางน้ำมาตรฐาน 6\" เกรด 304",
     price: 850,
     category: "standard", 
-    description: "รางน้ำสแตนเลสเกรด 304 ขนาด 6 นิ้ว ทนสนิม ทนทานยาวนาน",
+    description: "รางน้ำมาตรฐาน 6 นิ้ว เกรด 304",
     size: "6\"",
     brand: "Grade 304"
   },
   {
     id: "standard5",
-    name: "รางน้ำสแตนเลส 5 นิ้ว (เกรด 304)",
+    name: "รางน้ำมาตรฐาน 5\" เกรด 304",
     price: 700,
     category: "standard",
-    description: "รางน้ำสแตนเลสเกรด 304 ขนาด 5 นิ้ว ทนสนิม คุณภาพมาตรฐาน",
+    description: "รางน้ำมาตรฐาน 5 นิ้ว เกรด 304",
     size: "5\"",
     brand: "Grade 304"
   },
@@ -61,7 +86,7 @@ export const gutterMaterials: GutterMaterial[] = [
     name: "รางน้ำไวนิล VG (สีขาว)",
     price: 900,
     category: "vinyl",
-    description: "รางน้ำไวนิลยี่ห้อ VG คุณภาพเยี่ยม ทนแดด ไม่ซีดจาง น้ำหนักเบา",
+    description: "รางน้ำไวนิล Vinyl Gutter ยี่ห้อ VG (สีขาว)",
     color: "#ffffff",
     brand: "VG"
   },
@@ -70,7 +95,7 @@ export const gutterMaterials: GutterMaterial[] = [
     name: "รางน้ำไวนิล Lion (สีขาว)",
     price: 700,
     category: "vinyl", 
-    description: "รางน้ำไวนิลยี่ห้อ Lion คุณภาพดี ราคาประหยัด เหมาะงบจำกัด",
+    description: "รางน้ำไวนิล Vinyl Gutter ยี่ห้อ Lion (สีขาว)",
     color: "#ffffff",
     brand: "Lion"
   }

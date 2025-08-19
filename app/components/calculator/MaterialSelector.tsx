@@ -110,7 +110,7 @@ const EmptyState = () => (
             <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500" />
           </div>
           <div className="text-xs text-gray-600 mb-0.5">ติดตั้งไว</div>
-          <div className="text-xs font-semibold text-gray-800 leading-tight">เสร็จใน 1 วัน</div>
+          <div className="text-xs font-semibold text-gray-800 leading-tight">เร็วสุดใน 1 วัน</div>
         </div>
         <div className="p-2 sm:p-3 bg-white rounded-xl border border-gray-200 text-center">
           <div className="flex justify-center mb-1">
@@ -123,8 +123,8 @@ const EmptyState = () => (
           <div className="flex justify-center mb-1">
             <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
           </div>
-          <div className="text-xs text-gray-600 mb-0.5">ราคาเบื้องต้น</div>
-          <div className="text-xs font-semibold text-gray-800 leading-tight">คำนวณได้</div>
+          <div className="text-xs text-gray-600 mb-0.5">คำนวนง่ายๆ</div>
+          <div className="text-xs font-semibold text-gray-800 leading-tight">ในราคาเบื้องต้น</div>
         </div>
       </div>
     </div>
