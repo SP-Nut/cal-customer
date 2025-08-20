@@ -165,9 +165,9 @@ export default function Home() {
         isInputFocused={isInputFocused}
       />
       
-      {/* Desktop Layout - เหมือนเดิม */}
+      {/* Desktop Layout - 70:30 ratio */}
       <div className="hidden lg:flex h-[calc(100vh-2rem)] p-8 gap-3 mt-6">
-        <div id="materials" className="flex-1">
+        <div id="materials" style={{width: '70%'}}>
           <div className="h-full rounded-3xl overflow-auto shadow-xl border border-gray-200/50 custom-scrollbar bg-white/95 backdrop-blur-sm">
             <MaterialPreview
               material={selectionData.material}
@@ -186,9 +186,9 @@ export default function Home() {
           </div>
         </div>
         
-        <div className="w-96 bg-white/95 backdrop-blur-sm border border-gray-200/50 h-full relative shadow-xl rounded-3xl overflow-hidden">
+        <div style={{width: '30%'}} className="bg-white/95 backdrop-blur-sm border border-gray-200/50 h-full relative shadow-xl rounded-3xl overflow-hidden">
           <div className="h-full flex flex-col">
-            <div className="flex-1 overflow-auto custom-scrollbar p-6">
+            <div className="flex-1 overflow-auto custom-scrollbar">
               <div className="space-y-8">
                 <div className="space-y-6">
                   <MaterialSelector

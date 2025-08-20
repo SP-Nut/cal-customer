@@ -38,36 +38,32 @@ export function PriceSummary({
 }: PriceSummaryProps) {
   const area = dimensions.width * dimensions.length;
 
-  // Debug log for selectedExtras
-  console.log('PriceSummary - selectedExtras:', selectedExtras);
-  console.log('PriceSummary - extraServices:', extraServices);
-  console.log('PriceSummary - filtered extras:', Object.entries(selectedExtras).filter(([_, optionId]) => optionId));
-  console.log('PriceSummary - electricalPoints:', electricalPoints);
-  console.log('PriceSummary - pipeLength:', pipeLength);
-
   return (
     <div className={`bg-white border-t border-slate-200 ${isMobile ? 'p-1.5' : 'p-2'}`}>
       <div className="space-y-1">
         {/* Header */}
         <div className="flex items-center gap-1.5">
-          <h3 className={`${isMobile ? 'text-sm' : 'text-sm'} font-medium text-slate-700`}>สรุปราคา</h3>
+          <h3 className="text-sm font-medium text-slate-700">สรุปราคา</h3>
         </div>
         
         {/* Area and Base Price */}
         <div className="bg-slate-50 rounded p-1">
-          <div className={`${isMobile ? 'text-xs' : 'text-xs'} text-slate-600 mb-0.5`}>วัสดุพื้นฐาน</div>
-          <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-xs'}`}>
-            <span className="text-slate-600">{area.toFixed(2)} ตร.ม. × ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}</span>
+          <div className="text-xs text-slate-600 mb-0.5">วัสดุพื้นฐาน</div>
+          <div className="flex justify-between text-xs">
+            <span className="text-slate-700">{material.name} ({area.toFixed(2)} ตร.ม.)</span>
             <span className="font-medium text-slate-800">
               ฿{(area * material.pricePerSqm[selectedSize.id]).toLocaleString()}
             </span>
+          </div>
+          <div className="flex justify-between text-xs mt-0.5">
+            <span className="text-slate-500 ml-2">• ขนาด {selectedSize.name} - ฿{material.pricePerSqm[selectedSize.id].toLocaleString()}/ตร.ม.</span>
           </div>
         </div>
         
         {/* Services */}
         {selectedServices.length > 0 && (
           <div className="bg-slate-50 rounded p-1">
-            <div className={`${isMobile ? 'text-xs' : 'text-xs'} text-slate-600 mb-0.5`}>บริการหลัก</div>
+            <div className="text-xs text-slate-600 mb-0.5">บริการหลัก</div>
             <div className="space-y-0.5">
               {mainServices
                 .filter((service) => selectedServices.includes(service.id))
@@ -93,45 +89,54 @@ export function PriceSummary({
                   }
                   
                   return (
-                    <div key={service.id} className={`flex justify-between ${isMobile ? 'text-xs' : 'text-xs'}`}>
-                      <span className="text-slate-700">
-                        {service.name}
-                        {service.id === 'poles' && poleCount > 1 && (
-                          <span className="text-slate-500 text-xs ml-1">
-                            ({poleCount} ต้น)
-                          </span>
-                        )}
-                        {service.pricePerSqm && selectedOption && service.options && (
-                          <span className="text-slate-500 text-xs ml-1">
-                            ({service.options.find(opt => opt.id === selectedOption)?.name})
-                          </span>
-                        )}
-                      </span>
+                    <div key={service.id} className="flex justify-between text-xs">
+                      <span className="text-slate-700">{service.name}</span>
                       <span className="font-medium text-slate-800">฿{servicePrice.toLocaleString()}</span>
                     </div>
                   );
+                })}
+              
+              {/* แสดงรายละเอียดย่อยของบริการหลัก */}
+              {mainServices
+                .filter((service) => selectedServices.includes(service.id))
+                .map((service) => {
+                  const selectedOption = selectedServiceOptions[service.id];
+                  let details = [];
+                  
+                  if (selectedOption && service.options) {
+                    const option = service.options.find(opt => opt.id === selectedOption);
+                    if (option) {
+                      if (service.id === 'poles' && poleCount > 1) {
+                        details.push(`• ${option.name} (${poleCount} ต้น)`);
+                      } else if (service.pricePerSqm) {
+                        details.push(`• ${option.name} (${area.toFixed(2)} ตร.ม.)`);
+                      } else if (option.name !== service.name) {
+                        details.push(`• ${option.name}`);
+                      }
+                    }
+                  }
+                  
+                  return details.length > 0 ? (
+                    <div key={`${service.id}-details`} className="space-y-0.5">
+                      {details.map((detail, index) => (
+                        <div key={index} className="ml-2 text-xs text-slate-500">
+                          <span>{detail}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null;
                 })}
             </div>
           </div>
         )}
         
         {/* Extra Services */}
-        {(() => {
-          const hasExtras = Object.keys(selectedExtras).some(key => selectedExtras[key]);
-          const hasGutterMaterials = Object.keys(selectedGutterMaterials).some(key => selectedGutterMaterials[key]);
-          console.log('Has extras check:', hasExtras, selectedExtras);
-          console.log('Has gutter materials check:', hasGutterMaterials, selectedGutterMaterials);
-          console.log('All selected gutter materials:', selectedGutterMaterials);
-          return hasExtras || hasGutterMaterials;
-        })() && (
+        {Object.keys(selectedExtras).some(key => selectedExtras[key]) && (
           <div className="bg-slate-50 rounded p-1">
-            <div className={`${isMobile ? 'text-xs' : 'text-xs'} text-slate-600 mb-0.5`}>บริการเสริม</div>
+            <div className="text-xs text-slate-600 mb-0.5">บริการเสริม</div>
             <div className="space-y-0.5">
               {Object.entries(selectedExtras)
-                .filter(([_, optionId]) => {
-                  console.log('Filtering extra service:', _, optionId);
-                  return optionId;
-                })
+                .filter(([_, optionId]) => optionId)
                 .map(([serviceId, optionId]) => {
                   const service = extraServices.find((s) => s.id === serviceId);
                   let option = service?.options.find((o) => o.id === optionId);
@@ -149,7 +154,6 @@ export function PriceSummary({
                     }
                   }
                   
-                  console.log('Rendering extra service:', serviceId, service?.name, option?.name, option?.price);
                   if (!service || !option) return null;
                   
                   // คำนวณราคาตามประเภทบริการ
@@ -182,104 +186,73 @@ export function PriceSummary({
                   
                   return (
                     <div key={serviceId} className="space-y-0.5">
-                      <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-xs'}`}>
-                        <span className="text-slate-700">+ {service.name}</span>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-700">{service.name}</span>
                         <span className="font-medium text-slate-800">
                           ฿{totalServicePrice.toLocaleString()}
                         </span>
                       </div>
                       
-                      {/* แสดงรายละเอียดท่อน้ำเมื่อเป็นบริการท่อน้ำ */}
-                      {serviceId === 'pipe' && service.pricePerMeter && pipeLength[serviceId] && (
-                        <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
+                      {/* แสดงรายละเอียดแบบมาตรฐาน */}
+                      <div className="ml-2 text-xs text-slate-500 space-y-0.5">
+                        {/* รายละเอียดท่อน้ำ */}
+                        {serviceId === 'pipe' && service.pricePerMeter && pipeLength[serviceId] && (
                           <div className="flex justify-between">
                             <span>• {option.name} ({pipeLength[serviceId]} ม.)</span>
                             <span>฿{(option.price * pipeLength[serviceId]).toLocaleString()}</span>
                           </div>
-                        </div>
-                      )}
-                      
-                      {/* แสดงรายละเอียดงานไฟฟ้าเมื่อเป็นบริการไฟฟ้า */}
-                      {serviceId === 'electrical' && service.pricePerPoint && electricalPoints[serviceId] && (
-                        <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
+                        )}
+                        
+                        {/* รายละเอียดงานไฟฟ้า */}
+                        {serviceId === 'electrical' && service.pricePerPoint && electricalPoints[serviceId] && (
                           <div className="flex justify-between">
                             <span>• {option.name} ({electricalPoints[serviceId]} จุด)</span>
                             <span>฿{(option.price * electricalPoints[serviceId]).toLocaleString()}</span>
                           </div>
-                        </div>
-                      )}
-                      
-                      {/* แสดงวัสดุรางน้ำเมื่อเลือกบริการรางน้ำ */}
-                      {serviceId === 'gutter' && selectedGutterMaterials[serviceId] && (
-                        <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
-                          {(() => {
-                            const selectedGutter = gutterMaterials.find(g => g.id === selectedGutterMaterials[serviceId]);
-                            if (!selectedGutter) return null;
-                            const gutterTotalPrice = selectedGutter.price * dimensions.length;
-                            return (
-                              <div className="flex justify-between">
-                                <span>• {selectedGutter.name} ({dimensions.length} ม.)</span>
-                                <span>฿{gutterTotalPrice.toLocaleString()}</span>
-                              </div>
-                            );
-                          })()}
-                        </div>
-                      )}
-                      
-                      {/* แสดงรายละเอียดงานรากฐานเมื่อเป็นบริการรากฐาน */}
-                      {serviceId === 'foundation' && (
-                        <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
-                          <div className="flex justify-between">
-                            {optionId.includes('hex-') || optionId === 'footing-only' ? (
-                              <span>• {option.name} ({Math.max(2, poleCount)} ชุด ยึดตามเสา {poleCount} ต้น)</span>
-                            ) : (
-                              <span>• {option.name} ({Math.max(2, poleCount)} ต้น ยึดตามเสา {poleCount} ต้น)</span>
-                            )}
-                            <span>฿{finalPrice.toLocaleString()}</span>
-                          </div>
-                          <div className="text-xs text-slate-400 mt-0.5 leading-tight">
-                            {option.description}
-                          </div>
-                          {optionId.includes('steel-') && (
-                            <div className="text-xs text-slate-400 mt-0.5">
-                              รวมค่าเจาะปูน 500 บาท/ต้น
+                        )}
+                        
+                        {/* รายละเอียดรางน้ำ */}
+                        {serviceId === 'gutter' && selectedGutterMaterials[serviceId] && (() => {
+                          const selectedGutter = gutterMaterials.find(g => g.id === selectedGutterMaterials[serviceId]);
+                          if (!selectedGutter) return null;
+                          const gutterTotalPrice = selectedGutter.price * dimensions.length;
+                          return (
+                            <div className="flex justify-between">
+                              <span>• {selectedGutter.name} ({dimensions.length} ม.)</span>
+                              <span>฿{gutterTotalPrice.toLocaleString()}</span>
                             </div>
-                          )}
-                        </div>
-                      )}
-                      
-                      {/* แสดงรายละเอียดบริการทั่วไป (ไม่ใช่ท่อน้ำ ไฟฟ้า รางน้ำ หรือรากฐาน) */}
-                      {serviceId !== 'pipe' && serviceId !== 'electrical' && serviceId !== 'gutter' && serviceId !== 'foundation' && (
-                        <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
+                          );
+                        })()}
+                        
+                        {/* รายละเอียดงานรากฐาน */}
+                        {serviceId === 'foundation' && (
+                          <>
+                            <div className="flex justify-between">
+                              {optionId.includes('hex-') || optionId === 'footing-only' ? (
+                                <span>• {option.name} ({Math.max(2, poleCount)} ชุด)</span>
+                              ) : (
+                                <span>• {option.name} ({Math.max(2, poleCount)} ต้น)</span>
+                              )}
+                              <span>฿{finalPrice.toLocaleString()}</span>
+                            </div>
+                            <div className="text-xs text-slate-400 leading-tight">
+                              {option.description}
+                            </div>
+                            {optionId.includes('steel-') && (
+                              <div className="text-xs text-slate-400">
+                                รวมค่าเจาะปูน 500 บาท/ต้น
+                              </div>
+                            )}
+                          </>
+                        )}
+                        
+                        {/* รายละเอียดบริการทั่วไป */}
+                        {serviceId !== 'pipe' && serviceId !== 'electrical' && serviceId !== 'gutter' && serviceId !== 'foundation' && (
                           <div className="flex justify-between">
                             <span>• {option.name}</span>
                             <span>฿{option.price.toLocaleString()}</span>
                           </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              
-              {/* แสดงรางน้ำที่เลือกแยกต่างหาก (กรณีไม่ได้เลือกผ่าน selectedExtras) */}
-              {Object.entries(selectedGutterMaterials)
-                .filter(([serviceId, materialId]) => materialId && serviceId === 'gutter')
-                .map(([serviceId, materialId]) => {
-                  const selectedGutter = gutterMaterials.find(g => g.id === materialId);
-                  if (!selectedGutter) return null;
-                  const gutterTotalPrice = selectedGutter.price * dimensions.length;
-                  
-                  return (
-                    <div key={`gutter-${serviceId}`} className="space-y-0.5">
-                      <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-xs'}`}>
-                        <span className="text-slate-700">+ งานรางน้ำ</span>
-                        <span className="font-medium text-slate-800">฿0</span>
-                      </div>
-                      <div className={`ml-2 ${isMobile ? 'text-xs' : 'text-xs'} text-slate-500`}>
-                        <div className="flex justify-between">
-                          <span>• {selectedGutter.name} ({dimensions.length} ม.)</span>
-                          <span>฿{gutterTotalPrice.toLocaleString()}</span>
-                        </div>
+                        )}
                       </div>
                     </div>
                   );
@@ -291,7 +264,7 @@ export function PriceSummary({
         {/* Total */}
         <div className="border-t border-slate-200 pt-1">
           <div className="flex justify-between items-center">
-            <span className={`${isMobile ? 'text-sm' : 'text-sm'} font-medium text-slate-800`}>ราคารวม</span>
+            <span className="text-sm font-medium text-slate-800">ราคารวม</span>
             <span className={`${isMobile ? 'text-base' : 'text-lg'} font-bold text-slate-900`}>
               ฿{totalPrice.toLocaleString()}
             </span>
@@ -301,7 +274,7 @@ export function PriceSummary({
           <div className="mt-1">
             <button
               onClick={onQuoteRequest}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-4 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-lg"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold py-4 px-6 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-lg"
             >
               ขอใบเสนอราคา
             </button>
