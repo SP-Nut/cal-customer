@@ -68,7 +68,7 @@ export default function FloatingPreview({
         <div className="lg:hidden fixed top-[55%] transform -translate-y-1/2 right-0 z-50">
           {/* Tooltip */}
           {showTooltip && (
-            <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap animate-pulse">
+            <div className="absolute right-full top-1/2 transform -translate-y-1/2 mr-2 bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap animate-pulse">
               แตะเพื่อดูรูปวัสดุ
             </div>
           )}
