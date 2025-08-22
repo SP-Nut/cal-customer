@@ -65,10 +65,10 @@ export default function FloatingPreview({
     <>
       {/* Floating Preview with Icon and Text - Smaller size */}
       {show && (
-        <div className="lg:hidden fixed bottom-24 right-8 z-50">
+        <div className="lg:hidden fixed top-[55%] transform -translate-y-1/2 right-0 z-50">
           {/* Tooltip */}
           {showTooltip && (
-            <div className="absolute bottom-full right-0 mb-2 bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap animate-pulse">
+            <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap animate-pulse">
               แตะเพื่อดูรูปวัสดุ
             </div>
           )}
@@ -83,20 +83,20 @@ export default function FloatingPreview({
                 setShowFullImage(true);
               }
             }}
-            className="relative group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-white/20"
+            className="relative group w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-l-lg lg:rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300"
             style={{
               animation: 'fadeInUp 0.5s ease-out',
             }}
           >
             {/* Icon Content */}
-            <div className="flex items-center justify-center p-3">
+            <div className="flex items-center justify-center w-full h-full">
               <ImageIcon className="w-6 h-6 text-white" />
             </div>
             
             {/* Badge indicator for multiple images */}
             {selectedSize?.image && (
-              <div className="absolute -top-2 -right-2 w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg z-10">
-                <span className="text-[10px] font-bold text-white">2</span>
+              <div className="absolute -top-1 -left-1 w-3 h-3 bg-orange-500 rounded-full flex items-center justify-center border border-white shadow-lg z-10">
+                <span className="text-[7px] font-bold text-white">2</span>
               </div>
             )}
           </button>
