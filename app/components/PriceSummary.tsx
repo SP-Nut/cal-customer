@@ -89,67 +89,49 @@ export function PriceSummary({
         {selectedServices.length > 0 && (
           <div className="bg-slate-50 rounded p-1">
             <div className="text-xs text-slate-600 mb-0.5">บริการหลัก</div>
-            <div className="space-y-0.5">
+            <div className="space-y-1">
               {mainServices
                 .filter((service) => selectedServices.includes(service.id))
                 .map((service) => {
                   let servicePrice = service.price || 0;
                   const selectedOption = selectedServiceOptions[service.id];
+                  let optionDetails = '';
+                  
                   if (selectedOption && service.options) {
                     const option = service.options.find(opt => opt.id === selectedOption);
                     if (option) {
-                      // ถ้าเป็น poles service ให้คูณกับจำนวนเสา
+                      // คำนวณราคา
                       if (service.id === 'poles') {
                         servicePrice = option.price * poleCount;
+                        optionDetails = `${option.name} (${poleCount} ต้น)`;
                       } else if (service.pricePerSqm) {
-                        // ถ้าบริการคิดราคาตามตารางเมตร ให้คูณกับพื้นที่
                         servicePrice = option.price * area;
+                        optionDetails = `${option.name} (${area.toFixed(2)} ตร.ม.)`;
                       } else {
                         servicePrice += option.price;
+                        optionDetails = option.name;
                       }
                     }
                   } else if (service.pricePerSqm && service.price) {
-                    // ถ้าไม่มี option แต่บริการคิดตามตารางเมตร
                     servicePrice = service.price * area;
+                    optionDetails = `(${area.toFixed(2)} ตร.ม.)`;
                   }
                   
                   return (
-                    <div key={service.id} className="flex justify-between text-xs">
-                      <span className="text-slate-700">{service.name}</span>
-                      <span className="font-medium text-slate-800">฿{servicePrice.toLocaleString()}</span>
+                    <div key={service.id} className="space-y-0.5">
+                      {/* หัวข้อบริการ */}
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-700 font-medium">{service.name}</span>
+                        <span className="font-medium text-slate-800">฿{servicePrice.toLocaleString()}</span>
+                      </div>
+                      {/* คำอธิบายที่เลือก */}
+                      {optionDetails && (
+                        <div className="ml-2 text-xs text-slate-500">
+                          • {optionDetails}
+                        </div>
+                      )}
                     </div>
                   );
-                })}
-              
-              {/* แสดงรายละเอียดย่อยของบริการหลัก */}
-              {mainServices
-                .filter((service) => selectedServices.includes(service.id))
-                .map((service) => {
-                  const selectedOption = selectedServiceOptions[service.id];
-                  let details = [];
-                  
-                  if (selectedOption && service.options) {
-                    const option = service.options.find(opt => opt.id === selectedOption);
-                    if (option) {
-                      if (service.id === 'poles' && poleCount > 1) {
-                        details.push(`• ${option.name} (${poleCount} ต้น)`);
-                      } else if (service.pricePerSqm) {
-                        details.push(`• ${option.name} (${area.toFixed(2)} ตร.ม.)`);
-                      } else if (option.name !== service.name) {
-                        details.push(`• ${option.name}`);
-                      }
-                    }
-                  }
-                  
-                  return details.length > 0 ? (
-                    <div key={`${service.id}-details`} className="space-y-0.5">
-                      {details.map((detail, index) => (
-                        <div key={index} className="ml-2 text-xs text-slate-500">
-                          <span>{detail}</span>
-                        </div>
-                      ))}
-                    </div>
-                  ) : null;
                 })}
             </div>
           </div>
@@ -159,7 +141,7 @@ export function PriceSummary({
         {Object.keys(selectedExtras).some(key => selectedExtras[key]) && (
           <div className="bg-slate-50 rounded p-1">
             <div className="text-xs text-slate-600 mb-0.5">บริการเสริม</div>
-            <div className="space-y-0.5">
+            <div className="space-y-1">
               {Object.entries(selectedExtras)
                 .filter(([_, optionId]) => optionId)
                 .map(([serviceId, optionId]) => {
@@ -181,103 +163,69 @@ export function PriceSummary({
                   
                   if (!service || !option) return null;
                   
-                  // คำนวณราคาตามประเภทบริการ
+                  // คำนวณราคาและรายละเอียด
                   let finalPrice = option.price;
+                  let optionDetails = '';
+                  
                   if (service.pricePerMeter && pipeLength[serviceId]) {
-                    // สำหรับท่อน้ำ: pipeLength เก็บจำนวนจุด, แต่ option.price เป็นราคาต่อเมตร
-                    // จึงคูณด้วย 3 (เมตรต่อจุด)
+                    // ท่อน้ำ: pipeLength เก็บจำนวนจุด
                     finalPrice = option.price * pipeLength[serviceId] * 3;
+                    optionDetails = `${option.name} (${pipeLength[serviceId]} จุด = ${pipeLength[serviceId] * 3} ม.)`;
                   } else if (service.pricePerPoint && electricalPoints[serviceId]) {
+                    // งานไฟฟ้า
                     finalPrice = option.price * electricalPoints[serviceId];
+                    optionDetails = `${option.name} (${electricalPoints[serviceId]} จุด)`;
                   } else if (serviceId === 'foundation') {
-                    // คำนวณรากฐานยึดตามจำนวนเสา
+                    // งานรากฐาน
                     if (optionId.includes('hex-') || optionId === 'footing-only') {
                       const foundationSets = Math.max(2, poleCount);
                       finalPrice = option.price * foundationSets;
+                      optionDetails = `${option.name} (${foundationSets} ชุด)`;
                     } else if (optionId.includes('micropile-') || optionId.includes('steel-')) {
                       const pileCount = Math.max(2, poleCount);
                       finalPrice = option.price * pileCount;
+                      optionDetails = `${option.name} (${pileCount} ต้น)`;
+                    } else {
+                      optionDetails = option.name;
                     }
+                  } else {
+                    // บริการทั่วไป
+                    optionDetails = option.name;
                   }
                   
                   // เพิ่มราคารางน้ำถ้ามี
-                  let gutterPrice = 0;
+                  let gutterDetails = '';
                   if (serviceId === 'gutter' && selectedGutterMaterials[serviceId]) {
                     const selectedGutter = gutterMaterials.find(g => g.id === selectedGutterMaterials[serviceId]);
                     if (selectedGutter) {
-                      gutterPrice = selectedGutter.price * dimensions.length;
+                      const gutterPrice = selectedGutter.price * dimensions.length;
+                      finalPrice += gutterPrice;
+                      gutterDetails = `${selectedGutter.name} (${dimensions.length} ม.)`;
                     }
                   }
                   
-                  const totalServicePrice = finalPrice + gutterPrice;
-                  
                   return (
                     <div key={serviceId} className="space-y-0.5">
+                      {/* หัวข้อบริการ */}
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700">{service.name}</span>
+                        <span className="text-slate-700 font-medium">{service.name}</span>
                         <span className="font-medium text-slate-800">
-                          ฿{totalServicePrice.toLocaleString()}
+                          ฿{finalPrice.toLocaleString()}
                         </span>
                       </div>
                       
-                      {/* แสดงรายละเอียดแบบมาตรฐาน */}
-                      <div className="ml-2 text-xs text-slate-500 space-y-0.5">
-                        {/* รายละเอียดท่อน้ำ */}
-                        {serviceId === 'pipe' && service.pricePerMeter && pipeLength[serviceId] && (
-                          <div className="flex justify-between">
-                            <span>• {option.name} ({pipeLength[serviceId]} จุด = {pipeLength[serviceId] * 3} ม.)</span>
-                            <span>฿{(option.price * pipeLength[serviceId] * 3).toLocaleString()}</span>
+                      {/* คำอธิบายที่เลือก */}
+                      <div className="ml-2 text-xs text-slate-500">
+                        {optionDetails && <div>• {optionDetails}</div>}
+                        {gutterDetails && <div>• {gutterDetails}</div>}
+                        {option.description && serviceId === 'foundation' && (
+                          <div className="text-xs text-slate-400 leading-tight mt-0.5">
+                            {option.description}
                           </div>
                         )}
-                        
-                        {/* รายละเอียดงานไฟฟ้า */}
-                        {serviceId === 'electrical' && service.pricePerPoint && electricalPoints[serviceId] && (
-                          <div className="flex justify-between">
-                            <span>• {option.name} ({electricalPoints[serviceId]} จุด)</span>
-                            <span>฿{(option.price * electricalPoints[serviceId]).toLocaleString()}</span>
-                          </div>
-                        )}
-                        
-                        {/* รายละเอียดรางน้ำ */}
-                        {serviceId === 'gutter' && selectedGutterMaterials[serviceId] && (() => {
-                          const selectedGutter = gutterMaterials.find(g => g.id === selectedGutterMaterials[serviceId]);
-                          if (!selectedGutter) return null;
-                          const gutterTotalPrice = selectedGutter.price * dimensions.length;
-                          return (
-                            <div className="flex justify-between">
-                              <span>• {selectedGutter.name} ({dimensions.length} ม.)</span>
-                              <span>฿{gutterTotalPrice.toLocaleString()}</span>
-                            </div>
-                          );
-                        })()}
-                        
-                        {/* รายละเอียดงานรากฐาน */}
-                        {serviceId === 'foundation' && (
-                          <>
-                            <div className="flex justify-between">
-                              {optionId.includes('hex-') || optionId === 'footing-only' ? (
-                                <span>• {option.name} ({Math.max(2, poleCount)} ชุด)</span>
-                              ) : (
-                                <span>• {option.name} ({Math.max(2, poleCount)} ต้น)</span>
-                              )}
-                              <span>฿{finalPrice.toLocaleString()}</span>
-                            </div>
-                            <div className="text-xs text-slate-400 leading-tight">
-                              {option.description}
-                            </div>
-                            {optionId.includes('steel-') && (
-                              <div className="text-xs text-slate-400">
-                                รวมค่าเจาะปูน 500 บาท/ต้น
-                              </div>
-                            )}
-                          </>
-                        )}
-                        
-                        {/* รายละเอียดบริการทั่วไป */}
-                        {serviceId !== 'pipe' && serviceId !== 'electrical' && serviceId !== 'gutter' && serviceId !== 'foundation' && (
-                          <div className="flex justify-between">
-                            <span>• {option.name}</span>
-                            <span>฿{option.price.toLocaleString()}</span>
+                        {optionId.includes('steel-') && (
+                          <div className="text-xs text-slate-400">
+                            รวมค่าเจาะปูน 500 บาท/ต้น
                           </div>
                         )}
                       </div>
