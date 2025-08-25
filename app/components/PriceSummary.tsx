@@ -1,5 +1,7 @@
 import { Material, Size, Service, ExtraService } from '../lib/types';
 import { gutterMaterials } from '../lib/materials/gutterMaterials';
+import { useState } from 'react';
+import { ChevronUp, ChevronDown } from 'lucide-react';
 
 interface PriceSummaryProps {
   material: Material;
@@ -37,14 +39,37 @@ export function PriceSummary({
   onQuoteRequest
 }: PriceSummaryProps) {
   const area = dimensions.width * dimensions.length;
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div className={`bg-white border-t border-slate-200 ${isMobile ? 'p-1.5' : 'p-2'}`}>
       <div className="space-y-1">
-        {/* Header */}
-        <div className="flex items-center gap-1.5">
-          <h3 className="text-sm font-medium text-slate-700">สรุปราคา</h3>
+        {/* Header - Always visible with toggle */}
+        <div 
+          className="flex items-center justify-between cursor-pointer hover:bg-slate-50 rounded p-1 transition-colors"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          <div className="flex items-center gap-1.5">
+            <h3 className="text-sm font-medium text-slate-700">สรุปราคา</h3>
+            <span className={`${isMobile ? 'text-base' : 'text-lg'} font-bold text-slate-900`}>
+              ฿{totalPrice.toLocaleString()}
+            </span>
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="text-xs text-slate-500">
+              {isExpanded ? 'ซ่อน' : 'แสดง'}รายละเอียด
+            </span>
+            {isExpanded ? (
+              <ChevronUp className="w-4 h-4 text-slate-500" />
+            ) : (
+              <ChevronDown className="w-4 h-4 text-slate-500" />
+            )}
+          </div>
         </div>
+        
+        {/* Collapsible Content */}
+        {isExpanded && (
+          <div className="space-y-1 animate-in slide-in-from-top-2 duration-200">
         
         {/* Area and Base Price */}
         <div className="bg-slate-50 rounded p-1">
@@ -159,7 +184,9 @@ export function PriceSummary({
                   // คำนวณราคาตามประเภทบริการ
                   let finalPrice = option.price;
                   if (service.pricePerMeter && pipeLength[serviceId]) {
-                    finalPrice = option.price * pipeLength[serviceId];
+                    // สำหรับท่อน้ำ: pipeLength เก็บจำนวนจุด, แต่ option.price เป็นราคาต่อเมตร
+                    // จึงคูณด้วย 3 (เมตรต่อจุด)
+                    finalPrice = option.price * pipeLength[serviceId] * 3;
                   } else if (service.pricePerPoint && electricalPoints[serviceId]) {
                     finalPrice = option.price * electricalPoints[serviceId];
                   } else if (serviceId === 'foundation') {
@@ -198,8 +225,8 @@ export function PriceSummary({
                         {/* รายละเอียดท่อน้ำ */}
                         {serviceId === 'pipe' && service.pricePerMeter && pipeLength[serviceId] && (
                           <div className="flex justify-between">
-                            <span>• {option.name} ({pipeLength[serviceId]} ม.)</span>
-                            <span>฿{(option.price * pipeLength[serviceId]).toLocaleString()}</span>
+                            <span>• {option.name} ({pipeLength[serviceId]} จุด = {pipeLength[serviceId] * 3} ม.)</span>
+                            <span>฿{(option.price * pipeLength[serviceId] * 3).toLocaleString()}</span>
                           </div>
                         )}
                         
@@ -260,16 +287,11 @@ export function PriceSummary({
             </div>
           </div>
         )}
+        </div>
+        )}
         
-        {/* Total */}
-        <div className="border-t border-slate-200 pt-1">
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium text-slate-800">ราคารวม</span>
-            <span className={`${isMobile ? 'text-base' : 'text-lg'} font-bold text-slate-900`}>
-              ฿{totalPrice.toLocaleString()}
-            </span>
-          </div>
-          
+        {/* Total - Always visible */}
+        <div className="border-t border-slate-200 pt-1">          
           {/* Quote Request Button */}
           <div className="mt-1">
             <button

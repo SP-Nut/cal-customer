@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { gutterMaterials, GutterMaterial } from "../../lib/materials/gutterMaterials";
-import { FileText, Check, Square, Info } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 import type {
   Material,
@@ -73,12 +73,6 @@ const StepIndicator = ({
   </div>
 );
 
-/** Empty state with no content */
-const EmptyState = () => (
-  <div className="px-3 sm:px-4 py-3 sm:py-4">
-  </div>
-);
-
 export function MaterialSelector({
   materials,
   categories,
@@ -111,61 +105,6 @@ export function MaterialSelector({
   const filteredMaterials = selectedType
     ? materials.filter((m) => m.type === selectedType)
     : [];
-  const area = dimensions.width * dimensions.length;
-
-  // Enhanced scroll function for both mobile and desktop
-  const scrollToNextStep = (targetId: string, delay = 200) => {
-    setTimeout(() => {
-      const targetElement = document.getElementById(targetId);
-      
-      if (targetElement) {
-        // For mobile devices, use more reliable scrolling
-        const isMobile = window.innerWidth < 1024; // Changed from 768 to 1024
-        
-        if (isMobile) {
-          // Mobile scroll with enhanced behavior
-          
-          // First attempt - native scrollIntoView
-          targetElement.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start',
-            inline: 'nearest'
-          });
-          
-          // Second attempt with manual calculation
-          setTimeout(() => {
-            const rect = targetElement.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const targetTop = rect.top + scrollTop - 80; // Increased padding to 80px
-            
-            window.scrollTo({
-              top: targetTop,
-              behavior: 'smooth'
-            });
-          }, 150);
-          
-          // Third attempt for stubborn mobile browsers
-          setTimeout(() => {
-            const finalRect = targetElement.getBoundingClientRect();
-            if (finalRect.top > 100) { // If still not in good position
-              const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-              const finalTop = finalRect.top + scrollTop - 60;
-              window.scrollTo({
-                top: finalTop,
-                behavior: 'smooth'
-              });
-            }
-          }, 300);
-        } else {
-          // Desktop scroll
-          targetElement.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start' 
-          });
-        }
-      }
-    }, delay);
-  };
 
   // defaults when material changes
   useEffect(() => {
@@ -256,11 +195,6 @@ export function MaterialSelector({
     setSelectedExtras({});
     setSelectedGutterMaterials({});
     setPipeLength({}); // รีเซ็ตความยาวท่อน้ำ
-    
-    // Auto scroll to size selection step
-    if (material) {
-      scrollToNextStep('step-size');
-    }
   };
 
   const handleSizeSelect = (size: Size) => {
@@ -272,9 +206,6 @@ export function MaterialSelector({
     setSelectedExtras({});
     setSelectedGutterMaterials({});
     setPipeLength({}); // รีเซ็ตความยาวท่อน้ำ
-    
-    // Auto scroll to dimensions step
-    scrollToNextStep('step-dimensions');
   };
 
   const handleTypeSelect = (categoryId: string) => {
@@ -282,28 +213,6 @@ export function MaterialSelector({
     if (selectedMaterial?.type !== categoryId) {
       handleMaterialSelect(null);
     }
-    
-    // Auto scroll to material selection step with proper timing
-    
-    // Wait for the step-material element to be rendered, then scroll
-    setTimeout(() => {
-      const checkAndScroll = (attempts = 0) => {
-        const element = document.getElementById('step-material');
-        if (element && attempts < 10) {
-          scrollToNextStep('step-material', 0); // Immediate scroll once found
-        } else if (attempts < 10) {
-          setTimeout(() => checkAndScroll(attempts + 1), 100);
-        }
-      };
-      checkAndScroll();
-    }, 100); // Small delay to allow React to render the conditional element
-  };
-
-  const handleColumnSelect = (hasColumnValue: boolean) => {
-    setHasColumn(hasColumnValue);
-    
-    // Auto scroll to services step
-    scrollToNextStep('step-services');
   };
 
   return (
@@ -336,7 +245,6 @@ export function MaterialSelector({
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {/* Empty state — full-bleed */}
-        {!selectedType && <EmptyState />}
 
         {/* Step 1 — Enhanced material type selection */}
         <div id="step-type" className="px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
@@ -496,11 +404,11 @@ export function MaterialSelector({
                 return (
                   <button
                     key={sizeName}
-                    className={`p-2 sm:p-3 rounded-xl border-2 text-center transition-all duration-200 hover:translate-y-[-2px] ${
+                    className={`p-2 rounded-lg border text-center transition-all duration-200 ${
                       selectedSize?.name === sizeName
                         ? "border-blue-500 bg-blue-50 shadow-md"
                         : isAvailable
-                        ? "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/50 hover:shadow-lg"
+                        ? "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/50"
                         : "border-gray-200 bg-gray-50 cursor-not-allowed opacity-60"
                     }`}
                     onClick={() => {
@@ -508,23 +416,14 @@ export function MaterialSelector({
                     }}
                     disabled={!isAvailable}
                   >
-                    <div className={`w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 rounded-lg flex items-center justify-center transition-all duration-200 ${
-                      selectedSize?.name === sizeName
-                        ? "bg-blue-500 text-white"
-                        : isAvailable
-                        ? "bg-gray-100 text-gray-600"
-                        : "bg-gray-200 text-gray-400"
-                    }`}>
-                      <FileText className="w-4 h-4 sm:w-6 sm:h-6" />
-                    </div>
-                    <div className="font-bold text-gray-800 text-sm mb-1 sm:mb-2 leading-tight">{sizeName}</div>
+                    <div className="font-bold text-gray-800 text-sm mb-1">{sizeName}</div>
                     {isAvailable ? (
                       <>
-                        <div className="text-base font-bold text-blue-600 mb-0.5 sm:mb-1">฿{price.toLocaleString()}</div>
+                        <div className="text-sm font-bold text-blue-600">฿{price.toLocaleString()}</div>
                         <div className="text-xs text-gray-500">ต่อ ตร.ม.</div>
                       </>
                     ) : (
-                      <div className="text-xs text-gray-400 font-medium leading-tight">ไม่มีขาย<br className="sm:hidden"/>ในขนาดนี้</div>
+                      <div className="text-xs text-gray-400 font-medium">ไม่มีขาย</div>
                     )}
                   </button>
                 );
@@ -616,44 +515,21 @@ export function MaterialSelector({
               </div>
 
               {/* Area calculation display */}
-              {area > 0 && (
-                <div className="text-center p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl border-2 border-blue-200 shadow-sm">
-                  <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2">
-                    <div className="w-8 h-8 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                      <Square className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" />
-                    </div>
-                    <div>
-                      <div className="text-sm text-blue-700 font-medium">พื้นที่รวมทั้งหมด</div>
-                      <div className="text-xl font-bold text-blue-600">
-                        {area.toFixed(2)} ตารางเมตร
-                      </div>
-                    </div>
+              {dimensions.width > 0 && dimensions.length > 0 && (
+                <div className="text-center p-3 bg-blue-50 rounded-xl border border-blue-200">
+                  <div className="text-sm text-blue-700 font-medium mb-1">พื้นที่รวมทั้งหมด</div>
+                  <div className="text-lg font-bold text-blue-600">
+                    {(dimensions.width * dimensions.length).toFixed(2)} ตารางเมตร
                   </div>
-                  <div className="text-sm text-blue-600">
-                    {dimensions.width} × {dimensions.length} = {area.toFixed(2)} ตร.ม.
+                  <div className="text-xs text-blue-600 mt-1">
+                    {dimensions.width} × {dimensions.length} = {(dimensions.width * dimensions.length).toFixed(2)} ตร.ม.
                   </div>
                 </div>
               )}
-              
-              {/* Helper info */}
-              <div className="p-3 sm:p-4 bg-amber-50 border border-amber-200 rounded-xl">
-                <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-5 h-5 sm:w-6 sm:h-6 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Info className="w-3 h-3 sm:w-4 sm:h-4 text-amber-600" />
-                  </div>
-                  <div>
-                    <p className="text-amber-800 font-semibold text-sm mb-1">💡 เคล็ดลับการวัด</p>
-                    <ul className="text-amber-700 text-sm space-y-0.5 sm:space-y-1 list-disc list-inside leading-tight">
-                      <li>วัดจากขอบถึงขอบของพื้นที่ที่ต้องการติดตั้ง</li>
-                      <li>สามารถกรอกทศนิยมได้ เช่น 5.5 เมตร</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
             </div>
             
             {/* Next step hint */}
-            {area > 0 && (
+            {dimensions.width > 0 && dimensions.length > 0 && (
               <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -963,7 +839,7 @@ export function MaterialSelector({
                           )}
                         </div>
                       ) : service.id === 'pipe' && service.requiresLength ? (
-                        /* ส่วนจัดการท่อน้ำพิเศษ */
+                        /* ส่วนจัดการท่อน้ำพิเศษ - คิดเป็นจุด จุดละ 3 เมตร */
                         <div className="space-y-1.5 sm:space-y-2">
                           <select
                             className="w-full p-2 sm:p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white text-base font-medium transition-all"
@@ -974,11 +850,11 @@ export function MaterialSelector({
                                   ...selectedExtras,
                                   [service.id]: e.target.value,
                                 });
-                                // ตั้งค่าเริ่มต้นเป็นความยาวขั้นต่ำ
+                                // ตั้งค่าเริ่มต้นเป็น 1 จุด (3 เมตร)
                                 if (!pipeLength[service.id]) {
                                   setPipeLength({
                                     ...pipeLength,
-                                    [service.id]: service.minimumLength || 3,
+                                    [service.id]: 1,
                                   });
                                 }
                               } else {
@@ -995,24 +871,24 @@ export function MaterialSelector({
                             <option value="">ไม่ต้องการ</option>
                             {service.options.map((option) => (
                               <option key={option.id} value={option.id}>
-                                {option.name} - ฿{option.price.toLocaleString()}/ม.
+                                {option.name} - ฿{(option.price * 3).toLocaleString()}/จุด (3ม.)
                               </option>
                             ))}
                           </select>
                           
-                          {/* ช่องกรอกความยาวท่อน้ำ */}
+                          {/* ช่องกรอกจำนวนจุดท่อน้ำ */}
                           {selectedExtras[service.id] && (
                             <div className="space-y-1.5 sm:space-y-2">
                               <div>
                                 <label className="block text-sm text-gray-700 mb-1 font-medium leading-tight">
-                                  ความยาวท่อน้ำ (เมตร) - ขั้นต่ำ {service.minimumLength || 3} เมตร
+                                  จำนวนจุดท่อน้ำ (จุดละ 3 เมตร)
                                 </label>
                                 <input
                                   type="number"
-                                  min={service.minimumLength || 3}
-                                  step="0.1"
+                                  min="1"
+                                  step="1"
                                   className="w-full px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-base font-medium transition-all"
-                                  placeholder={`${service.minimumLength || 3}.0`}
+                                  placeholder="1"
                                   value={pipeLength[service.id] || ""}
                                   onChange={(e) => {
                                     const value = e.target.value;
@@ -1022,12 +898,11 @@ export function MaterialSelector({
                                       delete newPipeLength[service.id];
                                       setPipeLength(newPipeLength);
                                     } else {
-                                      const length = parseFloat(value);
-                                      if (!isNaN(length)) {
-                                        const minLength = service.minimumLength || 3;
+                                      const points = parseInt(value);
+                                      if (!isNaN(points)) {
                                         setPipeLength({
                                           ...pipeLength,
-                                          [service.id]: Math.max(length, minLength),
+                                          [service.id]: Math.max(points, 1),
                                         });
                                       }
                                     }
@@ -1041,14 +916,20 @@ export function MaterialSelector({
                                   <div className="text-xs text-orange-700">
                                     {(() => {
                                       const selectedOption = service.options.find(opt => opt.id === selectedExtras[service.id]);
-                                      const length = pipeLength[service.id] || 0;
+                                      const points = pipeLength[service.id] || 0;
+                                      const metersPerPoint = 3;
+                                      const totalMeters = points * metersPerPoint;
                                       const pricePerMeter = selectedOption?.price || 0;
-                                      const totalPrice = pricePerMeter * length;
+                                      const totalPrice = pricePerMeter * totalMeters;
                                       return (
                                         <div className="space-y-0.5 sm:space-y-1">
                                           <div className="flex justify-between">
-                                            <span>ความยาว:</span>
-                                            <span className="font-semibold">{length} เมตร</span>
+                                            <span>จำนวนจุด:</span>
+                                            <span className="font-semibold">{points} จุด</span>
+                                          </div>
+                                          <div className="flex justify-between">
+                                            <span>ความยาวรวม:</span>
+                                            <span className="font-semibold">{totalMeters} เมตร</span>
                                           </div>
                                           <div className="flex justify-between">
                                             <span>ราคารวม:</span>
@@ -1106,7 +987,7 @@ export function MaterialSelector({
                             <div className="space-y-2">
                               <div>
                                 <label className="block text-sm text-gray-700 mb-1 font-medium">
-                                  จำนวนจุดไฟฟ้า (ขั้นต่ำ 1 จุด)
+                                  จำนวนจุดไฟฟ้า
                                 </label>
                                 <input
                                   type="number"
