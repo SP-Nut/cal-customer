@@ -142,10 +142,38 @@ export function PriceSummary({
           <div className="bg-slate-50 rounded p-1">
             <div className="text-xs text-slate-600 mb-0.5">บริการเสริม</div>
             <div className="space-y-1">
-              {Object.entries(selectedExtras)
-                .filter(([_, optionId]) => optionId)
-                .map(([serviceId, optionId]) => {
-                  const service = extraServices.find((s) => s.id === serviceId);
+              {extraServices
+                .filter((service) => selectedExtras[service.id])
+                .map((service) => {
+                  const serviceId = service.id;
+                  const optionId = selectedExtras[serviceId];
+                  
+                  // จัดการรางน้ำพิเศษ
+                  if (serviceId === 'gutter' && selectedGutterMaterials['gutter']) {
+                    const selectedGutter = gutterMaterials.find(g => g.id === selectedGutterMaterials['gutter']);
+                    
+                    if (selectedGutter) {
+                      const gutterPrice = selectedGutter.price * dimensions.length;
+                      const gutterDetails = `${selectedGutter.name} (${dimensions.length} ม.)`;
+                      
+                      return (
+                        <div key="gutter" className="space-y-0.5">
+                          <div className="flex justify-between text-xs">
+                            <span className="text-slate-700 font-medium">{service.name}</span>
+                            <span className="font-medium text-slate-800">
+                              ฿{gutterPrice.toLocaleString()}
+                            </span>
+                          </div>
+                          <div className="ml-2 text-xs text-slate-500">
+                            • {gutterDetails}
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }
+                  
+                  // จัดการบริการเสริมอื่นๆ
                   let option = service?.options.find((o) => o.id === optionId);
                   
                   // ถ้าไม่พบ option ในระดับแรก ให้หาใน subOptions
@@ -161,7 +189,7 @@ export function PriceSummary({
                     }
                   }
                   
-                  if (!service || !option) return null;
+                  if (!option) return null;
                   
                   // คำนวณราคาและรายละเอียด
                   let finalPrice = option.price;
@@ -193,17 +221,6 @@ export function PriceSummary({
                     optionDetails = option.name;
                   }
                   
-                  // เพิ่มราคารางน้ำถ้ามี
-                  let gutterDetails = '';
-                  if (serviceId === 'gutter' && selectedGutterMaterials[serviceId]) {
-                    const selectedGutter = gutterMaterials.find(g => g.id === selectedGutterMaterials[serviceId]);
-                    if (selectedGutter) {
-                      const gutterPrice = selectedGutter.price * dimensions.length;
-                      finalPrice += gutterPrice;
-                      gutterDetails = `${selectedGutter.name} (${dimensions.length} ม.)`;
-                    }
-                  }
-                  
                   return (
                     <div key={serviceId} className="space-y-0.5">
                       {/* หัวข้อบริการ */}
@@ -217,7 +234,6 @@ export function PriceSummary({
                       {/* คำอธิบายที่เลือก */}
                       <div className="ml-2 text-xs text-slate-500">
                         {optionDetails && <div>• {optionDetails}</div>}
-                        {gutterDetails && <div>• {gutterDetails}</div>}
                         {option.description && serviceId === 'foundation' && (
                           <div className="text-xs text-slate-400 leading-tight mt-0.5">
                             {option.description}
@@ -231,7 +247,7 @@ export function PriceSummary({
                       </div>
                     </div>
                   );
-                })}
+                }).filter(Boolean)}
             </div>
           </div>
         )}
