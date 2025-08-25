@@ -46,7 +46,7 @@ const StepIndicator = ({
 }) => (
   <div className="sticky top-0 inset-x-0 z-20">
     <div className="bg-gradient-to-r from-blue-600 to-cyan-500 rounded-t-xl shadow-lg">
-      <div className="px-3 sm:px-4 py-2 sm:py-3">
+      <div className="px-2 sm:px-4 py-1.5 sm:py-3">
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center shadow-md flex-shrink-0">
             <span className="text-blue-600 font-bold text-sm">
@@ -247,8 +247,8 @@ export function MaterialSelector({
         {/* Empty state — full-bleed */}
 
         {/* Step 1 — Enhanced material type selection */}
-        <div id="step-type" className="px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
-          <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+        <div id="step-type" className="px-2 sm:px-4 bg-white border-b border-gray-100 py-2 sm:py-4">
+          <div className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-3">
             <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
             <div>
               <h3 className="text-lg font-bold text-gray-800 leading-tight">
@@ -257,7 +257,7 @@ export function MaterialSelector({
               <p className="text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">เลือกประเภทวัสดุ</p>
             </div>
           </div>
-          <div className="space-y-2 sm:space-y-3">
+          <div className="space-y-1.5 sm:space-y-3">
             {categories.map((category, index) => (
               <button
                 key={category.id}
@@ -302,7 +302,7 @@ export function MaterialSelector({
           
           {/* Next step hint */}
           {selectedType && (
-            <div className="mt-3 sm:mt-4 p-3 bg-green-50 border border-green-200 rounded-xl">
+            <div className="mt-2 sm:mt-4 p-2 sm:p-3 bg-green-50 border border-green-200 rounded-xl">
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <Check className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" />
@@ -318,8 +318,8 @@ export function MaterialSelector({
 
         {/* Step 2 — Enhanced material selection */}
         {selectedType && (
-          <div id="step-material" className="px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
-            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+          <div id="step-material" className="px-2 sm:px-4 bg-white border-b border-gray-100 py-2 sm:py-4">
+            <div className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-3">
               <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
               <div>
                 <h3 className="text-lg font-bold text-gray-800 leading-tight">
@@ -328,7 +328,7 @@ export function MaterialSelector({
                 <p className="text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">เลือกวัสดุที่เหมาะสม</p>
               </div>
             </div>
-            <div className="space-y-2 sm:space-y-3 max-h-80 sm:max-h-96 overflow-y-auto scrollbar-hide">
+            <div className="space-y-1.5 sm:space-y-3 max-h-80 sm:max-h-96 overflow-y-auto scrollbar-hide">
               {filteredMaterials.map((material, index) => (
                 <button
                   key={material.id}
@@ -368,7 +368,7 @@ export function MaterialSelector({
             
             {/* Next step hint */}
             {selectedMaterial && (
-              <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
+              <div className="mt-3 sm:mt-6 p-2 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <Check className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" />
@@ -385,8 +385,8 @@ export function MaterialSelector({
 
         {/* Step 3 — Enhanced size selection */}
         {selectedMaterial && (
-          <div id="step-size" className="px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
-            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+          <div id="step-size" className="px-2 sm:px-4 bg-white border-b border-gray-100 py-2 sm:py-4">
+            <div className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-3">
               <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
               <div>
                 <h3 className="text-lg font-bold text-gray-800 leading-tight">
@@ -395,7 +395,7 @@ export function MaterialSelector({
                 <p className="text-sm text-gray-600 mt-0.5 sm:mt-1 leading-tight">เลือกขนาดที่เหมาะสม</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+            <div className="grid grid-cols-2 gap-1.5 sm:gap-3">
               {["M", "M+", "L", "L+", "Stainless S", "Stainless M"].map((sizeName) => {
                 const size = selectedMaterial.sizes.find((s) => s.name === sizeName);
                 const price = size ? selectedMaterial.pricePerSqm[size.id] : 0;
@@ -432,7 +432,7 @@ export function MaterialSelector({
             
             {/* Next step hint */}
             {selectedSize && (
-              <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
+              <div className="mt-3 sm:mt-6 p-2 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <Check className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" />
@@ -449,8 +449,8 @@ export function MaterialSelector({
 
         {/* Step 4 — Enhanced dimensions input */}
         {selectedSize && (
-          <div id="step-dimensions" className="px-3 sm:px-4 bg-white border-b border-gray-100 py-3 sm:py-4">
-            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+          <div id="step-dimensions" className="px-2 sm:px-4 bg-white border-b border-gray-100 py-2 sm:py-4">
+            <div className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-3">
               <div className="w-2 sm:w-3 h-6 sm:h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
               <div>
                 <h3 className="text-lg font-bold text-gray-800 leading-tight">
@@ -460,8 +460,8 @@ export function MaterialSelector({
               </div>
             </div>
             
-            <div className="space-y-3 sm:space-y-4">
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="space-y-2 sm:space-y-4">
+              <div className="grid grid-cols-2 gap-2 sm:gap-4">
                 <div className="space-y-1 sm:space-y-2">
                   <label className="block text-sm font-semibold text-gray-700">
                     <span className="flex items-center gap-1 sm:gap-2">
@@ -530,7 +530,7 @@ export function MaterialSelector({
             
             {/* Next step hint */}
             {dimensions.width > 0 && dimensions.length > 0 && (
-              <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
+              <div className="mt-3 sm:mt-6 p-2 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <Check className="w-3 h-3 sm:w-5 sm:h-5 text-green-600" />
@@ -547,12 +547,12 @@ export function MaterialSelector({
 
         {/* Step 5 — full-bleed */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
-          <div id="step-installation" className="px-2 sm:px-3 bg-white border-b border-gray-100 py-2 sm:py-3">
-            <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+          <div id="step-installation" className="px-2 sm:px-3 bg-white border-b border-gray-100 py-1.5 sm:py-3">
+            <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-3">
               <div className="w-1.5 sm:w-2 h-5 sm:h-6 bg-blue-500 rounded-full" />
               <h3 className="text-lg font-bold text-gray-800">รูปแบบติดตั้ง</h3>
             </div>
-            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+            <div className="grid grid-cols-2 gap-1.5 sm:gap-3">
               <button
                 className={`p-3 sm:p-4 rounded-lg border text-center transition-all duration-150 ${
                   hasColumn === true
@@ -582,12 +582,12 @@ export function MaterialSelector({
         {/* Step 6 — full-bleed */}
         {selectedSize && dimensions.width > 0 && dimensions.length > 0 && (
           <>
-            <div id="step-services" className="px-2 sm:px-3 bg-white border-b border-gray-100 py-2 sm:py-3">
-              <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+            <div id="step-services" className="px-2 sm:px-3 bg-white border-b border-gray-100 py-1.5 sm:py-3">
+              <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2">
                 <div className="w-1.5 sm:w-2 h-4 sm:h-5 bg-blue-500 rounded-full" />
                 <h3 className="text-lg font-bold text-gray-800">บริการหลัก</h3>
               </div>
-              <div className="space-y-1.5 sm:space-y-2">
+              <div className="space-y-1 sm:space-y-2">
                 {mainServices
                   .filter((service) => {
                     // @ts-ignore optional fields exist in data
@@ -735,12 +735,12 @@ export function MaterialSelector({
             </div>
 
             {/* Extra services — full-bleed */}
-            <div className="px-2 sm:px-3 bg-white py-2 sm:py-3 pb-4 sm:pb-6">
-              <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+            <div className="px-2 sm:px-3 bg-white py-1.5 sm:py-3 pb-3 sm:pb-6">
+              <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2">
                 <div className="w-1.5 sm:w-2 h-5 sm:h-6 bg-blue-500 rounded-full" />
                 <h3 className="text-lg font-bold text-gray-800">บริการเสริม (ตัวเลือก)</h3>
               </div>
-              <div className="space-y-1.5 sm:space-y-2">
+              <div className="space-y-1 sm:space-y-2">
                 {extraServices
                   .filter((service) => (hasColumn === false ? !service.id.includes("column") : true))
                   .map((service) => (

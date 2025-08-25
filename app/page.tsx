@@ -229,7 +229,7 @@ export default function Home() {
       <div className="lg:hidden p-4 mt-4">
         {/* Preview Section - ก่อนเลือกวัสดุ */}
         {!selectionData.material && (
-          <div className="mb-4 bg-white/95 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-xl">
+          <div className="mb-4">
             <MaterialPreview 
               material={selectionData.material} 
               selectedSize={selectionData.size}
@@ -247,17 +247,15 @@ export default function Home() {
         )}
         
         {/* Selector Section - แสดงเสมอ */}
-        <div className="bg-white/95 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-xl mb-4">
-          <div className="p-4">
-            <MaterialSelector
-              materials={materials}
-              categories={materialCategories}
-              mainServices={mainServices}
-              extraServices={extraServices}
-              gutterMaterials={gutterMaterials}
-              onSelectionChange={setSelectionData}
-            />
-          </div>
+        <div className="mb-4">
+          <MaterialSelector
+            materials={materials}
+            categories={materialCategories}
+            mainServices={mainServices}
+            extraServices={extraServices}
+            gutterMaterials={gutterMaterials}
+            onSelectionChange={setSelectionData}
+          />
         </div>
         
         {/* Price Summary - เมื่อมีข้อมูลครบ */}
