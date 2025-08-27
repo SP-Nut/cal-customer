@@ -261,7 +261,7 @@ export const extraServices: ExtraService[] = [
   {
     id: 'electrical',
     name: 'งานไฟฟ้า',
-    description: 'ระบบไฟฟ้าและแสงสว่าง (1,500 บาท/จุด)',
+    description: 'ระบบไฟฟ้าและแสงสว่าง ',
     options: [
       { 
         id: 'lighting', 
