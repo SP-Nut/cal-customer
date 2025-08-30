@@ -1031,7 +1031,11 @@ export function MaterialPreview({
                           
                           if (service.pricePerSqm && dimensions.width > 0 && dimensions.length > 0) {
                             servicePrice = servicePrice * dimensions.width * dimensions.length;
-                            if (optionInfo) optionInfo += ` (${(dimensions.width * dimensions.length).toFixed(1)} ตร.ม.)`;
+                            if (optionInfo) {
+                              optionInfo += service.id === 'steel-painting' 
+                                ? ` (${(dimensions.width * dimensions.length).toFixed(1)} ตร.ม. - สีพิเศษคิดเป็นตารางเมตร)`
+                                : ` (${(dimensions.width * dimensions.length).toFixed(1)} ตร.ม.)`;
+                            }
                           }
                           
                           return (
@@ -1087,7 +1091,9 @@ export function MaterialPreview({
                           } else if (service.pricePerSqm && dimensions.width > 0 && dimensions.length > 0) {
                             const area = dimensions.width * dimensions.length;
                             finalPrice = priceSource.price * area;
-                            extraInfo = `${area.toFixed(1)} ตร.ม.`;
+                            extraInfo = service.id === 'steel-painting' 
+                              ? `${area.toFixed(1)} ตร.ม. - สีพิเศษคิดเป็นตารางเมตร`
+                              : `${area.toFixed(1)} ตร.ม.`;
                           } else if (service.requiresLength) {
                             const length = Math.max(dimensions.length, service.minimumLength || 3);
                             finalPrice = priceSource.price * length;

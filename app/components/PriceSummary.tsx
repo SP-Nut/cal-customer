@@ -106,7 +106,9 @@ export function PriceSummary({
                         optionDetails = `${option.name} (${poleCount} ต้น)`;
                       } else if (service.pricePerSqm) {
                         servicePrice = option.price * area;
-                        optionDetails = `${option.name} (${area.toFixed(2)} ตร.ม.)`;
+                        optionDetails = service.id === 'steel-painting' 
+                          ? `${option.name} (${area.toFixed(2)} ตร.ม. - สีพิเศษคิดเป็นตารางเมตร)`
+                          : `${option.name} (${area.toFixed(2)} ตร.ม.)`;
                       } else {
                         servicePrice += option.price;
                         optionDetails = option.name;
@@ -216,6 +218,13 @@ export function PriceSummary({
                     } else {
                       optionDetails = option.name;
                     }
+                  } else if (service.pricePerSqm && dimensions.width > 0 && dimensions.length > 0) {
+                    // บริการที่คิดตามตารางเมตร เช่น สีโครงสร้าง
+                    const area = dimensions.width * dimensions.length;
+                    finalPrice = option.price * area;
+                    optionDetails = service.id === 'steel-painting' 
+                      ? `${option.name} (${area.toFixed(2)} ตร.ม. - สีพิเศษคิดเป็นตารางเมตร)`
+                      : `${option.name} (${area.toFixed(2)} ตร.ม.)`;
                   } else {
                     // บริการทั่วไป
                     optionDetails = option.name;

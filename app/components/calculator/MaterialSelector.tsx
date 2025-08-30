@@ -618,10 +618,15 @@ export function MaterialSelector({
                           <div className="flex justify-between items-center gap-2">
                             <div className="min-w-0">
                               <div className="font-semibold text-gray-800 text-base">{service.name}</div>
-                              <div className="text-sm text-gray-600 leading-tight">{service.description}</div>
+                              <div className="text-sm text-gray-600 leading-tight">
+                                {service.description}
+                                {service.id === 'steel-painting' && service.pricePerSqm && (
+                                  <span className="text-orange-600 font-medium"> • สีพิเศษคิดเป็นตารางเมตร</span>
+                                )}
+                              </div>
                             </div>
                             <div className="text-base font-bold text-blue-600 shrink-0">
-                              {service.price ? `฿${service.price.toLocaleString()}` : 'ตามพื้นที่'}
+                              {service.price ? `฿${service.price.toLocaleString()}` : service.pricePerSqm ? 'ตามตัวเลือก' : 'ตามพื้นที่'}
                             </div>
                           </div>
                         </button>
@@ -630,10 +635,15 @@ export function MaterialSelector({
                           <div className="flex justify-between items-center gap-2 mb-1.5 sm:mb-2">
                             <div className="min-w-0">
                               <div className="font-semibold text-gray-800 text-base">{service.name}</div>
-                              <div className="text-sm text-gray-600 leading-tight">{service.description}</div>
+                              <div className="text-sm text-gray-600 leading-tight">
+                                {service.description}
+                                {service.id === 'steel-painting' && service.pricePerSqm && (
+                                  <span className="text-orange-600 font-medium"> • สีพิเศษคิดเป็นตารางเมตร</span>
+                                )}
+                              </div>
                             </div>
                             <div className="text-base font-bold text-blue-600 shrink-0">
-                              {service.price ? `฿${service.price.toLocaleString()}` : 'ตามพื้นที่'}
+                              {service.price ? `฿${service.price.toLocaleString()}` : service.pricePerSqm ? 'ตามตัวเลือก' : 'ตามพื้นที่'}
                             </div>
                           </div>
 
@@ -720,7 +730,7 @@ export function MaterialSelector({
                                   </div>
                                   {option.price > 0 && (
                                     <div className="text-base text-blue-600 font-semibold flex-shrink-0">
-                                      +฿{option.price.toLocaleString()}
+                                      +฿{option.price.toLocaleString()}{service.id === 'steel-painting' && service.pricePerSqm ? '/ตร.ม.' : ''}
                                     </div>
                                   )}
                                 </div>
@@ -754,7 +764,12 @@ export function MaterialSelector({
                     >
                       <div className="mb-0.5 sm:mb-1">
                         <div className="font-semibold text-gray-800 text-base">{service.name}</div>
-                        <div className="text-sm text-gray-600 leading-tight">{service.description}</div>
+                        <div className="text-sm text-gray-600 leading-tight">
+                          {service.description}
+                          {service.id === 'steel-painting' && service.pricePerSqm && (
+                            <span className="text-orange-600 font-medium"> • สีพิเศษคิดเป็นตารางเมตร</span>
+                          )}
+                        </div>
                       </div>
                       
                       {/* ถ้าเป็นบริการรางน้ำ ให้ใช้ gutterMaterials แทน service.options */}
@@ -1192,7 +1207,7 @@ export function MaterialSelector({
                           <option value="">ไม่ต้องการ</option>
                           {service.options.map((option) => (
                             <option key={option.id} value={option.id}>
-                              {option.name} - ฿{option.price.toLocaleString()}
+                              {option.name} - ฿{option.price.toLocaleString()}{service.pricePerSqm ? '/ตร.ม.' : ''}{service.id === 'steel-painting' && service.pricePerSqm ? ' (สีพิเศษคิดเป็นตารางเมตร)' : ''}
                             </option>
                           ))}
                         </select>

@@ -92,12 +92,13 @@ export const mainServices: Service[] = [
       { 
         id: 'custom', 
         name: 'สีผสม (พิเศษ)', 
-        price: 1000,
+        price: 200,
         color: '#FF6B6B',
-        description: 'สีผสมตามต้องการ +1,000 บาท'
+        description: 'สีผสมตามต้องการ ฿200/ตร.ม.'
       }
     ],
-    isSelectedByDefault: true
+    isSelectedByDefault: true,
+    pricePerSqm: true
   },
   {
     id: 'ceiling',
