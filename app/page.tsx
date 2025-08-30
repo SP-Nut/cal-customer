@@ -16,7 +16,7 @@ export default function Home() {
     material: null as Material | null,
     size: null as Size | null,
     dimensions: { width: 0, length: 0 },
-    hasColumn: null as boolean | null,
+    installationType: null as string | null,
     selectedServices: [] as string[],
     selectedServiceOptions: {} as Record<string, string>,
     selectedExtras: {} as Record<string, string>,
@@ -180,7 +180,10 @@ export default function Home() {
               extraServices={extraServices}
               selectedServiceOptions={selectionData.selectedServiceOptions}
               gutterMaterials={selectionData.gutterMaterials}
+              pipeLength={selectionData.pipeLength}
+              electricalPoints={selectionData.electricalPoints}
               poleCount={selectionData.poleCount}
+              installationType={selectionData.installationType}
               onFloatingPreviewChange={setShowFloatingPreview}
             />
           </div>
@@ -218,6 +221,7 @@ export default function Home() {
                 pipeLength={selectionData.pipeLength}
                 electricalPoints={selectionData.electricalPoints}
                 poleCount={selectionData.poleCount}
+                installationType={selectionData.installationType}
                 onQuoteRequest={() => setIsQuoteModalOpen(true)}
               />
             )}
@@ -241,6 +245,12 @@ export default function Home() {
               extraServices={extraServices}
               selectedServiceOptions={selectionData.selectedServiceOptions}
               gutterMaterials={selectionData.gutterMaterials}
+              pipeLength={selectionData.pipeLength}
+              electricalPoints={selectionData.electricalPoints}
+              poleCount={selectionData.poleCount}
+              installationType={selectionData.installationType}
+              isMobile={true}
+              onQuoteRequest={() => setIsQuoteModalOpen(true)}
               onFloatingPreviewChange={setShowFloatingPreview}
             />
           </div>
@@ -273,6 +283,8 @@ export default function Home() {
             gutterMaterials={selectionData.gutterMaterials}
             pipeLength={selectionData.pipeLength}
             electricalPoints={selectionData.electricalPoints}
+            poleCount={selectionData.poleCount}
+            installationType={selectionData.installationType}
             isMobile={true}
             onQuoteRequest={() => setIsQuoteModalOpen(true)}
           />
@@ -297,6 +309,7 @@ export default function Home() {
           pipeLength={selectionData.pipeLength}
           electricalPoints={selectionData.electricalPoints}
           poleCount={selectionData.poleCount}
+          installationType={selectionData.installationType}
         />
       )}
     </main>

@@ -23,7 +23,7 @@ interface MaterialSelectorProps {
     material: Material | null;
     size: Size | null;
     dimensions: { width: number; length: number };
-    hasColumn: boolean | null;
+    installationType: string | null;
     selectedServices: string[];
     selectedServiceOptions: Record<string, string>;
     selectedExtras: Record<string, string>;
@@ -87,7 +87,8 @@ export function MaterialSelector({
   );
   const [selectedSize, setSelectedSize] = useState<Size | null>(null);
   const [dimensions, setDimensions] = useState({ width: 0, length: 0 });
-  const [hasColumn, setHasColumn] = useState<boolean | null>(null);
+  const [installationType, setInstallationType] = useState<string | null>(null);
+  const [noColumnSupportType, setNoColumnSupportType] = useState<string | null>(null);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedServiceOptions, setSelectedServiceOptions] = useState<
     Record<string, string>
@@ -132,7 +133,7 @@ export function MaterialSelector({
       material: selectedMaterial,
       size: selectedSize,
       dimensions,
-      hasColumn,
+      installationType: installationType === 'no-column' ? noColumnSupportType || 'no-column' : installationType,
       selectedServices,
       selectedServiceOptions,
       selectedExtras,
@@ -145,7 +146,8 @@ export function MaterialSelector({
     selectedMaterial,
     selectedSize,
     dimensions,
-    hasColumn,
+    installationType,
+    noColumnSupportType,
     selectedServices,
     selectedServiceOptions,
     selectedExtras,
@@ -161,7 +163,8 @@ export function MaterialSelector({
     if (!selectedMaterial) return 2;
     if (!selectedSize) return 3;
     if (!dimensions.width || !dimensions.length) return 4;
-    if (hasColumn === null) return 5;
+    if (installationType === null) return 5;
+    if (installationType === 'no-column' && noColumnSupportType === null) return 5;
     return 6;
   };
 
@@ -189,7 +192,8 @@ export function MaterialSelector({
     setSelectedMaterial(material);
     setSelectedSize(null);
     setDimensions({ width: 0, length: 0 });
-    setHasColumn(null);
+    setInstallationType(null);
+    setNoColumnSupportType(null);
     setSelectedServices([]);
     setSelectedServiceOptions({});
     setSelectedExtras({});
@@ -200,7 +204,8 @@ export function MaterialSelector({
   const handleSizeSelect = (size: Size) => {
     setSelectedSize(size);
     setDimensions({ width: 0, length: 0 });
-    setHasColumn(null);
+    setInstallationType(null);
+    setNoColumnSupportType(null);
     setSelectedServices([]);
     setSelectedServiceOptions({});
     setSelectedExtras({});
@@ -555,27 +560,86 @@ export function MaterialSelector({
             <div className="grid grid-cols-2 gap-1.5 sm:gap-3">
               <button
                 className={`p-3 sm:p-4 rounded-lg border text-center transition-all duration-150 ${
-                  hasColumn === true
+                  installationType === 'with-column'
                     ? "border-blue-500 bg-blue-50 shadow"
                     : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/40"
                 }`}
-                onClick={() => setHasColumn(true)}
+                onClick={() => {
+                  setInstallationType('with-column');
+                  setNoColumnSupportType(null);
+                }}
               >
                 <div className="font-bold text-gray-700 text-sm mb-0.5">แบบมีเสา</div>
                 <div className="text-sm text-gray-600 leading-tight">มีเสาค้ำยัน</div>
               </button>
               <button
                 className={`p-3 sm:p-4 rounded-lg border text-center transition-all duration-150 ${
-                  hasColumn === false
+                  installationType === 'no-column'
                     ? "border-blue-500 bg-blue-50 shadow"
                     : "border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50/40"
                 }`}
-                onClick={() => setHasColumn(false)}
+                onClick={() => {
+                  setInstallationType('no-column');
+                  setNoColumnSupportType(null);
+                }}
               >
                 <div className="font-bold text-gray-700 text-sm mb-0.5">แบบไร้เสา</div>
-                <div className="text-sm text-gray-600 leading-tight">ไม่มีเสาค้ำยัน</div>
+                <div className="text-sm text-gray-600 leading-tight">เลือกประเภทการรองรับ</div>
               </button>
             </div>
+
+            {/* ตัวเลือกย่อยสำหรับแบบไร้เสา */}
+            {installationType === 'no-column' && (
+              <div className="mt-3 space-y-2">
+                <h4 className="text-base font-semibold text-gray-800">เลือกประเภทการรองรับ:</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    className={`p-2 sm:p-3 rounded-lg border text-center transition-all duration-150 ${
+                      noColumnSupportType === 'single-support'
+                        ? "border-green-500 bg-green-50 shadow"
+                        : "border-gray-200 hover:border-green-300 bg-white hover:bg-green-50/40"
+                    }`}
+                    onClick={() => setNoColumnSupportType('single-support')}
+                  >
+                    <div className="font-semibold text-gray-700 text-sm mb-1">ขาค้ำเดี่ยว</div>
+                    <div className="text-xs text-green-600 font-medium">ฟรี</div>
+                  </button>
+                  <button
+                    className={`p-2 sm:p-3 rounded-lg border text-center transition-all duration-150 ${
+                      noColumnSupportType === 'beam-support'
+                        ? "border-green-500 bg-green-50 shadow"
+                        : "border-gray-200 hover:border-green-300 bg-white hover:bg-green-50/40"
+                    }`}
+                    onClick={() => setNoColumnSupportType('beam-support')}
+                  >
+                    <div className="font-semibold text-gray-700 text-sm mb-1">ขาค้ำระแนง</div>
+                    <div className="text-xs text-green-600 font-medium">ฟรี</div>
+                  </button>
+                  <button
+                    className={`p-2 sm:p-3 rounded-lg border text-center transition-all duration-150 ${
+                      noColumnSupportType === 'tension-arm'
+                        ? "border-green-500 bg-green-50 shadow"
+                        : "border-gray-200 hover:border-green-300 bg-white hover:bg-green-50/40"
+                    }`}
+                    onClick={() => setNoColumnSupportType('tension-arm')}
+                  >
+                    <div className="font-semibold text-gray-700 text-sm mb-1">แขนดึง</div>
+                    <div className="text-xs text-green-600 font-medium">ฟรี</div>
+                  </button>
+                  <button
+                    className={`p-2 sm:p-3 rounded-lg border text-center transition-all duration-150 ${
+                      noColumnSupportType === 'flat-bar'
+                        ? "border-green-500 bg-green-50 shadow"
+                        : "border-gray-200 hover:border-green-300 bg-white hover:bg-green-50/40"
+                    }`}
+                    onClick={() => setNoColumnSupportType('flat-bar')}
+                  >
+                    <div className="font-semibold text-gray-700 text-sm mb-1">แฟลตบาร์</div>
+                    <div className="text-xs text-green-600 font-medium">ฟรี</div>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -592,7 +656,12 @@ export function MaterialSelector({
                   .filter((service) => {
                     // @ts-ignore optional fields exist in data
                     const sizeOk = !service.requiresSize || service.requiresSize === selectedSize?.id;
-                    const installationOk = hasColumn === null || (hasColumn === false ? service.id !== "poles" : true);
+                    const currentInstallationType = installationType === 'no-column' ? noColumnSupportType || 'no-column' : installationType;
+                    const installationOk = !service.requiresInstallationType || service.requiresInstallationType === currentInstallationType;
+                    
+                    // ซ่อน poles service เมื่อเลือกแบบไร้เสา
+                    if (installationType === 'no-column' && service.id === 'poles') return false;
+                    
                     return sizeOk && installationOk;
                   })
                   .map((service) => (
@@ -752,7 +821,10 @@ export function MaterialSelector({
               </div>
               <div className="space-y-1 sm:space-y-2">
                 {extraServices
-                  .filter((service) => (hasColumn === false ? !service.id.includes("column") : true))
+                  .filter((service) => {
+                    const currentInstallationType = installationType === 'no-column' ? noColumnSupportType || 'no-column' : installationType;
+                    return currentInstallationType !== 'no-column' || !service.id.includes("column");
+                  })
                   .map((service) => (
                     <div 
                       key={service.id} 

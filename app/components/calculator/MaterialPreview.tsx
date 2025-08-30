@@ -16,10 +16,15 @@ interface MaterialPreviewProps {
   extraServices?: ExtraService[];
   selectedServiceOptions?: Record<string, string>;
   gutterMaterials?: Record<string, string>;
+  pipeLength?: Record<string, number>;
+  electricalPoints?: Record<string, number>;
   poleCount?: number;
+  installationType?: string | null;
   onNext?: () => void;
   onSizeSelect?: (sizeId: string) => void;
   onFloatingPreviewChange?: (isVisible: boolean) => void;
+  onQuoteRequest?: () => void;
+  isMobile?: boolean;
 }
 
 export function MaterialPreview({ 
@@ -33,10 +38,15 @@ export function MaterialPreview({
   extraServices = [],
   selectedServiceOptions = {},
   gutterMaterials: selectedGutterMaterials = {},
+  pipeLength = {},
+  electricalPoints = {},
   poleCount = 1,
+  installationType = null,
   onNext,
   onSizeSelect,
-  onFloatingPreviewChange
+  onFloatingPreviewChange,
+  onQuoteRequest,
+  isMobile = false
 }: MaterialPreviewProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedImageIndex, setSelectedImageIndex] = React.useState<number | null>(null);
@@ -1007,46 +1017,122 @@ export function MaterialPreview({
                     <h4 className="text-lg font-bold text-gray-800 mb-3">บริการที่เลือก</h4>
                     
                     <div className="space-y-2">
-                      {/* Main Services */}
+                      {/* Installation Type */}
+                      {installationType && (
+                        <div className="py-2 px-3 bg-blue-50 rounded border border-blue-100">
+                          <div className="flex justify-between items-start">
+                            <div className="flex-1">
+                              <span className="font-medium text-gray-800">ประเภทการติดตั้ง</span>
+                              <div className="text-gray-600 text-sm mt-1">
+                                • {installationType === 'with-column' ? 'แบบมีเสา' :
+                                    installationType === 'single-support' ? 'แบบไร้เสา - ขาค้ำเดี่ยว' :
+                                    installationType === 'beam-support' ? 'แบบไร้เสา - ขาค้ำระแนง' :
+                                    installationType === 'tension-arm' ? 'แบบไร้เสา - แขนดึง' :
+                                    installationType === 'flat-bar' ? 'แบบไร้เสา - แฟลตบาร์' :
+                                    'แบบไร้เสา'}
+                                
+                                {/* Pole Details for with-column type - ต่อท้ายในบรรทัดเดียวกัน */}
+                                {installationType === 'with-column' && (() => {
+                                  const poleService = mainServices.find(s => s.id === 'poles');
+                                  if (poleService && selectedServices.includes('poles')) {
+                                    const selectedOption = selectedServiceOptions['poles'];
+                                    if (selectedOption && poleService.options) {
+                                      const option = poleService.options.find(opt => opt.id === selectedOption);
+                                      if (option) {
+                                        const totalPrice = option.price * poleCount;
+                                        return ` (${option.name} ${poleCount} ต้น)`;
+                                      }
+                                    }
+                                  }
+                                  return null;
+                                })()}
+                              </div>
+                            </div>
+                            <span className={`font-bold ml-3 ${
+                              installationType === 'with-column' ? 
+                                (() => {
+                                  const poleService = mainServices.find(s => s.id === 'poles');
+                                  if (poleService && selectedServices.includes('poles')) {
+                                    const selectedOption = selectedServiceOptions['poles'];
+                                    if (selectedOption && poleService.options) {
+                                      const option = poleService.options.find(opt => opt.id === selectedOption);
+                                      if (option && option.price > 0) {
+                                        return 'text-blue-700';
+                                      }
+                                    }
+                                  }
+                                  return 'text-green-600';
+                                })() : 
+                                'text-green-600'
+                            }`}>
+                              {installationType === 'with-column' ? 
+                                (() => {
+                                  const poleService = mainServices.find(s => s.id === 'poles');
+                                  if (poleService && selectedServices.includes('poles')) {
+                                    const selectedOption = selectedServiceOptions['poles'];
+                                    if (selectedOption && poleService.options) {
+                                      const option = poleService.options.find(opt => opt.id === selectedOption);
+                                      if (option) {
+                                        const price = option.price * poleCount;
+                                        return price === 0 ? 'ฟรี' : `฿${price.toLocaleString()}`;
+                                      }
+                                    }
+                                  }
+                                  return 'ฟรี';
+                                })() : 
+                                'ฟรี'
+                              }
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Main Services (ไม่รวมงานเสา เพราะแสดงในส่วนการติดตั้งแล้ว) */}
                       {mainServices
-                        .filter((service) => selectedServices.includes(service.id))
+                        .filter((service) => selectedServices.includes(service.id) && service.id !== 'poles')
                         .map((service) => {
-                          let servicePrice = service.price || 0;
                           const selectedOption = selectedServiceOptions[service.id];
-                          let optionInfo = '';
+                          let servicePrice = 0;
+                          let detailText = '';
                           
                           if (selectedOption && service.options) {
                             const option = service.options.find(opt => opt.id === selectedOption);
                             if (option) {
-                              // ถ้าเป็น poles service ให้คูณกับจำนวนเสา
-                              if (service.id === 'poles') {
-                                servicePrice = option.price * poleCount;
-                                optionInfo = `${option.name} (${poleCount} ต้น)`;
+                              servicePrice = option.price;
+                              
+                              if (service.pricePerSqm && dimensions.width > 0 && dimensions.length > 0) {
+                                const area = dimensions.width * dimensions.length;
+                                servicePrice = option.price * area;
+                                
+                                if (service.id === 'steel-painting') {
+                                  detailText = `${option.name} (${area.toFixed(2)} ตร.ม.)`;
+                                  if (option.price === 0) {
+                                    detailText += ' - สีมาตรฐาน';
+                                  } else {
+                                    detailText += ' - สีพิเศษคิดเป็นตารางเมตร';
+                                  }
+                                } else {
+                                  detailText = `${option.name} (${area.toFixed(2)} ตร.ม.)`;
+                                }
                               } else {
-                                servicePrice += option.price;
-                                optionInfo = option.name;
+                                detailText = option.name;
                               }
                             }
                           }
                           
-                          if (service.pricePerSqm && dimensions.width > 0 && dimensions.length > 0) {
-                            servicePrice = servicePrice * dimensions.width * dimensions.length;
-                            if (optionInfo) {
-                              optionInfo += service.id === 'steel-painting' 
-                                ? ` (${(dimensions.width * dimensions.length).toFixed(1)} ตร.ม. - สีพิเศษคิดเป็นตารางเมตร)`
-                                : ` (${(dimensions.width * dimensions.length).toFixed(1)} ตร.ม.)`;
-                            }
-                          }
+                          const displayPrice = servicePrice === 0 ? 'ฟรี' : `฿${servicePrice.toLocaleString()}`;
                           
                           return (
-                            <div key={service.id} className="flex justify-between items-center py-2 px-3 bg-blue-50 rounded border border-blue-100">
+                            <div key={service.id} className="flex justify-between items-start py-2 px-3 bg-blue-50 rounded border border-blue-100">
                               <div className="flex-1">
                                 <span className="font-medium text-gray-800">{service.name}</span>
-                                {optionInfo && (
-                                  <span className="text-gray-600 text-sm ml-2">• {optionInfo}</span>
+                                {detailText && (
+                                  <div className="text-gray-600 text-sm mt-1">• {detailText}</div>
                                 )}
                               </div>
-                              <span className="font-bold text-blue-700 ml-3">฿{servicePrice.toLocaleString()}</span>
+                              <span className={`font-bold ml-3 ${servicePrice === 0 ? 'text-green-600' : 'text-blue-700'}`}>
+                                {displayPrice}
+                              </span>
                             </div>
                           );
                         })}
@@ -1152,12 +1238,22 @@ export function MaterialPreview({
                     
                     <div className="bg-green-50 rounded-lg p-4 border border-green-200">
                       <h5 className="font-bold text-green-800 text-base mb-2">ติดต่อเราเพื่อรับใบเสนอราคา</h5>
-                      <div className="text-green-700 text-sm space-y-1">
+                      <div className="text-green-700 text-sm space-y-1 mb-4">
                         <p>📞 โทรศัพท์: 084-909-7777</p>
                         <p>💬 Line: @spkansard</p>
                         <p>📧 อีเมล: spkansards@gmail.com</p>
                         <p className="font-medium mt-2">พร้อมให้คำปรึกษาฟรี!</p>
                       </div>
+                      
+                      {onQuoteRequest && isMobile && (
+                        <button
+                          onClick={onQuoteRequest}
+                          className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                        >
+                          <MessageSquare className="w-5 h-5" />
+                          📋 ขอใบเสนอราคา
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

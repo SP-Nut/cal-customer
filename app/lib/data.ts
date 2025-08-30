@@ -26,6 +26,7 @@ export const mainServices: Service[] = [
     id: 'poles',
     name: 'งานเสา',
     description: 'ติดตั้งเสารองรับโครงสร้างกันสาด (ขั้นต่ำ 2 ต้น)',
+    isSelectedByDefault: true,
     options: [
       { 
         id: 'single', 
@@ -42,7 +43,7 @@ export const mainServices: Service[] = [
       },
       { 
         id: 'extension', 
-        name: 'แขนดึง', 
+        name: 'เสาเรียง', 
         price: 2800,
         description: '2,800 บาท/ต้น'
       }
@@ -99,6 +100,39 @@ export const mainServices: Service[] = [
     ],
     isSelectedByDefault: true,
     pricePerSqm: true
+  },
+  {
+    id: 'no-column-support',
+    name: 'การติดตั้งแบบไร้เสา',
+    description: 'เลือกประเภทการรองรับแบบไร้เสา (ฟรีทั้งหมด)',
+    options: [
+      { 
+        id: 'single-support', 
+        name: 'ขาค้ำเดี่ยว', 
+        price: 0, 
+        isDefault: true,
+        description: 'ขาค้ำเดี่ยวสำหรับรองรับโครงสร้าง (ฟรี)'
+      },
+      { 
+        id: 'cantilever-support', 
+        name: 'ขาค้ำระแนง', 
+        price: 0,
+        description: 'ขาค้ำระแนงสำหรับพื้นที่กว้าง (ฟรี)'
+      },
+      { 
+        id: 'tension-arm', 
+        name: 'แขนดึง', 
+        price: 0,
+        description: 'แขนดึงสำหรับการรองรับแบบแขวน (ฟรี)'
+      },
+      { 
+        id: 'flat-bar', 
+        name: 'แฟลตบาร์', 
+        price: 0,
+        description: 'แฟลตบาร์สำหรับการยึดติดผนัง (ฟรี)'
+      }
+    ],
+    requiresInstallationType: 'no-column'
   },
   {
     id: 'ceiling',

@@ -40,6 +40,7 @@ export interface Service {
   description: string;
   price?: number;
   requiresSize?: string;
+  requiresInstallationType?: string;
   options?: ServiceOption[];
   isSelectedByDefault?: boolean;
   pricePerSqm?: boolean;

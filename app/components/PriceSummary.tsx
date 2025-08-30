@@ -17,6 +17,7 @@ interface PriceSummaryProps {
   pipeLength?: Record<string, number>;
   electricalPoints?: Record<string, number>;
   poleCount?: number;
+  installationType?: string | null;
   isMobile?: boolean;
   onQuoteRequest?: () => void;
 }
@@ -35,11 +36,64 @@ export function PriceSummary({
   pipeLength = {},
   electricalPoints = {},
   poleCount = 1,
+  installationType = null,
   isMobile = false,
   onQuoteRequest
 }: PriceSummaryProps) {
   const area = dimensions.width * dimensions.length;
   const [isExpanded, setIsExpanded] = useState(false);
+
+  // ฟังก์ชันแปลงชื่อประเภทการติดตั้ง
+  const getInstallationTypeText = (type: string | null) => {
+    if (!type) return 'ไม่ได้เลือก';
+    
+    const typeMapping: Record<string, string> = {
+      'with-column': 'แบบมีเสา',
+      'no-column': 'แบบไร้เสา',
+      'single-support': 'แบบไร้เสา - ขาค้ำเดี่ยว',
+      'beam-support': 'แบบไร้เสา - ขาค้ำระแนง', 
+      'tension-arm': 'แบบไร้เสา - แขนดึง',
+      'flat-bar': 'แบบไร้เสา - แฟลตบาร์'
+    };
+    
+    return typeMapping[type] || type;
+  };
+
+  // ฟังก์ชันคำนวณราคาการติดตั้ง
+  const getInstallationPrice = () => {
+    if (!installationType) return 0;
+    
+    // แบบไร้เสา = ฟรี
+    if (installationType.includes('single-support') || 
+        installationType.includes('beam-support') || 
+        installationType.includes('tension-arm') || 
+        installationType.includes('flat-bar') ||
+        installationType === 'no-column') {
+      return 0;
+    }
+    
+    // แบบมีเสา = ราคาจากบริการเสา
+    if (installationType === 'with-column') {
+      const poleService = mainServices.find(s => s.id === 'poles');
+      if (poleService && selectedServices.includes('poles')) {
+        const selectedOption = selectedServiceOptions['poles'];
+        if (selectedOption && poleService.options) {
+          const option = poleService.options.find(opt => opt.id === selectedOption);
+          if (option) {
+            return option.price * poleCount;
+          }
+        }
+      }
+    }
+    
+    return 0;
+  };
+
+  // ฟังก์ชัน helper สำหรับการแสดงราคา
+  const formatPrice = (price: number) => ({
+    text: price === 0 ? 'ฟรี' : `฿${price.toLocaleString()}`,
+    className: price === 0 ? 'text-green-600' : 'text-slate-800'
+  });
 
   return (
     <div className={`bg-white border-t border-slate-200 ${isMobile ? 'p-1.5' : 'p-2'}`}>
@@ -71,6 +125,22 @@ export function PriceSummary({
         {isExpanded && (
           <div className="space-y-1 animate-in slide-in-from-top-2 duration-200">
         
+        {/* Installation Type */}
+        <div className="bg-slate-50 rounded p-1">
+          <div className="text-xs text-slate-600 mb-0.5">ประเภทการติดตั้ง</div>
+          <div className="flex justify-between text-xs">
+            <span className="text-slate-700">{getInstallationTypeText(installationType)}</span>
+            <span className={`font-medium ${formatPrice(getInstallationPrice()).className}`}>
+              {formatPrice(getInstallationPrice()).text}
+            </span>
+          </div>
+          {installationType === 'with-column' && poleCount > 0 && getInstallationPrice() > 0 && (
+            <div className="text-xs text-slate-500 ml-2 mt-0.5">
+              • รวมเสาเรียง {poleCount} ต้น
+            </div>
+          )}
+        </div>
+        
         {/* Area and Base Price */}
         <div className="bg-slate-50 rounded p-1">
           <div className="text-xs text-slate-600 mb-0.5">วัสดุพื้นฐาน</div>
@@ -86,12 +156,17 @@ export function PriceSummary({
         </div>
         
         {/* Services */}
-        {selectedServices.length > 0 && (
+        {selectedServices.filter(serviceId => {
+          // ซ่อนบริการเสาถ้าเป็นแบบมีเสา (เพราะแสดงในส่วน Installation Type แล้ว)
+          return !(serviceId === 'poles' && installationType === 'with-column');
+        }).length > 0 && (
           <div className="bg-slate-50 rounded p-1">
             <div className="text-xs text-slate-600 mb-0.5">บริการหลัก</div>
             <div className="space-y-1">
               {mainServices
                 .filter((service) => selectedServices.includes(service.id))
+                // ซ่อนบริการเสาถ้าเป็นแบบมีเสา (เพราะแสดงในส่วน Installation Type แล้ว)
+                .filter((service) => !(service.id === 'poles' && installationType === 'with-column'))
                 .map((service) => {
                   let servicePrice = service.price || 0;
                   const selectedOption = selectedServiceOptions[service.id];
@@ -124,7 +199,9 @@ export function PriceSummary({
                       {/* หัวข้อบริการ */}
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-700 font-medium">{service.name}</span>
-                        <span className="font-medium text-slate-800">฿{servicePrice.toLocaleString()}</span>
+                        <span className={`font-medium ${formatPrice(servicePrice).className}`}>
+                          {formatPrice(servicePrice).text}
+                        </span>
                       </div>
                       {/* คำอธิบายที่เลือก */}
                       {optionDetails && (
@@ -162,8 +239,8 @@ export function PriceSummary({
                         <div key="gutter" className="space-y-0.5">
                           <div className="flex justify-between text-xs">
                             <span className="text-slate-700 font-medium">{service.name}</span>
-                            <span className="font-medium text-slate-800">
-                              ฿{gutterPrice.toLocaleString()}
+                            <span className={`font-medium ${formatPrice(gutterPrice).className}`}>
+                              {formatPrice(gutterPrice).text}
                             </span>
                           </div>
                           <div className="ml-2 text-xs text-slate-500">
@@ -235,14 +312,16 @@ export function PriceSummary({
                       {/* หัวข้อบริการ */}
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-700 font-medium">{service.name}</span>
-                        <span className="font-medium text-slate-800">
-                          ฿{finalPrice.toLocaleString()}
+                        <span className={`font-medium ${formatPrice(finalPrice).className}`}>
+                          {formatPrice(finalPrice).text}
                         </span>
                       </div>
                       
                       {/* คำอธิบายที่เลือก */}
                       <div className="ml-2 text-xs text-slate-500">
-                        {optionDetails && <div>• {optionDetails}</div>}
+                        {optionDetails && (
+                          <div>• {optionDetails}</div>
+                        )}
                         {option.description && serviceId === 'foundation' && (
                           <div className="text-xs text-slate-400 leading-tight mt-0.5">
                             {option.description}
@@ -263,6 +342,19 @@ export function PriceSummary({
         </div>
         )}
         
+        {/* Total Summary */}
+        <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-lg p-2 mt-2">
+          <div className="flex justify-between items-center">
+            <div className="text-sm font-semibold text-slate-700">ราคารวมทั้งสิ้น</div>
+            <div className="text-lg font-bold text-blue-600">
+              ฿{totalPrice.toLocaleString()}
+            </div>
+          </div>
+          <div className="text-xs text-slate-500 mt-1">
+            ราคาอ้างอิงเท่านั้น • อาจปรับเปลี่ยนตามสถานที่ติดตั้งจริง
+          </div>
+        </div>
+
         {/* Total - Always visible */}
         <div className="border-t border-slate-200 pt-1">          
           {/* Quote Request Button */}
