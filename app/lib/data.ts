@@ -1,3 +1,4 @@
+// ไฟล์ข้อมูลหลักสำหรับระบบคำนวณราคา
 import { Material, Service, ExtraService, MaterialCategory } from './types';
 import { translucentMaterials } from './materials/translucentMaterials';
 import { opaqueMaterials } from './materials/opaqueMaterials';
