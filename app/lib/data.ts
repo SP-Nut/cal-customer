@@ -30,7 +30,7 @@ export const mainServices: Service[] = [
     options: [
       { 
         id: 'single', 
-        name: 'เสาเดี่ยว', 
+        name: 'เสาเดี่ยว ', 
         price: 2000, 
         isDefault: true,
         description: '2,000 บาท/ต้น'
