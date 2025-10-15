@@ -27,21 +27,18 @@ export default function Navbar({ totalPrice, onQuoteRequest }: NavbarProps) {
         <div className="flex justify-between items-center h-14 lg:h-16">
           {/* Left Side - Logo & Brand */}
           <div className="flex items-center space-x-3 lg:space-x-4">
-            <div className="flex items-center space-x-3">
+            <Link 
+              href="/" 
+              onClick={() => window.location.reload()}
+              className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity duration-200"
+            >
               <img 
                 src="/materials/logo.webp" 
                 alt="SP Kansard Logo" 
                 className="h-10 lg:h-12 w-auto object-contain"
               />
-              <div className="hidden sm:block">
-                <h1 className="text-base lg:text-lg font-bold text-gray-800 tracking-wide">
-                  SP Kansard
-                </h1>
-                <p className="text-sm text-gray-600 -mt-0.5">
-                  กันสาด & หลังคา
-                </p>
-              </div>
-            </div>
+         
+            </Link>
           </div>
 
           {/* Center - Contact Information */}
