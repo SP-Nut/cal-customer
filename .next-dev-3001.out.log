@@ -1,0 +1,61 @@
+
+> sp-kansard-rebuild@0.1.0 dev
+> next dev -p 3001
+
+   ▲ Next.js 15.5.19
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.26.168:3001
+
+ ✓ Starting...
+ ✓ Ready in 3.8s
+ ○ Compiling / ...
+ ✓ Compiled / in 2.6s (694 modules)
+ GET / 200 in 3684ms
+ GET / 200 in 226ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 531ms (423 modules)
+ GET /favicon.ico 200 in 879ms
+ GET / 200 in 1190ms
+ GET /favicon.ico 200 in 31ms
+ ✓ Compiled in 6.8s (708 modules)
+ GET / 200 in 1589ms
+ GET / 200 in 1562ms
+ ✓ Compiled /favicon.ico in 366ms (423 modules)
+ GET /favicon.ico 200 in 740ms
+ ✓ Compiled in 1364ms (725 modules)
+ GET / 200 in 520ms
+ ✓ Compiled in 1649ms (725 modules)
+ GET / 200 in 954ms
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 6.7s (1041 modules)
+ GET / 200 in 2107ms
+ GET / 500 in 8965ms
+ GET / 500 in 16936ms
+ GET / 200 in 796ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 2.2s (617 modules)
+ GET /favicon.ico 500 in 2542ms
+ GET / 200 in 816ms
+ GET /favicon.ico 500 in 179ms
+ GET / 200 in 147ms
+ GET /favicon.ico 500 in 113ms
+ GET / 200 in 155ms
+ GET /favicon.ico 500 in 53ms
+ GET / 200 in 177ms
+ GET /favicon.ico 500 in 63ms
+ GET / 200 in 150ms
+ GET /favicon.ico 500 in 55ms
+ GET / 200 in 128ms
+ GET /favicon.ico 500 in 62ms
+ ✓ Compiled in 2s (1072 modules)
+ GET / 500 in 1497ms
+ GET /favicon.ico 200 in 99ms
+ GET / 200 in 175ms
+ GET / 200 in 66ms
+ GET /favicon.ico 200 in 29ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 733ms (1063 modules)
+ GET /_vercel/insights/script.js 404 in 1517ms
+ GET / 200 in 159ms
+ GET /favicon.ico 500 in 83ms
+[?25h

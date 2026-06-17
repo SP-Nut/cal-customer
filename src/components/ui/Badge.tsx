@@ -1,0 +1,31 @@
+import { cn } from "@/lib/cn";
+
+type BadgeVariant = "default" | "brand" | "success" | "warning" | "info";
+
+const variants: Record<BadgeVariant, string> = {
+  default: "bg-slate-100 text-slate-600",
+  brand: "bg-brand-100 text-brand-700",
+  success: "bg-emerald-50 text-emerald-700",
+  warning: "bg-amber-50 text-amber-700",
+  info: "bg-sky-50 text-sky-700"
+};
+
+interface BadgeProps {
+  children: React.ReactNode;
+  variant?: BadgeVariant;
+  className?: string;
+}
+
+export function Badge({ children, variant = "default", className }: BadgeProps) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold",
+        variants[variant],
+        className
+      )}
+    >
+      {children}
+    </span>
+  );
+}

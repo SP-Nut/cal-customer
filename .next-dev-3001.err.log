@@ -1,0 +1,247 @@
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1403671160'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '597652636'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '597652636'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '597652636'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1403671160'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1403671160'
+}
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  digest: '4094151860'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1403671160'
+}
+[TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  page: '/'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1403671160'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '597652636'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '597652636'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '597652636'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1403671160'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1403671160'
+}
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  digest: '4094151860'
+}
+ ⨯ Error: Could not find the module "C:\Users\anasa\cal-customer\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1403671160'
+}
+[TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  page: '/'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\anasa\cal-customer\.next\server\webpack-runtime.js
+- C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\require.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\load-components.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\utils.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\options.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\index.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41223)
+    at Object.<anonymous> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41272) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\anasa\cal-customer\.next\server\webpack-runtime.js
+- C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\require.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\load-components.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\utils.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\options.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\index.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41223)
+    at Object.<anonymous> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41272) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\anasa\cal-customer\.next\server\webpack-runtime.js
+- C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\require.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\load-components.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\utils.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\options.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\index.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41223)
+    at Object.<anonymous> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41272) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\anasa\cal-customer\.next\server\webpack-runtime.js
+- C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\require.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\load-components.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\utils.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\options.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\index.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41223)
+    at Object.<anonymous> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41272) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\anasa\cal-customer\.next\server\webpack-runtime.js
+- C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\require.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\load-components.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\utils.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\options.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\index.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41223)
+    at Object.<anonymous> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41272) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\anasa\cal-customer\.next\server\webpack-runtime.js
+- C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\require.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\load-components.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\utils.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\options.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\index.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41223)
+    at Object.<anonymous> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41272) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\anasa\cal-customer\.next\server\webpack-runtime.js
+- C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\require.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\load-components.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\utils.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\options.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\index.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41223)
+    at Object.<anonymous> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41272) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\anasa\cal-customer\.next\routes-manifest.json'
+    at async M (C:\Users\anasa\cal-customer\.next\server\app\page.js:1:91825) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\anasa\\cal-customer\\.next\\routes-manifest.json',
+  page: '/'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\anasa\cal-customer\.next\server\webpack-runtime.js
+- C:\Users\anasa\cal-customer\.next\server\app\_not-found\page.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\require.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\load-components.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\utils.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\options.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\swc\index.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\anasa\cal-customer\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41223)
+    at Object.<anonymous> (C:\Users\anasa\cal-customer\.next\server\app\favicon.ico\route.js:1:41272) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}

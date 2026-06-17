@@ -1,0 +1,18 @@
+
+> sp-kansard-rebuild@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.19
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.26.168:3000
+
+ ✓ Starting...
+ ✓ Ready in 5.6s
+ ○ Compiling / ...
+ ✓ Compiled / in 12s (717 modules)
+ GET / 200 in 11843ms
+ GET / 200 in 15745ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 839ms (423 modules)
+ GET /favicon.ico 200 in 1256ms
+ GET / 200 in 816ms
