@@ -182,9 +182,9 @@ export async function POST(request: Request) {
       });
 
       await transporter.sendMail({
-        from: `"SP Kansard Calculator" <${smtpUser}>`,
+        from: `"🏠 SP Kansard" <${smtpUser}>`,
         to: [toEmail],
-        subject: `[${referenceId}] ใบเสนอราคา — ${data.contact.name} | ${data.breakdown.subtotal.toLocaleString()} บาท`,
+        subject: `📩 ใบเสนอราคาใหม่ — ${data.contact.name} | ${data.breakdown.subtotal.toLocaleString()} บาท`,
         html: buildEmailHtml(data, referenceId)
       });
     } catch (err) {

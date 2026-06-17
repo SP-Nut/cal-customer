@@ -45,10 +45,6 @@ export function StepContact({
               ทีมงานจะโทรกลับภายใน 2 ชั่วโมง (วันจ-ศ 8:00–18:00)
             </p>
           </div>
-          <div className="w-full rounded-xl bg-white px-4 py-3 text-left">
-            <p className="text-xs text-slate-500">หมายเลขอ้างอิง</p>
-            <p className="mt-0.5 text-lg font-bold text-brand-700">{submitResult.referenceId}</p>
-          </div>
         </div>
 
         <a

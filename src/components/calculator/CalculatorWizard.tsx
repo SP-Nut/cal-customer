@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { AlertTriangle, Send, X } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Send, X } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -334,11 +334,13 @@ export function CalculatorWizard() {
             <div className="flex items-start justify-between gap-3 border-b border-slate-100 px-4 py-3">
               <div>
                 <h2 id="quick-contact-title" className="text-lg font-bold text-slate-900">
-                  ข้อมูลติดต่อกลับ
+                  {quoteSubmit.status === "success" ? "ส่งสำเร็จ" : "ข้อมูลติดต่อกลับ"}
                 </h2>
-                <p className="mt-0.5 text-sm text-slate-500">
-                  กรอกชื่อและเบอร์โทรก่อนส่งข้อมูลประเมินราคา
-                </p>
+                {quoteSubmit.status !== "success" && (
+                  <p className="mt-0.5 text-sm text-slate-500">
+                    กรอกชื่อและเบอร์โทรก่อนส่งข้อมูลประเมินราคา
+                  </p>
+                )}
               </div>
               <button
                 type="button"
@@ -352,13 +354,11 @@ export function CalculatorWizard() {
 
             <div className="space-y-4 px-4 py-4">
               {quoteSubmit.status === "success" && quoteSubmit.result ? (
-                <div className="rounded-xl bg-emerald-50 p-4">
-                  <p className="text-sm font-bold text-emerald-900">ส่งข้อมูลเรียบร้อยแล้ว</p>
-                  <p className="mt-1 text-sm text-emerald-700">
-                    ทีมงานจะติดต่อกลับตามข้อมูลที่ให้ไว้
+                <div className="flex flex-col items-center justify-center rounded-xl bg-emerald-50 px-5 py-8 text-center">
+                  <CheckCircle2 className="h-12 w-12 text-emerald-600" />
+                  <p className="mt-4 text-2xl font-extrabold text-emerald-900">
+                    ส่งข้อมูลเรียบร้อยแล้ว
                   </p>
-                  <p className="mt-3 text-xs text-slate-500">เลขอ้างอิง</p>
-                  <p className="text-lg font-bold text-brand-700">{quoteSubmit.result.referenceId}</p>
                 </div>
               ) : (
                 <>
