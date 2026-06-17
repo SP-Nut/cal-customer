@@ -5,7 +5,7 @@ import { calculateQuote } from "@/domain/calculator/pricing";
 import { validateStep } from "@/domain/calculator/validation";
 import type { CalculatorInput, ContactInfo } from "@/domain/calculator/types";
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 5;
 
 const emptyInput: CalculatorInput = {
   category: "translucent",

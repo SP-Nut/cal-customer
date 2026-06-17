@@ -12,7 +12,6 @@ import { StepMaterial } from "./steps/StepMaterial";
 import { StepStructure } from "./steps/StepStructure";
 import { StepDimensions } from "./steps/StepDimensions";
 import { StepAddOns } from "./steps/StepAddOns";
-import { StepContact } from "./steps/StepContact";
 import { useCalculator } from "@/hooks/useCalculator";
 import { useQuoteSubmit } from "@/hooks/useQuoteSubmit";
 import { validateStep } from "@/domain/calculator/validation";
@@ -24,8 +23,7 @@ const STEP_LABELS = [
   "วัสดุ",
   "โครงสร้าง",
   "พื้นที่",
-  "บริการเสริม",
-  "ติดต่อ"
+  "บริการเสริม"
 ];
 
 export function CalculatorWizard() {
@@ -50,13 +48,7 @@ export function CalculatorWizard() {
     });
   }, [calc.step]);
 
-  function handleSubmit() {
-    const validation = validateStep(6, calc.input, calc.contact);
-    if (!validation.valid) return;
-    quoteSubmit.submit(calc.input, calc.breakdown, calc.contact);
-  }
-
-  function handleQuickSubmit() {
+  function openContactPopup() {
     const validation = validateStep(4, calc.input, calc.contact);
     if (!validation.valid) return;
     setQuickContactAttempted(false);
@@ -72,7 +64,7 @@ export function CalculatorWizard() {
 
   function handleNext() {
     if (isLastStep) {
-      handleSubmit();
+      openContactPopup();
     } else {
       calc.nextStep();
     }
@@ -150,7 +142,7 @@ export function CalculatorWizard() {
               loading={quoteSubmit.status === "loading"}
               className="px-5"
             >
-              {isLastStep ? "ส่งคำขอ" : "ถัดไป →"}
+              {isLastStep ? "ติดต่อกลับ" : "ถัดไป →"}
             </Button>
           </div>
         </div>
@@ -279,10 +271,8 @@ export function CalculatorWizard() {
                   value={calc.input}
                   onChange={calc.patch}
                   onInstallationSelect={calc.patchAndNext}
-                  onQuickSubmit={handleQuickSubmit}
+                  onQuickSubmit={openContactPopup}
                   quickSubmitStatus={quoteSubmit.status}
-                  quickSubmitResult={quoteSubmit.result}
-                  quickSubmitError={quoteSubmit.errorMessage}
                   canQuickSubmit={validateStep(4, calc.input, calc.contact).valid}
                 />
               )}
@@ -293,21 +283,6 @@ export function CalculatorWizard() {
                   value={calc.input}
                   onToggle={calc.toggleAddOn}
                   onChange={calc.patch}
-                />
-              )}
-            {calc.step >= 6 &&
-              renderFlowSection(
-                6,
-                <StepContact
-                  contact={calc.contact}
-                  input={calc.input}
-                  breakdown={calc.breakdown}
-                  onContactChange={calc.patchContact}
-                  onSubmit={handleSubmit}
-                  submitStatus={quoteSubmit.status}
-                  submitResult={quoteSubmit.result}
-                  submitError={quoteSubmit.errorMessage}
-                  errors={quoteSubmit.status !== "success" ? contactValidation.errors : []}
                 />
               )}
           </div>
@@ -334,12 +309,13 @@ export function CalculatorWizard() {
             ) : (
               quoteSubmit.status !== "success" && (
                 <Button
-                  onClick={handleSubmit}
+                  onClick={openContactPopup}
                   loading={quoteSubmit.status === "loading"}
-                  disabled={!contactValidation.valid || quoteSubmit.status === "loading"}
+                  disabled={!validateStep(4, calc.input, calc.contact).valid || quoteSubmit.status === "loading"}
                   className="min-w-[200px]"
                 >
-                  ส่งคำขอใบเสนอราคา
+                  <Send className="h-4 w-4" />
+                  ขอให้ติดต่อกลับ
                 </Button>
               )
             )}

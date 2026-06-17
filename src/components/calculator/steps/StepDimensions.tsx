@@ -1,9 +1,9 @@
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, Send } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import type { CalculatorInput, InstallationType } from "@/domain/calculator/types";
-import type { SubmitStatus, QuoteResult } from "@/hooks/useQuoteSubmit";
+import type { SubmitStatus } from "@/hooks/useQuoteSubmit";
 
 interface StepDimensionsProps {
   value: CalculatorInput;
@@ -11,8 +11,6 @@ interface StepDimensionsProps {
   onInstallationSelect?: (update: Partial<CalculatorInput>) => void;
   onQuickSubmit?: () => void;
   quickSubmitStatus?: SubmitStatus;
-  quickSubmitResult?: QuoteResult | null;
-  quickSubmitError?: string | null;
   canQuickSubmit?: boolean;
 }
 
@@ -28,8 +26,6 @@ export function StepDimensions({
   onInstallationSelect,
   onQuickSubmit,
   quickSubmitStatus = "idle",
-  quickSubmitResult,
-  quickSubmitError,
   canQuickSubmit = false
 }: StepDimensionsProps) {
   const area = Math.max(0, value.width) * Math.max(0, value.length);
@@ -143,26 +139,21 @@ export function StepDimensions({
       )}
 
       {onQuickSubmit && (
-        <div className="rounded-xl border border-brand-100 bg-brand-50 p-3">
-          {quickSubmitStatus === "success" && quickSubmitResult ? (
-            <div className="space-y-2">
-              <p className="text-sm font-bold text-brand-700">ส่งข้อมูลเรียบร้อยแล้ว</p>
-              <p className="text-xs text-slate-600">เลขอ้างอิง {quickSubmitResult.referenceId}</p>
-            </div>
-          ) : (
-            <div className="space-y-2">
-              <Button
-                type="button"
-                onClick={onQuickSubmit}
-                loading={quickSubmitStatus === "loading"}
-                disabled={!canQuickSubmit || quickSubmitStatus === "loading"}
-                className="w-full"
-              >
-                ส่งข้อมูลประเมินราคา
-              </Button>
-              {quickSubmitError && <p className="text-xs text-red-600">{quickSubmitError}</p>}
-            </div>
-          )}
+        <div className="flex flex-col gap-2 rounded-xl border border-brand-100 bg-brand-50 p-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
+            <p className="text-sm font-bold text-brand-700">พร้อมส่งข้อมูลประเมิน</p>
+            <p className="text-xs text-slate-500">กรอกข้อมูลติดต่อในหน้าต่างถัดไป</p>
+          </div>
+          <Button
+            type="button"
+            onClick={onQuickSubmit}
+            loading={quickSubmitStatus === "loading"}
+            disabled={!canQuickSubmit || quickSubmitStatus === "loading"}
+            className="w-full shrink-0 sm:w-auto"
+          >
+            <Send className="h-4 w-4" />
+            ขอให้ติดต่อกลับ
+          </Button>
         </div>
       )}
     </div>
