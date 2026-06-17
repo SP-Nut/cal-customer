@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -162,22 +162,33 @@ export async function POST(request: Request) {
   const referenceId = `SPK-${Date.now().toString(36).toUpperCase()}`;
   const data = parsed.data;
 
-  // Send email via Resend
-  const apiKey = process.env.RESEND_API_KEY;
+  // Send email via Gmail SMTP / compatible SMTP provider.
   const toEmail = process.env.CONTACT_EMAIL ?? "spkansards@gmail.com";
+  const smtpHost = process.env.SMTP_HOST ?? "smtp.gmail.com";
+  const smtpPort = Number(process.env.SMTP_PORT ?? 465);
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
 
-  if (apiKey) {
+  if (smtpUser && smtpPass) {
     try {
-      const resend = new Resend(apiKey);
-      await resend.emails.send({
-        from: "SP Kansard Calculator <noreply@spkansard.com>",
+      const transporter = nodemailer.createTransport({
+        host: smtpHost,
+        port: smtpPort,
+        secure: smtpPort === 465,
+        auth: {
+          user: smtpUser,
+          pass: smtpPass
+        }
+      });
+
+      await transporter.sendMail({
+        from: `"SP Kansard Calculator" <${smtpUser}>`,
         to: [toEmail],
-        replyTo: data.contact.phone ? undefined : undefined,
         subject: `[${referenceId}] ใบเสนอราคา — ${data.contact.name} | ${data.breakdown.subtotal.toLocaleString()} บาท`,
         html: buildEmailHtml(data, referenceId)
       });
     } catch (err) {
-      console.error("Resend error:", err);
+      console.error("SMTP email error:", err);
       // Don't fail the request — log and continue
     }
   }

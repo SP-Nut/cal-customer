@@ -41,13 +41,13 @@ export function StepCategory({ value, onChange }: StepCategoryProps) {
                 </svg>
               </span>
             )}
-            <div className="h-24 w-full overflow-hidden rounded-lg bg-slate-100">
+            <div className="h-40 w-full overflow-hidden rounded-lg bg-white sm:h-32">
               <Image
                 src={materials.find((m) => m.category === cat.id)?.image ?? "/materials/pr.png"}
                 alt={cat.name}
-                width={280}
-                height={96}
-                className="h-full w-full object-cover"
+                width={520}
+                height={280}
+                className="h-full w-full object-contain"
               />
             </div>
             <div>
