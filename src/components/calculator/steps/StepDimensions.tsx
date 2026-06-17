@@ -1,12 +1,19 @@
 import { Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import type { CalculatorInput, InstallationType } from "@/domain/calculator/types";
+import type { SubmitStatus, QuoteResult } from "@/hooks/useQuoteSubmit";
 
 interface StepDimensionsProps {
   value: CalculatorInput;
   onChange: (update: Partial<CalculatorInput>) => void;
   onInstallationSelect?: (update: Partial<CalculatorInput>) => void;
+  onQuickSubmit?: () => void;
+  quickSubmitStatus?: SubmitStatus;
+  quickSubmitResult?: QuoteResult | null;
+  quickSubmitError?: string | null;
+  canQuickSubmit?: boolean;
 }
 
 const installationOptions: Array<{ id: InstallationType; label: string; description: string }> = [
@@ -15,7 +22,16 @@ const installationOptions: Array<{ id: InstallationType; label: string; descript
   { id: "survey", label: "ให้ทีมแนะนำ", description: "ยังไม่แน่ใจ ให้ SP แนะนำ" }
 ];
 
-export function StepDimensions({ value, onChange, onInstallationSelect }: StepDimensionsProps) {
+export function StepDimensions({
+  value,
+  onChange,
+  onInstallationSelect,
+  onQuickSubmit,
+  quickSubmitStatus = "idle",
+  quickSubmitResult,
+  quickSubmitError,
+  canQuickSubmit = false
+}: StepDimensionsProps) {
   const area = Math.max(0, value.width) * Math.max(0, value.length);
   const selectInstallation = onInstallationSelect ?? onChange;
 
@@ -123,6 +139,30 @@ export function StepDimensions({ value, onChange, onInstallationSelect }: StepDi
               <Plus className="h-4 w-4" />
             </button>
           </div>
+        </div>
+      )}
+
+      {onQuickSubmit && (
+        <div className="rounded-xl border border-brand-100 bg-brand-50 p-3">
+          {quickSubmitStatus === "success" && quickSubmitResult ? (
+            <div className="space-y-2">
+              <p className="text-sm font-bold text-brand-700">ส่งข้อมูลเรียบร้อยแล้ว</p>
+              <p className="text-xs text-slate-600">เลขอ้างอิง {quickSubmitResult.referenceId}</p>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <Button
+                type="button"
+                onClick={onQuickSubmit}
+                loading={quickSubmitStatus === "loading"}
+                disabled={!canQuickSubmit || quickSubmitStatus === "loading"}
+                className="w-full"
+              >
+                ส่งข้อมูลประเมินราคา
+              </Button>
+              {quickSubmitError && <p className="text-xs text-red-600">{quickSubmitError}</p>}
+            </div>
+          )}
         </div>
       )}
     </div>

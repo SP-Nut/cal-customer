@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { AlertTriangle, Send, X } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 import { TopBar } from "@/components/layout/TopBar";
 import { PreviewPanel } from "./PreviewPanel";
 import { StepCategory } from "./steps/StepCategory";
@@ -30,6 +32,8 @@ export function CalculatorWizard() {
   const calc = useCalculator();
   const quoteSubmit = useQuoteSubmit();
   const stepSectionRefs = useRef<Record<number, HTMLElement | null>>({});
+  const [quickContactOpen, setQuickContactOpen] = useState(false);
+  const [quickContactAttempted, setQuickContactAttempted] = useState(false);
 
   const selectedMaterial = materials.find((m) => m.id === calc.input.materialId) ?? materials[0];
   const isLastStep = calc.step === calc.totalSteps;
@@ -47,6 +51,20 @@ export function CalculatorWizard() {
   }, [calc.step]);
 
   function handleSubmit() {
+    const validation = validateStep(6, calc.input, calc.contact);
+    if (!validation.valid) return;
+    quoteSubmit.submit(calc.input, calc.breakdown, calc.contact);
+  }
+
+  function handleQuickSubmit() {
+    const validation = validateStep(4, calc.input, calc.contact);
+    if (!validation.valid) return;
+    setQuickContactAttempted(false);
+    setQuickContactOpen(true);
+  }
+
+  function handleQuickContactSubmit() {
+    setQuickContactAttempted(true);
     const validation = validateStep(6, calc.input, calc.contact);
     if (!validation.valid) return;
     quoteSubmit.submit(calc.input, calc.breakdown, calc.contact);
@@ -261,6 +279,11 @@ export function CalculatorWizard() {
                   value={calc.input}
                   onChange={calc.patch}
                   onInstallationSelect={calc.patchAndNext}
+                  onQuickSubmit={handleQuickSubmit}
+                  quickSubmitStatus={quoteSubmit.status}
+                  quickSubmitResult={quoteSubmit.result}
+                  quickSubmitError={quoteSubmit.errorMessage}
+                  canQuickSubmit={validateStep(4, calc.input, calc.contact).valid}
                 />
               )}
             {calc.step >= 5 &&
@@ -323,6 +346,131 @@ export function CalculatorWizard() {
           </div>
         </aside>
       </div>
+
+      {quickContactOpen && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-slate-950/45 px-3 py-4 sm:items-center">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="quick-contact-title"
+            className="w-full max-w-md rounded-xl bg-white shadow-2xl"
+          >
+            <div className="flex items-start justify-between gap-3 border-b border-slate-100 px-4 py-3">
+              <div>
+                <h2 id="quick-contact-title" className="text-lg font-bold text-slate-900">
+                  ข้อมูลติดต่อกลับ
+                </h2>
+                <p className="mt-0.5 text-sm text-slate-500">
+                  กรอกชื่อและเบอร์โทรก่อนส่งข้อมูลประเมินราคา
+                </p>
+              </div>
+              <button
+                type="button"
+                aria-label="ปิดหน้าต่างข้อมูลติดต่อ"
+                onClick={() => setQuickContactOpen(false)}
+                className="grid h-9 w-9 flex-none place-items-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4 px-4 py-4">
+              {quoteSubmit.status === "success" && quoteSubmit.result ? (
+                <div className="rounded-xl bg-emerald-50 p-4">
+                  <p className="text-sm font-bold text-emerald-900">ส่งข้อมูลเรียบร้อยแล้ว</p>
+                  <p className="mt-1 text-sm text-emerald-700">
+                    ทีมงานจะติดต่อกลับตามข้อมูลที่ให้ไว้
+                  </p>
+                  <p className="mt-3 text-xs text-slate-500">เลขอ้างอิง</p>
+                  <p className="text-lg font-bold text-brand-700">{quoteSubmit.result.referenceId}</p>
+                </div>
+              ) : (
+                <>
+                  <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <p className="text-sm font-semibold text-slate-600">ราคาประเมินรวม</p>
+                      <p className="text-xl font-bold text-brand-700">
+                        {formatBaht(calc.breakdown.subtotal)}
+                      </p>
+                    </div>
+                    <p className="mt-1 text-xs text-slate-400">
+                      * ราคาประเมินเบื้องต้น ขึ้นกับหน้างานจริง
+                    </p>
+                  </div>
+
+                  <div className="space-y-3">
+                    <Input
+                      label="ชื่อ-นามสกุล"
+                      type="text"
+                      value={calc.contact.name}
+                      placeholder="กรุณาระบุชื่อ-นามสกุล"
+                      required
+                      autoComplete="name"
+                      onChange={(e) => calc.patchContact({ name: e.target.value })}
+                    />
+                    <Input
+                      label="เบอร์โทรศัพท์"
+                      type="tel"
+                      value={calc.contact.phone}
+                      placeholder="เช่น 0891234567"
+                      required
+                      autoComplete="tel"
+                      onChange={(e) => calc.patchContact({ phone: e.target.value })}
+                    />
+                    <Input
+                      label="Line ID"
+                      type="text"
+                      value={calc.contact.lineId}
+                      placeholder="ไม่บังคับ"
+                      autoComplete="off"
+                      onChange={(e) => calc.patchContact({ lineId: e.target.value })}
+                    />
+                    <div className="flex flex-col gap-1">
+                      <label htmlFor="quick-note-input" className="text-sm font-semibold text-slate-700">
+                        หมายเหตุ / รายละเอียดเพิ่มเติม
+                      </label>
+                      <textarea
+                        id="quick-note-input"
+                        value={calc.contact.note}
+                        placeholder="เช่น ต้องการสีพิเศษ หรือรูปแบบงานเพิ่มเติม"
+                        rows={3}
+                        className="w-full resize-none rounded-md border border-slate-200 bg-white px-3 py-2.5 text-base text-slate-900 outline-none placeholder:text-slate-400 transition-colors focus:border-brand-600 focus:ring-2 focus:ring-brand-100"
+                        onChange={(e) => calc.patchContact({ note: e.target.value })}
+                      />
+                    </div>
+                  </div>
+
+                  {quickContactAttempted && contactValidation.errors.length > 0 && (
+                    <div className="rounded-lg bg-red-50 px-3 py-2.5 text-sm text-red-700">
+                      {contactValidation.errors.map((err, i) => (
+                        <p key={i}>{err}</p>
+                      ))}
+                    </div>
+                  )}
+
+                  {quoteSubmit.errorMessage && (
+                    <div className="flex gap-2 rounded-lg bg-red-50 px-3 py-2.5 text-sm text-red-700">
+                      <AlertTriangle className="mt-0.5 h-4 w-4 flex-none" />
+                      <p>{quoteSubmit.errorMessage}</p>
+                    </div>
+                  )}
+
+                  <Button
+                    className="w-full"
+                    size="lg"
+                    onClick={handleQuickContactSubmit}
+                    loading={quoteSubmit.status === "loading"}
+                    disabled={quoteSubmit.status === "loading"}
+                  >
+                    <Send className="h-4 w-4" />
+                    ส่งข้อมูลให้ติดต่อกลับ
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
